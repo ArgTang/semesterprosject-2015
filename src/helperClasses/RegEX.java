@@ -1,4 +1,4 @@
-package helperClasses;
+package HelperClasses;
 /**
  * Created by steinar on 16.03.2015.
  * This is a class for doing input validation.
