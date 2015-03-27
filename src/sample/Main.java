@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-//testing git integrations
+//testing git integrations once
 
 public class Main extends Application {
 
