@@ -1,0 +1,8 @@
+.idea/
+.nbproject/
+.out/
+.dist/
+awesomenautsproject.iml
+build.xml
+manifest.mf
+
