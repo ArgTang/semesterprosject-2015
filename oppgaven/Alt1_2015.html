@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html lang="nb">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="Alt1_2015_files/oppgaver.css">
+</head>
+<body>
+    <h2>ALTERNATIV 1:<br><br>FORSIKRING</h2>
+
+<p>Dere har fått i oppdrag å lage et java-program for et forsikringsselskapet. Programmet skal kunne registrere selskapets kunder, opprette ulike typer forsikringer, registrere skader og utbetale erstatninger. Systemet skal kunne generere ulik type statistikk og historikk, i tillegg til at det skal være enkelt å hente ut forskjellig informasjon. De ulike forsikringstypene selskapet  i dag tilbyr er bilforsikring, båtforsikring, hus- og innboforsikring, forsikring av fritidsbolig og reiseforsikring. De har imidlertid planer om å utvide sitt forsikringstilbud og programmet må derfor bygges  opp på en måte som gjør at det enkelt å bygges det ut med flere forsikringstyper etterhvert.
+</p>
+
+<p>Forsikringsselskapet tilbyr 10% i rabatt på den årlige forsikringspremien forccforsikringskunder som defineres som "totalkunde". For å bli totalkunde må kunden ha minst tre ulike typer forsikringer.
+</p>
+
+<p>Med hensyn til bilforsikring følger selskapet det vanlig bonus-systemet som gjelder i Norge, der kunder som kjører skadefritt opparbeider seg bonus og øker derved sin rabatt på bilforsikringen med en gitt prosent for hvert år. Kunden kan pr idag ikke opparbeide høyere bonus enn 75%. Hvis vedkommende skader bilen, vil bonusen minske og bilforsikringspremien øke. Bonussystemet er imidlertid til revidering og systemet skal derfor lett kunne oppdateres og tilpasses de bonusregler som til enhver tid måtte gjelde. (Sjekk reglene som gjelder i andre forsikringsselskap.)
+</p>
+
+<h3>REGISTRERING</h3>
+<p>
+</p><h4>Registrering av forsikringskunder</h4><p>
+Følgende informasjon skal lagres om forsikringskunden:
+     </p><ul>
+     <li>Dato for opprettet kundeforhold</li>
+     <li>navn</li>
+    <li>fakturaadresse</li>
+    <li>forsikringsnummer</li>
+    <li>alle kundens forsikringer</li>
+    <li>årlig premie for alle forsikringene</li>
+    <li>totalkunde?</li>
+    <li>skademeldinger</li>
+    <li>utbetalte erstatninger</li>
+    <li>annet?</li>
+    </ul>
+
+<p>
+</p><h4>Tegning (registrering) av forsikringer</h4><p>
+For ALLE forsikringer skal det registreres
+</p><ul><li>årlig forsikringspremie</li>
+    <li>dato for opprettet forsikring</li>
+    <li>forsikringsbeløp</li>
+    <li>forsikringsbetingelser: informasjon om hva forsikringen dekker</li>
+    <li>annet?</li>
+</ul>
+
+<p>
+</p><h4>Bilforsikring</h4><p>
+For bilforsikringer skal det i tillegg registreres
+
+</p><ul><li>bileier (kan være forskjellig fra forsikringskunde) </li>
+    <li>registreringsnummer </li>
+    <li>biltype og modell </li>
+    <li>registreringsår (første gang)</li>
+    <li>kjørelengde pr. år i antall km</li>
+     <li>pris pr. kilometer </li>
+    <li>bonus</li>
+    <li>annet?</li>
+    </ul>
+<p>
+
+</p><h4>Båtforsikring</h4><p>
+For båtforsikringer skal det i tillegg registreres
+</p><ul>
+<li>eier (kan være forskjellig fra forsikringskunde) </li>
+    <li>registreringsnummer (hvis det foreligger)</li>
+    <li>båttype og modell </li>
+    <li>lengde i fot</li>
+    <li>årsmodell</li>
+    <li>motortype og motorstyrke HK</li>
+    <li>annet?</li>
+</ul>
+
+
+<h4>Hus- og innboforsikring</h4><p>
+
+For hus- og innboforsikring skal det i tillegg registreres
+</p><ul>
+    <li>boligens adresse (kan være forskjellig fra fakturaadressen) </li>
+    <li>byggeår</li>
+    <li>boligtype</li>
+    <li>byggemateriale</li>
+    <li>standard</li>
+    <li>antall kvadratmeter</li>
+    <li>forsikringsbeløp for bygning</li>
+    <li>forsikringsbeløp for innbo</li>
+     <li>annet?</li>
+</ul>
+
+<h4>Fritidsboligforsikring</h4><p>
+For forsikring av fritidsboliger skal det i tillegg registreres
+</p><ul>
+    <li>fritidsboligens adresse (er forskjellig fra fakturaadressen) </li>
+    <li>byggeår</li>
+    <li>boligtype</li>
+    <li>byggemateriale</li>
+    <li>standard</li>
+    <li>antall kvaderatmeter</li>
+    <li>forsikringsbeløp for bygning</li>
+    <li>forsikringsbeløp for innbo</li>
+    <li>utleie?</li>
+     <li>annet?</li>
+</ul>
+
+
+
+<h4>Fritidsboligforsikring</h4><p>
+For reiseforsikring det i tillegg registreres
+</p><ul>
+
+    <li>forsikringsområde (hvor forsikringen gjelder</li>
+    <li>forsikringssum</li>
+</ul>
+
+<h3>SKADEMELDINGER</h3><p>
+Forsikringsselskapet mottar forløpende skademeldinger fra sine kunder. Hvis kunden
+har en forsikring som dekker skaden,  skal det registreres at erstatning blir utbetalt.
+
+</p><h4>Registrering av skademeldinger</h4><p>
+Hver skademelding skal registreres på gjeldende kunde, under forutsetning at kunden har forsikring for
+den aktuelle skadetypen.
+For hver skademelding skal følgende registreres:
+</p><ul><li>Dato for skade</li>
+    <li>skadenummer</li>
+    <li>type skade</li>
+    <li>for biler: skademeldingsskjema </li>
+    <li>beskrivelse av skaden</li>
+    <li>bilder av skaden (hvis det foreligger)</li>
+    <li>kontaktinformasjon til eventuelle vitner til ulykken (gjelder først og fremt bilkollisjoner)</li>
+    <li>takseringsbeløp av skaden</li>
+    <li>utbetalt erstatningsbeløp (kan være lavere enn det takserte skadebeløpet)</li>
+</ul>
+
+
+<h3>TIDLIGERE KUNDER OG FORSIKINGER</h3>
+<p>
+Det skal være mulig å registrere at et kundeforhold opphører. Alle data tilknyttet kunden skal imidlertid
+bevares i systemet slik at de kan brukes til historikk og statistikk. Det samme gjelder hvis en kunde sier
+opp en forsikringstype. Det skal være mulig å finne ut hvilke forsikringstyper
+kunden har hatt tidligere, i tillegg til de vedkommende har i dag.
+</p>
+
+
+<h3>LAGRING</h3>
+<h4>Skrive data til fil</h4>
+<p>For at dataene som ligger lagret i dataprogrammets interne datastruktur ikke skal
+gå tapt når dataprogrammet avsluttes, må alle data lagres på fil. Lagring på fil må
+foretas i forbindelse med hver dataprogramavslutning. Det kan dessuten være ønskelig
+å kunne foreta lagring på fil også under dataprogrammets kjøring.
+
+</p><h4>Lese data fra fil</h4>
+<p>Hver gang dataprogrammet startes, må alle dataene som ligger lagret på fil leses
+inn i dataprogrammets interne datastruktur.
+
+
+</p><h3>INFORMASJON</h3>
+
+<h4>Søking</h4>
+<p></p><p>Det skal være mulig å søke i systemet etter ulik type informasjon:
+</p><ul>
+  <li>alle data om gitt en forsikringskunde ut fra navn og/eller forsikringsnummer</li>
+  <li>alle kunder som har en gitt type forsikring</li>
+  <li>alle data om en skade ut fra skadenummer</li>
+  <li>alle skader av en gitt skadetype</li>
+  <li>antall skademeldinger innenfor en gitt tidsperiode</li>
+  <li>antall skademeldinger av en bestemt type innenfor en gitt tidsperiode</li>
+  <li>annet?</li>
+</ul>
+
+<h4>Inntekter og utgifter</h4><p>
+Det skal være mulig å hente ut ulik informasjon om utgifter og inntekter:
+</p><ul>
+
+  <li>selskapets totale utbetaling av erstatninger i løpet av et år</li>
+  <li>selskapets totale utbetaling av erstatninger for en gitt forsikringstype  i løpet av et år</li>
+  <li>selskapets utbetaling til en gitt forsikringskunde i løpet av kundeforholdet</li><p>
+  </p><li>selskapets totale forsikringspremieinntekter i løpet av et år</li>
+  <li>selskapets totale forsikringspremieinntekter for en gitt forsikringstype i løpet av et år</li>
+  <li>selskapets forsikringspremieinntekter på en gitt forsikringskunde i løpet av kundeforholdet</li>
+  <li>annet?</li>
+</ul>
+
+<h3>STATISTIKK</h3>
+<p>Det er ønskelig at dataprogrammet skal kunne skrive ut ulik statistikk, som for eksempel:
+</p><ul>
+  <li>øking/minking av antall skademeldinger innenfor en gitt tidsperiode</li>
+  <li>øking/minking av skademeldinger av en bestemt type innenfor en gitt tidsperiode</li>
+  <li>øking/minking av de totale erstatningskostnadene</li>
+  <li>øking/minking av erstatningskostnadene for en gitt skadetype innenfor en gitt tidsperiode</li>
+  <li>type forsikringer rangert etter antall</li>
+ <li>annet?</li>
+</ul><p></p>
+
+
+<h3>UTVIDELSESMULIGHETER</h3>
+<p>Opplistingen av søkemuligheter og statistikk er å betrakte som eksempler. Her er det bare fantasien og tiden
+som setter begrensninger for hva som kan gjøres.
+Dere står fritt når det gjelder hva dere vil implementere og også fritt i å
+supplere dataprogrammet med andre søkemuligheter.
+
+</p><h3>OPPGAVENS OMFANG</h3>
+<p>Oppgavens størrelse vil være avhengig av hvor mye av oppdragsgiverens krav
+og ønsker dere implementerer. For de fleste vil den bli alt for omfattende hvis alt skal
+implementeres fullt ut. En av utfordringene blir derfor å gjøre fornuftige valg
+for HVA som implementeres og HVA som kan utelates. Det er imidlertid viktig at
+programmet kan kompletteres på et seinere tidspunkt (for eksempel av en annen
+programmerer) uten at det må gjøres vesentlige forandringer i den eksisterende koden.
+
+</p><p>Kravene fra oppdragsgiver er veiledende. Dere kan legge til og trekke fra
+alt etter som dere finner det hensiktsmessig. Oppdragsgiver ønsker imidlertid at
+dere skal komme med forslag til utvidelser av programmet.  Dere står også fritt
+til å implementere mer funksjonalitet enn det som er beskrevet i det følgende.
+Dersom dere implementerer mindre enn det som er beskrevet, må det gå klart fram
+av dokumentasjonen hva som er utelatt og hvordan dere har prioritert.
+
+
+</p><p>
+Programmet SKAL være en vanlig java-applikasjon, ikke en web-applikasjon.
+
+
+</p></body></html>
