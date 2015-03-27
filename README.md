@@ -7,3 +7,10 @@ using these tools:
 - slack.com
 - Zenhub for chrome
 - Pivotaltracker
+- Zapier
+
+When you have a pivotal stories make sure you have this as a comment when you commit youre final version of a feature:
+
+[ (Finishes|Fixes|Delivers) #TRACKER_STORY_ID ]
+
+so if you are working on a feature with ID 91269260 (you find this in the pivotal story). rhis commit fixes some stuff [ Finishes #91269260 ]
