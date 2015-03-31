@@ -7,5 +7,5 @@ package CompanyLogic;
  *
  * It might be ok to merge this with OldRegister and different lists
  */
-public class CurrentInsuranceRegister {
+public final class CurrentInsuranceRegister {
 }

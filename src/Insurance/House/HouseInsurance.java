@@ -10,11 +10,15 @@ import java.util.List;
  */
 public abstract class HouseInsurance extends Insurance{
 
-    String adress;
-    String postnumber;
-    String city;
-
-    Person Owner;
-    List<Person> inhabitants; //maybe??
-
+    private String adress;
+    private String postnumber;
+    private String city;
+    private short constructionYear;
+    private String type; //ENUM
+    private String building;
+    private short size;
+    private String buildingMaterial;    //ENUM?
+    private int houseValue;
+    private Person Owner;
+    private List<Person> inhabitants; //maybe??
 }

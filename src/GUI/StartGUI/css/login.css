@@ -1,0 +1,14 @@
+.root {
+    -fx-padding: 1em;
+    -fx-margin: 0.5em;
+    -fx-max-height: 100%;
+    -fx-min-height: 200px;
+    -fx-max-width: 100%;
+    -fx-min-width: 200px;
+}
+
+.Vbox {
+    -fx-alignment: center;
+    -fx-vgap: 100px;
+
+}

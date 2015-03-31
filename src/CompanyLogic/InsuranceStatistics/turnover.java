@@ -3,5 +3,5 @@ package CompanyLogic.InsuranceStatistics;
 /**
  * Created by steinar on 27.03.2015.
  */
-public class turnover {
+public final class turnover {
 }
