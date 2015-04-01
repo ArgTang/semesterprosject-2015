@@ -21,7 +21,7 @@
             <Text text="Welcome, please log in:" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"/>
             <!-- Login or register-->
             <Label text="User Name:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <TextField fx:id="userName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <TextField fx:id="inputName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
             <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
             <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>

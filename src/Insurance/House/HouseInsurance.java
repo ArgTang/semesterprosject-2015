@@ -21,4 +21,20 @@ public abstract class HouseInsurance extends Insurance{
     private int houseValue;
     private Person Owner;
     private List<Person> inhabitants; //maybe??
+
+    //temp constructor (for compile)
+    public HouseInsurance(double insuranceFee, double insuranseValue, String insurancePolicy, String adress, String postnumber, String city, short constructionYear, String type, String building, short size, String buildingMaterial, int houseValue, Person owner, List<Person> inhabitants) {
+        super(insuranceFee, insuranseValue, insurancePolicy);
+        this.adress = adress;
+        this.postnumber = postnumber;
+        this.city = city;
+        this.constructionYear = constructionYear;
+        this.type = type;
+        this.building = building;
+        this.size = size;
+        this.buildingMaterial = buildingMaterial;
+        this.houseValue = houseValue;
+        Owner = owner;
+        this.inhabitants = inhabitants;
+    }
 }

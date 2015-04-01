@@ -12,7 +12,7 @@ import javafx.scene.control.ButtonType;
  *  - All functions return a boolean
  *  - Except multichoice
  */
-public final class modalWindow {
+public final class ModalWindow {
 
     public static boolean messageDialog( String message, String title ) {
         Alert.AlertType aType = Alert.AlertType.INFORMATION;

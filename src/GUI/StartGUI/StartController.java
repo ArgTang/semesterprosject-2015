@@ -1,23 +1,45 @@
 package GUI.StartGUI;
 
+import GUI.GuiHelper.ModalWindow;
 import GUI.GuiHelper.RegEX;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
 
 /**
  * Created by steinar on 29.03.2015.
  *
  *
  */
-public class StartController {
+public class StartController implements Initializable {
+    @FXML
+    private TextField inputName;
+    @FXML
+    private PasswordField passwordField;
 
-    //todo: add this to textfields
-    //userName.setOnKeyReleased( e -> textField1.pseudoClassStateChanged( invalidText, !RegEX.checkIfString(getTextField1()) ));
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
+        addListener();
+    }
 
+    //todo: abstract this. needs to be aplyaple to ALL textfields. Predicates, functionable interface?
+    public void addListener() {
+        final PseudoClass invalidText = PseudoClass.getPseudoClass("invalidText");
+        inputName.setOnKeyReleased(e -> inputName.pseudoClassStateChanged(invalidText, !RegEX.checkIfString(inputName.getText())));
+    }
 
 
     @FXML public void login() {
-
         //login here
+        //Test:
+        ModalWindow.messageDialog("Button Clicked", "Button Clicked");
+
     }
 
     @FXML public void register() {
