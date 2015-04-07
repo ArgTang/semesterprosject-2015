@@ -71,10 +71,11 @@ public class makePersons {
     }
 
     //todo: Make some personobjects and put into "DB"
+
     public static void makeDefaultPerson() {
         //todo make default persons and passwords to logintosite
     }
-    
+
     public static void makeCustomers(int numberOfCustomers) {
 
     }

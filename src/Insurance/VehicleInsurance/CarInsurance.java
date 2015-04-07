@@ -7,7 +7,7 @@ package Insurance.VehicleInsurance;
 public final class CarInsurance extends VehicleInsurance {
 
     //temp constructor (for compile)
-    public CarInsurance(double insuranceFee, double insuranseValue, String insurancePolicy) {
-        super(insuranceFee, insuranseValue, insurancePolicy);
+    public CarInsurance(double insuranseValue, String insurancePolicy, int registeredKM) {
+        super(insuranseValue, insurancePolicy, registeredKM);
     }
 }
