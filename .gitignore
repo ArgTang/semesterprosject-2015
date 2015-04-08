@@ -2,7 +2,7 @@
 .nbproject/
 .out/
 .dist/
-awesomenautsproject.iml
+*.iml
 build.xml
 manifest.mf
 
