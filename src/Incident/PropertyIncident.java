@@ -10,10 +10,10 @@ import java.util.ArrayDeque;
 /**
  * Created by steinar on 27.03.2015.
  */
-public class HouseIncident extends Incident {
+public class PropertyIncident extends Incident {
 
     //temp constructor (for compile)
-    public HouseIncident(String incidentDescription, LocalDate dayOfIncident, String timeOfIncident, ArrayDeque<Files> pictures, ArrayDeque<Person> witness) {
+    public PropertyIncident(String incidentDescription, LocalDate dayOfIncident, String timeOfIncident, ArrayDeque<Files> pictures, ArrayDeque<Person> witness) {
         super(incidentDescription, dayOfIncident, timeOfIncident, pictures, witness);
     }
 }
