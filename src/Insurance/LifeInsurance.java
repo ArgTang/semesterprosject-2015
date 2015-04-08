@@ -7,7 +7,7 @@ public final class LifeInsurance extends Insurance{
 
     //temp constructor (for compile)
 
-    public LifeInsurance(double insuranceFee, double insuranseValue, String insurancePolicy) {
-        super(insuranceFee, insuranseValue, insurancePolicy);
+    public LifeInsurance(double insuranseValue, String insurancePolicy) {
+        super(insuranseValue, insurancePolicy);
     }
 }

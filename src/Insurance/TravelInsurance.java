@@ -6,7 +6,7 @@ package Insurance;
 public final class TravelInsurance extends Insurance {
 
     //temp constructor (for compile)
-    public TravelInsurance(double insuranceFee, double insuranseValue, String insurancePolicy) {
-        super(insuranceFee, insuranseValue, insurancePolicy);
+    public TravelInsurance(double insuranseValue, String insurancePolicy) {
+        super(insuranseValue, insurancePolicy);
     }
 }
