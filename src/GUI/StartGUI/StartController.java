@@ -34,7 +34,6 @@ public class StartController implements Initializable {
         inputName.setOnKeyReleased(e -> inputName.pseudoClassStateChanged(invalidText, !RegEX.checkIfString(inputName.getText())));
     }
 
-
     @FXML public void login() {
         //login here
         //Test:
