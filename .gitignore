@@ -10,3 +10,4 @@ manifest.mf
 src/GUI/FXML-LoginDemo/demo/.idea
 src/GUI/FXML-LoginDemo/demo/demo.iml
 out
+patch.diff
