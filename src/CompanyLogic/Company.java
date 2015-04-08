@@ -6,7 +6,7 @@ package CompanyLogic;
 public final class Company {
 <<<<<<< HEAD
 
-    private final String bossName = "Stian";
+    private final String bossName = "Adrian";
 =======
 >>>>>>> b9ce437f2c12e0a2979356ba12ddc6d10fce3b26
 }
