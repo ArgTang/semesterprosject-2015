@@ -15,6 +15,7 @@ public class PersonRegister
 
     Map<String, Person> personRegister = new HashMap();
     //todo: decide if hashmap is correct)
+    //TODO: make an interface or superclass to all the registers so that all common methods can be in one place
 
     public void addCustomer(Customer customer)
     {
