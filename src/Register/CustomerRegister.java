@@ -10,21 +10,17 @@ import java.util.Map;
 /**
  * Created by steinar on 08.04.2015.
  */
-public class PersonRegister
+public class CustomerRegister
 {
 
-    Map<String, Person> personRegister = new HashMap();
+    Map<String, Person> CustomerRegister = new HashMap();
     //todo: decide if hashmap is correct)
     //TODO: make an interface or superclass to all the registers so that all common methods can be in one place
 
     public void addCustomer(Customer customer)
     {
-        personRegister.put( customer.getCustomerId(), customer );
+        CustomerRegister.put( customer.getCustomerId(), customer );
     }
-
-    public void addEmployee(Employee employee) //todo merge add methods?
-    {
-        personRegister.put( employee.getEmployeeId(), employee );
-    }
+    
 
 }
