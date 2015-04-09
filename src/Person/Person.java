@@ -2,15 +2,15 @@ package Person;
 
 import Incident.Incident;
 import Insurance.Insurance;
-
 import java.util.List;
-import java.util.Set;
+
 
 /**
  * Created by steinar on 27.03.2015.
  */
 public abstract class Person {
 
+    //todo: Merge Person and Object package together.
     private String firstName;
     private String lastName;
     private String socialSecurityNumber;

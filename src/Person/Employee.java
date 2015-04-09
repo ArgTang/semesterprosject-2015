@@ -10,6 +10,7 @@ public final class Employee extends Person
     private String jobTitle;
     private static int idCount = 00001;
     private String employeeId;
+    private int salary;
 
     /**
      *
@@ -25,4 +26,6 @@ public final class Employee extends Person
         this.jobTitle = jobTitle;
         employeeId = "emp" + idCount++;
     }
+
+    public String getEmployeeId() { return employeeId; }
 }

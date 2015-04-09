@@ -47,8 +47,8 @@ public class makePersons {
         phone = 40000000 + randomGenerator.nextInt(50000000);
 
         //todo: decide how Person Objects are structured, and change this accordingly
-        Person Person = new Person(name, lastName, adress, city, email, phone);
-        return Person;
+       // Person Person = new Person(name, lastName, adress, city, email, phone);
+        return null;
     }
 
     private static String makeName( String[] names ) {

@@ -11,7 +11,7 @@ public final class Customer extends Person
 {
     private static int idCount = 00001;
     private String customerId;
-    private InsuranceRegister insuranceRegister; //todo: bruke registeret i Personklassen? kjekt med historikk for ansatte også.
+    private InsuranceRegister insuranceRegister; //todo: bruke registeret i Personklassen? kjekt med historikk for ansatte ogsÃ¥.
     private IncidentRegister incidentRegister;  //todo: se over.
 
     /**
@@ -26,6 +26,8 @@ public final class Customer extends Person
         super(firstName, lastName, socialSecurityNumber, contactInfo);
         customerId = "cust" + idCount++;
     }
+
+    public String getCustomerId() { return customerId; }
 
     public void addInsurance(Insurance insurance)
     {
