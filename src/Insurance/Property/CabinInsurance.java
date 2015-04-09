@@ -10,7 +10,7 @@ import java.util.List;
 public final class CabinInsurance extends PropertyInsurance {
 
     //temp constructor (for compile)
-    public CabinInsurance(double insuranseValue, String insurancePolicy, String adress) {
-        super(insuranseValue, insurancePolicy, adress);
+    public CabinInsurance(double insuranseValue, String insurancePolicy) {
+        super(insuranseValue, insurancePolicy);
     }
 }

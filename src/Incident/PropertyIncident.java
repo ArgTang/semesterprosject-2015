@@ -13,7 +13,7 @@ import java.util.ArrayDeque;
 public class PropertyIncident extends Incident {
 
     //temp constructor (for compile)
-    public PropertyIncident(String incidentDescription, LocalDate dayOfIncident, String timeOfIncident, ArrayDeque<Files> pictures, ArrayDeque<Person> witness) {
-        super(incidentDescription, dayOfIncident, timeOfIncident, pictures, witness);
+    public PropertyIncident(String incidentDescription, LocalDate dayOfIncident, String timeOfIncident) {
+        super(incidentDescription, dayOfIncident, timeOfIncident);
     }
 }

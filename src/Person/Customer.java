@@ -9,10 +9,10 @@ import Insurance.Insurance;
  */
 public final class Customer extends Person
 {
-    private int idCount = 00001;
+    private static int idCount = 00001;
     private String customerId;
-    private InsuranceRegister insuranceRegister;
-    private IncidentRegister incidentRegister;
+    private InsuranceRegister insuranceRegister; //todo: bruke registeret i Personklassen? kjekt med historikk for ansatte også.
+    private IncidentRegister incidentRegister;  //todo: se over.
 
     /**
      *

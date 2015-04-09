@@ -1,5 +1,9 @@
 package Person;
 
+import Incident.Incident;
+import Insurance.Insurance;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,6 +15,9 @@ public abstract class Person {
     private String lastName;
     private String socialSecurityNumber;
     private ContactInfo contactInfo;
+    private String password;
+    List<Insurance> InsuranceHistory;
+    List<Incident> IncidentHistory;
 
 
     /**
@@ -18,7 +25,6 @@ public abstract class Person {
      * @param firstName
      * @param lastName
      * @param socialSecurityNumber
-     * @param personId
      * @param contactInfo
      */
     public Person(String firstName, String lastName, String socialSecurityNumber, ContactInfo contactInfo) {

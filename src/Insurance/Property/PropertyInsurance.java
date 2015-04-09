@@ -1,5 +1,6 @@
 package Insurance.Property;
 
+import Objects.Property;
 import Person.Person;
 import Insurance.Insurance;
 import java.util.List;
@@ -10,22 +11,11 @@ import java.util.List;
  */
 public abstract class PropertyInsurance extends Insurance{
 
-    private String adress;
-    private String postnumber;
-    private String city;
-    private short constructionYear;
-    private String type; //ENUM
-    private String building;
-    private short size;
-    private String buildingMaterial;    //ENUM?
-    private int houseValue;
-    private Person Owner;
-    private List<Person> inhabitants; //maybe??
+    Property property;
 
     //temp constructor (for compile)
 
-    public PropertyInsurance(double insuranseValue, String insurancePolicy, String adress) {
+    public PropertyInsurance(double insuranseValue, String insurancePolicy) {
         super(insuranseValue, insurancePolicy);
-        this.adress = adress;
     }
 }

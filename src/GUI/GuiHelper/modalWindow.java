@@ -12,6 +12,9 @@ import javafx.scene.control.ButtonType;
  *  - All functions return a boolean
  *  - Except multichoice
  */
+
+//todo: Maybe interface instead?
+
 public final class ModalWindow {
 
     public static boolean messageDialog( String message, String title ) {

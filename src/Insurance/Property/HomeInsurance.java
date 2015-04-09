@@ -11,7 +11,7 @@ public final class HomeInsurance extends PropertyInsurance {
 
     //temp constructor (for compile)
 
-    public HomeInsurance(double insuranseValue, String insurancePolicy, String adress) {
-        super(insuranseValue, insurancePolicy, adress);
+    public HomeInsurance(double insuranseValue, String insurancePolicy) {
+        super(insuranseValue, insurancePolicy);
     }
 }

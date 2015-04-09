@@ -10,7 +10,7 @@ public class ContactInfo
     private String address;
     private String email;
     private String city;
-    Set<Integer> phone; //TODO: Make hashmap to store work phnoe and private phone
+    Set<Integer> phone; //TODO: Make hashset to store work phnoe and private phone
 
     /**
      *

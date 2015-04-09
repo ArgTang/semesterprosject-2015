@@ -1,16 +1,19 @@
 package Insurance.VehicleInsurance;
 
 import Insurance.Insurance;
+import Objects.Vehicle;
 
 /**
  * Created by steinar on 27.03.2015.
  */
 public final class BoatInsurance extends VehicleInsurance {
 
-    int feet;
+    //int feet; //todo: boat class?
 
     //temp constructor (for compile)
-    public BoatInsurance(double insuranseValue, String insurancePolicy, int registeredKM) {
-        super(insuranseValue, insurancePolicy, registeredKM);
+
+    public BoatInsurance(double insuranseValue, String insurancePolicy, Vehicle vehicle, int feet) {
+        super(insuranseValue, insurancePolicy, vehicle);
+       // this.feet = feet;
     }
 }

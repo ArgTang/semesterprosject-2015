@@ -8,7 +8,7 @@ public final class Employee extends Person
 {
 
     private String jobTitle;
-    private int idCount = 00001;
+    private static int idCount = 00001;
     private String employeeId;
 
     /**

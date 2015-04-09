@@ -1,5 +1,6 @@
-package Insurance;
+package Insurance.Helper;
 
+import Insurance.Insurance;
 import Person.Person;
 
 /**

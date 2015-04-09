@@ -7,6 +7,7 @@ package GUI.GuiHelper;
  *  - All functions should return Boolean
  */
 
+//todo: Maybe interface instead?
 public final class RegEX {
 
     static final String number = "[\\d]+";

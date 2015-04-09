@@ -10,7 +10,7 @@ import java.util.List;
 public class ComercialBuilding extends PropertyInsurance {
 
 
-    public ComercialBuilding(double insuranseValue, String insurancePolicy, String adress) {
-        super(insuranseValue, insurancePolicy, adress);
+    public ComercialBuilding(double insuranseValue, String insurancePolicy) {
+        super(insuranseValue, insurancePolicy);
     }
 }
