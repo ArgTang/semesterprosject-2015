@@ -1,5 +1,6 @@
 package Person;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -8,9 +9,9 @@ import java.util.Set;
 public class ContactInfo
 {
     private String address;
-    private String email;
     private String city;
-    Set<Integer> phone; //TODO: Make hashset to store work phone and private phone
+    private String email;
+    Set<Integer> phones = new HashSet(); //TODO: is this needed?
 
     /**
      *
@@ -19,11 +20,11 @@ public class ContactInfo
      * @param city
      * @param phone
      */
-    public ContactInfo(String address, String email, String city, Set<Integer> phone)
+    public ContactInfo(String address, String email, String city, int phone)
     {
         this.address = address;
         this.email = email;
         this.city = city;
-        this.phone = phone;
+        phones.add(phone);
     }
 }

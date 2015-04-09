@@ -10,5 +10,5 @@ import java.util.Map;
  */
 public class InsuranceRegister {
 
-    Map<Integer, Insurance> insuranceRegister = new HashMap();
+    Map< String, Insurance > register = new HashMap();
 }

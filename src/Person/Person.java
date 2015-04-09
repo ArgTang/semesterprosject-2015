@@ -16,8 +16,8 @@ public abstract class Person {
     private String socialSecurityNumber;
     private ContactInfo contactInfo;
     private String password;
-    List<Insurance> InsuranceHistory;
-    List<Incident> IncidentHistory;
+    List<Insurance> InsuranceHistory; //todo: change Insurance to Insuranceregister key
+    List<Incident> IncidentHistory;  //todo: change Incident to Insidentregister key
 
 
     /**

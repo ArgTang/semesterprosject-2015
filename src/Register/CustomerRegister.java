@@ -10,17 +10,17 @@ import java.util.Map;
 /**
  * Created by steinar on 08.04.2015.
  */
-public class CustomerRegister
+public final class CustomerRegister
 {
 
-    Map<String, Person> CustomerRegister = new HashMap();
-    //todo: decide if hashmap is correct)
+    Map< String, Person > register = new HashMap(); //todo: decide if hashmap is correct, AND on what key to use
+
     //TODO: make an interface or superclass to all the registers so that all common methods can be in one place
 
     public void addCustomer(Customer customer)
     {
-        CustomerRegister.put( customer.getCustomerId(), customer );
+        register.put( customer.getCustomerId(), customer );
     }
-    
+
 
 }

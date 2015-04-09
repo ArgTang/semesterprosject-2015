@@ -1,18 +1,26 @@
 package Objects;
 
+import java.io.File;
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  * Created by steinar on 09.04.2015.
  */
 public class Vehicle {
 
-    int registeredKM;
+    int registeredKM; // todo do boats have this? -> new car class?
     int horsePower;
-    String make;
+    int value;
+    int purchasePrice;
+    LocalDate purchaceDate;
+    short makeYear; //todo Change name of this årsmodell.
+
+    String maker;
     String model;
-    String color; //todo: maybe enum?
-    String registrationNumber; //todo: are all boats registered, Or are registration prereq to get insurance?;
-    int feet; //todo: new class for boas or different constructors?
-    short numberOfMotors; //boat
-    String type; //boat TODO; enum?
+    String color; //todo: maybe enum? do boats need this?
+    String registrationNumber;
+    List<File> pictures;
+
 
 }

@@ -4,6 +4,8 @@ import Register.InsuranceRegister;
 import Register.IncidentRegister;
 import Insurance.Insurance;
 
+import java.util.List;
+
 /**
  * Created by steinar on 27.03.2015.
  */
@@ -11,8 +13,8 @@ public final class Customer extends Person
 {
     private static int idCount = 00001;
     private String customerId;
-    private InsuranceRegister insuranceRegister; //todo: bruke registeret i Personklassen? kjekt med historikk for ansatte også.
-    private IncidentRegister incidentRegister;  //todo: se over.
+    private List<String> insuranceRegister; //todo: bruke registeret i Personklassen? kjekt med historikk for ansatte også.
+    private List<String> incidentRegister;  //todo: se over.
 
     /**
      *
