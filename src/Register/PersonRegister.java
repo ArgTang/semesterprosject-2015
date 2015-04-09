@@ -1,10 +1,23 @@
 package Register;
 
+import Person.Customer;
+import Person.Employee;
+
 /**
  * Created by steinar on 08.04.2015.
  */
-public class PersonRegister {
+public class PersonRegister
+{
 
+    //TODO: Make a register (List of hashmap maybe?)
 
-    //todo: make this file
+    public void addCustomer(Customer customer)
+    {
+
+    }
+    public void addEmployee(Employee employee)
+    {
+
+    }
+
 }
