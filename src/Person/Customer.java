@@ -6,7 +6,7 @@ package Person;
 public final class Customer extends Person {
 
     //temp constructor (for compile)
-    public Customer(String name, String aftername, String adress, String city, String email, int phone) {
-        super(name, aftername, adress, city, email, phone);
+    public Customer(String name, String lastname, String address, String city, String email, int phone) {
+        super(name, lastname, address, city, email, phone);
     }
 }

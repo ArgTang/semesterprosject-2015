@@ -8,16 +8,16 @@ import java.util.Set;
 public class Person {
 
     private String name;
-    private String adress;
+    private String address;
     private String email;
     private String city;
     Set<Integer> phone;
     long personID; //todo: if we dont count here delete
     private long personIdCounter; //todo: where to count here or in customer\Agent
 
-    public Person(String name, String aftername, String adress, String city, String email, int phone) {
-        this.name = name + " " + aftername;
-        this.adress = adress;
+    public Person(String name, String lastname, String address, String city, String email, int phone) {
+        this.name = name + " " + lastname;
+        this.address = address;
         this.city = city;
         this.email = email;
         this.phone.add( phone );
