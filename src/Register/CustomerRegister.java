@@ -10,17 +10,16 @@ import java.util.Map;
 /**
  * Created by steinar on 08.04.2015.
  */
-public final class CustomerRegister
+public final class CustomerRegister implements registerMethods
 {
 
-    Map< String, Person > register = new HashMap(); //todo: decide if hashmap is correct, AND on what key to use
+    Map< String, Person > register = new HashMap(); //todo: what key to use: userId or socialsecuritynumber
+    //TODO: make an interface or superclass to the registers so that all common methods can be in one place, unsure how to do this.
 
-    //TODO: make an interface or superclass to all the registers so that all common methods can be in one place
-
-    public void addCustomer(Customer customer)
+    public void add(Customer customer)
     {
         register.put( customer.getCustomerId(), customer );
-    }
 
+    }
 
 }
