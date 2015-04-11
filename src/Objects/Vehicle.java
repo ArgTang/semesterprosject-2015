@@ -14,7 +14,7 @@ public class Vehicle {
     int value;
     int purchasePrice;
     LocalDate purchaceDate;
-    short makeYear; //todo Change name of this årsmodell.
+    short makeYear; //todo Change name of this Ã¥rsmodell.
 
     String maker;
     String model;

@@ -11,7 +11,6 @@ public abstract class VehicleInsurance extends Insurance {
     Vehicle vehicle;
     byte bonus; //todo: maybe enum ( steps of 10)  ?
 
-
     //temp constructor (for compile))
 
     public VehicleInsurance(double insuranseValue, String insurancePolicy, Vehicle vehicle) {
