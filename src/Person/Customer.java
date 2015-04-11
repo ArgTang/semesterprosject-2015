@@ -1,7 +1,5 @@
 package Person;
 
-import Register.InsuranceRegister;
-import Register.IncidentRegister;
 import Insurance.Insurance;
 
 import java.util.List;
@@ -23,16 +21,16 @@ public final class Customer extends Person
      * @param socialSecurityNumber
      * @param contactInfo
      */
-    public Customer(String firstName, String lastName, String socialSecurityNumber, ContactInfo contactInfo)
+    public Customer(String firstName, String lastName, int socialSecurityNumber, ContactInfo contactInfo)
     {
         super(firstName, lastName, socialSecurityNumber, contactInfo);
         customerId = "cust" + idCount++;
     }
 
-    public String getCustomerId() { return customerId; }
+    public int getCustomerId() { return super.getSocialSecurityNumber(); }
 
     public void addInsurance(Insurance insurance)
     {
-        //insuranceRegister.addInsurance(insurance);
+        //insuranceRegister.add(insurance.getKey()); //todo: decide what insurancekey is andd how to get it
     }
 }

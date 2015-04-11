@@ -1,6 +1,5 @@
 package Insurance.VehicleInsurance;
 
-import Insurance.Insurance;
 import Objects.Vehicle;
 
 /**

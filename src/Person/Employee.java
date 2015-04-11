@@ -20,7 +20,7 @@ public final class Employee extends Person
      * @param contactInfo
      * @param jobTitle
      */
-    public Employee(String firstName, String lastName, String socialSecurityNumber, ContactInfo contactInfo, String jobTitle)
+    public Employee(String firstName, String lastName, int socialSecurityNumber, ContactInfo contactInfo, String jobTitle)
     {
         super(firstName, lastName, socialSecurityNumber, contactInfo);
         this.jobTitle = jobTitle;
