@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 //testing git integrations once
 
-public class startMain extends Application {
+public class StartMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{

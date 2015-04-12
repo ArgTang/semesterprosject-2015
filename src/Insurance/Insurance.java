@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
  * Created by steinar on 27.03.2015.
  * Base information for the different insurance types
  */
+
 public abstract class Insurance {
     final LocalDateTime fromDate;
     final double insuranseValue;
