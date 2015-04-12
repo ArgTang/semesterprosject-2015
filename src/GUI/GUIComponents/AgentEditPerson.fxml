@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane hgap="5.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints valignment="TOP" vgrow="ALWAYS" />
+        </rowConstraints>
+         <children>
+             <Label text="Personnummer" />
+             <TextField GridPane.columnIndex="1" />
+             <Label text="Fornavn" GridPane.rowIndex="1" />
+             <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+             <Label text="Etternavn" GridPane.rowIndex="2" />
+             <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+             <Label text="Adresse" GridPane.rowIndex="3" />
+             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+             <Label text="Postnr" GridPane.rowIndex="4" />
+             <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+             <Label text="PostSted" GridPane.rowIndex="5" />
+             <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+             <Label text="Email" GridPane.rowIndex="6" />
+             <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label alignment="TOP_RIGHT" text="Phonenumber" GridPane.rowIndex="7" />
+            <ListView editable="true" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+         </children>
+      </GridPane>
+   </children>
+</VBox>
