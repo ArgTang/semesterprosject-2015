@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -38,16 +39,17 @@ public class StartMain extends Application {
         launch(args);
     }
 
-
     private Parent initMenu() throws IOException {
-        Parent AgentMenu = FXMLLoader.load(getClass().getResource("\\GUIComponents\\Meny.fxml"));
+        Parent AgentMenu = FXMLLoader.load(getClass().getResource("\\GUIComponents\\Menu.fxml"));
+        Separator separator = new Separator();
+        HBox body = new HBox();
+        body.getChildren().addAll(AgentMenu, separator);
         return AgentMenu;
     }
 
     private HBox initAgentSearch() throws IOException {
-
-            Parent search = FXMLLoader.load(getClass().getResource("\\GUIComponents\\Søk.fxml"));
-            Parent result = FXMLLoader.load(getClass().getResource("\\GUIComponents\\Result.fxml"));
+            Parent search = FXMLLoader.load(getClass().getResource("\\GUIComponents\\AgentPersonSearch.fxml"));
+            Parent result = FXMLLoader.load(getClass().getResource("\\GUIComponents\\AgentSearcresult.fxml"));
             HBox body = new HBox();
             body.getChildren().addAll(search, result);
 
