@@ -8,7 +8,7 @@ import Person.Person;
  */
 public class Animal extends Insurance{
 
-    String nreed;
+    String breed;
     String name;
     String countryOrigin;
     String Country;
@@ -19,8 +19,8 @@ public class Animal extends Insurance{
     String Sex;
     boolean vaccinated;
 
-    public Animal(double insuranseValue, String insurancePolicy, String nreed) {
+    public Animal(double insuranseValue, String insurancePolicy, String breed) {
         super(insuranseValue, insurancePolicy);
-        this.nreed = nreed;
+        this.breed = breed;
     }
 }
