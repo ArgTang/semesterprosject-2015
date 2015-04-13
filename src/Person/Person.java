@@ -2,6 +2,8 @@ package Person;
 
 import Incident.Incident;
 import Insurance.Insurance;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import java.util.List;
 
@@ -34,6 +36,9 @@ public abstract class Person {
         this.socialSecurityNumber = socialSecurityNumber;
         this.contactInfo = contactInfo;
     }
+
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
 
     protected int getSocialSecurityNumber() { return socialSecurityNumber; }
 }

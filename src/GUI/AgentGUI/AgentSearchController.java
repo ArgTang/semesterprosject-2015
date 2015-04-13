@@ -1,27 +1,26 @@
 package GUI.AgentGUI;
 
+import GUI.StartMain;
+import Insurance.Insurance;
+import Test.GUItest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import Person.Person;
+
 
 /**
  * Created by steinar on 13.04.2015.
  */
-public class AgentSearchController implements Initializable {
-
-
+public class AgentSearchController
+{
     // Register all search InputFields
     @FXML
     private TextField searchSocialsecuritynumber;
@@ -39,7 +38,11 @@ public class AgentSearchController implements Initializable {
     //Register PersonOutputTable
     //todo: might need to register each column
     @FXML
-    private javafx.scene.control.TableView personResults;
+    private TableView<Person> personResults;
+    @FXML
+    private TableColumn<Person, String> firstname;
+    @FXML
+    private TableColumn<Person, String> lastname;
 
     //Register PersonDetailOutput
     @FXML
@@ -57,15 +60,17 @@ public class AgentSearchController implements Initializable {
 
     //Register CaseOutputTable
     @FXML
-    private javafx.scene.control.TableView caseResults;
+    private TableView<Insurance> caseResults;
+    @FXML
+    private TableColumn<Insurance, String> type;
+    @FXML
+    private TableColumn<Insurance, Integer> year;
 
     @FXML
     private void showEditPersonDialog(ActionEvent actionEvent) throws IOException
     {
-        // Load the fxml file and create a new stage for the popup dialog.
         Parent EditPerson = FXMLLoader.load(getClass().getResource("\\AgentEditPerson.fxml"));
 
-        // Create the dialog Stage.
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Edit Person");
         dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -73,16 +78,21 @@ public class AgentSearchController implements Initializable {
         Scene scene = new Scene(EditPerson);
         dialogStage.setScene(scene);
 
-        // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
-
     }
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
 
+    @FXML
+    private void initialize()
+    {
+        firstname.setCellValueFactory( new PropertyValueFactory("firstName") );
+        lastname.setCellValueFactory( new PropertyValueFactory("lastName") );
+        test = new GUItest();
+        personResults.setItems( test.getPersonData() );
     }
 
     private Stage owner;
+    private StartMain main;
+    private GUItest test;
 
     public Parent initAgentSearch(Stage owner) throws IOException
     {
@@ -90,6 +100,5 @@ public class AgentSearchController implements Initializable {
         Parent search = FXMLLoader.load( getClass().getResource("\\AgentPersonSearchFull.fxml"));
         return search;
     }
-
 
 }

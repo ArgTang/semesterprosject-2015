@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="GUI.WelcomeController" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <right>
       <GridPane maxHeight="-Infinity" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -20,11 +20,11 @@
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" text="Login" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <PasswordField promptText="passord" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField promptText="brukernavn" GridPane.columnIndex="1" />
-            <Label text="Brukernavn" />
-            <Label text="Passord" GridPane.rowIndex="1" />
+             <Label text="Brukernavn" />
+             <TextField fx:id="userName" promptText="brukernavn" GridPane.columnIndex="1" />
+             <Label text="Passord" GridPane.rowIndex="1" />
+             <PasswordField fx:id="password" promptText="passord" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+             <Button fx:id="loginButton" onAction="#login" text="Login" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </right>

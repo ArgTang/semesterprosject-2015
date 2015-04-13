@@ -6,6 +6,9 @@ package GUI;
 
 import GUI.AgentGUI.AgentSearchController;
 import javafx.application.Application;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,37 +19,48 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-//testing git integrations once
 
-public class StartMain extends Application {
+public class StartMain extends Application
+{
 
     private Stage PrimaryStage;
     private BorderPane rootLayout = new BorderPane();
+    AgentSearchController agentSearch = new AgentSearchController();
+    WelcomeController welcomeController = new WelcomeController();
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        AgentSearchController agentSearch = new AgentSearchController();
-
+    public void start(Stage primaryStage) throws Exception
+    {
         this.PrimaryStage = primaryStage;
-
         Scene scene = new Scene(rootLayout);
-        rootLayout.setTop(initAgentMenu());
-        rootLayout.setCenter( agentSearch.initAgentSearch(PrimaryStage) );
+
+        //startup();
+        initAgentScreen();
 
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 
-    private Parent initAgentMenu() throws IOException {
+    public void initAgentScreen() throws IOException {
         Parent AgentMenu = FXMLLoader.load( getClass().getResource("\\AgentGUI\\AgentMenu.fxml"));
         Separator separator = new Separator();
-        VBox body = new VBox();
-        body.getChildren().addAll(AgentMenu, separator);
-        return AgentMenu;
+        VBox menu = new VBox();
+        menu.getChildren().addAll(AgentMenu, separator);
+
+        PrimaryStage.setTitle("HUBC Forsikring");
+        rootLayout.setTop(menu);
+        rootLayout.setCenter(agentSearch.initAgentSearch(PrimaryStage));
     }
+
+    public void startup() throws IOException
+    {
+        PrimaryStage.setTitle("Velkommen");
+        rootLayout.setCenter( welcomeController.initWelcome(this) );
+    }
+
 }
