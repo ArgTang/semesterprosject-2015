@@ -1,15 +1,14 @@
 package GUI.GUIComponents;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.text.TableView;
@@ -22,75 +21,49 @@ import java.util.ResourceBundle;
  */
 public class AgentSearchController implements Initializable {
 
+
     // Register all search InputFields
     @FXML
-    private TextField SearchSocialsecuritynumber;
+    private TextField searchSocialsecuritynumber;
     @FXML
-    private TextField SearchSurename;
+    private TextField searchSurename;
     @FXML
-    private TextField SearchLastname;
+    private TextField searchLastname;
     @FXML
-    private TextField SearchCustomeriD;
+    private TextField searchCustomeriD;
     @FXML
-    private TextField SearchPhone;
+    private TextField searchPhone;
     @FXML
-    private TextField SearchAdress;
+    private TextField searchAdress;
 
     //Register PersonOutputTable
+   // public javafx.scene.control.TableView personResults;
     @FXML
-    private TableView personSearchResults;
+    private TableView personResults;
 
     //Register PersonDetailOutput
     @FXML
-    private TextField socialsecurity;
+    private Label socialsecurity;
     @FXML
-    private TextField customerId;
+    private Label customerId;
     @FXML
-    private TextField adress;
+    private Label adress;
     @FXML
-    private TextField phonenumber;
+    private Label phonenumber;
     @FXML
-    private TextField city;
+    private Label city;
     @FXML
     private Button editPerson;
 
     //Register CaseOutputTable
+    @FXML
     private TableView caseResults;
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-
-    public Parent initAgentSearch(Stage owner) throws IOException
-    {
-        Parent search = FXMLLoader.load( getClass().getResource("\\AgentPersonSearchFull.fxml"));
-
-        //initActionListeners(owner);
-
-        return search;
-    }
-
-    private void initActionListeners(Stage owner)
-    {
-        editPerson.setOnAction(event -> {
-            try
-            {
-                showEditPersonDialog(owner);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void showEditPersonDialog(Stage owner) throws IOException
+    @FXML
+    private void showEditPersonDialog(ActionEvent actionEvent) throws IOException
     {
         // Load the fxml file and create a new stage for the popup dialog.
-        Parent EditPerson = FXMLLoader.load(getClass().getResource("\\GUIComponents\\AgentPersonEdit.fxml"));
+        Parent EditPerson = FXMLLoader.load(getClass().getResource("\\AgentEditPerson.fxml"));
 
         // Create the dialog Stage.
         Stage dialogStage = new Stage();
@@ -104,4 +77,19 @@ public class AgentSearchController implements Initializable {
         dialogStage.showAndWait();
 
     }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    private Stage owner;
+
+    public Parent initAgentSearch(Stage owner) throws IOException
+    {
+        this.owner = owner;
+        Parent search = FXMLLoader.load( getClass().getResource("\\AgentPersonSearchFull.fxml"));
+        return search;
+    }
+
+
 }
