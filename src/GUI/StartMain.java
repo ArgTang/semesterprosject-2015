@@ -4,13 +4,14 @@ package GUI;
  * Created by steinar on 29.03.2015.
  */
 
+import GUI.GUIComponents.AgentSearchController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,11 +26,13 @@ public class StartMain extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        AgentSearchController agentSearch = new AgentSearchController();
+
         this.PrimaryStage = primaryStage;
 
         Scene scene = new Scene(rootLayout);
         rootLayout.setTop(initMenu());
-        rootLayout.setCenter(initAgentSearch());
+        rootLayout.setCenter( agentSearch.initAgentSearch(PrimaryStage) );
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -40,19 +43,10 @@ public class StartMain extends Application {
     }
 
     private Parent initMenu() throws IOException {
-        Parent AgentMenu = FXMLLoader.load(getClass().getResource("\\GUIComponents\\Menu.fxml"));
+        Parent AgentMenu = FXMLLoader.load( getClass().getResource("\\GUIComponents\\Menu.fxml"));
         Separator separator = new Separator();
-        HBox body = new HBox();
+        VBox body = new VBox();
         body.getChildren().addAll(AgentMenu, separator);
         return AgentMenu;
-    }
-
-    private HBox initAgentSearch() throws IOException {
-            Parent search = FXMLLoader.load(getClass().getResource("\\GUIComponents\\AgentPersonSearch.fxml"));
-            Parent result = FXMLLoader.load(getClass().getResource("\\GUIComponents\\AgentSearcresult.fxml"));
-            HBox body = new HBox();
-            body.getChildren().addAll(search, result);
-
-            return body;
     }
 }
