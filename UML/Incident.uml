@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Incident</OriginalElement>
+  <nodes>
+    <node x="305.5833333333333" y="409.0">Incident.VehicleIncident</node>
+    <node x="174.58333333333331" y="453.0">Incident.PersonIncident</node>
+    <node x="0.0" y="0.0">Incident.Incident</node>
+    <node x="34.583333333333314" y="453.0">Incident.PropertyIncident</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Incident.VehicleIncident" target="Incident.Incident">
+      <point x="-5.6843418860808015E-14" y="-58.5" />
+      <point x="420.58333333333326" y="384.0" />
+      <point x="405.83333333333337" y="384.0" />
+      <point x="162.33333333333337" y="179.5" />
+    </edge>
+    <edge source="Incident.PropertyIncident" target="Incident.Incident">
+      <point x="0.0" y="-14.5" />
+      <point x="94.58333333333331" y="384.0" />
+      <point x="81.16666666666666" y="384.0" />
+      <point x="-162.33333333333334" y="179.5" />
+    </edge>
+    <edge source="Incident.PersonIncident" target="Incident.Incident">
+      <point x="0.0" y="-14.5" />
+      <point x="230.08333333333331" y="384.0" />
+      <point x="243.50000000000003" y="384.0" />
+      <point x="2.8421709430404007E-14" y="179.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="192.0" y="314.5" />
+  <SelectedNodes>
+    <node>Incident.PropertyIncident</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
