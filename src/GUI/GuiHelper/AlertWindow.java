@@ -15,7 +15,7 @@ import javafx.scene.control.ButtonType;
 
 //todo: Maybe interface instead?
 
-public final class ModalWindow {
+public final class AlertWindow {
 
     public static boolean messageDialog( String message, String title ) {
         Alert.AlertType aType = Alert.AlertType.INFORMATION;
