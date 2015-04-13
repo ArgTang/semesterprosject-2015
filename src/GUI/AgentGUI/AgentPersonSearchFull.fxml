@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIComponents.AgentSearchController">
+<HBox spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.AgentSearchController">
    <children>
       <GridPane hgap="5.0" maxHeight="200.0" maxWidth="400.0" minHeight="200.0" minWidth="200.0" HBox.hgrow="ALWAYS">
         <columnConstraints>
@@ -39,7 +39,7 @@
       <VBox maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
          <children>
             <Label text="SøkeResultat:" />
-            <TableView maxHeight="1.7976931348623157E308" minWidth="250.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <TableView fx:id="personResults" maxHeight="1.7976931348623157E308" minWidth="250.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" text="Fornavn" />
                 <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" text="Etternavn" />
@@ -86,7 +86,7 @@
       <VBox maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
          <children>
             <Label text="Registrerte saker:" />
-            <TableView fx:id="caseResuts" maxHeight="1.7976931348623157E308" minWidth="250.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="caseResults" maxHeight="1.7976931348623157E308" minWidth="250.0" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn editable="false" prefWidth="-1.0" text="Type" />
                   <TableColumn editable="false" prefWidth="-1.0" text="Year" />

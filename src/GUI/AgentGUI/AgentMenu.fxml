@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="800.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:controller="GUI.AgentGUI.AgentMenuController" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="800.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="menuSearch" alignment="CENTER" maxHeight="1.7976931348623157E308" minWidth="70.0" mnemonicParsing="false" text="Søk" textAlignment="CENTER" />
       <Button fx:id="menuCustomer" alignment="CENTER" maxHeight="1.7976931348623157E308" minWidth="70.0" mnemonicParsing="false" text="Kunde" textAlignment="CENTER" />

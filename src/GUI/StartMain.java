@@ -4,7 +4,7 @@ package GUI;
  * Created by steinar on 29.03.2015.
  */
 
-import GUI.GUIComponents.AgentSearchController;
+import GUI.AgentGUI.AgentSearchController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +31,7 @@ public class StartMain extends Application {
         this.PrimaryStage = primaryStage;
 
         Scene scene = new Scene(rootLayout);
-        rootLayout.setTop(initMenu());
+        rootLayout.setTop(initAgentMenu());
         rootLayout.setCenter( agentSearch.initAgentSearch(PrimaryStage) );
 
         primaryStage.setScene(scene);
@@ -42,8 +42,8 @@ public class StartMain extends Application {
         launch(args);
     }
 
-    private Parent initMenu() throws IOException {
-        Parent AgentMenu = FXMLLoader.load( getClass().getResource("\\GUIComponents\\Menu.fxml"));
+    private Parent initAgentMenu() throws IOException {
+        Parent AgentMenu = FXMLLoader.load( getClass().getResource("\\AgentGUI\\AgentMenu.fxml"));
         Separator separator = new Separator();
         VBox body = new VBox();
         body.getChildren().addAll(AgentMenu, separator);

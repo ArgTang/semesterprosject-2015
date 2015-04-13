@@ -1,4 +1,4 @@
-package GUI.GUIComponents;
+package GUI.AgentGUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,9 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.text.TableView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,9 +37,9 @@ public class AgentSearchController implements Initializable {
     private TextField searchAdress;
 
     //Register PersonOutputTable
-   // public javafx.scene.control.TableView personResults;
+    //todo: might need to register each column
     @FXML
-    private TableView personResults;
+    private javafx.scene.control.TableView personResults;
 
     //Register PersonDetailOutput
     @FXML
@@ -57,7 +57,7 @@ public class AgentSearchController implements Initializable {
 
     //Register CaseOutputTable
     @FXML
-    private TableView caseResults;
+    private javafx.scene.control.TableView caseResults;
 
     @FXML
     private void showEditPersonDialog(ActionEvent actionEvent) throws IOException
