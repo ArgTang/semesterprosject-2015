@@ -18,9 +18,28 @@ public class AgentMenuController {
     @FXML
     private Button menuStatistics;
 
-
     @FXML
     public void showSearchMenu()
+    {
+
+    }
+    @FXML
+    public void showCustomerhMenu()
+    {
+
+    }
+    @FXML
+    public void showInsuranceMenu()
+    {
+
+    }
+    @FXML
+    public void showIncidentMenu()
+    {
+
+    }
+    @FXML
+    public void showStatisticsMenu()
     {
 
     }

@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -39,6 +40,10 @@ public abstract class Person {
 
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
-
-    protected int getSocialSecurityNumber() { return socialSecurityNumber; }
+    public String getAdress() { return contactInfo.getAddress(); }
+    public String getCity() { return contactInfo.getCity(); }
+    public String getEmail() { return contactInfo.getEmail(); }
+    public int getAPhonenumber() { return contactInfo.getAPhonenumber(); }
+    public Set<Integer> getAllPhonenumbers() {return contactInfo.getPhones(); }
+    public int getSocialSecurityNumber() { return socialSecurityNumber; }
 }

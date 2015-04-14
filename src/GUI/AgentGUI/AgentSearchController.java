@@ -1,6 +1,6 @@
 package GUI.AgentGUI;
 
-import GUI.StartMain;
+import Person.Person;
 import Insurance.Insurance;
 import Test.GUItest;
 import javafx.event.ActionEvent;
@@ -13,14 +13,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
-import Person.Person;
 
 
 /**
+ * This Class controlls the Agent Search Window
  * Created by steinar on 13.04.2015.
  */
 public class AgentSearchController
 {
+
     // Register all search InputFields
     @FXML
     private TextField searchSocialsecuritynumber;
@@ -50,6 +51,8 @@ public class AgentSearchController
     @FXML
     private Label customerId;
     @FXML
+    private Label fullname;
+    @FXML
     private Label adress;
     @FXML
     private Label phonenumber;
@@ -69,6 +72,7 @@ public class AgentSearchController
     @FXML
     private void showEditPersonDialog(ActionEvent actionEvent) throws IOException
     {
+        //todo: goto personeditmenu instead?
         Parent EditPerson = FXMLLoader.load(getClass().getResource("\\AgentEditPerson.fxml"));
 
         Stage dialogStage = new Stage();
@@ -88,10 +92,12 @@ public class AgentSearchController
         lastname.setCellValueFactory( new PropertyValueFactory("lastName") );
         test = new GUItest();
         personResults.setItems( test.getPersonData() );
+
+        personResults.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> selectedPersonDetails(newValue));
     }
 
     private Stage owner;
-    private StartMain main;
     private GUItest test;
 
     public Parent initAgentSearch(Stage owner) throws IOException
@@ -99,6 +105,16 @@ public class AgentSearchController
         this.owner = owner;
         Parent search = FXMLLoader.load( getClass().getResource("\\AgentPersonSearchFull.fxml"));
         return search;
+    }
+
+    private void selectedPersonDetails(Person person)
+    {
+        socialsecurity.setText( String.valueOf( person.getSocialSecurityNumber() ) );
+        customerId.setText( String.valueOf(1234567) ); //todo: set this field when customers have customernumbers
+        fullname.setText(person.getFirstName() + " " + person.getLastName() );
+        phonenumber.setText( String.valueOf( person.getAPhonenumber() ) );
+        adress.setText( person.getAdress() );
+        city.setText( person.getCity() );
     }
 
 }
