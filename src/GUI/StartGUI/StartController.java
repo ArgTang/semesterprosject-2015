@@ -1,6 +1,6 @@
 package GUI.StartGUI;
 
-import GUI.GuiHelper.ModalWindow;
+import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.RegEX;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
@@ -37,7 +37,7 @@ public class StartController implements Initializable {
     @FXML public void login() {
         //login here
         //Test:
-        ModalWindow.messageDialog("Button Clicked", "Button Clicked");
+        AlertWindow.messageDialog("Button Clicked", "Button Clicked");
 
     }
 

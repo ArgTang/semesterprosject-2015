@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Test</OriginalElement>
+  <nodes>
+    <node x="0.0" y="361.0">Test.MakeInsuranceContracts</node>
+    <node x="0.0" y="0.0">Test.MakePersons</node>
+    <node x="208.0" y="361.0">Test.MakeIncidentReports</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="81.5" y="88.5" />
+  <SelectedNodes>
+    <node>Test.MakeInsuranceContracts</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
