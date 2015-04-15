@@ -88,13 +88,13 @@ public class AgentSearchController
     @FXML
     private void initialize()
     {
+        //this function sets up the binding from searchresult to tables in the view
         firstname.setCellValueFactory( new PropertyValueFactory("firstName") );
         lastname.setCellValueFactory( new PropertyValueFactory("lastName") );
+        //Gets the observable arraylist from witch the search funktion gets collected into
         test = new GUItest();
         personResults.setItems( test.getPersonData() );
-
-        personResults.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> selectedPersonDetails(newValue));
+        personResults.getSelectionModel().selectedItemProperty().addListener( (observable, oldPerson, newPerson) -> setSelectedPersonDetails(newPerson) );
     }
 
     private Stage owner;
@@ -107,7 +107,7 @@ public class AgentSearchController
         return search;
     }
 
-    private void selectedPersonDetails(Person person)
+    private void setSelectedPersonDetails(Person person)
     {
         socialsecurity.setText( String.valueOf( person.getSocialSecurityNumber() ) );
         customerId.setText( String.valueOf(1234567) ); //todo: set this field when customers have customernumbers
