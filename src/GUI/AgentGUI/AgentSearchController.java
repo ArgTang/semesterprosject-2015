@@ -91,14 +91,13 @@ public class AgentSearchController
         //this function sets up the binding from searchresult to tables in the view
         firstname.setCellValueFactory( new PropertyValueFactory("firstName") );
         lastname.setCellValueFactory( new PropertyValueFactory("lastName") );
-        //Gets the observable arraylist from witch the search funktion gets collected into
-        test = new GUItest();
+        //Gets the observable arraylist from witch the search function gets collected into
+        GUItest test = new GUItest();
         personResults.setItems( test.getPersonData() );
         personResults.getSelectionModel().selectedItemProperty().addListener( (observable, oldPerson, newPerson) -> setSelectedPersonDetails(newPerson) );
     }
 
     private Stage owner;
-    private GUItest test;
 
     public Parent initAgentSearch(Stage owner) throws IOException
     {
