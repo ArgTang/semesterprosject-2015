@@ -34,8 +34,8 @@ public class StartMain extends Application
         this.PrimaryStage = primaryStage;
         Scene scene = new Scene(rootLayout);
 
-        //startup();
-        initAgentScreen();
+        startup();
+        //initAgentScreen();
 
         primaryStage.setScene(scene);
         primaryStage.show();
