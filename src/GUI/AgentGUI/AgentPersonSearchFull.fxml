@@ -19,9 +19,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
           <children>
-              <Label text="PersonNummer" />
+              <Label text="Personnummer" />
               <TextField fx:id="searchSocialsecuritynumber" GridPane.columnIndex="1" />
               <Label text="Fornavn" GridPane.rowIndex="2" />
               <TextField fx:id="searchSurename" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -34,6 +35,12 @@
               <!-- TODO: adress search might not be needed-->
               <Label text="Adresse" GridPane.rowIndex="5" />
               <TextField fx:id="searchAdress" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <children>
+                  <Button fx:id="searchButton" onAction="#searchFunction" maxHeight="1.7976931348623157E308" text="Søk" />
+                  <Button fx:id="emptyFields" onAction="#clearFields" maxHeight="1.7976931348623157E308" text="Tøm skjerm" />
+               </children>
+            </HBox>
           </children>
       </GridPane>
       <VBox maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">

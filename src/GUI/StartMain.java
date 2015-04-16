@@ -7,9 +7,6 @@ package GUI;
 import GUI.AgentGUI.AgentInsuranceController;
 import GUI.AgentGUI.AgentSearchController;
 import javafx.application.Application;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -36,6 +33,7 @@ public class StartMain extends Application
     {
         this.PrimaryStage = primaryStage;
         Scene scene = new Scene(rootLayout);
+        rootLayout.setPadding( new Insets(5,5,5,5) );
 
         initMenu();
         //startup();

@@ -19,7 +19,7 @@ import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
 /**
  * Created by steinar on 15.04.2015.
  */
-public class InsuranceConfirmModuleController
+public class InsuranceConfirmModuleController implements CommonGUIMethods
 {
     @FXML
     private TextArea description;
@@ -33,17 +33,37 @@ public class InsuranceConfirmModuleController
     @FXML
     private Button confirmInsurance;
 
-
     private Stage owner;
     @FXML
     private void endInsurance() {
-
-        LocalDate result = makeDialog();
-
-        AlertWindow.confirmDialog(result.toString(), "svar");
+        Optional<LocalDate> result = makeDialog();
+        if ( result.isPresent() )
+            AlertWindow.confirmDialog(result.toString(), "svar");
+        else
+            AlertWindow.confirmDialog("tomt resultat", "svar");
     }
 
-    private LocalDate makeDialog() //todo: move this to AlertWindows? http://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
+    @FXML
+    @Override
+    public void clearFields()
+    {
+        if( AlertWindow.confirmDialog("Vil du tømme Skjema?", "tøm skjema") )
+            description.setText("");
+    }
+
+    @FXML
+    private void saveInsuranceOffer()
+    {
+        AlertWindow.messageDialog("lagret Tilbud", "lagret tilbud");
+    }
+
+    @FXML
+    private void confirmInsurance()
+    {
+        AlertWindow.messageDialog("Opprettet Forsikring","Opprettet Forsikring");
+    }
+
+    private Optional<LocalDate> makeDialog() //todo: move this to GUIHelper.AlertWindow? http://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
     {
         Dialog dialog = new Dialog();
         //Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -65,9 +85,12 @@ public class InsuranceConfirmModuleController
         ButtonType cancel = new ButtonType("Avbryt", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().addAll(ok, cancel );
 
-        dialog.setResultConverter(param -> datePicker.getValue());
+        dialog.setResultConverter(button -> {  //todo: compact this?
+                                            if (button == ok)
+                                                return Optional.of( datePicker.getValue() );
+                                            else
+                                                return Optional.empty(); });
 
-        Optional<LocalDate> result = dialog.showAndWait();
-        return result.get();
+        return dialog.showAndWait();
     }
 }

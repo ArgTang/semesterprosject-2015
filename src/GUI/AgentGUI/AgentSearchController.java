@@ -1,5 +1,6 @@
 package GUI.AgentGUI;
 
+import GUI.GuiHelper.AlertWindow;
 import Person.Person;
 import Insurance.Insurance;
 import Test.GUItest;
@@ -19,7 +20,7 @@ import java.io.IOException;
  * This Class controlls the Agent Search Window
  * Created by steinar on 13.04.2015.
  */
-public class AgentSearchController
+public class AgentSearchController implements CommonGUIMethods
 {
 
     // Register all search InputFields
@@ -35,6 +36,10 @@ public class AgentSearchController
     private TextField searchPhone;
     @FXML
     private TextField searchAdress;
+    @FXML
+    private Button emptyFields;
+    @FXML
+    private Button searchButton;
 
     //Register PersonOutputTable
     //todo: might need to register each column
@@ -70,6 +75,18 @@ public class AgentSearchController
     private TableColumn<Insurance, Integer> year;
 
     @FXML
+    private void initialize()
+    {
+        //this function sets up the binding from searchresult to tables in the view
+        firstname.setCellValueFactory(new PropertyValueFactory("firstName"));
+        lastname.setCellValueFactory(new PropertyValueFactory("lastName"));
+        //Gets the observable arraylist from witch the search function gets collected into
+        GUItest test = new GUItest();
+        personResults.setItems(test.getPersonData());
+        personResults.getSelectionModel().selectedItemProperty().addListener((observable, oldPerson, newPerson) -> setSelectedPersonDetails(newPerson));
+    }
+
+    @FXML
     private void showEditPersonDialog(ActionEvent actionEvent) throws IOException
     {
         //todo: goto personeditmenu instead?
@@ -84,17 +101,22 @@ public class AgentSearchController
 
         dialogStage.showAndWait();
     }
+    @FXML
+    private void searchFunction()
+    {
+        AlertWindow.messageDialog("Søkeknapp", "søkeknapp");
+    }
 
     @FXML
-    private void initialize()
+    @Override
+    public void clearFields()
     {
-        //this function sets up the binding from searchresult to tables in the view
-        firstname.setCellValueFactory( new PropertyValueFactory("firstName") );
-        lastname.setCellValueFactory( new PropertyValueFactory("lastName") );
-        //Gets the observable arraylist from witch the search function gets collected into
-        GUItest test = new GUItest();
-        personResults.setItems( test.getPersonData() );
-        personResults.getSelectionModel().selectedItemProperty().addListener( (observable, oldPerson, newPerson) -> setSelectedPersonDetails(newPerson) );
+        searchSocialsecuritynumber.setText("");
+        searchSurename.setText("");
+        searchLastname.setText("");
+        searchCustomeriD.setText("");
+        searchPhone.setText("");
+        searchAdress.setText("");
     }
 
     private Stage owner;

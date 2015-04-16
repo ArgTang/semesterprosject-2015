@@ -16,9 +16,9 @@
       <HBox alignment="CENTER_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="endThis" text="Avslutt avtale" textFill="#e11010" onAction="#endInsurance"/>
-            <Button fx:id="clearScheme"  text="Tøm skjema" />
-            <Button fx:id="insuranceOffer" text="Tilbud" />
-            <Button fx:id="confirmInsurance" text="Bestill" />
+            <Button fx:id="clearScheme"  text="Tøm skjema" onAction="#clearFields"/>
+            <Button fx:id="insuranceOffer" text="Tilbud" onAction="#saveInsuranceOffer"/>
+            <Button fx:id="confirmInsurance" text="Bestill" onAction="#confirmInsurance" />
          </children>
       </HBox>
    </bottom>

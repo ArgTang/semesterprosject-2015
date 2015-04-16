@@ -16,27 +16,25 @@ import java.util.function.Predicate;
 //todo: Maybe interface instead?
 public final class RegEX {
 
-    private static final String number = "[\\d]+";
-    private static final String allChars = "[\\wøØæÆåÅ]+";
+    private static final String NUMBER = "[\\d]+";
+    private static final String ALLCHARS = "[\\wøØæÆåÅ]+";
+    private static final String EMAIL = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 
     public static boolean checkIfString( String string )
     {
-        return string.matches(allChars);
+        return string.matches(ALLCHARS);
     }
 
-    public static Predicate<TextField> isAllChars()
+    public static Predicate<String> isAllChars()
     {
-        return t -> t.getText().matches(allChars);
+        return string -> string.matches(ALLCHARS);
     }
 
-    public static Predicate<TextField> isNumber()
-    {
-        return t -> t.getText().matches(number);
-    }
+    public static Predicate<String> isNumber() { return string -> string.matches(NUMBER); }
 
     public static void addCSSTextValidation(TextField textField, Predicate condition)
     {
         final PseudoClass invalidText = PseudoClass.getPseudoClass("invalidText");
-        textField.setOnKeyReleased(e -> textField.pseudoClassStateChanged(invalidText, condition.test(textField)));
+        textField.setOnKeyReleased(e -> textField.pseudoClassStateChanged(invalidText, condition.test(textField.getText())));
     }
 }
