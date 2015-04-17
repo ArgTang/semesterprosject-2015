@@ -18,6 +18,7 @@ public class GUItest {
         //test personData.addListener( (ListChangeListener) c -> System.out.println("change") );
         personData.add(new testPerson("Per", "heimly", contact));
         personData.add(new testPerson("jannike", "korsvoll", contact));
+
     }
 
     public ObservableList<Person> getPersonData() { return personData; }

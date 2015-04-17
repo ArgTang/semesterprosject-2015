@@ -119,13 +119,9 @@ public final class AgentSearchController implements CommonGUIMethods
 
     private Stage owner;
 
-    public AgentSearchController(Stage owner)
+    public Parent initAgentSearch(Stage stage) throws IOException
     {
-        this.owner = owner;
-    }
-
-    public Parent initAgentSearch() throws IOException
-    {
+        this.owner = stage;
         Parent search = FXMLLoader.load( getClass().getResource("\\AgentPersonSearch.fxml"));
         return search;
     }

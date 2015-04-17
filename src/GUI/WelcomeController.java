@@ -29,19 +29,14 @@ public final class WelcomeController
         System.out.println("password " + password.getText());
 
         //todo: how to proceed from here
-        System.out.println(main);
-        try {
-            main.initAgentScreen();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        StartMain.changeWindowListener.setPropertyString("Agent");
+        System.out.println(this.getClass());
+        //StartMain.changeWindowWindowListener.setPropertyObject(this.getClass()); todo: crash!
     }
 
-    StartMain main;
-
-    public Parent initWelcome(StartMain main) throws IOException
+    public Parent initWelcome() throws IOException
     {
-        this.main = main;
+
         Parent parent = FXMLLoader.load(getClass().getResource("\\Welcome.fxml"));
         return parent;
     }

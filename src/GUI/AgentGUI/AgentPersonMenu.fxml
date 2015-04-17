@@ -40,14 +40,14 @@
                    <TextField fx:id="city" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                    <Label text="Email" GridPane.rowIndex="6" />
                    <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label alignment="TOP_RIGHT" text="Phonenumber" GridPane.rowIndex="7" />
-                  <ListView fx:id="phonelist" editable="true" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                     <children>
-                        <Button fx:id="changeCustomer" text="Endre kunde" />
-                        <Button mnemonicParsing="false" text="Opprett kunde" />
-                     </children>
-                  </HBox>
+                   <Label alignment="TOP_RIGHT" text="Phonenumber" GridPane.rowIndex="7" />
+                   <ListView fx:id="phonelist" editable="true" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                       <children>
+                           <Button fx:id="changeCustomer" text="Endre kunde" />
+                           <Button mnemonicParsing="false" text="Opprett kunde" />
+                       </children>
+                   </HBox>
                </children>
             </GridPane>
          </children>

@@ -14,4 +14,6 @@ public class testPerson extends Person {
     public testPerson(String firstName, String lastName, ContactInfo contact) {
         super(firstName, lastName, ++sosialnumber, contact );
     }
+
+    public int getSocilanumber() {return  sosialnumber;}
 }
