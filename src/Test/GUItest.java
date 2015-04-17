@@ -15,7 +15,7 @@ public class GUItest {
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
     public GUItest() {
-        personData.addListener( (ListChangeListener) c -> System.out.println("change") );
+        //test personData.addListener( (ListChangeListener) c -> System.out.println("change") );
         personData.add(new testPerson("Per", "heimly", contact));
         personData.add(new testPerson("jannike", "korsvoll", contact));
     }

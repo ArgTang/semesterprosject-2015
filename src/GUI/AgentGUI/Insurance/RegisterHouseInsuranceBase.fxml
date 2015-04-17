@@ -5,9 +5,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="TOP_CENTER" hgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane alignment="TOP_CENTER" hgap="5.0" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Insurance.RegisterHouseInsuranceBaseController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="130.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
   </columnConstraints>
   <rowConstraints>
@@ -51,9 +51,9 @@
        <TextField fx:id="taxedvalue" GridPane.columnIndex="1" GridPane.rowIndex="10" />
 
        <Label text="Fra dato:" GridPane.rowIndex="12" />
-       <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="12" />
+       <DatePicker fx:id="fromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="12" />
        <Label text="Egenandel:" GridPane.rowIndex="13" />
-       <TextField fx:id="deductible" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+       <ComboBox fx:id="deductible" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="13" />
        <Label text="Betalingsvalg:" GridPane.rowIndex="14" />
        <ComboBox fx:id="paymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="14" />
    </children>

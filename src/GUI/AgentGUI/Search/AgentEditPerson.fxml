@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="GUI.AgentGUI.AgentPersonMenuController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane hgap="5.0">
         <columnConstraints>
@@ -23,21 +23,27 @@
         </rowConstraints>
          <children>
              <Label text="Personnummer" />
-             <TextField GridPane.columnIndex="1" />
+             <TextField fx:id="socialSecurityNumber" GridPane.columnIndex="1" />
              <Label text="Fornavn" GridPane.rowIndex="1" />
-             <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+             <TextField fx:id="firstname" GridPane.columnIndex="1" GridPane.rowIndex="1" />
              <Label text="Etternavn" GridPane.rowIndex="2" />
-             <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+             <TextField fx:id="lastname" GridPane.columnIndex="1" GridPane.rowIndex="2" />
              <Label text="Adresse" GridPane.rowIndex="3" />
-             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+             <TextField fx:id="adress" GridPane.columnIndex="1" GridPane.rowIndex="3" />
              <Label text="Postnr" GridPane.rowIndex="4" />
-             <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+             <TextField fx:id="citynumber" GridPane.columnIndex="1" GridPane.rowIndex="4" />
              <Label text="PostSted" GridPane.rowIndex="5" />
-             <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+             <TextField fx:id="city" GridPane.columnIndex="1" GridPane.rowIndex="5" />
              <Label text="Email" GridPane.rowIndex="6" />
-             <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label alignment="TOP_RIGHT" text="Phonenumber" GridPane.rowIndex="7" />
-            <ListView editable="true" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+             <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+             <Label alignment="TOP_RIGHT" text="Phonenumber" GridPane.rowIndex="7" />
+             <ListView fx:id="phonelist" editable="true" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                 <children>
+                     <Button mnemonicParsing="false" text="Endre kunde" />
+                     <Button mnemonicParsing="false" text="Opprett kunde" />
+                 </children>
+             </HBox>
          </children>
       </GridPane>
    </children>

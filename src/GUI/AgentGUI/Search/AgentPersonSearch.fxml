@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.AgentSearchController">
+<HBox spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Search.AgentSearchController">
    <children>
       <GridPane hgap="5.0" maxHeight="200.0" maxWidth="400.0" minHeight="200.0" minWidth="200.0" HBox.hgrow="ALWAYS">
         <columnConstraints>
@@ -32,14 +32,11 @@
               <TextField fx:id="searchCustomeriD" GridPane.columnIndex="1" GridPane.rowIndex="1" />
               <Label text="Telefonnummer" GridPane.rowIndex="4" />
               <TextField fx:id="searchPhone" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-              <!-- TODO: adress search might not be needed-->
-              <Label text="Adresse" GridPane.rowIndex="5" />
-              <TextField fx:id="searchAdress" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-               <children>
+              <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+              <children>
                   <Button fx:id="searchButton" onAction="#searchFunction" maxHeight="1.7976931348623157E308" text="Søk" />
                   <Button fx:id="emptyFields" onAction="#clearFields" maxHeight="1.7976931348623157E308" text="Tøm skjerm" />
-               </children>
+              </children>
             </HBox>
           </children>
       </GridPane>
@@ -48,8 +45,8 @@
             <Label text="SøkeResultat:" />
             <TableView fx:id="personResults" maxHeight="1.7976931348623157E308" minWidth="250.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="firstname" editable="false" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" text="Fornavn" />
-                <TableColumn fx:id="lastname" editable="false" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" text="Etternavn" />
+                  <TableColumn fx:id="firstname" editable="false" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" text="Fornavn" />
+                  <TableColumn fx:id="lastname" editable="false" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" text="Etternavn" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

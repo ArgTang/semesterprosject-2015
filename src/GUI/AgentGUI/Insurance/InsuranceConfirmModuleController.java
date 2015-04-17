@@ -1,5 +1,6 @@
-package GUI.AgentGUI;
+package GUI.AgentGUI.Insurance;
 
+import GUI.AgentGUI.CommonGUIMethods;
 import GUI.GuiHelper.AlertWindow;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -19,7 +20,7 @@ import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
 /**
  * Created by steinar on 15.04.2015.
  */
-public class InsuranceConfirmModuleController implements CommonGUIMethods
+public final class InsuranceConfirmModuleController implements CommonGUIMethods
 {
     @FXML
     private TextArea description;

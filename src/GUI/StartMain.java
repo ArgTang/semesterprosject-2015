@@ -4,8 +4,8 @@ package GUI;
  * Created by steinar on 29.03.2015.
  */
 
-import GUI.AgentGUI.AgentInsuranceController;
-import GUI.AgentGUI.AgentSearchController;
+import GUI.AgentGUI.Insurance.AgentInsuranceController;
+import GUI.AgentGUI.Search.AgentSearchController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -16,15 +16,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 
 
 public class StartMain extends Application
 {
 
+    private static Dimension SCREEN;
     private Stage PrimaryStage;
     private BorderPane rootLayout = new BorderPane();
-    AgentSearchController agentSearch = new AgentSearchController();
+    AgentSearchController agentSearch = new AgentSearchController(PrimaryStage);
     WelcomeController welcomeController = new WelcomeController();
     AgentInsuranceController agentInsuranceController = new AgentInsuranceController();
 
@@ -33,12 +35,12 @@ public class StartMain extends Application
     {
         this.PrimaryStage = primaryStage;
         Scene scene = new Scene(rootLayout);
-        rootLayout.setPadding( new Insets(5,5,5,5) );
-
-        initMenu();
+        rootLayout.setPadding(new Insets(5, 5, 5, 5));
+        rootLayout.setPrefSize( SCREEN.getWidth()/1.5, SCREEN.getHeight()/1.5);
+        //initMenu();
         //startup();
-        //initAgentScreen();
-        initInsuranceScreen();
+        initAgentScreen();
+        //initInsuranceScreen();
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -46,9 +48,9 @@ public class StartMain extends Application
 
     public static void main(String[] args)
     {
+        SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
         launch(args);
     }
-
 
     private void initMenu() throws IOException
     {
@@ -64,7 +66,7 @@ public class StartMain extends Application
 
     public void initAgentScreen() throws IOException
     {
-        rootLayout.setCenter(agentSearch.initAgentSearch(PrimaryStage));
+        rootLayout.setCenter( agentSearch.initAgentSearch() );
     }
 
     public void startup() throws IOException
@@ -75,7 +77,6 @@ public class StartMain extends Application
 
     private void initInsuranceScreen() throws IOException
     {
-       rootLayout.setCenter( agentInsuranceController.initAgentInsurance(PrimaryStage) );
+       rootLayout.setCenter( agentInsuranceController.initAgentHouseInsurance(PrimaryStage) );
     }
-
 }

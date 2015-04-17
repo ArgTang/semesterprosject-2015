@@ -1,5 +1,6 @@
-package GUI.AgentGUI;
+package GUI.AgentGUI.Search;
 
+import GUI.AgentGUI.CommonGUIMethods;
 import GUI.GuiHelper.AlertWindow;
 import Person.Person;
 import Insurance.Insurance;
@@ -20,9 +21,8 @@ import java.io.IOException;
  * This Class controlls the Agent Search Window
  * Created by steinar on 13.04.2015.
  */
-public class AgentSearchController implements CommonGUIMethods
+public final class AgentSearchController implements CommonGUIMethods
 {
-
     // Register all search InputFields
     @FXML
     private TextField searchSocialsecuritynumber;
@@ -34,8 +34,6 @@ public class AgentSearchController implements CommonGUIMethods
     private TextField searchCustomeriD;
     @FXML
     private TextField searchPhone;
-    @FXML
-    private TextField searchAdress;
     @FXML
     private Button emptyFields;
     @FXML
@@ -101,6 +99,7 @@ public class AgentSearchController implements CommonGUIMethods
 
         dialogStage.showAndWait();
     }
+
     @FXML
     private void searchFunction()
     {
@@ -116,15 +115,18 @@ public class AgentSearchController implements CommonGUIMethods
         searchLastname.setText("");
         searchCustomeriD.setText("");
         searchPhone.setText("");
-        searchAdress.setText("");
     }
 
     private Stage owner;
 
-    public Parent initAgentSearch(Stage owner) throws IOException
+    public AgentSearchController(Stage owner)
     {
         this.owner = owner;
-        Parent search = FXMLLoader.load( getClass().getResource("\\AgentPersonSearchFull.fxml"));
+    }
+
+    public Parent initAgentSearch() throws IOException
+    {
+        Parent search = FXMLLoader.load( getClass().getResource("\\AgentPersonSearch.fxml"));
         return search;
     }
 
