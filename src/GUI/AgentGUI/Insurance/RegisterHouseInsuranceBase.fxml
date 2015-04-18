@@ -5,9 +5,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="TOP_CENTER" hgap="5.0" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Insurance.RegisterHouseInsuranceBaseController">
+<GridPane alignment="TOP_CENTER" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Insurance.RegisterHouseInsuranceBaseController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="130.0" />
+    <ColumnConstraints hgrow="SOMETIMES" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
   </columnConstraints>
   <rowConstraints>
@@ -28,33 +28,36 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-       <Label text="Du behandler nå kunde:" />
+       <Label text="Du behandler nå kunde" />
        <Label fx:id="customername" GridPane.columnIndex="1" />
-       <Label text="Adresse:" GridPane.rowIndex="1" />
+       <Label text="Adresse" GridPane.rowIndex="1" />
        <TextField fx:id="adress" promptText="storgata 11f" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-       <Label text="Postnummer:" GridPane.rowIndex="2" />
+       <Label text="Postnummer" GridPane.rowIndex="2" />
        <TextField fx:id="citynumber" promptText="2345" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-       <Label text="Poststed:" GridPane.rowIndex="3" />
+       <Label text="Poststed" GridPane.rowIndex="3" />
        <TextField fx:id="city" promptText="Jordbærhaugen" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-       <Label text="Byggematriale:" GridPane.rowIndex="5" />
+       <Label text="Byggematriale" GridPane.rowIndex="5" />
        <TextField fx:id="constructedIn" promptText="mur, tre" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-       <Label text="Byggeår:" GridPane.rowIndex="6" />
+       <Label text="Byggeår" GridPane.rowIndex="6" />
        <TextField fx:id="constructionYear" promptText="1987" GridPane.columnIndex="1" GridPane.rowIndex="6" />
        <Label text="Boligtype:" GridPane.rowIndex="7" />
        <TextField fx:id="buildingType" promptText="rekkehus, enebolig, blokk" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-       <Label text="Bruttoareal:" GridPane.rowIndex="8" />
+       <Label text="Bruttoareal" GridPane.rowIndex="8" />
        <TextField fx:id="grossArea" promptText="167" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-       <Label text="Primærareal:" GridPane.rowIndex="9" />
+       <Label text="Primærareal" GridPane.rowIndex="9" />
        <TextField fx:id="primaryArea" promptText="135" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-       <Label text="Takst:" GridPane.rowIndex="10" />
+       <Label text="Takst" GridPane.rowIndex="10" />
        <TextField fx:id="taxedvalue" GridPane.columnIndex="1" GridPane.rowIndex="10" />
 
-       <Label text="Fra dato:" GridPane.rowIndex="12" />
+       <Label text="Fra dato" GridPane.rowIndex="12" />
        <DatePicker fx:id="fromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-       <Label text="Egenandel:" GridPane.rowIndex="13" />
+       <Label text="Egenandel" GridPane.rowIndex="13" />
        <ComboBox fx:id="deductible" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-       <Label text="Betalingsvalg:" GridPane.rowIndex="14" />
+       <Label text="Betalingsvalg" GridPane.rowIndex="14" />
        <ComboBox fx:id="paymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="14" />
    </children>
+   <padding>
+      <Insets left="8.0" right="8.0" />
+   </padding>
 </GridPane>

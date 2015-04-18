@@ -1,5 +1,6 @@
 package GUI;
 
+import GUI.GuiHelper.RegEX;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,18 +26,19 @@ public final class WelcomeController
 
     @FXML
     private void login(ActionEvent event) throws IOException {
-        System.out.println("username: " + userName.getText());
-        System.out.println("password " + password.getText());
-
         //todo: how to proceed from here
         StartMain.changeWindowListener.setPropertyString("Agent");
-        System.out.println(this.getClass());
         //StartMain.changeWindowWindowListener.setPropertyObject(this.getClass()); todo: crash!
+    }
+    @FXML
+    private void initialize()
+    {
+        RegEX.addCSSTextValidation(userName, RegEX.isLetters());
+        RegEX.addCSSTextValidation(password, RegEX.isAllChars());
     }
 
     public Parent initWelcome() throws IOException
     {
-
         Parent parent = FXMLLoader.load(getClass().getResource("\\Welcome.fxml"));
         return parent;
     }

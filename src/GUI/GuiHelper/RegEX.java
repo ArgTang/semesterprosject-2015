@@ -4,6 +4,7 @@ import javafx.css.PseudoClass;
 import javafx.scene.control.TextField;
 
 import java.util.function.Predicate;
+import java.util.logging.Level;
 
 /**
  * Created by steinar on 16.03.2015.
@@ -13,28 +14,54 @@ import java.util.function.Predicate;
  *  - All functions should return Boolean
  */
 
-//todo: Maybe interface instead?
 public final class RegEX {
 
-    private static final String NUMBER = "[\\d]+";
+    private static final PseudoClass invalidText = PseudoClass.getPseudoClass("invalidText");
+    //todo: make sure all of the regular expressions works as intended
+    private static final String NUMBER = "[1-9]{1}[\\d]";
     private static final String ALLCHARS = "[\\wøØæÆåÅ]+";
+    private static final String LETTERS = "[^\\d\\W]+|[øØæÆåÅ]+";
     private static final String EMAIL = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+    private static final String ADRESS = "^((.){1,}(\\d){1,}(.){0,})$";
 
-    public static boolean checkIfString( String string )
+    public static  Predicate<String> isAdress()
     {
-        return string.matches(ALLCHARS);
+        return string -> !string.matches(ADRESS);
+    }
+
+    public  static Predicate<String> isLetters()
+    {
+        return string -> !string.matches(LETTERS);
+    }
+
+    public static Predicate<String> isEmail()
+    {
+        return string -> !string.matches(EMAIL);
     }
 
     public static Predicate<String> isAllChars()
     {
-        return string -> string.matches(ALLCHARS);
+        return string -> !string.matches(ALLCHARS);
     }
 
-    public static Predicate<String> isNumber() { return string -> string.matches(NUMBER); }
+    public static Predicate<String> isNumber()
+    {
+        return string -> !string.matches(NUMBER + "+");
+    }
+
+    public static Predicate<String> isNumber(int lenght)
+    {
+        return string -> !string.matches(NUMBER+ "{" + (lenght-1) + "}");
+    }
 
     public static void addCSSTextValidation(TextField textField, Predicate condition)
     {
-        final PseudoClass invalidText = PseudoClass.getPseudoClass("invalidText");
-        textField.setOnKeyReleased(e -> textField.pseudoClassStateChanged(invalidText, condition.test(textField.getText())));
+        //todo: how to add css only when done typing?
+        textField.setOnKeyReleased(e ->  textField.pseudoClassStateChanged( invalidText, condition.test( textField.getText() ) && ( textField.getText().length() > 3 )) );
+    }
+
+    public static void resetCSSValidationRule(TextField textField)
+    {
+        textField.pseudoClassStateChanged(invalidText, false);
     }
 }

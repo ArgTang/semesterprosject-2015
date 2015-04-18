@@ -31,7 +31,7 @@ public class StartController implements Initializable {
     //todo: abstract this. needs to be aplyaple to ALL textfields. Predicates, functionable interface?
     public void addListener() {
         final PseudoClass invalidText = PseudoClass.getPseudoClass("invalidText");
-        inputName.setOnKeyReleased(e -> inputName.pseudoClassStateChanged(invalidText, !RegEX.checkIfString(inputName.getText())));
+
     }
 
     @FXML public void login() {

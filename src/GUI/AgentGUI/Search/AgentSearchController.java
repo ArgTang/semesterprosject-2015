@@ -2,6 +2,7 @@ package GUI.AgentGUI.Search;
 
 import GUI.AgentGUI.CommonGUIMethods;
 import GUI.GuiHelper.AlertWindow;
+import GUI.GuiHelper.RegEX;
 import Person.Person;
 import Insurance.Insurance;
 import Test.GUItest;
@@ -82,6 +83,8 @@ public final class AgentSearchController implements CommonGUIMethods
         GUItest test = new GUItest();
         personResults.setItems(test.getPersonData());
         personResults.getSelectionModel().selectedItemProperty().addListener((observable, oldPerson, newPerson) -> setSelectedPersonDetails(newPerson));
+
+        addCSSValidation();
     }
 
     @FXML
@@ -110,11 +113,21 @@ public final class AgentSearchController implements CommonGUIMethods
     @Override
     public void clearFields()
     {
-        searchSocialsecuritynumber.setText("");
-        searchSurename.setText("");
-        searchLastname.setText("");
-        searchCustomeriD.setText("");
-        searchPhone.setText("");
+        resetTextField(searchSocialsecuritynumber);
+        resetTextField(searchSurename);
+        resetTextField(searchLastname);
+        resetTextField(searchCustomeriD);
+        resetTextField(searchPhone);
+    }
+
+    @Override
+    public void addCSSValidation()
+    {
+        RegEX.addCSSTextValidation(searchSocialsecuritynumber, RegEX.isNumber(11));
+        RegEX.addCSSTextValidation(searchSurename, RegEX.isLetters());
+        RegEX.addCSSTextValidation(searchLastname, RegEX.isLetters());
+        RegEX.addCSSTextValidation(searchCustomeriD, RegEX.isAllChars());
+        RegEX.addCSSTextValidation(searchPhone,RegEX.isNumber(8));
     }
 
     private Stage owner;

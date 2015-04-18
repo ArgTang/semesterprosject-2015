@@ -2,6 +2,7 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.AgentGUI.CommonGUIMethods;
 import GUI.GuiHelper.AlertWindow;
+import GUI.GuiHelper.RegEX;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -49,7 +50,15 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
     public void clearFields()
     {
         if( AlertWindow.confirmDialog("Vil du tømme Skjema?", "tøm skjema") )
+        {
+            AgentInsuranceController.insuranceChoiceListener.setPropertyString( "tøm skjerm" );
             description.setText("");
+        }
+    }
+
+    @Override
+    public void addCSSValidation() {
+        //no textfields here
     }
 
     @FXML

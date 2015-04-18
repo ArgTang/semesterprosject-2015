@@ -7,19 +7,19 @@
 
 <HBox spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Search.AgentSearchController">
    <children>
-      <GridPane hgap="5.0" maxHeight="200.0" maxWidth="400.0" minHeight="200.0" minWidth="200.0" HBox.hgrow="ALWAYS">
+      <GridPane hgap="5.0" maxHeight="250.0" maxWidth="400.0" minHeight="200.0" minWidth="200.0" HBox.hgrow="ALWAYS">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="8.0" minHeight="8.0" prefHeight="8.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
           <children>
               <Label text="Personnummer" />
@@ -32,10 +32,10 @@
               <TextField fx:id="searchCustomeriD" GridPane.columnIndex="1" GridPane.rowIndex="1" />
               <Label text="Telefonnummer" GridPane.rowIndex="4" />
               <TextField fx:id="searchPhone" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-              <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+              <HBox nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
               <children>
-                  <Button fx:id="searchButton" onAction="#searchFunction" maxHeight="1.7976931348623157E308" text="Søk" />
-                  <Button fx:id="emptyFields" onAction="#clearFields" maxHeight="1.7976931348623157E308" text="Tøm skjerm" />
+                  <Button fx:id="searchButton" maxHeight="1.7976931348623157E308" onAction="#searchFunction" text="Søk" />
+                  <Button fx:id="emptyFields" maxHeight="1.7976931348623157E308" onAction="#clearFields" text="Tøm skjerm" />
               </children>
             </HBox>
           </children>
@@ -54,7 +54,7 @@
             </TableView>
          </children>
       </VBox>
-      <GridPane hgap="10.0" maxHeight="200.0" maxWidth="500.0" minHeight="220.0" minWidth="220.0" HBox.hgrow="ALWAYS">
+      <GridPane hgap="10.0" maxHeight="250.0" maxWidth="500.0" minHeight="220.0" minWidth="220.0" HBox.hgrow="ALWAYS">
          <children>
             <Label text="Personnummer:" />
             <Label fx:id="socialsecurity" GridPane.columnIndex="1" />

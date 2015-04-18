@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:controller="GUI.AgentGUI.AgentPersonMenuController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.AgentPersonMenuController">
    <children>
       <GridPane hgap="5.0">
         <columnConstraints>
@@ -20,6 +20,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints valignment="TOP" vgrow="ALWAYS" />
+            <RowConstraints />
+            <RowConstraints />
         </rowConstraints>
          <children>
              <Label text="Personnummer" />
@@ -38,10 +40,10 @@
              <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="6" />
              <Label alignment="TOP_RIGHT" text="Phonenumber" GridPane.rowIndex="7" />
              <ListView fx:id="phonelist" editable="true" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+             <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
                  <children>
-                     <Button mnemonicParsing="false" text="Endre kunde" />
-                     <Button mnemonicParsing="false" text="Opprett kunde" />
+                     <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="Endre kunde" />
+                     <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="Opprett kunde" />
                  </children>
              </HBox>
          </children>

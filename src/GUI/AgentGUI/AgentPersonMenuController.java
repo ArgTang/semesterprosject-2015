@@ -22,7 +22,7 @@ public class AgentPersonMenuController implements CommonGUIMethods
     @FXML
     private TextField adress;
     @FXML
-    private TextField cityNumber;
+    private TextField citynumber;
     @FXML
     private TextField city;
     @FXML
@@ -34,18 +34,29 @@ public class AgentPersonMenuController implements CommonGUIMethods
     @FXML
     private void initialize()
     {
-       // RegEX.addCSSTextValidation(email, RegEX.isAllChars());
-        phonelist.setItems( PhoneSet );
+        phonelist.setItems(PhoneSet);
+        addCSSValidation();
     }
 
     @Override
     public void clearFields() {
-        socialSecurityNumber.setText("");
-        firstname.setText("");
-        lastname.setText("");
-        adress.setText("");
-        cityNumber.setText("");
-        city.setText("");
-        email.setText("");
+        resetTextField(socialSecurityNumber);
+        resetTextField(firstname);
+        resetTextField(lastname);
+        resetTextField(adress);
+        resetTextField(citynumber);
+        resetTextField(city);
+        resetTextField(email);
+    }
+
+    @Override
+    public void addCSSValidation() {
+        RegEX.addCSSTextValidation(socialSecurityNumber, RegEX.isNumber(11));
+        RegEX.addCSSTextValidation(firstname, RegEX.isLetters());
+        RegEX.addCSSTextValidation(lastname, RegEX.isLetters());
+        RegEX.addCSSTextValidation(adress, RegEX.isAdress());
+        RegEX.addCSSTextValidation(citynumber, RegEX.isNumber(4));
+        RegEX.addCSSTextValidation(city, RegEX.isLetters());
+        RegEX.addCSSTextValidation(email, RegEX.isEmail());
     }
 }
