@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="GUI.AgentGUI.Person.TableController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="tableLabel" text="Forsikringer:" />
+      <TableView fx:id="table">
+         <columns>
+            <TableColumn fx:id="typeCollumn" prefWidth="119.0" text="Type" />
+            <TableColumn fx:id="yearCollumn" minWidth="0.0" prefWidth="128.0" text="År" />
+         </columns>
+      </TableView>
+   </children>
+</VBox>

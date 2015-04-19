@@ -10,8 +10,8 @@
    <right>
       <GridPane maxHeight="-Infinity" vgap="5.0" BorderPane.alignment="CENTER_LEFT">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="150.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
@@ -24,17 +24,17 @@
              <Label text="Passord" GridPane.rowIndex="1" />
              <PasswordField fx:id="password" promptText="passord" GridPane.columnIndex="1" GridPane.rowIndex="1" />
              <Button fx:id="loginButton" onAction="#login" text="Login" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Hyperlink text="Glemt passord?" GridPane.rowIndex="2" />
          </children>
+         <BorderPane.margin>
+            <Insets right="80.0" />
+         </BorderPane.margin>
       </GridPane>
    </right>
    <center>
       <TilePane alignment="CENTER_LEFT">
          <children>
-            <Label alignment="TOP_RIGHT" contentDisplay="CENTER" prefHeight="66.0" prefWidth="336.0" text="Velkommen til Oss!" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
+            <Label fx:id="welcome" contentDisplay="CENTER" prefWidth="340.0" text="Velkommen til Oss!"/>
          </children>
       </TilePane>
    </center>

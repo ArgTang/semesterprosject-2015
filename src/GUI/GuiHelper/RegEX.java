@@ -12,11 +12,21 @@ import java.util.logging.Level;
  * Add more functions as needed.
  *  - All functions should be static
  *  - All functions should return Boolean
+ *
+ *  To use any of the predicates you can do like this: RegEX.isAdress.test(somestringhere)
  */
 
 public final class RegEX {
 
-    private static final PseudoClass invalidText = PseudoClass.getPseudoClass("invalidText");
+    public static final PseudoClass invalidText = PseudoClass.getPseudoClass("invalidText");
+    //todo: this string does not seem to work. css file works fine
+    public static  final String CSSrules = ".text-field:invalidText { " +
+                                            "-red: rgb(237.0, 68.0, 37.0); " +
+                                            "-fx-background-color: -red, rgb(230, 230, 230) !important; " +
+                                            "-fx-background-insets: 0.0, 0.2em; " +
+                                            "-fx-background-radius: 2.0;" +
+                                            "} ";
+
     //todo: make sure all of the regular expressions works as intended
     private static final String NUMBER = "[1-9]{1}[\\d]";
     private static final String ALLCHARS = "[\\wøØæÆåÅ]+";
@@ -51,13 +61,14 @@ public final class RegEX {
 
     public static Predicate<String> isNumber(int lenght)
     {
-        return string -> !string.matches(NUMBER+ "{" + (lenght-1) + "}");
+        return string -> !string.matches(NUMBER + "{" + (lenght-1) + "}");
     }
 
     public static void addCSSTextValidation(TextField textField, Predicate condition)
     {
         //todo: how to add css only when done typing?
-        textField.setOnKeyReleased(e ->  textField.pseudoClassStateChanged( invalidText, condition.test( textField.getText() ) && ( textField.getText().length() > 3 )) );
+        //todo: cleanup
+        textField.setOnKeyReleased( event ->  { /*System.out.println("CSS");*/ textField.pseudoClassStateChanged(invalidText, condition.test(textField.getText()) /*&& (textField.getText().length() > 3)*/);} );
     }
 
     public static void resetCSSValidationRule(TextField textField)

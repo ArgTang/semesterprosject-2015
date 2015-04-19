@@ -34,11 +34,14 @@ public class StartMain extends Application
     private static final double FADETIME = 0.3; //seconds
     private static FadeTransition fader;
 
+    public static final CurrentCustomer currentCustomer = new CurrentCustomer();
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
     public static final WindowWindowListener changeWindowWindowListener = new WindowWindowListener();     //todo: change to this? more generic
 
     private BorderPane rootLayout = new BorderPane();
     WelcomeController welcomeController = new WelcomeController();
+
+    //todo: do we really need these?
     private Parent agentMenu;
     private final AgentSearchController agentSearchController = new AgentSearchController();
     private Parent agentSearchPane;
@@ -90,9 +93,8 @@ public class StartMain extends Application
         rootLayout.setCenter(welcome);
         setupFadeout(welcome);
         agentMenu = initAgentMenu();
-        agentSearchPane = agentSearchController.initAgentSearch(PrimaryStage);
-        agentHomeInsurancePane = agentInsuranceController.initAgentDefaultInsurance(PrimaryStage);
-
+        agentSearchPane = agentSearchController.initAgentSearch();
+        agentHomeInsurancePane = agentInsuranceController.initAgentDefaultInsurance();
     }
 
     private void initInvalidationListener() throws IOException
@@ -102,7 +104,6 @@ public class StartMain extends Application
                     StringProperty string = (StringProperty) observable;
                     switch ( string.getValue() )
                     {
-
                         case "Customer":
                                     AlertWindow.messageDialog("her kommer snart kundebehandlingsskjerm", "kunde");
                                     break;

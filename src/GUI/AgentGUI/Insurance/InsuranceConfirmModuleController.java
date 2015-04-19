@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -75,9 +76,16 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
 
     private Optional<LocalDate> makeDialog() //todo: move this to GUIHelper.AlertWindow? http://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
     {
+        //todo: disable buttn when no insurance is chosen
         Dialog dialog = new Dialog();
-        //Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         //dialog.setGraphic(alert.getGraphic().getClip()); //InvocationTargetException //todo: find a way to get warning icon and add to this dialog
+        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+//        Image icon = alertStage.getIcons().stream().findFirst().get(); //this do crash
+
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        //stage.getIcons().add( icon );
+
         dialog.setTitle("Avslutt avtale");
         dialog.setHeaderText("Er du sikker på at denne avtalen skal avsluttes?");
 

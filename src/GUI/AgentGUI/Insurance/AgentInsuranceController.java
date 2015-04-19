@@ -1,16 +1,18 @@
 package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.AlertWindow;
+import GUI.StartMain;
 import GUI.WindowChangeListener;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sun.plugin2.util.ParameterNames;
 
 import java.io.IOException;
 
@@ -26,7 +28,7 @@ public final class AgentInsuranceController
     private static FadeTransition fader;
     private static final double FADETIME = 0.35;
 
-    public Parent initAgentDefaultInsurance(Stage owner) throws IOException
+    public Parent initAgentDefaultInsurance() throws IOException
     {
 
         Parent chooser =  FXMLLoader.load( getClass().getResource("\\InsuranceChooserModule.fxml"));
@@ -55,11 +57,10 @@ public final class AgentInsuranceController
         insuranceChoiceListener.getStringProperty().addListener(
                 observable -> {
                     StringProperty string = (StringProperty) observable;
-                    System.out.println("her:" + string.getValue());
                     switch (string.getValue()) {
                         case "tøm skjerm":
-                            //todo: empty only _current_ scheme
-                            System.out.println("her:" + string.getValue());
+                            //do nothing
+                            System.out.println("AgentInsuranceController:" + string.getValue());
                             break;
                         case "[Hus]":
                             showtHouseInsurance();
@@ -69,15 +70,26 @@ public final class AgentInsuranceController
                             showCarinsurance();
                             break;
                         case "[Reise]":
-                            AlertWindow.messageDialog("Reiseforsikring","Reiseforsikring");
+                            AlertWindow.messageDialog("Reiseforsikring", "Reiseforsikring");
                             break;
                         case "[Båt]":
-                            AlertWindow.messageDialog("Båtforsikring","Båtforsikring");
+                            AlertWindow.messageDialog("Båtforsikring", "Båtforsikring");
 
                     }
                 }
         );
     }
+
+    private void setCurrentPersonListener()
+    {
+        StartMain.currentCustomer.getPersonProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+
+            }
+        });
+    }
+
     private void setFading(String FXMLUrl)
     {
         Parent scene = null;

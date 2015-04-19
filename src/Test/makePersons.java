@@ -1,7 +1,7 @@
 package Test;
 
 import Person.Person;
-
+import Person.ContactInfo;
 import java.util.Random;
 
 /**
@@ -18,13 +18,39 @@ public class MakePersons {
 
     private final static Random randomGenerator = new Random();
 
+    private static ContactInfo makeContactinfo(String email)
+    {
+
+        String adress;
+        String city;
+        int citynumber;
+        int phone;
+
+        adress = adresses[ randomGenerator.nextInt( adresses.length )];
+        adress += " " + randomGenerator.nextInt( 100 );
+
+        int temp = randomGenerator.nextInt( citys.length );
+        if ((temp & 1) == 0) {
+            city = citys[temp - 1];
+            citynumber = Integer.parseInt( citys[temp], 10 );
+        }
+        else
+        {
+            city = citys[temp];
+            citynumber = Integer.parseInt( citys[temp + 1], 10);
+        }
+
+        email = email + "@gmail.com";
+
+        phone = 40000000 + randomGenerator.nextInt(50000000);
+
+        ContactInfo contactInfo = new ContactInfo(adress, email, city, citynumber, phone );
+        return contactInfo;
+    }
+
     private static Person makePerson() {
         String name;
         String lastName;
-        String adress;
-        String city;
-        String email;
-        int phone;
 
         if( randomGenerator.nextBoolean() )
             name = makeDoubleName( girlyNames );
@@ -33,18 +59,7 @@ public class MakePersons {
 
         lastName = makeName(lastNames);
 
-        adress = adresses[ randomGenerator.nextInt( adresses.length )];
-        adress += " " + randomGenerator.nextInt( 100 );
-
-        int temp = randomGenerator.nextInt( citys.length );
-        if ((temp & 1) == 0)
-            city = citys[temp-1] + " " + citys[temp];
-        else
-            city = citys[temp] + " " + citys[temp+1];
-
-        email = name + "." + lastName + "@gmail.com";
-
-        phone = 40000000 + randomGenerator.nextInt(50000000);
+        ContactInfo contactInfo = makeContactinfo( name + "." + lastName );
 
         //todo: decide how Person Objects are structured, and change this accordingly
        // Person Person = new Person(name, lastName, adress, city, email, phone);
@@ -59,14 +74,15 @@ public class MakePersons {
         String name = makeName( names );
 
         // Sometimes add middlename
-        if ( randomGenerator.nextInt(10) < 3) {
+        if ( randomGenerator.nextInt(10) < 3)
+        {
             String middlename;
             do {
                 middlename = makeName(names);
             } while (name.equalsIgnoreCase(middlename));
+
             name += " " + middlename;
         }
-
         return name;
     }
 

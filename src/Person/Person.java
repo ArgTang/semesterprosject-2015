@@ -4,6 +4,7 @@ import Incident.Incident;
 import Insurance.Insurance;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 import java.util.Set;
@@ -42,8 +43,12 @@ public abstract class Person {
     public String getLastName() { return lastName; }
     public String getAdress() { return contactInfo.getAddress(); }
     public String getCity() { return contactInfo.getCity(); }
+    public int getCitynumbr() { return contactInfo.getCitynumber(); }
     public String getEmail() { return contactInfo.getEmail(); }
     public int getAPhonenumber() { return contactInfo.getAPhonenumber(); }
     public Set<Integer> getAllPhonenumbers() {return contactInfo.getPhones(); }
     public int getSocialSecurityNumber() { return socialSecurityNumber; }
+
+    public void addPhonenumber(int phonenumber) { contactInfo.addPhonenumber(phonenumber); }
+    public void addPhonenumber(List<Integer> list) { contactInfo.addPhonenumber(list); }
 }

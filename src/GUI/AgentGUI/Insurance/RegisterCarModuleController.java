@@ -2,8 +2,11 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.AgentGUI.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
-import GUI.WindowChangeListener;
+import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
+import Person.Person;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,11 +55,14 @@ public final class RegisterCarModuleController implements CommonGUIMethods
     @FXML
     ComboBox paymentOption;
 
+    //combobox values:
     private ObservableList<String> kaskoValues = FXCollections.observableArrayList();
     private ObservableList<Integer> bonusValues = FXCollections.observableArrayList();
     private ObservableList<String> kmValues = FXCollections.observableArrayList();
     private ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList();
     private ObservableList<String> paymentOptionNummber = FXCollections.observableArrayList();
+
+    private StringProperty personName = new SimpleStringProperty();
 
     @FXML
     private void initialize()
@@ -77,9 +83,15 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         paymentOptionNummber.addAll(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
         paymentOption.setItems(paymentOptionNummber);
 
+        customername.textProperty().bind(personName);
+        customername.setStyle("-fx-font-weight: bold;");
         addCSSValidation();
         clearFields();
         setInsuranceChoiceListener();
+        Person person = StartMain.currentCustomer.getProperty();
+        if (person != null)
+            setCustomer(person);
+        setCurrentPersonListener();
     }
 
     @Override
@@ -92,6 +104,7 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         resetTextField(modelYear);
         resetTextField(color);
         resetTextField(buyPrice);
+        personName.setValue("");
         fromDate.setValue(LocalDate.now());
         kasko.setValue("Fullkasko");
         bonus.setValue(20);
@@ -120,5 +133,21 @@ public final class RegisterCarModuleController implements CommonGUIMethods
                         clearFields();
                 });
 
+    }
+
+    //todo: put these into an interface (DRY)?? also need to redraw or update label after new name is set
+    private void setCurrentPersonListener()
+    {
+        StartMain.currentCustomer.getPersonProperty().addListener(
+                observable -> {
+                    SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
+                    setCustomer(property.getValue());
+                });
+    }
+
+    private void setCustomer(Person person)
+    {
+        //customername.setText( person.getFirstName() + " " + person.getLastName() );
+        personName.setValue( person.getFirstName() + " " + person.getLastName() );
     }
 }

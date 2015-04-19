@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 
 import java.io.IOException;
 
@@ -22,6 +24,9 @@ public final class WelcomeController
     private TextField password;
 
     @FXML
+    Label welcome;
+
+    @FXML
     private Button loginButton;
 
     @FXML
@@ -35,6 +40,9 @@ public final class WelcomeController
     {
         RegEX.addCSSTextValidation(userName, RegEX.isLetters());
         RegEX.addCSSTextValidation(password, RegEX.isAllChars());
+        welcome.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        welcome.setStyle("-fx-font-size: 3.5em;" +
+                "-fx-padding: 10em, 0, 0, 0;");
     }
 
     public Parent initWelcome() throws IOException

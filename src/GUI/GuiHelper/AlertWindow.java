@@ -1,7 +1,12 @@
 package GUI.GuiHelper;
 
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Created by steinar on 19.03.2015.
@@ -12,8 +17,6 @@ import javafx.scene.control.ButtonType;
  *  - All functions return a boolean
  *  - Except multichoice
  */
-
-//todo: Maybe interface instead?
 
 public final class AlertWindow {
 
@@ -39,9 +42,13 @@ public final class AlertWindow {
 
     private static boolean alert(String message, String title, Alert.AlertType type) {
         Alert alert = new Alert(type);
+        alert.initModality(Modality.WINDOW_MODAL);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+
+        Parent parent = (Parent) alert.getDialogPane();
+        parent.setStyle("-fx-font-size: 1.3em;");
 
         return alert.showAndWait().get() == ButtonType.OK;
     }

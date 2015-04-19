@@ -3,7 +3,6 @@ package GUI.AgentGUI;
 import GUI.GuiHelper.RegEX;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -29,12 +28,12 @@ public class AgentPersonMenuController implements CommonGUIMethods
     private TextField email;
     @FXML
     private ListView phonelist;
-    private ObservableList<Integer> PhoneSet; //todo: ObservableSet here?
+    private ObservableList<Integer> phoneList; //todo: ObservableSet here?
 
     @FXML
     private void initialize()
     {
-        phonelist.setItems(PhoneSet);
+        phonelist.setItems(phoneList);
         addCSSValidation();
     }
 
@@ -47,6 +46,7 @@ public class AgentPersonMenuController implements CommonGUIMethods
         resetTextField(citynumber);
         resetTextField(city);
         resetTextField(email);
+        phoneList.clear();
     }
 
     @Override

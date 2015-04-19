@@ -1,8 +1,5 @@
 package Insurance.Helper;
 
-import Insurance.Insurance;
-import Person.Person;
-
 /**
  * Created by steinar on 07.04.2015.
  */

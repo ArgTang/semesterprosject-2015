@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
  */
 public class GUItest {
 
-    private ContactInfo contact = new ContactInfo("someadress", "em@ail.com", "city", 45645678);
+    private ContactInfo contact = new ContactInfo("someadress", "em@ail.com", "city", 1245, 45645678);
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
     public GUItest() {
@@ -20,6 +20,9 @@ public class GUItest {
         personData.add(new testPerson("jannike", "korsvoll", contact));
 
     }
-
+    public void resetList()
+    {
+        personData.clear();
+    }
     public ObservableList<Person> getPersonData() { return personData; }
 }
