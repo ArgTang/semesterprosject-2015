@@ -1,9 +1,5 @@
 package Insurance.Property;
 
-import Person.Person;
-
-import java.util.List;
-
 /**
  * Created by steinar on 07.04.2015.
  */

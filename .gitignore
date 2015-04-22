@@ -7,7 +7,7 @@ build.xml
 manifest.mf
 
 
-src/GUI/FXML-LoginDemo/demo/.idea
-src/GUI/FXML-LoginDemo/demo/demo.iml
+FXML-LoginDemo/demo/.idea
+FXML-LoginDemo/demo/demo.iml
 out
 patch.diff

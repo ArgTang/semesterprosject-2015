@@ -1,5 +1,6 @@
 package GUI.AgentGUI;
 
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

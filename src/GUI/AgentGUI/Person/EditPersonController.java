@@ -1,7 +1,7 @@
-package GUI.AgentGUI.Search;
+package GUI.AgentGUI.Person;
 
-import GUI.AgentGUI.CommonGUIMethods;
 import GUI.GuiHelper.AlertWindow;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
 import Person.Person;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * Created by steinar on 19.04.2015.
  */
-public class AgentEditPersonController implements CommonGUIMethods
+public class EditPersonController implements CommonGUIMethods
 {
     @FXML
     TextField socialSecurityNumber;
@@ -144,10 +144,10 @@ public class AgentEditPersonController implements CommonGUIMethods
         email.setText(person.getEmail());
 
         phones.clear();
-        /*person.getAllPhonenumbers()
+        person.getPhoneNumbers()
                 .stream()
                 .map(i -> i.toString())
-                .forEach(phones::add);*/
+                .forEach(phones::add);
         while (phones.size() < 3)
             phones.add("");
     }
@@ -159,7 +159,7 @@ public class AgentEditPersonController implements CommonGUIMethods
         Person person = StartMain.currentCustomer.getProperty();
 
         List<Integer> phonelist = phones.stream()
-                                        .mapToInt(string -> Integer.parseInt(string, 10)) //todo: nullpointer here?
+                                        .mapToInt(string -> Integer.parseInt(string, 10)) //todo: check if nullpointerException here?
                                         .boxed()
                                         .collect(Collectors.toList());
         if ( person != null && socialSecurityNumber.isEditable() == false )

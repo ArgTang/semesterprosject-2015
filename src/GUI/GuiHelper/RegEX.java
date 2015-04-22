@@ -4,7 +4,6 @@ import javafx.css.PseudoClass;
 import javafx.scene.control.TextField;
 
 import java.util.function.Predicate;
-import java.util.logging.Level;
 
 /**
  * Created by steinar on 16.03.2015.

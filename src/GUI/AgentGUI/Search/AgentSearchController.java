@@ -1,12 +1,12 @@
 package GUI.AgentGUI.Search;
 
-import GUI.AgentGUI.CommonGUIMethods;
 import GUI.GuiHelper.AlertWindow;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
 import Person.Person;
-import Insurance.Insurance;
 import Test.GUItest;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 /**
@@ -65,20 +66,22 @@ public final class AgentSearchController implements CommonGUIMethods
     private Label city;
     @FXML
     private Button editPerson;
+    @FXML
+    private Button gotoPerson;
 
-    //Register CaseOutputTable
+
+/*    //Register CaseOutputTable
     @FXML
     private TableView<Insurance> caseResults;
     @FXML
     private TableColumn<Insurance, String> type;
     @FXML
-    private TableColumn<Insurance, Integer> year;
+    private TableColumn<Insurance, Integer> year;*/
 
     //class containing observale searchList
     GUItest test;
     //searchresults go here
-    public static ObservableList<Person> searchresults;
-
+    public static ObservableList<Person> searchresults = FXCollections.observableArrayList();;
 
     @FXML
     private void initialize()
@@ -87,12 +90,19 @@ public final class AgentSearchController implements CommonGUIMethods
         firstname.setCellValueFactory(new PropertyValueFactory("firstName"));
         lastname.setCellValueFactory(new PropertyValueFactory("lastName"));
         //Gets the observable arraylist from witch the search function gets collected into
-        test = new GUItest();
-        personResults.setItems(test.getPersonData());
+
+        test = new GUItest(); //TODO: make searchMethod
+        searchresults.setAll(test.getPersonData());
+
+        gotoPerson.setDisable(true);
+        personResults.setItems(searchresults);
         personResults.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldPerson, newPerson) -> {
+                    if (newPerson == null)
+                        return;
                     setSelectedPersonDetails(newPerson);
                     StartMain.currentCustomer.setProperty(newPerson);
+                    gotoPerson.setDisable(false);
                 }
         );
         addCSSValidation();
@@ -102,7 +112,7 @@ public final class AgentSearchController implements CommonGUIMethods
     private void showEditPersonDialog(ActionEvent actionEvent) throws IOException
     {
         //todo: goto personeditmenu instead? or is a popup sufficient
-        Parent EditPerson = FXMLLoader.load(getClass().getResource("\\AgentEditPerson.fxml"));
+        Parent EditPerson = FXMLLoader.load(getClass().getResource("\\EditPerson.fxml"));
         EditPerson.setStyle("-fx-font-size: 1.5em;");
 
         //todo: get mainstage somehow instead of creating a new one?
@@ -117,12 +127,10 @@ public final class AgentSearchController implements CommonGUIMethods
         String css = StartMain.class.getResource("\\css\\login.css").toExternalForm();
         scene.getStylesheets().add(css);
 
-
         dialogStage.setAlwaysOnTop(true);
         dialogStage.isAlwaysOnTop();
         dialogStage.centerOnScreen();
         dialogStage.showAndWait();
-
     }
 
     @FXML
@@ -153,6 +161,12 @@ public final class AgentSearchController implements CommonGUIMethods
     }
 
     @FXML
+    private void  gotoPerson()
+    {
+        StartMain.changeWindowListener.setPropertyString("Customer");
+    }
+
+    @FXML
     @Override
     public void clearFields()
     {
@@ -161,6 +175,7 @@ public final class AgentSearchController implements CommonGUIMethods
         resetTextField(searchLastname);
         resetTextField(searchCustomeriD);
         resetTextField(searchPhone);
+        gotoPerson.setDisable(true);
         test.resetList();
     }
 
@@ -170,14 +185,19 @@ public final class AgentSearchController implements CommonGUIMethods
         RegEX.addCSSTextValidation(searchSocialsecuritynumber, RegEX.isNumber(11));
         RegEX.addCSSTextValidation(searchSurename, RegEX.isLetters());
         RegEX.addCSSTextValidation(searchLastname, RegEX.isLetters());
-        RegEX.addCSSTextValidation(searchCustomeriD, RegEX.isAllChars()); //todo:cnage this when customer id is ready
+        RegEX.addCSSTextValidation(searchCustomeriD, RegEX.isAllChars()); //todo:chage this when customer id is ready
         RegEX.addCSSTextValidation(searchPhone, RegEX.isNumber(8));
     }
 
 
-    public Parent initAgentSearch() throws IOException
+    public Parent initAgentSearch()
     {
-        Parent search = FXMLLoader.load( getClass().getResource("\\AgentPersonSearch.fxml"));
+        Parent search = null;
+        try {
+            search = FXMLLoader.load(getClass().getResource("\\AgentPersonSearch.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return search;
     }
 
@@ -186,9 +206,8 @@ public final class AgentSearchController implements CommonGUIMethods
         socialsecurity.setText( String.valueOf( person.getSocialSecurityNumber() ) );
         customerId.setText( String.valueOf(1234567) ); //todo: set this field when customers have customernumbers
         fullname.setText(person.getFirstName() + " " + person.getLastName() );
-        //phonenumber.setText( String.valueOf( person.getAPhonenumber() ) );
+        phonenumber.setText( String.valueOf( person.getPhoneNumbers().stream().findAny().get() ) );
         adress.setText( person.getAdress() );
         city.setText( person.getCity() );
     }
-
 }

@@ -14,9 +14,8 @@ package GUI.GuiHelper;
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-        import java.io.UnsupportedEncodingException;
-
-        import java.security.SecureRandom;
+import java.io.UnsupportedEncodingException;
+import java.security.SecureRandom;
 
 /**
  * BCrypt implements OpenBSD-style Blowfish password hashing using
@@ -61,6 +60,7 @@ package GUI.GuiHelper;
  * @author Damien Miller
  * @version 0.4
  */
+//@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"INT_BAD_COMPARISON_WITH_NONNEGATIVE_VALUE"})
 public class Bcrypt {
     // BCrypt parameters
     private static final int GENSALT_DEFAULT_LOG2_ROUNDS = 10;

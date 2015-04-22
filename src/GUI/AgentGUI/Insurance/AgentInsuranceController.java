@@ -1,18 +1,15 @@
 package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.AlertWindow;
+import GUI.GuiHelper.Fader;
 import GUI.StartMain;
 import GUI.WindowChangeListener;
-import javafx.animation.FadeTransition;
-import javafx.animation.Interpolator;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -22,17 +19,21 @@ import java.io.IOException;
 public final class AgentInsuranceController
 {
     private static BorderPane container = new BorderPane();
+    private Fader fade = new Fader();
 
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
 
-    private static FadeTransition fader;
-    private static final double FADETIME = 0.35;
-
-    public Parent initAgentDefaultInsurance() throws IOException
+    public Parent initAgentInsuranceView()
     {
+        Parent chooser = null;
+        Parent confirmModule = null;
+        try {
+            chooser =  FXMLLoader.load( getClass().getResource("\\InsuranceChooserModule.fxml"));
+            confirmModule = FXMLLoader.load(getClass().getResource("\\InsuranceConfirmModule.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        Parent chooser =  FXMLLoader.load( getClass().getResource("\\InsuranceChooserModule.fxml"));
-        Parent confirmModule =  FXMLLoader.load(getClass().getResource("\\InsuranceConfirmModule.fxml"));
         setInsuranceChoiceListener();
 
         container.setLeft(chooser);
@@ -44,12 +45,25 @@ public final class AgentInsuranceController
 
     public void showtHouseInsurance()
     {
-        setFading("\\RegisterHouseInsuranceBase.fxml");
+        loadParent("\\RegisterHouseInsuranceBase.fxml");
     }
 
     public void showCarinsurance()
     {
-        setFading("\\RegisterCarModule.fxml");
+        loadParent("\\RegisterCarModule.fxml");
+    }
+
+    private void loadParent(String FXMLpath)
+    {
+        Parent scene = null;
+        try {
+            scene = FXMLLoader.load(getClass().getResource(FXMLpath));
+            fade.setFading(scene);
+            container.setCenter(scene);
+            fade.setupFadeout(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setInsuranceChoiceListener()
@@ -88,35 +102,5 @@ public final class AgentInsuranceController
 
             }
         });
-    }
-
-    private void setFading(String FXMLUrl)
-    {
-        Parent scene = null;
-        try
-        {
-            scene = FXMLLoader.load(getClass().getResource(FXMLUrl));
-            if (fader != null)
-                fader.play();
-            AgentInsuranceController.fader = new FadeTransition(Duration.seconds(FADETIME), scene);
-            fader.setInterpolator(Interpolator.EASE_IN);
-            fader.setFromValue(0.1);
-            fader.setToValue(1.0);
-            fader.play();
-            container.setCenter(scene);
-            setupFadeout(scene);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    private void setupFadeout(Parent scene)
-    {
-        AgentInsuranceController.fader = new FadeTransition(Duration.millis(FADETIME), scene);
-        fader.setInterpolator(Interpolator.EASE_OUT);
-        fader.setFromValue(1.0);
-        fader.setToValue(0.1);
     }
 }

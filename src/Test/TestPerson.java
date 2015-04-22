@@ -1,7 +1,7 @@
 package Test;
 
-import Person.Person;
 import Person.ContactInfo;
+import Person.Person;
 
 /**
  * Created by steinar on 14.04.2015.

@@ -1,11 +1,7 @@
 package Incident;
 
 
-import Person.Person;
-
-import java.nio.file.Files;
 import java.time.LocalDate;
-import java.util.ArrayDeque;
 
 /**
  * Created by steinar on 27.03.2015.

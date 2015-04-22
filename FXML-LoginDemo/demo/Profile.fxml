@@ -30,12 +30,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
-<?import java.net.*?>
-<?import javafx.geometry.*?>
+
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
 <AnchorPane id="Profile" minWidth="500.0" prefHeight="500.0" prefWidth="500.0" styleClass="background" xmlns:fx="http://javafx.com/fxml" fx:controller="ProfileController">
   <children>
     <AnchorPane id="anchorPane1" prefHeight="371.0" prefWidth="500.0" styleClass="top-segment" AnchorPane.bottomAnchor="129.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

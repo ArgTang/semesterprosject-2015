@@ -1,6 +1,5 @@
 package GUI;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 
 /**

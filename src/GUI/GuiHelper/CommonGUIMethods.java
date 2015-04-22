@@ -1,6 +1,5 @@
-package GUI.AgentGUI;
+package GUI.GuiHelper;
 
-import GUI.GuiHelper.RegEX;
 import javafx.scene.control.TextField;
 
 /**

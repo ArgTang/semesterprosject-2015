@@ -1,5 +1,5 @@
 Hello,
-this is the Login demo!
+this is the Oracle Login demo!
 
 Må åpnes i eget prosjekt!!!!
  

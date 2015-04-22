@@ -1,7 +1,8 @@
 package Test;
 
-import Person.Person;
 import Person.ContactInfo;
+import Person.Person;
+
 import java.util.Random;
 
 /**

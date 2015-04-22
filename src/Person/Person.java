@@ -1,11 +1,5 @@
 package Person;
 
-import Incident.Incident;
-import Insurance.Insurance;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
-
 import java.util.List;
 import java.util.Set;
 

@@ -1,7 +1,7 @@
-package GUI.AgentGUI.Person;
+package GUI.AgentGUI.Search;
 
-import GUI.AgentGUI.CommonGUIMethods;
 import GUI.GuiHelper.AlertWindow;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
 import Person.Person;
@@ -23,8 +23,10 @@ import java.util.stream.Collectors;
 
 /**
  * Created by steinar on 19.04.2015.
+ *
+ * This class is depreciated -> todo: to be removed
  */
-public class AgentEditPersonController implements CommonGUIMethods
+public class EditPersonController implements CommonGUIMethods
 {
     @FXML
     TextField socialSecurityNumber;

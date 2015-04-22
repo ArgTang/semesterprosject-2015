@@ -1,6 +1,6 @@
 package GUI.AgentGUI.Insurance;
 
-import GUI.AgentGUI.CommonGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
 import Insurance.Helper.PaymentOption;

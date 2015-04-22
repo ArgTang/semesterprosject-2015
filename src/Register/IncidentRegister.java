@@ -1,6 +1,7 @@
 package Register;
 
 import Incident.Incident;
+
 import java.util.HashMap;
 import java.util.Map;
 

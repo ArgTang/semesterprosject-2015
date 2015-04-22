@@ -1,6 +1,5 @@
 package Register;
 
-import Person.Customer;
 import Person.Person;
 
 import java.util.HashMap;

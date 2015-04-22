@@ -1,6 +1,6 @@
 package GUI.AgentGUI.Insurance;
 
-import GUI.AgentGUI.CommonGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
@@ -11,7 +11,11 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
 import java.time.LocalDate;
 
 

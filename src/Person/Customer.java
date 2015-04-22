@@ -5,8 +5,6 @@ import Insurance.Insurance;
 import Register.IncidentRegister;
 import Register.InsuranceRegister;
 
-import java.util.List;
-
 /**
  * Created by steinar on 27.03.2015.
  */

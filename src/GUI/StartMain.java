@@ -5,10 +5,10 @@ package GUI;
  */
 
 import GUI.AgentGUI.Insurance.AgentInsuranceController;
+import GUI.AgentGUI.Person.PersonController;
 import GUI.AgentGUI.Search.AgentSearchController;
 import GUI.GuiHelper.AlertWindow;
-import javafx.animation.FadeTransition;
-import javafx.animation.Interpolator;
+import GUI.GuiHelper.Fader;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -21,7 +21,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.IOException;
@@ -31,22 +30,13 @@ public class StartMain extends Application
 {
     private static Dimension SCREEN;
     private Stage PrimaryStage;
-    private static final double FADETIME = 0.3; //seconds
-    private static FadeTransition fader;
+    private Fader fade = new Fader();
 
     public static final CurrentCustomer currentCustomer = new CurrentCustomer();
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
     public static final WindowWindowListener changeWindowWindowListener = new WindowWindowListener();     //todo: change to this? more generic
 
     private BorderPane rootLayout = new BorderPane();
-    WelcomeController welcomeController = new WelcomeController();
-
-    //todo: do we really need these?
-    private Parent agentMenu;
-    private final AgentSearchController agentSearchController = new AgentSearchController();
-    private Parent agentSearchPane;
-    private AgentInsuranceController agentInsuranceController = new AgentInsuranceController();
-    private Parent agentHomeInsurancePane;
 
     @Override
     public void start(Stage primaryStage) throws Exception
@@ -75,26 +65,51 @@ public class StartMain extends Application
         launch(args);
     }
 
-    private Parent initAgentMenu() throws IOException {
-        Parent AgentMenu = FXMLLoader.load(getClass().getResource("\\AgentGUI\\AgentMenu.fxml"));
+    private Parent initAgentMenu()
+    {
+        Parent agentMenu = null;
+        try {
+            agentMenu = FXMLLoader.load(getClass().getResource("\\AgentGUI\\AgentMenu.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Separator separator = new Separator();
         separator.setPadding(new Insets(0, 0, 5, 0));
         VBox menu = new VBox();
-        menu.getChildren().addAll(AgentMenu, separator);
+        menu.getChildren().addAll(agentMenu, separator);
 
-        PrimaryStage.setTitle("HUBC Forsikring");
+        PrimaryStage.setTitle("HUBC Forsikring"); //todo: change name when name is ready
         return menu;
     }
 
-    public void startup() throws IOException
+    private void startup() throws IOException
     {
-        PrimaryStage.setTitle("Velkommen");
+        WelcomeController welcomeController = new WelcomeController();
         Parent welcome = welcomeController.initWelcome();
-        rootLayout.setCenter(welcome);
-        setupFadeout(welcome);
-        agentMenu = initAgentMenu();
-        agentSearchPane = agentSearchController.initAgentSearch();
-        agentHomeInsurancePane = agentInsuranceController.initAgentDefaultInsurance();
+        PrimaryStage.setTitle("Velkommen");
+        loadParent(welcome);
+    }
+
+    private Parent getHomeInsurancePane()
+    {
+        //todo: maybe move controllers to classVariable
+        AgentInsuranceController HomeController = new AgentInsuranceController();
+        return HomeController.initAgentInsuranceView();
+    }
+
+    private Parent getAgenSearchPane()
+    {
+        //todo: maybe move controllers to classVariable
+        AgentSearchController searchController = new AgentSearchController();
+        return searchController.initAgentSearch();
+    }
+
+    private Parent getAgentPersonPane()
+    {
+        //todo: maybe move controllers to classVariable
+        PersonController personController = new PersonController();
+        return personController.initEditPerson();
     }
 
     private void initInvalidationListener() throws IOException
@@ -102,59 +117,45 @@ public class StartMain extends Application
         changeWindowListener.getStringProperty().addListener(
                 observable -> {
                     StringProperty string = (StringProperty) observable;
-                    switch ( string.getValue() )
-                    {
+                    switch (string.getValue()) {
                         case "Customer":
-                                    AlertWindow.messageDialog("her kommer snart kundebehandlingsskjerm", "kunde");
-                                    break;
+                            loadParent(getAgentPersonPane() );
+                            break;
                         case "Insurance":
-                                    setFading(agentHomeInsurancePane);
-                                    break;
+                            loadParent( getHomeInsurancePane() );
+                            break;
                         case "Incident":
-                                    AlertWindow.messageDialog("her kommer snart ulykkesskjerm","hendelses skjerm");
-                                    break;
+                            AlertWindow.messageDialog("her kommer snart ulykkesskjerm", "hendelses skjerm");
+                            break;
                         case "statistics":
-                                    AlertWindow.messageDialog("her kommer  snart statistikkskjerm", "statistikkskjerm");
-                                    break;
+                            AlertWindow.messageDialog("her kommer  snart statistikkskjerm", "statistikkskjerm");
+                            break;
                         case "Agent":
                         default:
-                                    setFading(agentSearchPane);
-                                    rootLayout.setTop(agentMenu);
-                                    break;
+                            loadParent( getAgenSearchPane() );
+                            rootLayout.setTop(initAgentMenu());
+                            break;
                     }
                 }
         );
     }
 
-    //todo: make us switch screens by not using a String
+    //todo: make us switch screens by not using a hardcoded String
     private void initWindowInvalidationListener() throws IOException
     {
         changeWindowWindowListener.getObjectProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
                 System.out.println("windowwindow");
-                System.out.println( observable instanceof Stage );
+                System.out.println(observable instanceof Stage);
             }
         });
     }
 
-    private void setFading(Parent scene)
+    private void loadParent(Parent scene)
     {
-        fader.play();
-        StartMain.fader = new FadeTransition(Duration.seconds(FADETIME), scene);
-        fader.setInterpolator(Interpolator.EASE_IN);
-        fader.setFromValue(0.1);
-        fader.setToValue(1.0);
-        fader.play();
+        fade.setFading(scene);
         rootLayout.setCenter(scene);
-        setupFadeout(scene);
-    }
-
-    private void setupFadeout(Parent scene)
-    {
-        StartMain.fader = new FadeTransition(Duration.millis(FADETIME), scene);
-        fader.setInterpolator(Interpolator.EASE_OUT);
-        fader.setFromValue(1.0);
-        fader.setToValue(0.1);
+        fade.setupFadeout(scene);
     }
 }

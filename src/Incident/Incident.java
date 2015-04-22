@@ -1,12 +1,12 @@
 package Incident;
 
+import Insurance.Insurance;
+import Person.Person;
+
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import Insurance.Insurance;
-import Person.Person;
 
 
 /**
