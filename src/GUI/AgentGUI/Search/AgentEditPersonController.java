@@ -144,10 +144,10 @@ public class AgentEditPersonController implements CommonGUIMethods
         email.setText(person.getEmail());
 
         phones.clear();
-        person.getAllPhonenumbers()
+        /*person.getAllPhonenumbers()
                 .stream()
                 .map(i -> i.toString())
-                .forEach(phones::add);
+                .forEach(phones::add);*/
         while (phones.size() < 3)
             phones.add("");
     }

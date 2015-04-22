@@ -186,7 +186,7 @@ public final class AgentSearchController implements CommonGUIMethods
         socialsecurity.setText( String.valueOf( person.getSocialSecurityNumber() ) );
         customerId.setText( String.valueOf(1234567) ); //todo: set this field when customers have customernumbers
         fullname.setText(person.getFirstName() + " " + person.getLastName() );
-        phonenumber.setText( String.valueOf( person.getAPhonenumber() ) );
+        //phonenumber.setText( String.valueOf( person.getAPhonenumber() ) );
         adress.setText( person.getAdress() );
         city.setText( person.getCity() );
     }

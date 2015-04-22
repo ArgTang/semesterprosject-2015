@@ -23,40 +23,67 @@ public abstract class Person {
     private String password;
 
 
-
     /**
      * Person constructor
+     *
      * @param firstName
      * @param lastName
      * @param socialSecurityNumber
      * @param contactInfo
      */
-    public Person( String firstName, String lastName, int socialSecurityNumber, ContactInfo contactInfo )
-    {
+    public Person(String firstName, String lastName, int socialSecurityNumber, ContactInfo contactInfo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.socialSecurityNumber = socialSecurityNumber;
         this.contactInfo = contactInfo;
     }
 
-    public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName; }
-    public String getAdress() { return contactInfo.getAddress(); }
-    public String getCity() { return contactInfo.getCity(); }
-    public int getCitynumbr() { return contactInfo.getCitynumber(); }
-    public String getEmail() { return contactInfo.getEmail(); }
-    public int getSocialSecurityNumber() { return socialSecurityNumber; }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public Set<Integer> getPhoneNumbers() { return contactInfo.getPhoneNumbers(); }
-    public void addPhonenumber(int phonenumber) { contactInfo.addPhonenumber(phonenumber); }
-    public void addPhonenumber(List<Integer> list) { contactInfo.addPhonenumber(list); }
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getAdress() {
+        return contactInfo.getAddress();
+    }
+
+    public String getCity() {
+        return contactInfo.getCity();
+    }
+
+    public int getCitynumbr() {
+        return contactInfo.getCitynumber();
+    }
+
+    public String getEmail() {
+        return contactInfo.getEmail();
+    }
+
+    public int getSocialSecurityNumber() {
+        return socialSecurityNumber;
+    }
+
+    public Set<Integer> getPhoneNumbers() {
+        return contactInfo.getPhoneNumbers();
+    }
+
+    public void addPhonenumber(int phonenumber) {
+        contactInfo.addPhonenumber(phonenumber);
+    }
+
+    public void addPhonenumber(List<Integer> list) {
+        contactInfo.addPhonenumber(list);
+    }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         String text = firstName + " " + lastName;
         text += "\n" + contactInfo.toString();
         return text;
     }
+}
 
 
