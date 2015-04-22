@@ -1,10 +1,8 @@
+//Customer class for use when customers registers or for info
 package Person;
 
-import Incident.Incident;
-import Insurance.Insurance;
-import Register.IncidentRegister;
-import Register.InsuranceRegister;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,8 +12,8 @@ public final class Customer extends Person
 {
     private static int idCount = 00001;
     private String customerId;
-    private InsuranceRegister insuranceRegister;
-    private IncidentRegister incidentRegister;
+    private List<Integer> insuranceNumbers;
+    private List<Integer> incidentNumbers;
 
     /**
      *
@@ -28,37 +26,40 @@ public final class Customer extends Person
     {
         super(firstName, lastName, socialSecurityNumber, contactInfo);
         customerId = "cust" + idCount++;
+        insuranceNumbers = new ArrayList<Integer>();
+        incidentNumbers = new ArrayList<Integer>();
     }
 
+    /**
+     *
+     * @return String element
+     */
     public String getCustomerId() { return customerId; }
-    public InsuranceRegister getInsuranceRegister() { return insuranceRegister; }
-    public IncidentRegister getIncidentRegister() { return incidentRegister; }
-
+    /**
+     * Add number to list
+     * @param nr
+     */
+    public void addInsuranceNumber( int nr ) { insuranceNumbers.add( nr ); }
+    /**
+     * Add number to list
+     * @param nr
+     */
+    public void addIncidentNumber( int nr ) { incidentNumbers.add( nr ); }
     /**
      *
-     * @param insurance
-     * @return true if added successfully
+     * @return a List<Integer> object - ArrayList
      */
-    public boolean addInsurance( Insurance insurance )
-    {
-        //TODO: Check for null? Exceptions?
-        //TODO: insuranceRegister.addInsurance(insurance);
-        return false;
-    }
-
-
+    public List<Integer> getInsuranceNumbers() { return insuranceNumbers; }
     /**
      *
-     * @param incident
-     * @return true if added successfully
+     * @return a List<Integer> object - ArrayList
      */
-    public boolean addIncident( Incident incident )
-    {
-        //TODO: Check for null? Exceptions?
-        //TODO: incidentRegister.addIncident(incident);
-        return false;
-    }
+    public List<Integer> getIncidentNumbers() { return incidentNumbers; }
 
+    /**
+     * Info about customer
+     * @return a String
+     */
     public String toString()
     {
         String text = super.toString();
