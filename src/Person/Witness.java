@@ -6,14 +6,19 @@ package Person;
 public class Witness {
 
     String firstName;
-    String Lastname;
+    String lastName;
     ContactInfo contactInfo;
 
 
     //temp Constructor for compiling
-    public Witness(String firstName, String lastname, ContactInfo contactInfo) {
+    public Witness( String firstName, String lastName, ContactInfo contactInfo )
+    {
         this.firstName = firstName;
-        Lastname = lastname;
+        this.lastName = lastName;
         this.contactInfo = contactInfo;
     }
+
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public ContactInfo getContactInfo() { return contactInfo; }
 }

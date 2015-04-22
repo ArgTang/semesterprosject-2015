@@ -21,8 +21,7 @@ public abstract class Person {
     private int socialSecurityNumber;
     private ContactInfo contactInfo;
     private String password;
-    List<Insurance> InsuranceHistory; //todo: change Insurance to Insuranceregister key
-    List<Incident> IncidentHistory;  //todo: change Incident to Insidentregister key
+
 
 
     /**
@@ -32,7 +31,8 @@ public abstract class Person {
      * @param socialSecurityNumber
      * @param contactInfo
      */
-    public Person(String firstName, String lastName, int socialSecurityNumber, ContactInfo contactInfo) {
+    public Person( String firstName, String lastName, int socialSecurityNumber, ContactInfo contactInfo )
+    {
         this.firstName = firstName;
         this.lastName = lastName;
         this.socialSecurityNumber = socialSecurityNumber;
@@ -45,10 +45,18 @@ public abstract class Person {
     public String getCity() { return contactInfo.getCity(); }
     public int getCitynumbr() { return contactInfo.getCitynumber(); }
     public String getEmail() { return contactInfo.getEmail(); }
-    public int getAPhonenumber() { return contactInfo.getAPhonenumber(); }
-    public Set<Integer> getAllPhonenumbers() {return contactInfo.getPhones(); }
     public int getSocialSecurityNumber() { return socialSecurityNumber; }
 
+    public Set<Integer> getPhoneNumbers() { return contactInfo.getPhoneNumbers(); }
     public void addPhonenumber(int phonenumber) { contactInfo.addPhonenumber(phonenumber); }
     public void addPhonenumber(List<Integer> list) { contactInfo.addPhonenumber(list); }
-}
+
+    @Override
+    public String toString()
+    {
+        String text = firstName + " " + lastName;
+        text += "\n" + contactInfo.toString();
+        return text;
+    }
+
+

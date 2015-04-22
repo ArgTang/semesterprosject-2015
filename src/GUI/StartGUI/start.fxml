@@ -34,7 +34,7 @@
         </VBox>
     </children>
     <!--<stylesheets>
-        <URL value="@css/JMetroLightTheme.css" />
-        <URL value="@css/login.css" />
+        <URL itemValue="@css/JMetroLightTheme.css" />
+        <URL itemValue="@css/login.css" />
     </stylesheets>-->
  </GridPane>
