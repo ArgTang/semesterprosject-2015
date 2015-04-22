@@ -1,6 +1,5 @@
 package Person;
 
-import java.util.EmptyStackException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,9 +9,9 @@ import java.util.Set;
 public class ContactInfo
 {
     private String address;
-    private String city;
+    private String city; //TODO: Add a class containing every postal codes in Norway
     private String email;
-    Set<Integer> phones = new HashSet(); //TODO: is this needed?
+    Set<Integer> phoneNumbers = new HashSet<Integer>(); //TODO: is this needed?
 
     /**
      *
@@ -21,24 +20,25 @@ public class ContactInfo
      * @param city
      * @param phone
      */
-    public ContactInfo(String address, String email, String city, int phone)
+    public ContactInfo( String address, String email, String city, int phone )
     {
         this.address = address;
         this.email = email;
         this.city = city;
-        phones.add(phone);
+        phoneNumbers.add(phone);
     }
 
     public String getAddress() { return address; }
     public String getCity() { return city; }
     public String getEmail() { return email; }
-    public Set<Integer> getPhones() { return phones; }
+    public Set<Integer> getPhoneNumbers() { return phoneNumbers; }
 
-    public int getAPhonenumber()
+    public String toString()
     {
-        if (phones.isEmpty())
-            throw  new EmptyStackException();
-        return phones.stream()
-                     .findAny().get();
+        String text = address + ", " + city;
+        text += "\n" + email;
+        text += "\nPhone number(s): " + phoneNumbers;
+        return text;
     }
+
 }

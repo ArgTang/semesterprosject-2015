@@ -1,11 +1,5 @@
 package Person;
 
-import Incident.Incident;
-import Insurance.Insurance;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
-import java.util.List;
 import java.util.Set;
 
 
@@ -20,8 +14,7 @@ public abstract class Person {
     private int socialSecurityNumber;
     private ContactInfo contactInfo;
     private String password;
-    List<Insurance> InsuranceHistory; //todo: change Insurance to Insuranceregister key
-    List<Incident> IncidentHistory;  //todo: change Incident to Insidentregister key
+
 
 
     /**
@@ -31,7 +24,8 @@ public abstract class Person {
      * @param socialSecurityNumber
      * @param contactInfo
      */
-    public Person(String firstName, String lastName, int socialSecurityNumber, ContactInfo contactInfo) {
+    public Person( String firstName, String lastName, int socialSecurityNumber, ContactInfo contactInfo )
+    {
         this.firstName = firstName;
         this.lastName = lastName;
         this.socialSecurityNumber = socialSecurityNumber;
@@ -43,7 +37,14 @@ public abstract class Person {
     public String getAdress() { return contactInfo.getAddress(); }
     public String getCity() { return contactInfo.getCity(); }
     public String getEmail() { return contactInfo.getEmail(); }
-    public int getAPhonenumber() { return contactInfo.getAPhonenumber(); }
-    public Set<Integer> getAllPhonenumbers() {return contactInfo.getPhones(); }
+    public Set<Integer> getPhoneNumbers() { return contactInfo.getPhoneNumbers(); }
     public int getSocialSecurityNumber() { return socialSecurityNumber; }
+
+    public String toString()
+    {
+        String text = firstName + " " + lastName;
+        text += "\n" + contactInfo.toString();
+        return text;
+    }
+
 }

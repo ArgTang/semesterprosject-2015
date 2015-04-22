@@ -10,7 +10,7 @@ public final class Employee extends Person
     private String jobTitle;
     private static int idCount = 00001;
     private String employeeId;
-    private int salary;
+    private int monthlySalary; //TODO: Needed?
 
     /**
      *
@@ -27,5 +27,6 @@ public final class Employee extends Person
         employeeId = "emp" + idCount++;
     }
 
+    public String getJobTitle() { return jobTitle; }
     public String getEmployeeId() { return employeeId; }
 }

@@ -6,7 +6,8 @@ import Person.Person;
 /**
  * Created by steinar on 07.04.2015.
  */
-public enum PaymentOption {
+public enum PaymentOption
+{
     YEARLY(12),
     QUARTERLY(3),
     MONTHLY(1);
@@ -16,4 +17,5 @@ public enum PaymentOption {
     PaymentOption(int monthsInPayment) {
         MonthsInPayment = monthsInPayment;
     }
+
 }
