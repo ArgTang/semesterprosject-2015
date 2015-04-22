@@ -3,7 +3,6 @@ package Test;
 import Person.ContactInfo;
 import Person.Person;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 /**
@@ -16,8 +15,8 @@ public class GUItest {
 
     public GUItest() {
         //test personData.addListener( (ListChangeListener) c -> System.out.println("change") );
-        personData.add(new testPerson("Per", "heimly", contact));
-        personData.add(new testPerson("jannike", "korsvoll", contact));
+        personData.add(new TestPerson("Per", "heimly", contact));
+        personData.add(new TestPerson("jannike", "korsvoll", contact));
 
     }
     public void resetList()
