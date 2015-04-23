@@ -4,14 +4,19 @@ import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import GUI.StartMain;
 import GUI.WindowChangeListener;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
+import Person.Person;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Created by steinar on 15.04.2015.
@@ -20,6 +25,9 @@ public final class AgentInsuranceController
 {
     private static BorderPane container = new BorderPane();
     private Fader fade = new Fader();
+    private Label kundenavn = new Label();
+
+    private StringProperty navn = new SimpleStringProperty();;
 
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
 
@@ -34,7 +42,11 @@ public final class AgentInsuranceController
             e.printStackTrace();
         }
 
+        chooser = setlabel(chooser);
+        kundenavn.textProperty().bind(navn);
+        kundenavn.setStyle("-fx-font-weight: bold;");
         setInsuranceChoiceListener();
+        setCurrentPersonListener();
 
         container.setLeft(chooser);
         if( container.getCenter() == null)
@@ -69,38 +81,61 @@ public final class AgentInsuranceController
     private void setInsuranceChoiceListener()
     {
         insuranceChoiceListener.getStringProperty().addListener(
-                observable -> {
-                    StringProperty string = (StringProperty) observable;
-                    switch (string.getValue()) {
-                        case "tøm skjerm":
-                            //do nothing
-                            System.out.println("AgentInsuranceController:" + string.getValue());
-                            break;
-                        case "[Hus]":
-                            showtHouseInsurance();
-                            break;
-                        case "[Bil]":
-                            //todo: check if scheme is empty -> confirmdialog
-                            showCarinsurance();
-                            break;
-                        case "[Reise]":
-                            AlertWindow.messageDialog("Reiseforsikring", "Reiseforsikring");
-                            break;
-                        case "[Båt]":
-                            AlertWindow.messageDialog("Båtforsikring", "Båtforsikring");
-
-                    }
+            observable -> {
+                StringProperty string = (StringProperty) observable;
+                switch (string.getValue()) {
+                    case "tøm skjerm":
+                        //do nothing
+                        System.out.println("AgentInsuranceController:" + string.getValue());
+                        break;
+                    case "[Hus]":
+                        showtHouseInsurance();
+                        break;
+                    case "[Bil]":
+                        //todo: check if scheme is empty -> confirmdialog
+                        showCarinsurance();
+                        break;
+                    case "[Reise]":
+                        AlertWindow.messageDialog("Reiseforsikring", "Reiseforsikring");
+                        break;
+                    case "[Båt]":
+                        AlertWindow.messageDialog("Båtforsikring", "Båtforsikring");
                 }
+            }
         );
+    }
+
+    private Parent setlabel(Parent chooser)
+    {
+        VBox vBox = new VBox();
+        GridPane grid= new GridPane();
+
+        Label info = new Label("Du behandler nå:");
+
+        grid.add(info, 1, 0);
+        grid.add(kundenavn, 1, 1);
+        Optional<Person> person = StartMain.currentCustomer.getProperty();
+        if ( person.isPresent() )
+            setCustomername(person.get());
+        vBox.getChildren().addAll(grid, chooser);
+        return vBox;
     }
 
     private void setCurrentPersonListener()
     {
-        StartMain.currentCustomer.getPersonProperty().addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
-
+        StartMain.currentCustomer.getPersonProperty().addListener(
+            observable -> {
+                SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
+                Person person = property.getValue();
+                if (person != null)
+                    setCustomername(person);
             }
-        });
+        );
+    }
+
+    private void setCustomername(Person person)
+    {
+        String navnet = person.getFirstName() + " " + person.getLastName();
+        navn.setValue(navnet);
     }
 }

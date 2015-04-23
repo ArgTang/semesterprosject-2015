@@ -2,10 +2,7 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
-import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
-import Person.Person;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -13,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
@@ -24,8 +20,6 @@ import java.time.LocalDate;
  */
 public final class RegisterHouseInsuranceBaseController implements CommonGUIMethods
 {
-    @FXML
-    Label customername;
     @FXML
     TextField adress;
     @FXML
@@ -82,12 +76,6 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
 
         fromDate.setValue(LocalDate.now());
 
-        customername.textProperty().bind(personName);
-        customername.setStyle("-fx-font-weight: bold;");
-        Person person = StartMain.currentCustomer.getProperty();
-        if (person != null)
-            setCustomername(person);
-        setCurrentPersonListener();
         setInsuranceChoiceListener();
         addCSSValidation();
     }
@@ -129,21 +117,5 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
                         clearFields();
                 });
 
-    }
-
-    //todo: put these into an interface (DRY)?? also need to redraw or update label after new name is set
-    private void setCurrentPersonListener()
-    {
-        StartMain.currentCustomer.getPersonProperty().addListener(
-            observable -> {
-                SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
-                setCustomername(property.getValue());
-            });
-    }
-
-    private void setCustomername(Person person)
-    {
-        //customername.setText(person.getFirstName() + " " + person.getLastName());
-        personName.setValue( person.getFirstName() + " " + person.getLastName() );
     }
 }

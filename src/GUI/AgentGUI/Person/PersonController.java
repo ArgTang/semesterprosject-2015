@@ -19,7 +19,6 @@ public class PersonController
 
     HBox container = new HBox();
 
-
     public Parent initEditPerson()
     {
         Parent editPerson = null;
@@ -61,7 +60,6 @@ public class PersonController
     private Parent initTable(Parent table, String string)
     {
         table = addParentLabel(table, string);
-
         //add observable array here
         if (string.contains("hendelse"))
         {

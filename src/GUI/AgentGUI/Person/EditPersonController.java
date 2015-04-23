@@ -55,16 +55,17 @@ public class EditPersonController implements CommonGUIMethods
         phonelist.setItems(phones);
         setCurrentPersonListener();
         addCSSValidation();
-        if( StartMain.currentCustomer.getProperty() == null )
+
+        if( StartMain.currentCustomer.getProperty().isPresent())
         {
-            //todo: do we need option to add more than 2 phonenumbers?
-            changeCustomer.setText("Registrer ny kunde");
-            phones.addAll("", "", "");
+            setCustomer(StartMain.currentCustomer.getProperty().get());
+            changeCustomer.setTextFill(Color.RED);
         }
         else
         {
-            setCustomer(StartMain.currentCustomer.getProperty());
-            changeCustomer.setTextFill(Color.RED);
+            //todo: do we need option to add more than 3 phonenumbers?
+            changeCustomer.setText("Registrer ny kunde");
+            phones.addAll("", "", "");
         }
     }
 
@@ -101,7 +102,8 @@ public class EditPersonController implements CommonGUIMethods
         StartMain.currentCustomer.getPersonProperty().addListener(
                 observable -> {
                     SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
-                    setCustomer(property.getValue());
+                    if ( property.isNotNull().get() )
+                        setCustomer(property.getValue());
                 });
 
         phonelist.setCellFactory(TextFieldListCell.forListView());
@@ -156,7 +158,7 @@ public class EditPersonController implements CommonGUIMethods
     {
         if( !checkValidation() )
             AlertWindow.messageDialog("Sjekk at du har fylt ut alle felt riktig", "Feil i innfylling");
-        Person person = StartMain.currentCustomer.getProperty();
+        Person person = StartMain.currentCustomer.getProperty().get();
 
         List<Integer> phonelist = phones.stream()
                                         .mapToInt(string -> Integer.parseInt(string, 10)) //todo: check if nullpointerException here?

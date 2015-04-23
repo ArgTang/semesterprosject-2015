@@ -69,16 +69,6 @@ public final class AgentSearchController implements CommonGUIMethods
     @FXML
     private Button gotoPerson;
 
-
-/*    //Register CaseOutputTable
-    @FXML
-    private TableView<Insurance> caseResults;
-    @FXML
-    private TableColumn<Insurance, String> type;
-    @FXML
-    private TableColumn<Insurance, Integer> year;*/
-
-    //class containing observale searchList
     GUItest test;
     //searchresults go here
     public static ObservableList<Person> searchresults = FXCollections.observableArrayList();;
@@ -95,6 +85,7 @@ public final class AgentSearchController implements CommonGUIMethods
         searchresults.setAll(test.getPersonData());
 
         gotoPerson.setDisable(true);
+        personResults.setPlaceholder(new Label("Her kommer resultatet fra ditt søk")); //todo: add icon here?
         personResults.setItems(searchresults);
         personResults.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldPerson, newPerson) -> {
@@ -177,6 +168,8 @@ public final class AgentSearchController implements CommonGUIMethods
         resetTextField(searchPhone);
         gotoPerson.setDisable(true);
         test.resetList();
+        searchresults.removeAll();
+        StartMain.currentCustomer.reset();
     }
 
     @Override

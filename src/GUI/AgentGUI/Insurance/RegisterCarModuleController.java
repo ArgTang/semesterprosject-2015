@@ -2,18 +2,15 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
-import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
-import Person.Person;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
@@ -23,8 +20,6 @@ import java.time.LocalDate;
  */
 public final class RegisterCarModuleController implements CommonGUIMethods
 {
-    @FXML
-    Label customername;
     @FXML
     TextField registrationnumber;
     @FXML
@@ -44,6 +39,8 @@ public final class RegisterCarModuleController implements CommonGUIMethods
 
     @FXML
     DatePicker fromDate;
+    @FXML
+    CheckBox ageRequirements;
     @FXML
     ComboBox kasko;
     @FXML
@@ -83,19 +80,14 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         paymentOptionNummber.addAll(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
         paymentOption.setItems(paymentOptionNummber);
 
-        customername.textProperty().bind(personName);
-        customername.setStyle("-fx-font-weight: bold;");
         addCSSValidation();
         clearFields();
         setInsuranceChoiceListener();
-        Person person = StartMain.currentCustomer.getProperty();
-        if (person != null)
-            setCustomer(person);
-        setCurrentPersonListener();
     }
 
     @Override
-    public void clearFields() {
+    public void clearFields()
+    {
         resetTextField(registrationnumber);
         resetTextField(km);
         resetTextField(maker);
@@ -106,6 +98,8 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         resetTextField(buyPrice);
         personName.setValue("");
         fromDate.setValue(LocalDate.now());
+        ageRequirements.setIndeterminate(false);
+
         kasko.setValue("Fullkasko");
         bonus.setValue(20);
         yearlyKM.setValue("12000");
@@ -127,27 +121,15 @@ public final class RegisterCarModuleController implements CommonGUIMethods
     private void setInsuranceChoiceListener()
     {
         AgentInsuranceController.insuranceChoiceListener.getStringProperty().addListener(
-                observable -> {
-                    StringProperty string = (StringProperty) observable;
-                    if (string.getValue().equals("tøm skjerm"))
-                        clearFields();
-                });
+            observable -> {
+                StringProperty string = (StringProperty) observable;
 
+                if (string.getValue().equals("tøm skjerm"))
+                {
+                    System.out.print(string.getValue());
+                    clearFields();
+                }
+            });
     }
 
-    //todo: put these into an interface (DRY)?? also need to redraw or update label after new name is set
-    private void setCurrentPersonListener()
-    {
-        StartMain.currentCustomer.getPersonProperty().addListener(
-                observable -> {
-                    SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
-                    setCustomer(property.getValue());
-                });
-    }
-
-    private void setCustomer(Person person)
-    {
-        //customername.setText( person.getFirstName() + " " + person.getLastName() );
-        personName.setValue( person.getFirstName() + " " + person.getLastName() );
-    }
 }

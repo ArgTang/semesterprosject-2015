@@ -11,8 +11,7 @@
   <rowConstraints>
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -26,34 +25,32 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-       <Label text="Du behandler nå kunde" />
-       <Label fx:id="customername" GridPane.columnIndex="1" />
-       <Label text="Adresse" GridPane.rowIndex="1" />
-       <TextField fx:id="adress" promptText="storgata 11f" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-       <Label text="Postnummer" GridPane.rowIndex="2" />
-       <TextField fx:id="citynumber" promptText="2345" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-       <Label text="Poststed" GridPane.rowIndex="3" />
-       <TextField fx:id="city" promptText="Jordbærhaugen" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+       <Label text="Adresse" />
+       <TextField fx:id="adress" promptText="storgata 11f" GridPane.columnIndex="1" />
+       <Label text="Postnummer" GridPane.rowIndex="1" />
+       <TextField fx:id="citynumber" promptText="2345" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+       <Label text="Poststed" GridPane.rowIndex="2" />
+       <TextField fx:id="city" promptText="Jordbærhaugen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-       <Label text="Byggematriale" GridPane.rowIndex="5" />
-       <ComboBox fx:id="constructedIn" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-       <Label text="Byggeår" GridPane.rowIndex="6" />
-       <TextField fx:id="constructionYear" promptText="1987" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-       <Label text="Boligtype:" GridPane.rowIndex="7" />
-       <ComboBox fx:id="buildingType" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-       <Label text="Bruttoareal" GridPane.rowIndex="8" />
-       <TextField fx:id="grossArea" promptText="167" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-       <Label text="Primærareal" GridPane.rowIndex="9" />
-       <TextField fx:id="primaryArea" promptText="135" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-       <Label text="Takst" GridPane.rowIndex="10" />
-       <TextField fx:id="taxedvalue" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+       <Label text="Byggematriale" GridPane.rowIndex="4" />
+       <ComboBox fx:id="constructedIn" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+       <Label text="Byggeår" GridPane.rowIndex="5" />
+       <TextField fx:id="constructionYear" promptText="1987" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+       <Label text="Boligtype:" GridPane.rowIndex="6" />
+       <ComboBox fx:id="buildingType" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+       <Label text="Bruttoareal" GridPane.rowIndex="7" />
+       <TextField fx:id="grossArea" promptText="167" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+       <Label text="Primærareal" GridPane.rowIndex="8" />
+       <TextField fx:id="primaryArea" promptText="135" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+       <Label text="Takst" GridPane.rowIndex="9" />
+       <TextField fx:id="taxedvalue" GridPane.columnIndex="1" GridPane.rowIndex="9" />
 
-       <Label text="Fra dato" GridPane.rowIndex="12" />
-       <DatePicker fx:id="fromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-       <Label text="Egenandel" GridPane.rowIndex="13" />
-       <ComboBox fx:id="deductible" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-       <Label text="Betalingsvalg" GridPane.rowIndex="14" />
-       <ComboBox fx:id="paymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+       <Label text="Fra dato" GridPane.rowIndex="11" />
+       <DatePicker fx:id="fromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+       <Label text="Egenandel" GridPane.rowIndex="12" />
+       <ComboBox fx:id="deductible" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+       <Label text="Betalingsvalg" GridPane.rowIndex="13" />
+       <ComboBox fx:id="paymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="13" />
    </children>
    <padding>
       <Insets left="8.0" right="8.0" />
