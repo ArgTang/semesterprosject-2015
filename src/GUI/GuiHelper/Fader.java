@@ -20,7 +20,7 @@ import javafx.util.Duration;
 public class Fader
 {
     private FadeTransition fader = new FadeTransition();
-    private double FADETIME = 0.35;
+    private double FADETIME = 0.4;
 
     public Parent setFading(Parent scene)
     {

@@ -1,6 +1,7 @@
 package GUI;
 
-import javafx.beans.property.Property;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 /**
  * Created by steinar on 17.04.2015.
@@ -10,9 +11,10 @@ import javafx.beans.property.Property;
  */
 public class WindowWindowListener
 {
-    private final Property objectProperty = null;
+    private final ObjectProperty objectProperty = new SimpleObjectProperty<>();
 
     public final Object getPropertyObject() { return objectProperty.getValue(); }
-    public final void setPropertyObject(Class object) { objectProperty.setValue( object ); }
-    public Property<Class> getObjectProperty() { return objectProperty; }
+    public final void setPropertyObject(Object object) { objectProperty.setValue( object ); }
+    public ObjectProperty getObjectProperty() { return objectProperty; }
+    public void reset() { objectProperty.setValue(null); }
 }

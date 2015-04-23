@@ -56,9 +56,9 @@ public class EditPersonController implements CommonGUIMethods
         setCurrentPersonListener();
         addCSSValidation();
 
-        if( StartMain.currentCustomer.getProperty().isPresent())
+        if( StartMain.currentCustomer.getPersonProperty().isNotNull().get())
         {
-            setCustomer(StartMain.currentCustomer.getProperty().get());
+            setCustomer(StartMain.currentCustomer.getPerson());
             changeCustomer.setTextFill(Color.RED);
         }
         else
@@ -102,7 +102,7 @@ public class EditPersonController implements CommonGUIMethods
         StartMain.currentCustomer.getPersonProperty().addListener(
                 observable -> {
                     SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
-                    if ( property.isNotNull().get() )
+                    if (property.isNotNull().get())
                         setCustomer(property.getValue());
                 });
 
@@ -118,15 +118,12 @@ public class EditPersonController implements CommonGUIMethods
         });
 
         //todo: lambda here??
-        phonelist.setOnEditCommit( new EventHandler<ListView.EditEvent<String>>()
-        {
+        phonelist.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
             @Override
             public void handle(ListView.EditEvent event) {
-                if ( RegEX.isNumber(8).test( event.getNewValue().toString()) )
-                {
+                if (RegEX.isNumber(8).test(event.getNewValue().toString())) {
                     AlertWindow.messageDialog("Telefonnummer må ha 8 siffer", "feil i telefonnummer");
-                }
-                else
+                } else
                     phonelist.getItems().set(event.getIndex(), event.getNewValue());
             }
         });
@@ -158,23 +155,26 @@ public class EditPersonController implements CommonGUIMethods
     {
         if( !checkValidation() )
             AlertWindow.messageDialog("Sjekk at du har fylt ut alle felt riktig", "Feil i innfylling");
-        Person person = StartMain.currentCustomer.getProperty().get();
 
         List<Integer> phonelist = phones.stream()
-                                        .mapToInt(string -> Integer.parseInt(string, 10)) //todo: check if nullpointerException here?
-                                        .boxed()
-                                        .collect(Collectors.toList());
-        if ( person != null && socialSecurityNumber.isEditable() == false )
+                .mapToInt(string -> Integer.parseInt(string, 10)) //todo: check if nullpointerException here?
+                .boxed()
+                .collect(Collectors.toList());
+
+        if ( StartMain.currentCustomer.getPersonProperty().isNotNull().get())
         {
-            //update Person
+            Person oldPerson = StartMain.currentCustomer.getPerson();
+            //todo: update person
         }
-        else if (socialSecurityNumber.isEditable() == true)
+        else
         {
-            newPerson(person, phonelist);
+            newPerson(phonelist);
         }
+
+
     }
 
-    private void newPerson(Person person, List phonelist)
+    private void newPerson(List pheonenumbers)
     {
         //todo: check in register if exists? maybe not needed, since we check if person is loaded from searchresult in updatePerson method
 
@@ -186,7 +186,8 @@ public class EditPersonController implements CommonGUIMethods
         String firstnameStrint = firstname.getText();
         String lastnameString = lastname.getText();
 
-        person.addPhonenumber(phonelist);
+        //todo make a person here
+        Person newCustomer;
     }
 
     private boolean checkValidation()

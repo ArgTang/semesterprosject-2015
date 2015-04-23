@@ -26,8 +26,8 @@ public class PersonController
         Parent incidentTable = null;
         try {
             editPerson = FXMLLoader.load( getClass().getResource("\\EditPerson.fxml") );
-            incidentTable = FXMLLoader.load( getClass().getResource("\\InsuranseTable.fxml") );
-            insuranceTable = FXMLLoader.load( getClass().getResource("\\IncidentTable.fxml") );
+            insuranceTable = FXMLLoader.load( getClass().getResource("\\InsuranseTable.fxml") );
+            incidentTable = FXMLLoader.load( getClass().getResource("\\IncidentTable.fxml") );
         } catch (IOException e) {
             e.printStackTrace();
         }

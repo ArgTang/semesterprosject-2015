@@ -2,6 +2,8 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
+import GUI.StartMain;
+import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -31,7 +33,14 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
     @FXML
     private Button confirmInsurance;
 
-    private Stage owner;
+
+    @FXML
+    private void initialize()
+    {
+        BooleanBinding insuranceIsNotChosen = StartMain.currentInsurance.getPersonProperty().isNull();
+        endThis.disableProperty().bind(insuranceIsNotChosen);
+    }
+
     @FXML
     private void endInsurance() {
         Optional<LocalDate> result = makeDialog();
@@ -47,7 +56,7 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
     {
         if( AlertWindow.confirmDialog("Vil du tømme Skjema?", "tøm skjema") )
         {
-            AgentInsuranceController.insuranceChoiceListener.setPropertyString( "tøm skjerm" );
+            StartMain.currentInsurance.reset();
             description.setText("");
         }
     }

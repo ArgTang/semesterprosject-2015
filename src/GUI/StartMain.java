@@ -34,7 +34,7 @@ public class StartMain extends Application
 
     public static final CurrentCustomer currentCustomer = new CurrentCustomer();
     public static final CurrentInsurance currentInsurance = new CurrentInsurance();
-    public static final CurrentIncident currantInceident = new CurrentIncident();
+    public static final CurrentIncident currentIncident = new CurrentIncident();
 
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
     public static final WindowWindowListener changeWindowWindowListener = new WindowWindowListener();     //todo: change to this? more generic
@@ -44,7 +44,7 @@ public class StartMain extends Application
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        initInvalidationListener();
+        initListeners();
         this.PrimaryStage = primaryStage;
         Scene scene = new Scene(rootLayout);
         rootLayout.setPadding(new Insets(5, 5, 5, 5));
@@ -67,6 +67,13 @@ public class StartMain extends Application
         SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
         launch(args);
     }
+    private void startup() throws IOException
+    {
+        WelcomeController welcomeController = new WelcomeController();
+        Parent welcome = welcomeController.initWelcome();
+        PrimaryStage.setTitle("Velkommen");
+        loadParent(welcome);
+    }
 
     private Parent initAgentMenu()
     {
@@ -84,14 +91,6 @@ public class StartMain extends Application
 
         PrimaryStage.setTitle("HUBC Forsikring"); //todo: change name when name is ready
         return menu;
-    }
-
-    private void startup() throws IOException
-    {
-        WelcomeController welcomeController = new WelcomeController();
-        Parent welcome = welcomeController.initWelcome();
-        PrimaryStage.setTitle("Velkommen");
-        loadParent(welcome);
     }
 
     private Parent getHomeInsurancePane()
@@ -115,20 +114,20 @@ public class StartMain extends Application
         return personController.initEditPerson();
     }
 
-    private void initInvalidationListener() throws IOException
+    private void initListeners() throws IOException
     {
         changeWindowListener.getStringProperty().addListener(
                 observable -> {
                     StringProperty string = (StringProperty) observable;
                     switch (string.getValue()) {
                         case "Customer":
-                            loadParent(getAgentPersonPane() );
+                            loadParent( getAgentPersonPane() );
                             break;
                         case "Insurance":
                             loadParent( getHomeInsurancePane() );
                             break;
                         case "Incident":
-                            AlertWindow.messageDialog("her kommer snart ulykkesskjerm", "hendelses skjerm");
+                            AlertWindow.messageDialog("Her kommer hendelsesvindu", "Hendelsesvindu");
                             break;
                         case "statistics":
                             AlertWindow.messageDialog("her kommer  snart statistikkskjerm", "statistikkskjerm");

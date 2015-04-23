@@ -11,6 +11,7 @@ public interface CommonGUIMethods {
 
     void addCSSValidation();
 
+
     default void resetTextField(TextField textField)
     {
         textField.setText("");

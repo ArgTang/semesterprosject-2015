@@ -2,7 +2,10 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
+import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
+import Insurance.Insurance;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -120,6 +123,20 @@ public final class RegisterCarModuleController implements CommonGUIMethods
     }
     private void setInsuranceChoiceListener()
     {
+
+        StartMain.currentInsurance.getPersonProperty().addListener(
+                observable -> {
+                    ObjectProperty<Insurance> insurance = (ObjectProperty<Insurance>)observable;
+
+                    if ( insurance.isNotNull().get() )
+                    {
+                        //todo: set insurance
+                    }
+                    else
+                        clearFields();
+                }
+        );
+
         AgentInsuranceController.insuranceChoiceListener.getStringProperty().addListener(
             observable -> {
                 StringProperty string = (StringProperty) observable;

@@ -8,13 +8,11 @@ import Person.Person;
 import Test.GUItest;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
@@ -41,7 +39,6 @@ public final class AgentSearchController implements CommonGUIMethods
     private Button searchButton;
 
     //Register PersonOutputTable
-    //todo: might need to register each column
     @FXML
     private TableView<Person> personResults;
     @FXML
@@ -137,7 +134,7 @@ public final class AgentSearchController implements CommonGUIMethods
     }
 
     @FXML
-    private void  gotoPerson()
+    private void gotoPerson()
     {
         StartMain.changeWindowListener.setPropertyString("Customer");
     }
@@ -153,7 +150,7 @@ public final class AgentSearchController implements CommonGUIMethods
         resetTextField(searchPhone);
         gotoPerson.setDisable(true);
         test.resetList();
-        searchresults.removeAll();
+        searchresults.clear();
         StartMain.currentCustomer.reset();
     }
 
@@ -167,6 +164,16 @@ public final class AgentSearchController implements CommonGUIMethods
         RegEX.addCSSTextValidation(searchPhone, RegEX.isNumber(8));
     }
 
+    private void setSelectedPersonDetails(Person person)
+    {
+        socialsecurity.setText( String.valueOf( person.getSocialSecurityNumber() ) );
+        customerId.setText(String.valueOf(1234567)); //todo: set this field when customers have customernumbers
+        fullname.setText(person.getFirstName() + " " + person.getLastName());
+        phonenumber.setText(String.valueOf(person.getPhoneNumbers().stream().findAny().get()));
+        adress.setText(person.getAdress());
+        city.setText(person.getCity());
+    }
+
     public Parent initAgentSearch()
     {
         Parent search = null;
@@ -176,15 +183,5 @@ public final class AgentSearchController implements CommonGUIMethods
             e.printStackTrace();
         }
         return search;
-    }
-
-    private void setSelectedPersonDetails(Person person)
-    {
-        socialsecurity.setText( String.valueOf( person.getSocialSecurityNumber() ) );
-        customerId.setText( String.valueOf(1234567) ); //todo: set this field when customers have customernumbers
-        fullname.setText(person.getFirstName() + " " + person.getLastName() );
-        phonenumber.setText( String.valueOf( person.getPhoneNumbers().stream().findAny().get() ) );
-        adress.setText( person.getAdress() );
-        city.setText( person.getCity() );
     }
 }

@@ -16,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * Created by steinar on 15.04.2015.
@@ -45,8 +44,7 @@ public final class AgentInsuranceController
         chooser = setlabel(chooser);
         kundenavn.textProperty().bind(navn);
         kundenavn.setStyle("-fx-font-weight: bold;");
-        setInsuranceChoiceListener();
-        setCurrentPersonListener();
+        setListeners();
 
         container.setLeft(chooser);
         if( container.getCenter() == null)
@@ -78,7 +76,7 @@ public final class AgentInsuranceController
         }
     }
 
-    private void setInsuranceChoiceListener()
+    private void setListeners()
     {
         insuranceChoiceListener.getStringProperty().addListener(
             observable -> {
@@ -103,34 +101,30 @@ public final class AgentInsuranceController
                 }
             }
         );
+
+        StartMain.currentCustomer.getPersonProperty().addListener(
+                observable -> {
+                    SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
+                    Person person = property.getValue();
+                    if (person != null)
+                        setCustomername(person);
+                }
+        );
     }
 
     private Parent setlabel(Parent chooser)
     {
-        VBox vBox = new VBox();
         GridPane grid= new GridPane();
-
         Label info = new Label("Du behandler nå:");
-
         grid.add(info, 1, 0);
         grid.add(kundenavn, 1, 1);
-        Optional<Person> person = StartMain.currentCustomer.getProperty();
-        if ( person.isPresent() )
-            setCustomername(person.get());
+
+        if ( StartMain.currentCustomer.getPersonProperty().isNotNull().get() )
+            setCustomername( StartMain.currentCustomer.getPerson() );
+
+        VBox vBox = new VBox();
         vBox.getChildren().addAll(grid, chooser);
         return vBox;
-    }
-
-    private void setCurrentPersonListener()
-    {
-        StartMain.currentCustomer.getPersonProperty().addListener(
-            observable -> {
-                SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
-                Person person = property.getValue();
-                if (person != null)
-                    setCustomername(person);
-            }
-        );
     }
 
     private void setCustomername(Person person)
