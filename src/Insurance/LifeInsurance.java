@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * Created by steinar on 27.03.2015.
  */
-public final class LifeInsurance extends Insurance{
+public final class LifeInsurance extends Insurance
+{
 
     //temp constructor (for compile)
     //TODO: this gets comlicated, lets see if we have time to do this

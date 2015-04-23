@@ -25,5 +25,6 @@ public abstract class Insurance
         this.dateCreated = LocalDateTime.now();
         this.itemValue = itemValue;
         this.policy = policy;
+
     }
 }

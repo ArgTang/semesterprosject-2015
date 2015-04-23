@@ -19,6 +19,7 @@ public final class WitnessRegister  implements CommonRegisterMethods
     public boolean add(Witness wit)
     {
         //todo: if upgrading a witness we can delete all info, and insert sosialsecuritynumber instead
+        return false;
 
     }
 }

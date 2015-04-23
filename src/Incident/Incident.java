@@ -42,4 +42,7 @@ public abstract class Incident {
         this.dayOfIncident = dayOfIncident;
         this.timeOfIncident = timeOfIncident;
     }
+    public long getIncidentID() {
+        return incidentID;
+    }
 }
