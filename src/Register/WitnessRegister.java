@@ -1,7 +1,9 @@
 package Register;
 
-import Person.Person;
-
+import java.util.ArrayList;
+//import Person.ContactInfo;
+import Person.Witness;
+//import Person.Person;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,12 +13,12 @@ import java.util.Map;
 public final class WitnessRegister  implements CommonRegisterMethods
 {
 
-    Map< String, Person > register = new HashMap();
+    Map< String, Witness> register = new HashMap();
 
 
-    public boolean remove(String hasKey)
+    public boolean add(Witness wit)
     {
         //todo: if upgrading a witness we can delete all info, and insert sosialsecuritynumber instead
-        return true;
+
     }
 }

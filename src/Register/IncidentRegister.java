@@ -11,4 +11,10 @@ public final class IncidentRegister  implements CommonRegisterMethods
 {
 
     Map< Integer, Incident > register = new HashMap();
+
+    public boolean add(Incident inc)
+    {
+        //add(inc., inc, register);
+        return false;
+    }
 }
