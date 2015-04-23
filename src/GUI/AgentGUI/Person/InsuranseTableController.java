@@ -38,17 +38,23 @@ public class InsuranseTableController
         table.setPlaceholder( new Label("Ingen registrerte forsikringer") ); //todo: add icon here?
         table.setItems(theList);
 
-        setCurrentPersonListener();
+        setListeners();
     }
 
     //todo: thi method is used some places ->
-    private void setCurrentPersonListener() {
+    private void setListeners() {
         //todo: might not need this? as users "should" open a new editPersonwindow each time
         StartMain.currentCustomer.getPersonProperty().addListener(
                 observable -> {
                     SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
                     setCustomer(property.getValue());
                 });
+
+        table.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                StartMain.changeWindowListener.setPropertyString("Insurance");
+            }
+        });
     }
 
     private void setCustomer(Person person)

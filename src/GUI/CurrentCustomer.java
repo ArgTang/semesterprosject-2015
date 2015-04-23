@@ -13,7 +13,7 @@ import java.util.Optional;
 public class CurrentCustomer
 {
     //todo: make generic?
-    private final SimpleObjectProperty<Person> personListener = new SimpleObjectProperty<>(null);
+    private final SimpleObjectProperty<Person> personListener = new SimpleObjectProperty<>();
 
     public final Optional<Person> getProperty() { return Optional.ofNullable(personListener.get()); }
     public final void setProperty(Person person) { personListener.set( person ); }

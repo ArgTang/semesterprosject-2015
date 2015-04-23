@@ -8,15 +8,13 @@ import Person.Person;
 import Test.GUItest;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
@@ -87,6 +85,13 @@ public final class AgentSearchController implements CommonGUIMethods
         gotoPerson.setDisable(true);
         personResults.setPlaceholder(new Label("Her kommer resultatet fra ditt søk")); //todo: add icon here?
         personResults.setItems(searchresults);
+
+        setListeners();
+        addCSSValidation();
+    }
+
+    private void setListeners()
+    {
         personResults.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldPerson, newPerson) -> {
                     if (newPerson == null)
@@ -96,32 +101,12 @@ public final class AgentSearchController implements CommonGUIMethods
                     gotoPerson.setDisable(false);
                 }
         );
-        addCSSValidation();
-    }
 
-    @FXML
-    private void showEditPersonDialog(ActionEvent actionEvent) throws IOException
-    {
-        //todo: goto personeditmenu instead? or is a popup sufficient
-        Parent EditPerson = FXMLLoader.load(getClass().getResource("\\EditPerson.fxml"));
-        EditPerson.setStyle("-fx-font-size: 1.5em;");
-
-        //todo: get mainstage somehow instead of creating a new one?
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("Edit Person");
-        dialogStage.initModality(Modality.APPLICATION_MODAL); // freeze program todo: feedback when clicking outside of mpdal?
-
-        Scene scene = new Scene(EditPerson);
-        dialogStage.setScene(scene);
-
-        //new stage -> add cssRules for cssValidation
-        String css = StartMain.class.getResource("\\css\\login.css").toExternalForm();
-        scene.getStylesheets().add(css);
-
-        dialogStage.setAlwaysOnTop(true);
-        dialogStage.isAlwaysOnTop();
-        dialogStage.centerOnScreen();
-        dialogStage.showAndWait();
+        personResults.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                gotoPerson();
+            }
+        });
     }
 
     @FXML
@@ -181,7 +166,6 @@ public final class AgentSearchController implements CommonGUIMethods
         RegEX.addCSSTextValidation(searchCustomeriD, RegEX.isAllChars()); //todo:chage this when customer id is ready
         RegEX.addCSSTextValidation(searchPhone, RegEX.isNumber(8));
     }
-
 
     public Parent initAgentSearch()
     {

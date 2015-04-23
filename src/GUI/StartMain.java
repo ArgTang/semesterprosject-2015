@@ -33,6 +33,9 @@ public class StartMain extends Application
     private Fader fade = new Fader();
 
     public static final CurrentCustomer currentCustomer = new CurrentCustomer();
+    public static final CurrentInsurance currentInsurance = new CurrentInsurance();
+    public static final CurrentIncident currantInceident = new CurrentIncident();
+
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
     public static final WindowWindowListener changeWindowWindowListener = new WindowWindowListener();     //todo: change to this? more generic
 
