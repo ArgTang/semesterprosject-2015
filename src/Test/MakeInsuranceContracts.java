@@ -1,9 +1,9 @@
 package Test;
 
 /**
- * Created by steinar on 30.03.2015.
+ * Created by nugGet on 22.04.2015.
  */
-public class MakeInsuranceContracts {
-
+public class MakeInsuranceContracts
+{
     //todo: make some insuranseContracts of all the different insuranse types
 }
