@@ -1,7 +1,9 @@
 package Insurance;
 
+import Insurance.Helper.PaymentOption;
 import Person.Person;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ public final class LifeInsurance extends Insurance
     //TODO: this gets comlicated, lets see if we have time to do this
     List<Person> Doctor;
 
-    public LifeInsurance(double insuranseValue, String insurancePolicy) {
-        super(insuranseValue, insurancePolicy);
+    public LifeInsurance(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, owner, paymentOption);
     }
 }

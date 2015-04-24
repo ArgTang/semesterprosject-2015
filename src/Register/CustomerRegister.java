@@ -1,6 +1,5 @@
 package Register;
 
-import Person.Person;
 import Person.Customer;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.Map;
  */
 public final class CustomerRegister implements CommonRegisterMethods
 {
-    private final Map< Long, Person > register = new HashMap(); //todo: what key to use: socialsecuritynumber
+    private final Map< Long, Customer > register = new HashMap(); //todo: what key to use: socialsecuritynumber
 
     public void adder(Customer customer)
     {
@@ -27,7 +26,7 @@ public final class CustomerRegister implements CommonRegisterMethods
     }
 
     //This Method is ONLY for testing purposes!
-    public List<Person> getRegister()
+    public List<Customer> getRegister()
     {
         List list = new ArrayList<>(register.values());
         return list;

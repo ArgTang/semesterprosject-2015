@@ -6,4 +6,6 @@ package Test;
 public class MakeInsuranceContracts
 {
     //todo: make some insuranseContracts of all the different insuranse types
+
+
 }

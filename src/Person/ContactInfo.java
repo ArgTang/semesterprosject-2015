@@ -24,13 +24,22 @@ public class ContactInfo
      * @param phone
      */
 
-    public ContactInfo(String address, String email, String city, int citynumber, int phone)
+    public ContactInfo(String address, int citynumber, String city, String email, int phone)
     {
         this.address = address;
         this.email = email;
         this.city = city;
         this.citynumber = citynumber;
         phoneNumbers.add(phone);
+    }
+
+    public ContactInfo(String address, int citynumber, String city, String email, List<Integer> phoneNumbers)
+    {
+        this.address = address;
+        this.citynumber = citynumber;
+        this.city = city;
+        this.email = email;
+        this.phoneNumbers.addAll(phoneNumbers);
     }
 
     public String getAddress() { return address; }

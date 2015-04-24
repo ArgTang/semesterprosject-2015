@@ -4,6 +4,7 @@ import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
+import Person.Customer;
 import Person.Person;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -40,11 +41,11 @@ public final class AgentSearchController implements CommonGUIMethods
 
     //Register PersonOutputTable
     @FXML
-    private TableView<Person> personResults;
+    private TableView<Customer> personResults;
     @FXML
-    private TableColumn<Person, String> firstname;
+    private TableColumn<Customer, String> firstname;
     @FXML
-    private TableColumn<Person, String> lastname;
+    private TableColumn<Customer, String> lastname;
 
     //Register PersonDetailOutput
     @FXML
@@ -65,23 +66,23 @@ public final class AgentSearchController implements CommonGUIMethods
     private Button gotoPerson;
 
     //searchresults go here
-    public static final ObservableList<Person> searchresults = FXCollections.observableArrayList();
+    public static final ObservableList<Customer> searchresults = FXCollections.observableArrayList();
 
     @FXML
     private void initialize()
     {
         //this function sets up the binding from searchresult to tables in the view
-        firstname.setCellValueFactory(new PropertyValueFactory<Person, String>("firstName"));
-        lastname.setCellValueFactory(new PropertyValueFactory<Person, String>("lastName"));
+        firstname.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
+        lastname.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
         //Gets the observable arraylist from witch the search function gets collected into
 
-        searchresults.addAll(StartMain.customerRegister.getRegister());
+        searchresults.addAll( StartMain.customerRegister.getRegister() );
 
         BooleanBinding noPersonSelected = StartMain.currentCustomer.getPersonProperty().isNull();
         gotoPerson.disableProperty().bind(noPersonSelected);
 
         personResults.setPlaceholder(new Label("Her kommer resultatet fra ditt søk")); //todo: add icon here?
-        personResults.setItems(searchresults);
+        personResults.setItems( searchresults );
 
         setListeners();
         addCSSValidation();

@@ -4,6 +4,8 @@ import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
+import Person.ContactInfo;
+import Person.Customer;
 import Person.Person;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -58,7 +60,7 @@ public class EditPersonController implements CommonGUIMethods
 
         if( StartMain.currentCustomer.getPersonProperty().isNotNull().get())
         {
-            setCustomer(StartMain.currentCustomer.getPerson());
+            setCustomer( StartMain.currentCustomer.getPerson() );
             changeCustomer.setTextFill(Color.RED);
         }
         else
@@ -101,7 +103,7 @@ public class EditPersonController implements CommonGUIMethods
         //todo: might not need this? as users "should" open a new editPersonwindow each time
         StartMain.currentCustomer.getPersonProperty().addListener(
                 observable -> {
-                    SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
+                    SimpleObjectProperty<Customer> property = (SimpleObjectProperty) observable;
                     if (property.isNotNull().get())
                         setCustomer(property.getValue());
                 });
@@ -131,19 +133,19 @@ public class EditPersonController implements CommonGUIMethods
         //phonelist.setOnEditCommit( event -> phonelist.getItems().set(event.getIndex(), event.getNewValue()));
     }
 
-    private void setCustomer(Person person) {
+    private void setCustomer(Customer customer) {
         //todo: if there is an update problem, we need to change this to tesxproperty
-        socialSecurityNumber.setText(String.valueOf(person.getSocialSecurityNumber()));
+        socialSecurityNumber.setText(String.valueOf(customer.getSocialSecurityNumber()));
         socialSecurityNumber.setEditable(false);
-        firstname.setText(person.getFirstName());
-        lastname.setText(person.getLastName());
-        adress.setText(person.getAdress());
-        citynumber.setText(String.valueOf(person.getCitynumbr()));
-        city.setText(person.getCity());
-        email.setText(person.getEmail());
+        firstname.setText(customer.getFirstName());
+        lastname.setText(customer.getLastName());
+        adress.setText(customer.getAdress());
+        citynumber.setText(String.valueOf(customer.getCitynumbr()));
+        city.setText(customer.getCity());
+        email.setText(customer.getEmail());
 
         phones.clear();
-        person.getPhoneNumbers()
+        customer.getPhoneNumbers()
                 .stream()
                 .map(i -> i.toString())
                 .forEach(phones::add);
@@ -170,45 +172,55 @@ public class EditPersonController implements CommonGUIMethods
         {
             newPerson(phonelist);
         }
-
-
     }
 
     private void newPerson(List pheonenumbers)
     {
         //todo: check in register if exists? maybe not needed, since we check if person is loaded from searchresult in updatePerson method
 
-        int socialsecuritynumber = Integer.parseInt( socialSecurityNumber.getText() );
+        if( !checkValidation() )
+        {
+            AlertWindow.errorDialog("Sjekk at alle felter er fylt ut korrekt", "Feil i skjema");
+            return;
+        }
+
+        long socialsecuritynumber = Long.parseLong(socialSecurityNumber.getText());
         String addressString = adress.getText();
         String emailString = email.getText();
         String cityString = city.getText();
         int citynumberString = Integer.parseInt(citynumber.getText(), 10);
-        String firstnameStrint = firstname.getText();
+        String firstnameString = firstname.getText();
         String lastnameString = lastname.getText();
 
-        //todo make a person here
-        Person newCustomer;
+        //get valid phonenumbers
+        List phonenumbers = phones.stream()
+                                    .filter(RegEX.isNumber(8))
+                                    .collect(Collectors.toList());
+
+        ContactInfo contactInfo = new ContactInfo(addressString, citynumberString, cityString, emailString, phonenumbers );
+        Customer customer = new Customer(firstnameString, lastnameString, socialsecuritynumber, contactInfo);
+        StartMain.customerRegister.adder(customer);
     }
 
     private boolean checkValidation()
     {
         // we already do regex, so we only need to check pseudoclass state
 
-        if ( socialSecurityNumber.getText().length() == 11 &&!socialSecurityNumber.getPseudoClassStates().isEmpty() )
+        if ( socialSecurityNumber.getText().length() == 11 && !socialSecurityNumber.getPseudoClassStates().isEmpty() )
             return false;
-        if ( adress.getText().length() > 3 &&!adress.getPseudoClassStates().isEmpty() )
+        if ( adress.getText().length() > 3 && !adress.getPseudoClassStates().isEmpty() )
             return false;
         if ( email.getText().length() > 4 && !email.getPseudoClassStates().isEmpty() )
             return false;
         if ( city.getText().length() > 2 && !city.getPseudoClassStates().isEmpty() )
             return false;
-        if ( citynumber.getText().length() == 4 &&!citynumber.getPseudoClassStates().isEmpty() )
+        if ( citynumber.getText().length() == 4 && !citynumber.getPseudoClassStates().isEmpty() )
             return false;
         if ( firstname.getText().length() < 1 && !firstname.getPseudoClassStates().isEmpty() )
             return false;
         if ( lastname.getText().length() < 2  && !lastname.getPseudoClassStates().isEmpty() )
             return false;
-        //todo: ccheck if this works as intended
+        //todo: check if this works as intended
         if ( phones.stream()
                 .filter(RegEX.isNumber(8))
                 .count() == 0 )

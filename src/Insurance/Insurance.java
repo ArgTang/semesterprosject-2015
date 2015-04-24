@@ -1,8 +1,8 @@
 package Insurance;
 
 import Insurance.Helper.PaymentOption;
-import Person.Person;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -13,19 +13,23 @@ import java.time.LocalDateTime;
 public abstract class Insurance
 {
     final LocalDateTime dateCreated; //TODO: Find a better name for "what date the insurance was created"
-    final double itemValue;
+    final LocalDate validFrom;
+    private LocalDate endDate;
+    final int itemValue;
     final String policy; // todo: informasjon om hva forsikringen dekker, forskjellig fra hver type?
     PaymentOption paymentOption;
     private int annualPremium;
     private static int monthlyPremium;
-    private Person owner; //todo: if cosinging policy? or company owned?
+    private final long owner; //todo: if cosinging policy? or company owned?
     //todo: Decide on what we should store here annet?
 
-    public Insurance(double itemValue, String policy)
-    {
+
+    public Insurance( LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
         this.dateCreated = LocalDateTime.now();
+        this.validFrom = validFrom;
         this.itemValue = itemValue;
         this.policy = policy;
-
+        this.owner = owner;
+        this.paymentOption = paymentOption;
     }
 }

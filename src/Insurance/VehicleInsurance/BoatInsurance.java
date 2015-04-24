@@ -1,7 +1,9 @@
 package Insurance.VehicleInsurance;
 
-import Objects.Vehicle;
+import Insurance.Helper.PaymentOption;
 import Objects.VehicleBoat;
+
+import java.time.LocalDate;
 
 /**
  * Created by steinar on 27.03.2015.
@@ -11,9 +13,7 @@ public final class BoatInsurance extends VehicleInsurance {
 
     VehicleBoat Boat;
 
-    //temp constructor (for compile)
-
-    public BoatInsurance(double insuranseValue, String insurancePolicy, Vehicle vehicle, int feet) {
-        super(insuranseValue, insurancePolicy, vehicle);
+    public BoatInsurance(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, owner, paymentOption);
     }
 }

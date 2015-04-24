@@ -1,7 +1,10 @@
 package Insurance.Animal;
 
+import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
 import Person.Person;
+
+import java.time.LocalDate;
 
 /**
  * Created by steinar on 07.04.2015.
@@ -19,8 +22,8 @@ public class Animal extends Insurance{
     String Sex;
     boolean vaccinated;
 
-    public Animal(double insuranseValue, String insurancePolicy, String breed) {
-        super(insuranseValue, insurancePolicy);
-        this.breed = breed;
+
+    public Animal(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, owner, paymentOption);
     }
 }

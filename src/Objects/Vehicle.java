@@ -22,5 +22,17 @@ public class Vehicle {
     String registrationNumber;
     List<File> pictures;
 
-
+    public Vehicle(int registeredKM, int horsePower, int value, int purchasePrice, LocalDate purchaceDate, short makeYear, String maker, String model, String color, String registrationNumber, List<File> pictures) {
+        this.registeredKM = registeredKM;
+        this.horsePower = horsePower;
+        this.value = value;
+        this.purchasePrice = purchasePrice;
+        this.purchaceDate = purchaceDate;
+        this.makeYear = makeYear;
+        this.maker = maker;
+        this.model = model;
+        this.color = color;
+        this.registrationNumber = registrationNumber;
+        this.pictures = pictures;
+    }
 }

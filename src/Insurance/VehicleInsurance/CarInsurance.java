@@ -1,15 +1,18 @@
 package Insurance.VehicleInsurance;
-
-
+import Insurance.Helper.PaymentOption;
 import Objects.Vehicle;
+
+import java.time.LocalDate;
 
 /**
  * Created by steinar on 27.03.2015.
  */
 public final class CarInsurance extends VehicleInsurance {
 
-    //temp constructor (for compile)
-    public CarInsurance(double insuranseValue, String insurancePolicy, Vehicle vehicle) {
-        super(insuranseValue, insurancePolicy, vehicle);
+    Vehicle vehicle;
+
+
+    public CarInsurance(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, owner, paymentOption);
     }
 }

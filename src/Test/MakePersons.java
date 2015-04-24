@@ -53,7 +53,7 @@ public class MakePersons
 
         phone = 40000000 + randomGenerator.nextInt(50000000);
 
-        ContactInfo contactInfo = new ContactInfo(adress, email, city, citynumber, phone );
+        ContactInfo contactInfo = new ContactInfo(adress, citynumber, city, email, phone );
         return contactInfo;
     }
 

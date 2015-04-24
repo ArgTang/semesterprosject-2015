@@ -1,6 +1,6 @@
 package GUI;
 
-import Person.Person;
+import Person.Customer;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -10,10 +10,10 @@ import javafx.beans.property.SimpleObjectProperty;
 public class CurrentCustomer
 {
     //todo: make generic?
-    private final SimpleObjectProperty<Person> personListener = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<Customer> personListener = new SimpleObjectProperty<>();
 
-    public final Person getPerson() { return personListener.get(); }
-    public final void setProperty(Person person) { personListener.set( person ); }
-    public ObjectProperty<Person> getPersonProperty() { return personListener; }
+    public final Customer getPerson() { return personListener.get(); }
+    public final void setProperty(Customer customer) { personListener.set( customer ); }
+    public ObjectProperty<Customer> getPersonProperty() { return personListener; }
     public void reset() { personListener.setValue(null); }
 }

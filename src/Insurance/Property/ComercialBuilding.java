@@ -1,12 +1,16 @@
 package Insurance.Property;
 
+import Insurance.Helper.PaymentOption;
+
+import java.time.LocalDate;
+
 /**
  * Created by steinar on 07.04.2015.
  */
 public class ComercialBuilding extends PropertyInsurance {
 
 
-    public ComercialBuilding(double insuranseValue, String insurancePolicy) {
-        super(insuranseValue, insurancePolicy);
+    public ComercialBuilding(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, owner, paymentOption);
     }
 }
