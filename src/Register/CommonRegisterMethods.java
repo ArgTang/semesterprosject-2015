@@ -12,7 +12,7 @@ interface CommonRegisterMethods {
     //todo: check for exceptions
     //todo: other common functions
     //linky; https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
-    default <K, O> boolean add( K key, O object,  Map<K, O> collection )
+    default <K, O> boolean addToMap(K key, O object, Map<K, O> collection)
     {
         if (! collection.containsKey(key) )
         {

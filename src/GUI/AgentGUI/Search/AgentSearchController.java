@@ -5,7 +5,6 @@ import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
 import Person.Person;
-import Test.GUItest;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -64,9 +63,8 @@ public final class AgentSearchController implements CommonGUIMethods
     @FXML
     private Button gotoPerson;
 
-    GUItest test;
     //searchresults go here
-    public static ObservableList<Person> searchresults = FXCollections.observableArrayList();;
+    public static final ObservableList<Person> searchresults = FXCollections.observableArrayList();
 
     @FXML
     private void initialize()
@@ -76,8 +74,7 @@ public final class AgentSearchController implements CommonGUIMethods
         lastname.setCellValueFactory(new PropertyValueFactory("lastName"));
         //Gets the observable arraylist from witch the search function gets collected into
 
-        test = new GUItest(); //TODO: make searchMethod
-        searchresults.setAll(test.getPersonData());
+        searchresults.addAll(StartMain.customerRegister.getRegister());
 
         gotoPerson.setDisable(true);
         personResults.setPlaceholder(new Label("Her kommer resultatet fra ditt søk")); //todo: add icon here?
@@ -149,7 +146,6 @@ public final class AgentSearchController implements CommonGUIMethods
         resetTextField(searchCustomeriD);
         resetTextField(searchPhone);
         gotoPerson.setDisable(true);
-        test.resetList();
         searchresults.clear();
         StartMain.currentCustomer.reset();
     }

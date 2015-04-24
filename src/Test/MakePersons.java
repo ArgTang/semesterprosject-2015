@@ -1,8 +1,12 @@
 package Test;
 
+import GUI.StartMain;
 import Person.ContactInfo;
 import Person.Person;
+import Person.Customer;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 /**
@@ -20,6 +24,7 @@ public class MakePersons
     private final static String[] citys = {"1295","OSLO","1300","SANDVIKA","1307","FORNEBU","1309","RUD","1312","SLEPENDEN","1317","BÆRUMS VERK","1319","BEKKESTUA","1324","LYSAKER","1329","LOMMEDALEN","1332","ØSTERÅS","1333","KOLSÅS","1358","JAR","1371","ASKER","1375","BILLINGSTAD","1378","NESBRU","1380","HEGGEDAL","1388","BORGEN","1391","VOLLEN","1395","HVALSTAD","1400","SKI","1403","LANGHUS","1404","SIGGERUD","1407","VINTERBRO","1408","KRÅKSTAD","1415","OPPEGÅRD","1411","KOLBOTN","1412","SOFIEMYR","1413","TÅRNÅSEN","1414","TROLLÅSEN","1420","SVARTSKOG","1430","ÅS","1440","DRØBAK","0215","FROGN","1451","NESODDTANGEN","1453","BJØRNEMYR","1454","FAGERSTRAND","1468","FINSTADJORDET","0230","LØRENSKOG","1477","FJELLHAMAR","1486","NITTEDAL","0104","MOSS","0136","RYGGE","0211","VESTBY","1555","SON","0106","FREDRIKSTAD","0135","RÅDE","1670","KRÅKERØY","0111","HVALER","0105","SARPSBORG","0101","HALDEN","0124","ASKIM","1816","SKIPTVET","1850","MYSEN","1870","ØRJE","0227","FET","0221","AURSKOG-HØLAND","2000","LILLESTRØM","2019","SKEDSMOKORSET","0235","ULLENSAKER","2053","JESSHEIM","2060","GARDERMOEN","0237","EIDSVOLL","0402","KONGSVINGER","0403","HAMAR","0412","RINGSAKER","2384","BRUMUNDDAL","0427","ELVERUM","0501","LILLEHAMMER","0520","RINGEBU","2670","OTTA","0517","SEL","0515","VÅGÅ","0514","LOM","0513","SKJÅK","0533","LUNNER","0502","GJØVIK","2900","FAGERNES","0545","VANG","0602","DRAMMEN","0702","HOLMESTRAND","0704","TØNSBERG","0722","NØTTERØY","3154","TOLVSRØD","0701","HORTEN","0706","SANDEFJORD","0624","ØVRE EIKER","0626","LIER","0627","RØYKEN","1103","STAVANGER","4049","HAFRSFJORD","1124","SOLA","1133","HJELMELAND","1141","FINNØY","1149","KARMØY","1102","SANDNES","1122","GJESDAL","1101","EIGERSUND","1004","FLEKKEFJORD","1002","MANDAL","1003","FARSUND","1032","LYNGDAL","1001","KRISTIANSAND","1018","SØGNE","1014","VENNESLA","0906","ARENDAL","0904","GRIMSTAD","0901","RISØR","1201","BERGEN","1247","ASKØY","1259","ØYGARDEN"};
 
     private final static Random randomGenerator = new Random();
+    private static int socialSecuritycounter = 3241;
 
     private static ContactInfo makeContactinfo(String email)
     {
@@ -32,15 +37,17 @@ public class MakePersons
         adress = adresses[ randomGenerator.nextInt( adresses.length )];
         adress += " " + randomGenerator.nextInt( 100 );
 
-        int temp = randomGenerator.nextInt( citys.length );
-        if ((temp & 1) == 0) {
-            city = citys[temp - 1];
+        int temp =  randomGenerator.nextInt(citys.length);
+
+        if ((temp & 1) == 0)
+        {
+            city = citys[temp + 1];
             citynumber = Integer.parseInt( citys[temp], 10 );
         }
         else
         {
             city = citys[temp];
-            citynumber = Integer.parseInt( citys[temp + 1], 10);
+            citynumber = Integer.parseInt( citys[temp - 1], 10);
         }
 
         email = email + "@gmail.com";
@@ -51,22 +58,48 @@ public class MakePersons
         return contactInfo;
     }
 
-    private static Person makePerson() {
-        String name;
+    private static Customer makeCustomer() {
+        String firstname;
         String lastName;
 
         if( randomGenerator.nextBoolean() )
-            name = makeDoubleName( girlyNames );
+            firstname = makeDoubleName( girlyNames );
         else
-            name = makeDoubleName( manlyNames );
+            firstname = makeDoubleName( manlyNames );
 
         lastName = makeName(lastNames);
 
-        ContactInfo contactInfo = makeContactinfo( name + "." + lastName );
+        ContactInfo contactInfo = makeContactinfo( firstname + "." + lastName );
 
-        //todo: decide how Person Objects are structured, and change this accordingly
-       // Person Person = new Person(name, lastName, adress, city, email, phone);
-        return null;
+        int year = 1970;
+        do {
+            year = 1970 + randomGenerator.nextInt(50);
+        } while (year > LocalDate.now().getYear());
+
+        int month = 1;
+        do
+        {
+            month = 1 + randomGenerator.nextInt(11);
+        }while (month > 12);
+
+        LocalDate date = LocalDate.of(year, month, 1);
+
+        int day = 9;
+        do
+        {
+         day = randomGenerator.nextInt(31);
+        }while( day > date.lengthOfMonth());
+
+        //System.out.println("day: " + day + " month: " + month + " year: " + year);
+
+        date.plusDays(day);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyy");
+        String birthday = date.format(formatter);
+
+        long number = Long.parseLong( birthday + String.valueOf( ++socialSecuritycounter));
+
+        Customer customer = new Customer(firstname, lastName, number, contactInfo );
+        return customer;
     }
 
     private static String makeName( String[] names ) {
@@ -95,8 +128,12 @@ public class MakePersons
         //todo make default persons and passwords to logintosite
     }
 
-    public static void makeCustomers(int numberOfCustomers) {
-
+    public static void makeCustomers(int numberOfCustomers)
+    {
+        for(int i = numberOfCustomers; i > 0; i--)
+        {
+            StartMain.customerRegister.adder( makeCustomer() );
+        }
     }
 
     public static void makeAgents(int numberOfAgents) {

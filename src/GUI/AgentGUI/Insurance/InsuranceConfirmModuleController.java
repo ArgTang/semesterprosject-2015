@@ -84,10 +84,10 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
         Dialog dialog = new Dialog();
         Alert alert = new Alert(Alert.AlertType.WARNING);
         //dialog.setGraphic(alert.getGraphic().getClip()); //InvocationTargetException //todo: find a way to get warning icon and add to this dialog
-        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        //Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
 //        Image icon = alertStage.getIcons().stream().findFirst().get(); //this do crash
 
-        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        //Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         //stage.getIcons().add( icon );
 
         dialog.setTitle("Avslutt avtale");

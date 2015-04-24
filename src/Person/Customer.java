@@ -21,7 +21,7 @@ public final class Customer extends Person
      * @param socialSecurityNumber
      * @param contactInfo
      */
-    public Customer( String firstName, String lastName, int socialSecurityNumber, ContactInfo contactInfo )
+    public Customer( String firstName, String lastName, long socialSecurityNumber, ContactInfo contactInfo )
     {
         super(firstName, lastName, socialSecurityNumber, contactInfo);
         customerId = "cust" + idCount++;
