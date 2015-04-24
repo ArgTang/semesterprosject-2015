@@ -2,7 +2,6 @@ package Test;
 
 import GUI.StartMain;
 import Person.ContactInfo;
-import Person.Person;
 import Person.Customer;
 
 import java.time.LocalDate;

@@ -5,6 +5,7 @@ import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
 import Person.Person;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -70,13 +71,15 @@ public final class AgentSearchController implements CommonGUIMethods
     private void initialize()
     {
         //this function sets up the binding from searchresult to tables in the view
-        firstname.setCellValueFactory(new PropertyValueFactory("firstName"));
-        lastname.setCellValueFactory(new PropertyValueFactory("lastName"));
+        firstname.setCellValueFactory(new PropertyValueFactory<Person, String>("firstName"));
+        lastname.setCellValueFactory(new PropertyValueFactory<Person, String>("lastName"));
         //Gets the observable arraylist from witch the search function gets collected into
 
         searchresults.addAll(StartMain.customerRegister.getRegister());
 
-        gotoPerson.setDisable(true);
+        BooleanBinding noPersonSelected = StartMain.currentCustomer.getPersonProperty().isNull();
+        gotoPerson.disableProperty().bind(noPersonSelected);
+
         personResults.setPlaceholder(new Label("Her kommer resultatet fra ditt søk")); //todo: add icon here?
         personResults.setItems(searchresults);
 
@@ -92,7 +95,6 @@ public final class AgentSearchController implements CommonGUIMethods
                         return;
                     setSelectedPersonDetails(newPerson);
                     StartMain.currentCustomer.setProperty(newPerson);
-                    gotoPerson.setDisable(false);
                 }
         );
 
@@ -145,9 +147,16 @@ public final class AgentSearchController implements CommonGUIMethods
         resetTextField(searchLastname);
         resetTextField(searchCustomeriD);
         resetTextField(searchPhone);
-        gotoPerson.setDisable(true);
         searchresults.clear();
         StartMain.currentCustomer.reset();
+
+        //todo: bind to a stringProperty instead?
+        socialsecurity.setText("");
+        customerId.setText("");
+        fullname.setText("");
+        phonenumber.setText("");
+        adress.setText("");
+        city.setText("");
     }
 
     @Override
@@ -162,6 +171,7 @@ public final class AgentSearchController implements CommonGUIMethods
 
     private void setSelectedPersonDetails(Person person)
     {
+        //todo: bind to a stringProperty instead?
         socialsecurity.setText( String.valueOf( person.getSocialSecurityNumber() ) );
         customerId.setText(String.valueOf(1234567)); //todo: set this field when customers have customernumbers
         fullname.setText(person.getFirstName() + " " + person.getLastName());
