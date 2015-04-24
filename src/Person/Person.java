@@ -12,7 +12,7 @@ public abstract class Person {
     //todo: Merge Person and Object package together.
     private String firstName;
     private String lastName;
-    private Long socialSecurityNumber;
+    private String socialSecurityNumber; //If we make this a number: 0304052345 will become 304052345
     private ContactInfo contactInfo;
     private String password;
 
@@ -25,7 +25,7 @@ public abstract class Person {
      * @param socialSecurityNumber
      * @param contactInfo
      */
-    public Person(String firstName, String lastName, long socialSecurityNumber, ContactInfo contactInfo) {
+    public Person(String firstName, String lastName, String socialSecurityNumber, ContactInfo contactInfo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.socialSecurityNumber = socialSecurityNumber;
@@ -56,7 +56,7 @@ public abstract class Person {
         return contactInfo.getEmail();
     }
 
-    public long getSocialSecurityNumber() {
+    public String getSocialSecurityNumber() {
         return socialSecurityNumber;
     }
 

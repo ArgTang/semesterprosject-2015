@@ -135,7 +135,7 @@ public class EditPersonController implements CommonGUIMethods
 
     private void setCustomer(Customer customer) {
         //todo: if there is an update problem, we need to change this to tesxproperty
-        socialSecurityNumber.setText(String.valueOf(customer.getSocialSecurityNumber()));
+        socialSecurityNumber.setText( customer.getSocialSecurityNumber() );
         socialSecurityNumber.setEditable(false);
         firstname.setText(customer.getFirstName());
         lastname.setText(customer.getLastName());
@@ -184,7 +184,7 @@ public class EditPersonController implements CommonGUIMethods
             return;
         }
 
-        long socialsecuritynumber = Long.parseLong(socialSecurityNumber.getText());
+        String socialsecuritynumber = socialSecurityNumber.getText();
         String addressString = adress.getText();
         String emailString = email.getText();
         String cityString = city.getText();

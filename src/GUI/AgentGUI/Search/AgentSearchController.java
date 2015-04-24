@@ -74,8 +74,8 @@ public final class AgentSearchController implements CommonGUIMethods
         //this function sets up the binding from searchresult to tables in the view
         firstname.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
         lastname.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
-        //Gets the observable arraylist from witch the search function gets collected into
 
+        //Gets the observable arraylist from witch the search function gets collected into
         searchresults.addAll( StartMain.customerRegister.getRegister() );
 
         BooleanBinding noPersonSelected = StartMain.currentCustomer.getPersonProperty().isNull();
@@ -170,15 +170,15 @@ public final class AgentSearchController implements CommonGUIMethods
         RegEX.addCSSTextValidation(searchPhone, RegEX.isNumber(8));
     }
 
-    private void setSelectedPersonDetails(Person person)
+    private void setSelectedPersonDetails(Customer customer)
     {
         //todo: bind to a stringProperty instead?
-        socialsecurity.setText( String.valueOf( person.getSocialSecurityNumber() ) );
+        socialsecurity.setText( customer.getSocialSecurityNumber() );
         customerId.setText(String.valueOf(1234567)); //todo: set this field when customers have customernumbers
-        fullname.setText(person.getFirstName() + " " + person.getLastName());
-        phonenumber.setText(String.valueOf(person.getPhoneNumbers().stream().findAny().get()));
-        adress.setText(person.getAdress());
-        city.setText(person.getCity());
+        fullname.setText(customer.getFirstName() + " " + customer.getLastName());
+        phonenumber.setText(String.valueOf(customer.getPhoneNumbers().stream().findAny().get()));
+        adress.setText(customer.getAdress());
+        city.setText(customer.getCity());
     }
 
     public Parent initAgentSearch()

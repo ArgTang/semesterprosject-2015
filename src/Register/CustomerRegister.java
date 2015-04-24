@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public final class CustomerRegister implements CommonRegisterMethods
 {
-    private final Map< Long, Customer > register = new HashMap(); //todo: what key to use: socialsecuritynumber
+    private final Map< String, Customer > register = new HashMap(); //todo: what key to use: socialsecuritynumber
 
     public void adder(Customer customer)
     {
@@ -20,7 +20,7 @@ public final class CustomerRegister implements CommonRegisterMethods
         register.put(customer.getSocialSecurityNumber(), customer);
     }
 
-    public Customer getCustomer(Long key)
+    public Customer getCustomer(String key)
     {
         return (Customer)getWithKey(key, register);
     }

@@ -72,8 +72,8 @@ public class MakePersons
 
         int year = 1970;
         do {
-            year = 1970 + randomGenerator.nextInt(50);
-        } while (year > LocalDate.now().getYear());
+            year = 1970 + randomGenerator.nextInt(40);
+        } while (year > LocalDate.now().getYear() - 20); //customers need to be 20 years old
 
         int month = 1;
         do
@@ -91,11 +91,12 @@ public class MakePersons
 
         //System.out.println("day: " + day + " month: " + month + " year: " + year);
 
-        date.plusDays(day);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyy");
+        date = date.plusDays(day);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
         String birthday = date.format(formatter);
+        //System.out.println(birthday);
 
-        long number = Long.parseLong( birthday + String.valueOf( ++socialSecuritycounter));
+        String number = birthday + String.valueOf( ++socialSecuritycounter);
 
         Customer customer = new Customer(firstname, lastName, number, contactInfo );
         return customer;
