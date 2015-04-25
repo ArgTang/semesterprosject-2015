@@ -2,7 +2,6 @@ package Register;
 
 import Person.Customer;
 import Person.Person;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,10 +10,10 @@ import java.util.Map;
  */
 public final class CustomerRegister implements CommonRegisterMethods
 {
-    Map< Integer, Customer > register = new HashMap(); //todo: what key to use: socialsecuritynumber
+    Map< Integer, Person > register = new HashMap(); //todo: what key to use: socialsecuritynumber
 
-     public boolean add(Customer cust)
+     public boolean addCustomer(Customer customer)
     {
-        return add(cust.getSocialSecurityNumber(), cust, register);
+        return add(customer.getSocialSecurityNumber(), customer, register);
     }
 }

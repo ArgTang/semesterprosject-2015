@@ -13,8 +13,8 @@ public class EmployeeRegister  implements CommonRegisterMethods
 
     Map< String, Person > register = new HashMap();
 
-    public boolean add(Employee emp)
+    public boolean addEmployee(Employee employee)
     {
-        return add(emp.getEmployeeId(), emp, register);
+        return add(employee.getEmployeeId(), employee, register);
     }
 }

@@ -12,8 +12,8 @@ public final class IncidentRegister  implements CommonRegisterMethods
 
     Map< Long, Incident > register = new HashMap();
 
-    public boolean add(Incident inc)
+    public boolean addIncident(Incident incident)
     {
-        return add(inc.getIncidentID(), inc, register);
+        return add(incident.getIncidentID(), incident, register);
     }
 }
