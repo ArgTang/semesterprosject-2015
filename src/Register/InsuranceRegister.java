@@ -13,7 +13,6 @@ public class InsuranceRegister  implements CommonRegisterMethods
     private static int idCount = 1;
     private int insuranceID;
 
-
     Map< Integer, Insurance > register = new HashMap();
 
     public boolean addInsurance(Customer customer, Insurance insurance)
@@ -21,5 +20,10 @@ public class InsuranceRegister  implements CommonRegisterMethods
         insuranceID = idCount++;
         customer.addInsuranceNumber(insuranceID);
         return add(insuranceID, insurance, register);
+    }
+
+    public Object getInsurance(int insuranceID)
+    {
+        return getWithKey(insuranceID, register);
     }
 }
