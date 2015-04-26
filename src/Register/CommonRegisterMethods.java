@@ -7,7 +7,6 @@ import java.util.Map;
  */
 interface CommonRegisterMethods {
 
-
     //todo: maybe this will work but wont save us much code? but its a good way to show we know generics and interface :)
     //todo: check for exceptions
     //todo: other common functions
@@ -36,5 +35,4 @@ interface CommonRegisterMethods {
         }
         return false;
     }
-
 }

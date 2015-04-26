@@ -10,6 +10,15 @@ import java.util.Map;
  */
 public final class IncidentRegister  implements CommonRegisterMethods
 {
+    Map< Long, Incident > register = new HashMap();
 
-    Map< Integer, Incident > register = new HashMap();
+    public boolean addIncident(Incident incident)
+    {
+        return add(incident.getIncidentID(), incident, register);
+    }
+
+    public Object getIncident(long incidentID)
+    {
+        return getWithKey(incidentID, register);
+    }
 }
