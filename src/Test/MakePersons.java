@@ -132,7 +132,7 @@ public class MakePersons
     {
         for(int i = numberOfCustomers; i > 0; i--)
         {
-            StartMain.customerRegister.adder( makeCustomer() );
+            StartMain.customerRegister.addCustomer( makeCustomer() );
         }
     }
 

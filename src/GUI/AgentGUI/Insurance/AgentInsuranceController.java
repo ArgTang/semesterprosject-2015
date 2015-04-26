@@ -98,6 +98,10 @@ public final class AgentInsuranceController
                         break;
                     case "[Båt]":
                         AlertWindow.messageDialog("Båtforsikring", "Båtforsikring");
+                        break;
+                    case "[Dyr]":
+                        AlertWindow.messageDialog("dyr", "dyr");
+                        break;
                 }
             }
         );

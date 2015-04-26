@@ -9,8 +9,7 @@ import java.time.LocalDate;
  */
 public final class MotorBike extends VehicleInsurance
 {
-
-    public MotorBike(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
-        super(validFrom, itemValue, policy, owner, paymentOption);
+    public MotorBike(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, paymentOption);
     }
 }

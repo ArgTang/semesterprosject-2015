@@ -12,7 +12,7 @@ public final class CarInsurance extends VehicleInsurance {
     Vehicle vehicle;
 
 
-    public CarInsurance(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
-        super(validFrom, itemValue, policy, owner, paymentOption);
+    public CarInsurance(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, paymentOption);
     }
 }

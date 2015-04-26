@@ -13,7 +13,8 @@ public final class BoatInsurance extends VehicleInsurance {
 
     VehicleBoat Boat;
 
-    public BoatInsurance(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
-        super(validFrom, itemValue, policy, owner, paymentOption);
+
+    public BoatInsurance(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, paymentOption);
     }
 }

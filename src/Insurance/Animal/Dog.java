@@ -1,5 +1,9 @@
 package Insurance.Animal;
 
+import Insurance.Helper.PaymentOption;
+
+import java.time.LocalDate;
+
 /**
  * Created by nugGet on 25.04.2015.
  */
@@ -7,11 +11,12 @@ public class Dog extends Animal
 {
     private boolean clubMembership;
 
-    public Dog(double value, String policy, String usage, String breed, String dateOfBirth, String sex, boolean nutered, boolean imported, boolean earlierIllness, AdditionalInfo additionalInfo, boolean clubMembership)
+    public Dog(LocalDate validFrom, int purchasePrice, String policy, PaymentOption paymentOption, String usage, String breed, String dateOfBirth,
+               String sex, boolean nutered, boolean imported, boolean earlierIllness, AdditionalInfo additionalInfo, boolean clubMembership)
     {
-        super(value, policy, usage, breed, dateOfBirth, sex, nutered, imported, earlierIllness, additionalInfo);
-        this.clubMembership = clubMembership;
+        super(validFrom, purchasePrice, policy, paymentOption, usage, breed, dateOfBirth, sex, nutered, imported, earlierIllness, additionalInfo);
     }
+
 
     public boolean getClubMembership() { return clubMembership;}
     public void changeMembershipStatus(boolean newStatus) { clubMembership = newStatus;} //Midlertidig

@@ -14,7 +14,7 @@ public abstract class PropertyInsurance extends Insurance{
 
     Property property;
 
-    public PropertyInsurance(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
-        super(validFrom, itemValue, policy, owner, paymentOption);
+    public PropertyInsurance(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, paymentOption);
     }
 }

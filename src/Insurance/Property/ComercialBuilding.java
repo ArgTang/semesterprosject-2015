@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class ComercialBuilding extends PropertyInsurance {
 
 
-    public ComercialBuilding(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
-        super(validFrom, itemValue, policy, owner, paymentOption);
+    public ComercialBuilding(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, paymentOption);
     }
 }

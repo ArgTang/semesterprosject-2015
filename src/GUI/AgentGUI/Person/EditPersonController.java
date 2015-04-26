@@ -199,7 +199,7 @@ public class EditPersonController implements CommonGUIMethods
 
         ContactInfo contactInfo = new ContactInfo(addressString, citynumberString, cityString, emailString, phonenumbers );
         Customer customer = new Customer(firstnameString, lastnameString, socialsecuritynumber, contactInfo);
-        StartMain.customerRegister.adder(customer);
+        StartMain.customerRegister.addCustomer(customer);
     }
 
     private boolean checkValidation()

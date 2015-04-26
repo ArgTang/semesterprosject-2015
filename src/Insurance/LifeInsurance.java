@@ -16,7 +16,8 @@ public final class LifeInsurance extends Insurance
     //TODO: this gets comlicated, lets see if we have time to do this
     List<Person> Doctor;
 
-    public LifeInsurance(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
-        super(validFrom, itemValue, policy, owner, paymentOption);
+
+    public LifeInsurance(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, paymentOption);
     }
 }

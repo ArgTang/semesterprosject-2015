@@ -1,7 +1,8 @@
 package Register;
 
-import Person.Person;
 import Person.Employee;
+import Person.Person;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class EmployeeRegister  implements CommonRegisterMethods
 
     public boolean addEmployee(Employee employee)
     {
-        return add(employee.getEmployeeId(), employee, register);
+        return addToMap(employee.getEmployeeId(), employee, register);
     }
 
     public Object getEmployee(String employeeId)

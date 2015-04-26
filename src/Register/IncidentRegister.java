@@ -14,7 +14,7 @@ public final class IncidentRegister  implements CommonRegisterMethods
 
     public boolean addIncident(Incident incident)
     {
-        return add(incident.getIncidentID(), incident, register);
+        return addToMap(incident.getIncidentID(), incident, register);
     }
 
     public Object getIncident(long incidentID)

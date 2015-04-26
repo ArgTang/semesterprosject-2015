@@ -2,7 +2,6 @@ package Insurance.Animal;
 
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
-import Person.Person;
 
 import java.time.LocalDate;
 

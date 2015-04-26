@@ -1,7 +1,8 @@
 package Register;
 
-import Person.Witness;
 import Incident.Incident;
+import Person.Witness;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public final class WitnessRegister  implements CommonRegisterMethods
 
     public boolean addWitness(Witness witness, Incident incident)
     {
-        return add(incident.getIncidentID(), witness, register);
+        return addToMap(incident.getIncidentID(), witness, register);
     }
 
     public Object getWitness(long incidentID)

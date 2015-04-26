@@ -7,10 +7,13 @@ import java.util.Map;
  */
 interface CommonRegisterMethods {
 
-    //todo: maybe this will work but wont save us much code? but its a good way to show we know generics and interface :)
-    //todo: check for exceptions
+    //todo: maybe this will work but wont save us much code? but its a good way to show we know generics :)
     //todo: other common functions
+
+    //TODO: these methods can be called from other classes, they should not -> change to superclass!
+
     //linky; https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
+    
     default <K, O> boolean addToMap(K key, O object, Map<K, O> collection)
     {
         if (! collection.containsKey(key) )

@@ -14,7 +14,9 @@ public abstract class VehicleInsurance extends Insurance {
     Vehicle vehicle;
     byte bonus; //todo: maybe enum ( steps of 10)  ?
 
-    public VehicleInsurance(LocalDate validFrom, int itemValue, String policy, long owner, PaymentOption paymentOption) {
-        super(validFrom, itemValue, policy, owner, paymentOption);
+
+    public VehicleInsurance(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption)
+    {
+        super(validFrom, itemValue, policy, paymentOption);
     }
 }
