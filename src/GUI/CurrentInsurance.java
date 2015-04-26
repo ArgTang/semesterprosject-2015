@@ -14,6 +14,6 @@ public class CurrentInsurance
 
     public final Insurance getInsurance() { return insuranseListener.get(); }
     public final void setProperty(Insurance insurance) { insuranseListener.set( insurance ); }
-    public ObjectProperty<Insurance> getPersonProperty() { return insuranseListener; }
+    public ObjectProperty<Insurance> getInsuranceProperty() { return insuranseListener; }
     public void reset() { insuranseListener.setValue(null); }
 }

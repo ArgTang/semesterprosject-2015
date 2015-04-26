@@ -74,14 +74,8 @@ public class EditPersonController implements CommonGUIMethods
     @Override
     public void clearFields()
     {
-        resetTextField(socialSecurityNumber);
         socialSecurityNumber.setEditable(true);
-        resetTextField(firstname);
-        resetTextField(lastname);
-        resetTextField(adress);
-        resetTextField(citynumber);
-        resetTextField(city);
-        resetTextField(email);
+        resetTextFields(socialSecurityNumber, firstname, lastname, adress, citynumber, city, email);
         phones.removeAll();
     }
 
@@ -89,12 +83,10 @@ public class EditPersonController implements CommonGUIMethods
     public void addCSSValidation()
     {
         RegEX.addCSSTextValidation(socialSecurityNumber, RegEX.isNumber(11));
-        RegEX.addCSSTextValidation(firstname, RegEX.isLetters());
-        RegEX.addCSSTextValidation(lastname, RegEX.isLetters());
         RegEX.addCSSTextValidation(adress, RegEX.isAdress());
         RegEX.addCSSTextValidation(citynumber, RegEX.isNumber(4));
-        RegEX.addCSSTextValidation(city, RegEX.isLetters());
-        RegEX.addCSSTextValidation(email, RegEX.isNumber(8));
+        RegEX.addCSSTextValidation(email, RegEX.isEmail());
+        addCSSTextValidation(RegEX.isLetters(), firstname, lastname, city);
     }
 
     //todo: put these into an interface (DRY)?? also need to redraw or update label after new name is set

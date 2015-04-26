@@ -3,8 +3,7 @@ package GUI.AgentGUI.Insurance;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -47,10 +46,8 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
     ComboBox paymentOption;
 
     private ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList();
-    private ObservableList<String> paymentOptionNummber = FXCollections.observableArrayList();
     private ObservableList<String> buildingMaterials = FXCollections.observableArrayList();
     private ObservableList<String> buildingTypes = FXCollections.observableArrayList();
-    private StringProperty personName = new SimpleStringProperty();
 
     @FXML
     private void initialize()
@@ -59,9 +56,8 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
         deductible.setItems(deductablenumbers);
         deductible.setValue(deductablenumbers.get(1));
 
-        paymentOptionNummber.addAll(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
-        paymentOption.setValue(paymentOptionNummber.get(0));
-        paymentOption.setItems(paymentOptionNummber);
+        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+        paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
 
         //todo: ENUM?
         buildingMaterials.addAll("Mur", "Tre", "strå");
@@ -76,23 +72,16 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
 
         fromDate.setValue(LocalDate.now());
 
-        setInsuranceChoiceListener();
+        setListeners();
         addCSSValidation();
     }
 
     @Override
     public void clearFields()
     {
-        resetTextField(adress);
-        resetTextField(citynumber);
-        resetTextField(city);
+        resetTextFields(adress, citynumber, city, constructionYear, grossArea, primaryArea, taxedvalue);
         constructedIn.setValue(buildingMaterials.get(0));
-        resetTextField(constructionYear);
         buildingType.setValue(buildingTypes.get(1));
-        resetTextField(grossArea);
-        resetTextField(primaryArea);
-        resetTextField(taxedvalue);
-        personName.setValue("");
         fromDate.setValue(LocalDate.now());
         deductible.setValue(4000);
         paymentOption.setValue(PaymentOption.MONTHLY.getName());
@@ -108,14 +97,12 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
         RegEX.addCSSTextValidation(grossArea, RegEX.isNumber()); //todo:make regex for this
         RegEX.addCSSTextValidation(primaryArea, RegEX.isNumber()); //todo:make regex for this
     }
-    private void setInsuranceChoiceListener()
+    private void setListeners()
     {
-        AgentInsuranceController.insuranceChoiceListener.getStringProperty().addListener(
-                observable -> {
-                    StringProperty string = (StringProperty) observable;
-                    if (string.getValue().equals("tøm skjerm"))
-                        clearFields();
-                });
-
+        AgentInsuranceController.emptyscreen.addListener(observable -> {
+            SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
+            if (bool.get())
+                clearFields();
+        });
     }
 }

@@ -36,7 +36,7 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
     @FXML
     private void initialize()
     {
-        BooleanBinding insuranceIsNotChosen = StartMain.currentInsurance.getPersonProperty().isNull();
+        BooleanBinding insuranceIsNotChosen = StartMain.currentInsurance.getInsuranceProperty().isNull();
         endThis.disableProperty().bind(insuranceIsNotChosen);
     }
 
@@ -57,6 +57,12 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
         {
             StartMain.currentInsurance.reset();
             description.setText("");
+
+            Runnable newthread = () -> {
+                AgentInsuranceController.emptyscreen.setValue(true);
+                AgentInsuranceController.emptyscreen.setValue(false);};
+            Thread thread = new Thread(newthread);
+            thread.start();
         }
     }
 

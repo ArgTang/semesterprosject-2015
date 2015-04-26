@@ -142,11 +142,11 @@ public final class AgentSearchController implements CommonGUIMethods
     @Override
     public void clearFields()
     {
-        resetTextField(searchSocialsecuritynumber);
-        resetTextField(searchSurename);
-        resetTextField(searchLastname);
-        resetTextField(searchCustomeriD);
-        resetTextField(searchPhone);
+        resetTextFields(searchSocialsecuritynumber);
+        resetTextFields(searchSurename);
+        resetTextFields(searchLastname);
+        resetTextFields(searchCustomeriD);
+        resetTextFields(searchPhone);
         searchresults.clear();
         StartMain.currentCustomer.reset();
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane hgap="5.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Insurance.RegisterAnimalModuleController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+    <children>
+        <Label text="Type" />
+        <ComboBox fx:id="animalType" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+        <Label text="Navn" GridPane.rowIndex="1" />
+        <TextField fx:id="name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label text="Fødselsdato" GridPane.rowIndex="2" />
+        <DatePicker fx:id="birthday" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label text="Rase" GridPane.rowIndex="3" />
+        <TextField fx:id="breed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label text="Farge" GridPane.rowIndex="4" />
+        <TextField fx:id="color" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Label text="Kjønn" GridPane.rowIndex="5" />
+        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+           <GridPane.margin>
+               <Insets right="10.0" />
+           </GridPane.margin>
+           <children>
+               <RadioButton fx:id="boy" mnemonicParsing="false" selected="true" text="Gutt" />
+               <RadioButton fx:id="girl" mnemonicParsing="false" text="Jente" />
+           </children>
+        </HBox>
+        <Label text="Chip ID" GridPane.rowIndex="6" />
+        <TextField fx:id="chipID" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <Label text="Bruksområde" GridPane.rowIndex="7" />
+        <TextField fx:id="usage" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+        <Label text="Kastrert" GridPane.rowIndex="8" />
+        <CheckBox fx:id="neutered" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+        <Label text="Orginal land" GridPane.rowIndex="9" />
+        <TextField fx:id="country" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+        <Label text="Klubb" GridPane.rowIndex="10" />
+        <TextField fx:id="sorority" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+        <Label text="Verdi" GridPane.rowIndex="11" />
+        <TextField fx:id="value" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+        <Label text="Fra dato" GridPane.rowIndex="12" />
+        <DatePicker fx:id="fromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+        <Label text="Betalingsvalg" GridPane.rowIndex="13" />
+        <ComboBox fx:id="paymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+    </children>
+   <padding>
+      <Insets left="8.0" right="8.0" />
+   </padding>
+</GridPane>

@@ -9,12 +9,12 @@ import java.time.LocalDate;
  */
 public class Dog extends Animal
 {
-    private boolean clubMembership;
+    private boolean clubMembership; //todo:need this?
 
     public Dog(LocalDate validFrom, int purchasePrice, String policy, PaymentOption paymentOption, String usage, String breed, String dateOfBirth,
-               String sex, boolean nutered, boolean imported, boolean earlierIllness, AdditionalInfo additionalInfo, boolean clubMembership)
+               String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo)
     {
-        super(validFrom, purchasePrice, policy, paymentOption, usage, breed, dateOfBirth, sex, nutered, imported, earlierIllness, additionalInfo);
+        super(validFrom, purchasePrice, policy, paymentOption, usage, breed, dateOfBirth, sex, nutered, earlierIllness, additionalInfo);
     }
 
 

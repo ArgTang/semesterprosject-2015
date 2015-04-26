@@ -10,10 +10,8 @@ import java.time.LocalDate;
 public class Cat extends Animal
 {
 
-    public Cat(LocalDate validFrom, int purchasePrice, String policy, PaymentOption paymentOption, String usage, String breed, String dateOfBirth, String sex,
-               boolean nutered, boolean imported, boolean earlierIllness, AdditionalInfo additionalInfo)
-    {
-
-        super(validFrom, purchasePrice, policy, paymentOption, usage, breed, dateOfBirth, sex, nutered, imported, earlierIllness, additionalInfo);
+    public Cat(LocalDate validFrom, int purchasePrice, String policy, PaymentOption paymentOption, String usage, String breed, String dateOfBirth,
+               String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo) {
+        super(validFrom, purchasePrice, policy, paymentOption, usage, breed, dateOfBirth, sex, nutered, earlierIllness, additionalInfo);
     }
 }

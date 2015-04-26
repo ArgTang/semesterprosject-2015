@@ -9,13 +9,14 @@ import java.time.LocalDate;
  */
 public class Horse extends Animal
 {
-    private boolean clubMembership;
+    private boolean clubMembership; //todo: need this?
 
     public Horse(LocalDate validFrom, int purchasePrice, String policy, PaymentOption paymentOption, String usage, String breed, String dateOfBirth,
-               String sex, boolean nutered, boolean imported, boolean earlierIllness, AdditionalInfo additionalInfo, boolean clubMembership)
+                 String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo)
     {
-        super(validFrom, purchasePrice, policy, paymentOption, usage, breed, dateOfBirth, sex, nutered, imported, earlierIllness, additionalInfo);
+        super(validFrom, purchasePrice, policy, paymentOption, usage, breed, dateOfBirth, sex, nutered, earlierIllness, additionalInfo);
     }
+
 
     public boolean getClubMembership() { return clubMembership; }
     public void changeMembershipStatus( boolean newStatus ) { clubMembership = newStatus; } //Midlertidig

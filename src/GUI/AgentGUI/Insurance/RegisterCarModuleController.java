@@ -3,11 +3,9 @@ package GUI.AgentGUI.Insurance;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
-import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -60,9 +58,6 @@ public final class RegisterCarModuleController implements CommonGUIMethods
     private ObservableList<Integer> bonusValues = FXCollections.observableArrayList();
     private ObservableList<String> kmValues = FXCollections.observableArrayList();
     private ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList();
-    private ObservableList<String> paymentOptionNummber = FXCollections.observableArrayList();
-
-    private StringProperty personName = new SimpleStringProperty();
 
     @FXML
     private void initialize()
@@ -70,83 +65,68 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         //todo: some of these might be used for more insurances -> move into Vehicle Class
         kaskoValues.addAll("Ansvar", "Delkasko", "Fullkasko");
         kasko.setItems(kaskoValues);
+        kasko.setValue(kaskoValues.get(1));
 
         bonusValues.addAll(0, 10, 20, 30, 40, 50, 60, 70, 75);
         bonus.setItems(bonusValues);
+        bonus.setValue(bonusValues.get(2));
 
         kmValues.addAll("8000", "12000", "16000", "ubegrenset");
         yearlyKM.setItems(kmValues);
+        yearlyKM.setValue(kmValues.get(0));
 
         deductablenumbers.addAll(2000, 4000, 8000, 12000);
         deductible.setItems(deductablenumbers);
+        deductible.setValue(deductablenumbers.get(1));
 
-        paymentOptionNummber.addAll(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
-        paymentOption.setItems(paymentOptionNummber);
+        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+        paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
 
         addCSSValidation();
-        clearFields();
         setInsuranceChoiceListener();
     }
 
     @Override
     public void clearFields()
     {
-        resetTextField(registrationnumber);
-        resetTextField(km);
-        resetTextField(maker);
-        resetTextField(model);
-        resetTextField(motorsize);
-        resetTextField(modelYear);
-        resetTextField(color);
-        resetTextField(buyPrice);
-        personName.setValue("");
+        resetTextFields(registrationnumber, km, maker, model, motorsize, color, buyPrice);
         fromDate.setValue(LocalDate.now());
         ageRequirements.setIndeterminate(false);
 
-        kasko.setValue("Fullkasko");
-        bonus.setValue(20);
-        yearlyKM.setValue("12000");
-        deductible.setValue(4000);
-        paymentOption.setValue(PaymentOption.MONTHLY.getName());
+        kasko.setValue(kaskoValues.get(1));
+        bonus.setValue(bonusValues.get(2));
+        yearlyKM.setValue(kmValues.get(0));
+        deductible.setValue(deductablenumbers.get(1));
+        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
     }
 
     @Override
     public void addCSSValidation() {
-        RegEX.addCSSTextValidation(registrationnumber, RegEX.isAllChars()); //todo: rege for this?
-        RegEX.addCSSTextValidation(km, RegEX.isNumber());
-        RegEX.addCSSTextValidation(maker, RegEX.isLetters());
+        RegEX.addCSSTextValidation(registrationnumber, RegEX.isAllChars()); //todo: regex for this?
         RegEX.addCSSTextValidation(model, RegEX.isAllChars()); //todo: is chars or is letters
-        RegEX.addCSSTextValidation(motorsize, RegEX.isNumber());
         RegEX.addCSSTextValidation(modelYear, RegEX.isNumber(4));
-        RegEX.addCSSTextValidation(color, RegEX.isLetters());
-        RegEX.addCSSTextValidation(buyPrice, RegEX.isNumber());
+        addCSSTextValidation(RegEX.isNumber(), km, motorsize, buyPrice);
+        addCSSTextValidation(RegEX.isLetters(), maker, color);
     }
+
     private void setInsuranceChoiceListener()
     {
 
-        StartMain.currentInsurance.getPersonProperty().addListener(
+        StartMain.currentInsurance.getInsuranceProperty().addListener(
                 observable -> {
-                    ObjectProperty<Insurance> insurance = (ObjectProperty<Insurance>)observable;
+                    ObjectProperty<Insurance> insurance = (ObjectProperty<Insurance>) observable;
 
-                    if ( insurance.isNotNull().get() )
-                    {
+                    if (insurance.isNotNull().get()) {
                         //todo: set insurance
-                    }
-                    else
+                    } else
                         clearFields();
                 }
         );
 
-        AgentInsuranceController.insuranceChoiceListener.getStringProperty().addListener(
-            observable -> {
-                StringProperty string = (StringProperty) observable;
-
-                if (string.getValue().equals("tøm skjerm"))
-                {
-                    System.out.print(string.getValue());
-                    clearFields();
-                }
-            });
+        AgentInsuranceController.emptyscreen.addListener(observable -> {
+            SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
+            if (bool.get())
+                clearFields();
+        });
     }
-
 }

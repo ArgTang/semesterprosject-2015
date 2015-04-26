@@ -77,6 +77,6 @@ public final class RegEX {
 
     public static void resetCSSValidationRule(TextField textField)
     {
-        textField.pseudoClassStateChanged(invalidText, false);
+            textField.pseudoClassStateChanged(invalidText, false);
     }
 }

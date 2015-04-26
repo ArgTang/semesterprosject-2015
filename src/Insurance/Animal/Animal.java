@@ -11,19 +11,16 @@ import java.time.LocalDate;
 public class Animal extends Insurance
 {
     double purchasePrice;
-    String usage; //TODO: Add enum for different usages
+    String usage; //TODO: Add enum for different usages //need this? horses and\or dogs only?
     String breed; //TODO: Add enum, (Full breed or mix)
     String dateOfBirth;
     String sex;
-    boolean nutered;
-    boolean imported;
-    boolean earlierIllness;
+    boolean nutered; //TODO: for Cats only?
+    boolean earlierIllness; //todo: need this, historikk? se på if: de dekker prosentandel av vetrinærutgifter
     AdditionalInfo additionalInfo;
+    String countryOrigin;
 
-    String countryOrigin; //TODO: need this?
-    boolean vaccinated; //TODO: need this?
-
-    public Animal(LocalDate validFrom, int purchasePrice, String policy, PaymentOption paymentOption, String usage, String breed, String dateOfBirth, String sex, boolean nutered, boolean imported, boolean earlierIllness, AdditionalInfo additionalInfo)
+    public Animal(LocalDate validFrom, int purchasePrice, String policy, PaymentOption paymentOption, String usage, String breed, String dateOfBirth, String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo)
     {
         super(validFrom, purchasePrice, policy, paymentOption);
         this.purchasePrice = purchasePrice;
@@ -32,7 +29,6 @@ public class Animal extends Insurance
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
         this.nutered = nutered;
-        this.imported = imported;
         this.earlierIllness = earlierIllness;
         this.additionalInfo = additionalInfo;
     }
@@ -43,7 +39,6 @@ public class Animal extends Insurance
     public String getDateOfBirth() { return dateOfBirth; }
     public String getSex() { return sex; }
     public boolean getNutered() { return nutered; }
-    public boolean getImported() { return imported; }
     public boolean getEarlerIllness() { return earlierIllness; }
     public String getColor() { return additionalInfo.color; }
     public String getName() { return additionalInfo.name; }
@@ -51,6 +46,5 @@ public class Animal extends Insurance
     public String getIllnessDescription() { return additionalInfo.illnessDescription; }
 
     //TODO: Add methods for changing usage and nutered
-
 
 }

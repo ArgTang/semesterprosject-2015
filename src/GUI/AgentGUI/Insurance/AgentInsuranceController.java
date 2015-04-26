@@ -4,10 +4,11 @@ import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import GUI.StartMain;
 import GUI.WindowChangeListener;
+import Insurance.Helper.PaymentOption;
 import Person.Person;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -26,9 +27,13 @@ public final class AgentInsuranceController
     private Fader fade = new Fader();
     private Label kundenavn = new Label();
 
-    private StringProperty navn = new SimpleStringProperty();;
+    private final StringProperty selectedCustomerName = new SimpleStringProperty();
+    public static final BooleanProperty emptyscreen = new SimpleBooleanProperty(false);
+    public static final ObservableList<String> paymentOptionNummber = FXCollections.observableArrayList();
 
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
+
+
 
     public Parent initAgentInsuranceView()
     {
@@ -42,15 +47,21 @@ public final class AgentInsuranceController
         }
 
         chooser = setlabel(chooser);
-        kundenavn.textProperty().bind(navn);
+        kundenavn.textProperty().bind(selectedCustomerName);
         kundenavn.setStyle("-fx-font-weight: bold;");
         setListeners();
+        setPaymentOptionObservables();
 
         container.setLeft(chooser);
         if( container.getCenter() == null)
             showtHouseInsurance();
         container.setRight(confirmModule);
         return container;
+    }
+
+    private void setPaymentOptionObservables()
+    {
+        paymentOptionNummber.addAll(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
     }
 
     public void showtHouseInsurance()
@@ -61,6 +72,11 @@ public final class AgentInsuranceController
     public void showCarinsurance()
     {
         loadParent("\\RegisterCarModule.fxml");
+    }
+
+    private void showAnimalInsurance()
+    {
+        loadParent("\\RegisterAnimalModule.fxml");
     }
 
     private void loadParent(String FXMLpath)
@@ -100,7 +116,7 @@ public final class AgentInsuranceController
                         AlertWindow.messageDialog("Båtforsikring", "Båtforsikring");
                         break;
                     case "[Dyr]":
-                        AlertWindow.messageDialog("dyr", "dyr");
+                        showAnimalInsurance();
                         break;
                 }
             }
@@ -134,6 +150,6 @@ public final class AgentInsuranceController
     private void setCustomername(Person person)
     {
         String navnet = person.getFirstName() + " " + person.getLastName();
-        navn.setValue(navnet);
+        selectedCustomerName.setValue(navnet);
     }
 }
