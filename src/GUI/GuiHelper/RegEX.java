@@ -63,6 +63,11 @@ public final class RegEX {
         return string -> !string.matches(NUMBER + "{" + (lenght-1) + "}");
     }
 
+    public static Predicate<String> isPassword()
+    {//TODO: how to use isAllChars() predicate here?
+        return string -> !string.matches(ALLCHARS) && string.length() > 5;
+    }
+
     public static void addCSSTextValidation(TextField textField, Predicate condition)
     {
         //todo: how to add css only when done typing?

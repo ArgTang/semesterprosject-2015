@@ -13,7 +13,7 @@ interface CommonRegisterMethods {
     //TODO: these methods can be called from other classes, they should not -> change to superclass!
 
     //linky; https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
-    
+
     default <K, O> boolean addToMap(K key, O object, Map<K, O> collection)
     {
         if (! collection.containsKey(key) )

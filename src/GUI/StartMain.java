@@ -47,8 +47,10 @@ public class StartMain extends Application
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        //generate Customers
-        MakePersons.makeCustomers(1000);
+        //generate Customers in new thread -> might be faster when we generate insurance\incidentCases
+        Runnable newthread = () -> MakePersons.makeCustomers(1000);
+        Thread thread = new Thread(newthread);
+        thread.start();
 
         initListeners();
         this.PrimaryStage = primaryStage;
