@@ -1,5 +1,6 @@
 package GUI;
 
+import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.RegEX;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,14 +28,19 @@ public final class WelcomeController
     Label welcome;
 
     @FXML
-    private Button loginButton;
-
-    @FXML
-    private void login(ActionEvent event) throws IOException {
+    private void login(ActionEvent event) throws IOException
+    {
         //todo: how to proceed from here
         StartMain.changeWindowListener.setPropertyString("Agent");
         //StartMain.changeWindowWindowListener.setPropertyObject(this.getClass()); todo: crash!
     }
+
+    @FXML
+    private void forgotPassword()
+    {
+        AlertWindow.messageDialog("glemt passord", "glemt passord");
+    }
+
     @FXML
     private void initialize()
     {
