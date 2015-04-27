@@ -49,7 +49,8 @@ public class MakePersons
             citynumber = Integer.parseInt( citys[temp - 1], 10);
         }
 
-        email = email + "@gmail.com";
+        email = email.replaceAll("\\s", ""); //remove spaces in doublenames
+        email = email.toLowerCase() + "@gmail.com";
 
         phone = 40000000 + randomGenerator.nextInt(50000000);
 

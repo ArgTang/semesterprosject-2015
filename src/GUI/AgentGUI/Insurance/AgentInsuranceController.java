@@ -34,8 +34,6 @@ public final class AgentInsuranceController
 
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
 
-
-
     public Parent initAgentInsuranceView()
     {
         Parent chooser = null;

@@ -27,7 +27,7 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-       <Label text="Registreringsnummer" />
+       <Label text= "Registreringsnummer" />
        <TextField fx:id="registrationnumber" GridPane.columnIndex="1" />
        <Label text="Kmstand" GridPane.rowIndex="1" />
        <TextField fx:id="km" GridPane.columnIndex="1" GridPane.rowIndex="1" />

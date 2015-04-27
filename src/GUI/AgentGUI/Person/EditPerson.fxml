@@ -30,7 +30,7 @@
          <TextField fx:id="adress" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          <Label text="Postnr" GridPane.rowIndex="4" />
          <TextField fx:id="citynumber" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-         <Label text="PostSted" GridPane.rowIndex="5" />
+         <Label text="Poststed" GridPane.rowIndex="5" />
          <TextField fx:id="city" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          <Label text="Email" GridPane.rowIndex="6" />
          <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="6" />
@@ -38,10 +38,7 @@
          <ListView fx:id="phonelist" editable="true" prefHeight="80.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" />
          <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.vgrow="NEVER">
              <children>
-                 <Button fx:id="changeCustomer" maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="Endre kunde">
-                 <HBox.margin>
-                    <Insets />
-                 </HBox.margin></Button>
+                 <Button fx:id="changeCustomer" maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="Endre kunde"></Button>
                  <!--<Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="Opprett kunde" />-->
              </children>
          <GridPane.margin>
