@@ -4,16 +4,16 @@
   <OriginalElement>Insurance</OriginalElement>
   <nodes>
     <node x="385.0" y="638.0">Objects.Property</node>
-    <node x="111.8269230769231" y="331.0">Insurance.VehicleInsurance.VehicleInsurance</node>
+    <node x="111.8269230769231" y="331.0">Insurance.Vehicle.Vehicle</node>
     <node x="310.75000000000006" y="342.0">Insurance.LifeInsurance</node>
     <node x="835.0" y="331.0">Insurance.TravelInsurance</node>
     <node x="682.0" y="353.0">Insurance.ValuablesInsurance</node>
     <node x="309.0" y="7.0">Insurance.Helper.PaymentOption</node>
-    <node x="0.0" y="553.0">Insurance.VehicleInsurance.CarInsurance</node>
+    <node x="0.0" y="553.0">Insurance.Vehicle.Car</node>
     <node x="0.0" y="638.0">Objects.Vehicle</node>
-    <node x="121.00000000000006" y="542.0">Insurance.VehicleInsurance.BoatInsurance</node>
+    <node x="121.00000000000006" y="542.0">Insurance.Vehicle.Boat</node>
     <node x="516.25" y="0.0">Insurance.Insurance</node>
-    <node x="283.00000000000006" y="553.0">Insurance.VehicleInsurance.MotorBike</node>
+    <node x="283.00000000000006" y="553.0">Insurance.Vehicle.MotorBike</node>
     <node x="674.0" y="553.0">Insurance.Property.HomeInsurance</node>
     <node x="524.0" y="553.0">Insurance.Property.ComercialBuilding</node>
     <node x="1112.0" y="243.0">Insurance.Animal.Animal</node>
@@ -37,7 +37,7 @@
       <point x="0.0" y="-47.5" />
       <point x="0.0" y="135.5" />
     </edge>
-    <edge source="Insurance.VehicleInsurance.BoatInsurance" target="Insurance.VehicleInsurance.VehicleInsurance">
+    <edge source="Insurance.Vehicle.Boat" target="Insurance.Vehicle.Vehicle">
       <point x="0.0" y="-25.5" />
       <point x="192.00000000000006" y="517.0" />
       <point x="187.3269230769231" y="517.0" />
@@ -67,7 +67,7 @@
       <point x="643.3333333333334" y="223.0" />
       <point x="-25.41666666666663" y="91.5" />
     </edge>
-    <edge source="Insurance.VehicleInsurance.VehicleInsurance" target="Insurance.Insurance">
+    <edge source="Insurance.Vehicle.Vehicle" target="Insurance.Insurance">
       <point x="0.0" y="-36.5" />
       <point x="187.3269230769231" y="203.0" />
       <point x="541.6666666666666" y="203.0" />
@@ -79,13 +79,13 @@
       <point x="795.8333333333334" y="203.0" />
       <point x="127.08333333333337" y="91.5" />
     </edge>
-    <edge source="Insurance.VehicleInsurance.CarInsurance" target="Insurance.VehicleInsurance.VehicleInsurance">
+    <edge source="Insurance.Vehicle.Car" target="Insurance.Vehicle.Vehicle">
       <point x="0.0" y="-14.5" />
       <point x="50.5" y="517.0" />
       <point x="136.99358974358972" y="517.0" />
       <point x="-50.33333333333334" y="36.5" />
     </edge>
-    <edge source="Insurance.VehicleInsurance.MotorBike" target="Insurance.VehicleInsurance.VehicleInsurance">
+    <edge source="Insurance.Vehicle.MotorBike" target="Insurance.Vehicle.Vehicle">
       <point x="0.0" y="-14.5" />
       <point x="326.50000000000006" y="517.0" />
       <point x="237.66025641025647" y="517.0" />

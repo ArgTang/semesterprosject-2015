@@ -17,6 +17,7 @@ public abstract class Insurance
     PaymentOption paymentOption;
     private int annualPremium;
     private static int monthlyPremium;
+    private int deductible;
     private Person owner; //todo: if cosinging policy? or company owned?
     //todo: Decide on what we should store here annet?
 

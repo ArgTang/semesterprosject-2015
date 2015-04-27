@@ -3,7 +3,8 @@ package Insurance.Helper;
 /**
  * Created by steinar on 07.04.2015.
  */
-public enum PaymentOption {
+public enum PaymentOption
+{
     YEARLY(12, "Årlig"),
     QUARTERLY(3 ,"Kvartalsvis"),
     MONTHLY(1, "Månedlig");
