@@ -4,6 +4,7 @@ import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
 import Insurance.Insurance;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -57,7 +58,6 @@ public final class RegisterCarModuleController implements CommonGUIMethods
     private ObservableList<String> kaskoValues = FXCollections.observableArrayList();
     private ObservableList<Integer> bonusValues = FXCollections.observableArrayList();
     private ObservableList<String> kmValues = FXCollections.observableArrayList();
-    private ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList();
 
     @FXML
     private void initialize()
@@ -72,8 +72,7 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         kmValues.addAll("8000", "12000", "16000", "ubegrenset");
         yearlyKM.setItems(kmValues);
 
-        deductablenumbers.addAll(2000, 4000, 8000, 12000);
-        deductible.setItems(deductablenumbers);
+        deductible.setItems(AgentInsuranceController.deductablenumbers);
 
         paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
 
@@ -89,11 +88,20 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         fromDate.setValue(LocalDate.now());
         ageRequirements.setIndeterminate(false);
 
-        kasko.setValue(kaskoValues.get(1));
-        bonus.setValue(bonusValues.get(2));
-        yearlyKM.setValue(kmValues.get(0));
-        deductible.setValue(deductablenumbers.get(1));
-        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+        //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
+        Runnable clear = () ->
+        {
+            kasko.setValue(kaskoValues.get(1));
+            bonus.setValue(bonusValues.get(2));
+            yearlyKM.setValue(kmValues.get(0));
+            deductible.setValue(AgentInsuranceController.deductablenumbers.get(1));
+            paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+        };
+
+        if(Platform.isFxApplicationThread())
+            clear.run();
+        else
+            Platform.runLater(clear);
     }
 
     @Override

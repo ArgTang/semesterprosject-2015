@@ -3,6 +3,7 @@ package GUI.AgentGUI.Insurance;
 /**
  * Created by steinar on 27.04.2015.
  */
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,9 +37,19 @@ public class TravelnsuranceController {
 
     private void clearFields()
     {
-        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
         fromDate.setValue(LocalDate.now());
-        type.setValue(types.get(0));
+
+        //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
+        Runnable clear = () ->
+        {
+            paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+            type.setValue(types.get(0));
+        };
+
+        if(Platform.isFxApplicationThread())
+            clear.run();
+        else
+            Platform.runLater(clear);
     }
 
     private void setListeners() {

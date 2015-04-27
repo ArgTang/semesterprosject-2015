@@ -3,6 +3,7 @@ package GUI.AgentGUI.Insurance;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,15 +46,13 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
     @FXML
     ComboBox paymentOption;
 
-    private ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList();
     private ObservableList<String> buildingMaterials = FXCollections.observableArrayList();
     private ObservableList<String> buildingTypes = FXCollections.observableArrayList();
 
     @FXML
     private void initialize()
     {
-        deductablenumbers.addAll(2000, 4000, 8000, 12000);
-        deductible.setItems(deductablenumbers);
+        deductible.setItems(AgentInsuranceController.deductablenumbers);
 
         paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
 
@@ -75,11 +74,21 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
     public void clearFields()
     {
         resetTextFields(adress, citynumber, city, constructionYear, grossArea, primaryArea, taxedvalue);
-        constructedIn.setValue(buildingMaterials.get(0));
-        buildingType.setValue(buildingTypes.get(1));
         fromDate.setValue(LocalDate.now());
-        deductible.setValue(deductablenumbers.get(1));
-        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+
+        //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
+        Runnable clear = () ->
+        {
+            constructedIn.setValue(buildingMaterials.get(0));
+            buildingType.setValue(buildingTypes.get(1));
+            deductible.setValue(AgentInsuranceController.deductablenumbers.get(1));
+            paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+        };
+
+        if(Platform.isFxApplicationThread())
+            clear.run();
+        else
+            Platform.runLater(clear);
     }
 
     @Override

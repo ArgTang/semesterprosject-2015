@@ -2,6 +2,7 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -64,12 +65,21 @@ public class RegisterAnimalModuleController implements CommonGUIMethods {
 
     @Override
     public void clearFields() {
+        resetTextFields(name, breed, color, chipID, usage, country, sorority, value);
         fromDate.setValue(LocalDate.now());
         boy.setSelected(true);
-        animalType.setValue(animalTypes.get(0));
-        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
 
-        resetTextFields(name, breed, color, chipID, usage, country, sorority, value);
+        //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
+        Runnable clear = () ->
+        {
+            animalType.setValue(animalTypes.get(0));
+            paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+        };
+
+        if(Platform.isFxApplicationThread())
+            clear.run();
+        else
+            Platform.runLater(clear);
     }
 
     @Override

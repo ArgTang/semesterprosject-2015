@@ -30,6 +30,7 @@ public final class AgentInsuranceController
     private final StringProperty selectedCustomerName = new SimpleStringProperty();
     public static final BooleanProperty emptyscreen = new SimpleBooleanProperty(false);
     public static final ObservableList<String> paymentOptionNummber = FXCollections.observableArrayList();
+    public static final ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList();
 
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
 
@@ -50,7 +51,7 @@ public final class AgentInsuranceController
         kundenavn.textProperty().bind(selectedCustomerName);
         kundenavn.setStyle("-fx-font-weight: bold;");
         setListeners();
-        setPaymentOptionObservables();
+        setObservables();
 
         container.setLeft(chooser);
         if( container.getCenter() == null)
@@ -59,9 +60,10 @@ public final class AgentInsuranceController
         return container;
     }
 
-    private void setPaymentOptionObservables()
+    private void setObservables()
     {
         paymentOptionNummber.addAll(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
+        deductablenumbers.addAll(2000, 4000, 8000, 12000);
     }
 
     public void showtHouseInsurance()
@@ -82,6 +84,11 @@ public final class AgentInsuranceController
     private void showTravelInsurance()
     {
         loadParent("\\TravelInsuranceModule.fxml");
+    }
+
+    private void showBoatInsurance()
+    {
+        loadParent("\\BoatInsuranceModule.fxml");
     }
 
     private void loadParent(String FXMLpath)
@@ -111,14 +118,13 @@ public final class AgentInsuranceController
                         showtHouseInsurance();
                         break;
                     case "[Bil]":
-                        //todo: check if scheme is empty -> confirmdialog
                         showCarinsurance();
                         break;
                     case "[Reise]":
                         showTravelInsurance();
                         break;
                     case "[Båt]":
-                        AlertWindow.messageDialog("Båtforsikring", "Båtforsikring");
+                        showBoatInsurance();
                         break;
                     case "[Dyr]":
                         showAnimalInsurance();
