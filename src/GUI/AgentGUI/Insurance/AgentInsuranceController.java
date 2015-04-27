@@ -79,6 +79,11 @@ public final class AgentInsuranceController
         loadParent("\\RegisterAnimalModule.fxml");
     }
 
+    private void showTravelInsurance()
+    {
+        loadParent("\\TravelInsuranceModule.fxml");
+    }
+
     private void loadParent(String FXMLpath)
     {
         Parent scene = null;
@@ -110,7 +115,7 @@ public final class AgentInsuranceController
                         showCarinsurance();
                         break;
                     case "[Reise]":
-                        AlertWindow.messageDialog("Reiseforsikring", "Reiseforsikring");
+                        showTravelInsurance();
                         break;
                     case "[Båt]":
                         AlertWindow.messageDialog("Båtforsikring", "Båtforsikring");

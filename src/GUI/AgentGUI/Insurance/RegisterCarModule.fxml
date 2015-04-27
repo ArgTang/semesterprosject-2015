@@ -46,7 +46,7 @@
 
        <Label text="Fra dato" GridPane.rowIndex="9" />
        <DatePicker fx:id="fromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-       <Label text="Bruker over 23 år" GridPane.rowIndex="10" />
+       <Label text="Bruker over 25 år" GridPane.rowIndex="10" />
        <CheckBox fx:id="ageRequirements" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" wrapText="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10"></CheckBox>
        <Label text="Bonus" GridPane.rowIndex="11" />
        <ComboBox fx:id="bonus" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="11" />

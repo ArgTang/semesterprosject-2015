@@ -54,26 +54,21 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
     {
         deductablenumbers.addAll(2000, 4000, 8000, 12000);
         deductible.setItems(deductablenumbers);
-        deductible.setValue(deductablenumbers.get(1));
 
-        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
         paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
 
         //todo: ENUM?
         buildingMaterials.addAll("Mur", "Tre", "strå");
         constructedIn.setItems(buildingMaterials);
-        constructedIn.setValue(buildingMaterials.get(0));
 
         //todo: ENUM?
         buildingTypes.addAll("Rekkehus", "Enebolig", "Leilighet", "Tomannsbolig");
         buildingTypes.sorted();
         buildingType.setItems(buildingTypes);
-        buildingType.setValue(buildingTypes.get(1));
-
-        fromDate.setValue(LocalDate.now());
 
         setListeners();
         addCSSValidation();
+        clearFields();
     }
 
     @Override
@@ -83,8 +78,8 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
         constructedIn.setValue(buildingMaterials.get(0));
         buildingType.setValue(buildingTypes.get(1));
         fromDate.setValue(LocalDate.now());
-        deductible.setValue(4000);
-        paymentOption.setValue(PaymentOption.MONTHLY.getName());
+        deductible.setValue(deductablenumbers.get(1));
+        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
     }
 
     @Override

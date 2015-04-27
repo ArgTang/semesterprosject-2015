@@ -65,25 +65,21 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         //todo: some of these might be used for more insurances -> move into Vehicle Class
         kaskoValues.addAll("Ansvar", "Delkasko", "Fullkasko");
         kasko.setItems(kaskoValues);
-        kasko.setValue(kaskoValues.get(1));
 
         bonusValues.addAll(0, 10, 20, 30, 40, 50, 60, 70, 75);
         bonus.setItems(bonusValues);
-        bonus.setValue(bonusValues.get(2));
 
         kmValues.addAll("8000", "12000", "16000", "ubegrenset");
         yearlyKM.setItems(kmValues);
-        yearlyKM.setValue(kmValues.get(0));
 
         deductablenumbers.addAll(2000, 4000, 8000, 12000);
         deductible.setItems(deductablenumbers);
-        deductible.setValue(deductablenumbers.get(1));
 
-        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
         paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
 
         addCSSValidation();
         setInsuranceChoiceListener();
+        clearFields();
     }
 
     @Override

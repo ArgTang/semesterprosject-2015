@@ -13,7 +13,8 @@ public final class TravelInsurance extends Insurance {
     PaymentOption yearlyPremium;
 
 
-    public TravelInsurance(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption) {
-        super(validFrom, itemValue, policy, paymentOption);
+    public TravelInsurance(LocalDate validFrom, String policy, PaymentOption paymentOption)
+    {
+        super(validFrom, 0, policy, paymentOption);
     }
 }

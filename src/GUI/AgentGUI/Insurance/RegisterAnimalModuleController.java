@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.time.LocalDate;
 
 public class RegisterAnimalModuleController implements CommonGUIMethods {
@@ -49,21 +48,24 @@ public class RegisterAnimalModuleController implements CommonGUIMethods {
 
     @FXML
     public void initialize() {
-        fromDate.setValue(LocalDate.now());
-
-        paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
         paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
 
         animalTypes.setAll("Hund", "Katt", "Hest");
         animalType.setItems(animalTypes);
-        animalType.setValue(animalTypes.get(0));
+
+        ToggleGroup group = new ToggleGroup();
+        girl.setToggleGroup(group);
+        boy.setToggleGroup(group);
+
         addCSSValidation();
         setListeners();
+        clearFields();
     }
 
     @Override
     public void clearFields() {
         fromDate.setValue(LocalDate.now());
+        boy.setSelected(true);
         animalType.setValue(animalTypes.get(0));
         paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
 
