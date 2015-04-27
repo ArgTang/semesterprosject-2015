@@ -12,16 +12,16 @@ import java.time.LocalDateTime;
 
 public abstract class Insurance
 {
-    private final LocalDateTime dateCreated; //TODO: Find a better name for "what date the insurance was created"
+    private final LocalDateTime dateCreated;
     private final LocalDate validFrom;
     private LocalDate endDate;
     private  final int itemValue;
     private  final String policy; // todo: informasjon om hva forsikringen dekker, forskjellig fra hver type?
     private  PaymentOption paymentOption;
     private int annualPremium;
-    private static int monthlyPremium;
-    private long owner; //todo: need this? if cosinging policy? or company owned?
-    //todo: Decide on what we should store here annet?
+    private int monthlyPremium;
+    private String owner; //personnummer todo: need this? if cosinging policy? or company owned?
+    private int deductible; //bonus
 
     public Insurance( LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption )
     {

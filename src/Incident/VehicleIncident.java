@@ -1,8 +1,8 @@
 package Incident;
 
 
-import Objects.Vehicle;
 
+import Insurance.Vehicle.Vehicle;
 import java.time.LocalDate;
 import java.util.List;
 

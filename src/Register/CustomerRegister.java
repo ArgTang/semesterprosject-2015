@@ -14,14 +14,34 @@ public class CustomerRegister implements CommonRegisterMethods
 {
     private final Map< String, Customer > register = new HashMap(); //todo: what key to use: socialsecuritynumber
 
+    /**
+     * Adds a new customer
+     * @param customer
+     * @return true if customer don't already exists
+     */
     public boolean addCustomer(Customer customer)
     {
         return addToMap(customer.getSocialSecurityNumber(), customer, register);
     }
 
-    public Customer getCustomer(String key)
+    /**
+     * Finds an existing customer
+     * @param socialSecurityNumber
+     * @return true if customer exists
+     */
+    public Customer getCustomer(String socialSecurityNumber)
     {
-        return (Customer)getWithKey(key, register);
+        return (Customer)getWithKey(socialSecurityNumber, register);
+    }
+
+    /**
+     * Updates an existing customer
+     * @param customer
+     * @return true if customer exists
+     */
+    public boolean updateCustomer(Customer customer)
+    {
+        return update(customer.getSocialSecurityNumber(), customer, register);
     }
 
     //This Method is ONLY for testing purposes!

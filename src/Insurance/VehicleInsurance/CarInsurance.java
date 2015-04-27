@@ -1,7 +1,7 @@
 package Insurance.VehicleInsurance;
-import Insurance.Helper.PaymentOption;
-import Objects.Vehicle;
 
+import Insurance.Helper.PaymentOption;
+import Insurance.Vehicle.Vehicle;
 import java.time.LocalDate;
 
 /**

@@ -1,8 +1,7 @@
 package Insurance.VehicleInsurance;
 
 import Insurance.Helper.PaymentOption;
-import Objects.VehicleBoat;
-
+import Insurance.Vehicle.Boat;
 import java.time.LocalDate;
 
 /**
@@ -10,9 +9,7 @@ import java.time.LocalDate;
  */
 public final class BoatInsurance extends VehicleInsurance {
 
-
-    VehicleBoat Boat;
-
+    Boat boat;
 
     public BoatInsurance(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption) {
         super(validFrom, itemValue, policy, paymentOption);
