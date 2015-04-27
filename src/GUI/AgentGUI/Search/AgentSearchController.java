@@ -42,27 +42,15 @@ public final class AgentSearchController implements CommonGUIMethods
     @FXML
     private TableView<Customer> personResults;
     @FXML
+    private TableColumn<Customer, String> tablesocialnumber;
+    @FXML
     private TableColumn<Customer, String> firstname;
     @FXML
     private TableColumn<Customer, String> lastname;
-
-    //Register PersonDetailOutput
     @FXML
-    private Label socialsecurity;
+    private TableColumn<Customer, String> tableadress;
     @FXML
-    private Label customerId;
-    @FXML
-    private Label fullname;
-    @FXML
-    private Label adress;
-    @FXML
-    private Label phonenumber;
-    @FXML
-    private Label city;
-    @FXML
-    private Button editPerson;
-    @FXML
-    private Button gotoPerson;
+    private TableColumn<Customer, String> tablecity;
 
     //searchresults go here
     public static final ObservableList<Customer> searchresults = FXCollections.observableArrayList();
@@ -71,14 +59,14 @@ public final class AgentSearchController implements CommonGUIMethods
     private void initialize()
     {
         //this function sets up the binding from searchresult to tables in the view
+        tablesocialnumber.setCellValueFactory(new PropertyValueFactory<Customer, String>("SocialSecurityNumber"));
         firstname.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
         lastname.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
+        tableadress.setCellValueFactory(new PropertyValueFactory<Customer, String>("Adress"));
+        tablecity.setCellValueFactory(new PropertyValueFactory<Customer, String>("City"));
 
         //Gets the observable arraylist from witch the search function gets collected into
         searchresults.addAll( StartMain.customerRegister.getRegister() );
-
-        BooleanBinding noPersonSelected = StartMain.currentCustomer.getPersonProperty().isNull();
-        gotoPerson.disableProperty().bind(noPersonSelected);
 
         personResults.setPlaceholder(new Label("Her kommer resultatet fra ditt søk")); //todo: add icon here?
         personResults.setItems( searchresults );
@@ -93,14 +81,13 @@ public final class AgentSearchController implements CommonGUIMethods
                 (observable, oldPerson, newPerson) -> {
                     if (newPerson == null)
                         return;
-                    setSelectedPersonDetails(newPerson);
                     StartMain.currentCustomer.setProperty(newPerson);
                 }
         );
 
         personResults.setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                gotoPerson();
+                StartMain.changeWindowListener.setPropertyString("Customer");
             }
         });
     }
@@ -133,12 +120,6 @@ public final class AgentSearchController implements CommonGUIMethods
     }
 
     @FXML
-    private void gotoPerson()
-    {
-        StartMain.changeWindowListener.setPropertyString("Customer");
-    }
-
-    @FXML
     @Override
     public void clearFields()
     {
@@ -149,14 +130,6 @@ public final class AgentSearchController implements CommonGUIMethods
         resetTextFields(searchPhone);
         searchresults.clear();
         StartMain.currentCustomer.reset();
-
-        //todo: bind to a stringProperty instead?
-        socialsecurity.setText("");
-        customerId.setText("");
-        fullname.setText("");
-        phonenumber.setText("");
-        adress.setText("");
-        city.setText("");
     }
 
     @Override
@@ -167,17 +140,6 @@ public final class AgentSearchController implements CommonGUIMethods
         RegEX.addCSSTextValidation(searchLastname, RegEX.isLetters());
         RegEX.addCSSTextValidation(searchCustomeriD, RegEX.isAllChars()); //todo:chage this when customer id is ready
         RegEX.addCSSTextValidation(searchPhone, RegEX.isNumber(8));
-    }
-
-    private void setSelectedPersonDetails(Customer customer)
-    {
-        //todo: bind to a stringProperty instead?
-        socialsecurity.setText( customer.getSocialSecurityNumber() );
-        customerId.setText(String.valueOf(1234567)); //todo: set this field when customers have customernumbers
-        fullname.setText(customer.getFirstName() + " " + customer.getLastName());
-        phonenumber.setText(String.valueOf(customer.getPhoneNumbers().stream().findAny().get()));
-        adress.setText(customer.getAdress());
-        city.setText(customer.getCity());
     }
 
     public Parent initAgentSearch()

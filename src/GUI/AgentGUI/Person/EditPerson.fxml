@@ -38,7 +38,8 @@
          <ListView fx:id="phonelist" editable="true" prefHeight="80.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" />
          <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.vgrow="NEVER">
              <children>
-                 <Button fx:id="changeCustomer" maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="Endre kunde"></Button>
+                 <Button fx:id="emptyFields" maxHeight="1.7976931348623157E308" onAction="#clearFields" text="Tøm skjerm" />
+                 <Button fx:id="changeCustomer" maxHeight="1.7976931348623157E308" onAction="#updatePerson" text="Endre kunde"></Button>
                  <!--<Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="Opprett kunde" />-->
              </children>
          <GridPane.margin>

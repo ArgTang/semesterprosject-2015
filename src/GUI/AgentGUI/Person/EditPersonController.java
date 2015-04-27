@@ -76,7 +76,7 @@ public class EditPersonController implements CommonGUIMethods
     {
         socialSecurityNumber.setEditable(true);
         resetTextFields(socialSecurityNumber, firstname, lastname, adress, citynumber, city, email);
-        phones.removeAll();
+        phones.clear();
     }
 
     @Override
@@ -145,6 +145,7 @@ public class EditPersonController implements CommonGUIMethods
             phones.add("");
     }
 
+    @FXML
     private void updatePerson()
     {
         if( !checkValidation() )

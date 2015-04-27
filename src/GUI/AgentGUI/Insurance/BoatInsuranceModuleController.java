@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
 
-public class BoatInsuranceController implements CommonGUIMethods
+public class BoatInsuranceModuleController implements CommonGUIMethods
 {
 
     @FXML

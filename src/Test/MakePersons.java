@@ -49,7 +49,13 @@ public class MakePersons
             citynumber = Integer.parseInt( citys[temp - 1], 10);
         }
 
+        city = city.charAt(0) + city.substring(1).toLowerCase();
+        adress = adress.charAt(0) + adress.substring(1).toLowerCase();
+
         email = email.replaceAll("\\s", ""); //remove spaces in doublenames
+        email = email.replaceAll("[åÅ]", "a");
+        email = email.replaceAll("[øØ]", "o");
+        email = email.replaceAll("[æÆ]", "oe");
         email = email.toLowerCase() + "@gmail.com";
 
         phone = 40000000 + randomGenerator.nextInt(50000000);
@@ -95,7 +101,6 @@ public class MakePersons
         date = date.plusDays(day);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
         String birthday = date.format(formatter);
-        //System.out.println(birthday);
 
         String number = birthday + String.valueOf( ++socialSecuritycounter);
 

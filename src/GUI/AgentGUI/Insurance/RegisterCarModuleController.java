@@ -69,7 +69,7 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         bonusValues.addAll(0, 10, 20, 30, 40, 50, 60, 70, 75);
         bonus.setItems(bonusValues);
 
-        kmValues.addAll("8000", "12000", "16000", "ubegrenset");
+        kmValues.addAll("8 000km", "12 000km", "16 000km", "ubegrenset km");
         yearlyKM.setItems(kmValues);
 
         deductible.setItems(AgentInsuranceController.deductablenumbers);
