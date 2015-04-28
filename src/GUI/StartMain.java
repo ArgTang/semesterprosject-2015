@@ -23,10 +23,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.awt.*;
 import java.io.IOException;
-
 
 public class StartMain extends Application
 {

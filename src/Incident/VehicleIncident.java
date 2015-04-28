@@ -1,7 +1,5 @@
 package Incident;
 
-
-
 import Insurance.Vehicle.Vehicle;
 import java.time.LocalDate;
 import java.util.List;

@@ -11,8 +11,4 @@ public final class HomeInsurance extends PropertyInsurance {
     public HomeInsurance(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption) {
         super(validFrom, itemValue, policy, paymentOption);
     }
-
-    //temp constructor (for compile)
-
-
 }

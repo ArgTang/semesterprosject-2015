@@ -5,7 +5,5 @@ package CompanyLogic;
  */
 public final class Company {
 
-
     private final String bossName = "Adrian";
-
 }

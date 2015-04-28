@@ -3,7 +3,6 @@ package Person;
 import java.util.List;
 import java.util.Set;
 
-
 /**
  * Created by steinar on 27.03.2015.
  */
@@ -15,7 +14,6 @@ public abstract class Person {
     private String socialSecurityNumber; //If we make this a number: 0304052345 will become 304052345
     private ContactInfo contactInfo;
     private String password;
-
 
     /**
      * Person constructor
@@ -56,7 +54,8 @@ public abstract class Person {
         return contactInfo.getEmail();
     }
 
-    public String getSocialSecurityNumber() {
+    public String getSocialSecurityNumber()
+    {
         return socialSecurityNumber;
     }
 
@@ -79,5 +78,3 @@ public abstract class Person {
         return text;
     }
 }
-
-

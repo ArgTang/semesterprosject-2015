@@ -23,7 +23,6 @@ import java.io.IOException;
  */
 public final class WelcomeController
 {
-
     private Fader fader = new Fader();
     BorderPane root = new BorderPane();
 
@@ -94,7 +93,6 @@ public final class WelcomeController
 
     private GridPane makeDialog() //http://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
     {
-
         StringProperty message = new SimpleStringProperty();
         Label userName = new Label("Fyll inn brukernavn");
         Label password = new Label("Velg passord");

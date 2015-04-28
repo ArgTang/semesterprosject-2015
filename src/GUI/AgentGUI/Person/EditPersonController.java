@@ -18,10 +18,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.paint.Color;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 /**
  * Created by steinar on 19.04.2015.
@@ -53,7 +51,6 @@ public class EditPersonController implements CommonGUIMethods
     @FXML
     private void initialize()
     {
-        changeCustomer.setPadding(new Insets(15, 15, 15, 15));
         phonelist.setItems(phones);
         setCurrentPersonListener();
         addCSSValidation();

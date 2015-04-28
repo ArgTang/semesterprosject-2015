@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-
 import java.time.LocalDate;
 
 public class BoatInsuranceModuleController implements CommonGUIMethods
@@ -22,31 +21,23 @@ public class BoatInsuranceModuleController implements CommonGUIMethods
 
     @FXML
     private TextField buyPrice;
-
     @FXML
     private TextField motorsize;
-
     @FXML
     private TextField model;
-
     @FXML
     private TextField maker;
-
     @FXML
     private TextField modelYear;
 
     @FXML
     private ComboBox<String> type;
-
     @FXML
     private TextField registrationnumber;
-
     @FXML
     private TextField speed;
-
     @FXML
     private TextField size;
-
     @FXML
     private TextField harbor;
 
@@ -98,8 +89,6 @@ public class BoatInsuranceModuleController implements CommonGUIMethods
             clear.run();
         else
             Platform.runLater(clear);
-
-
     }
 
     @Override

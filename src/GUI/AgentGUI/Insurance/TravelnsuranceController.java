@@ -3,6 +3,7 @@ package GUI.AgentGUI.Insurance;
 /**
  * Created by steinar on 27.04.2015.
  */
+
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -14,7 +15,6 @@ import java.time.LocalDate;
 
 public class TravelnsuranceController
 {
-
     @FXML
     private ComboBox<String> type;
     @FXML

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 <GridPane hgap="5.0" vgap="2.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Person.EditPersonController">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" />
@@ -38,8 +39,8 @@
          <ListView fx:id="phonelist" editable="true" prefHeight="80.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" />
          <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.vgrow="NEVER">
              <children>
-                 <Button fx:id="emptyFields" maxHeight="1.7976931348623157E308" onAction="#clearFields" text="Tøm skjerm" />
-                 <Button fx:id="changeCustomer" maxHeight="1.7976931348623157E308" onAction="#updatePerson" text="Endre kunde"></Button>
+                 <Button fx:id="emptyFields" onAction="#clearFields" text="Tøm skjerm" />
+                 <Button fx:id="changeCustomer" onAction="#updatePerson" text="Endre kunde" />
                  <!--<Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="Opprett kunde" />-->
              </children>
          <GridPane.margin>
