@@ -22,11 +22,11 @@ import java.time.LocalDate;
 public final class RegisterCarModuleController implements CommonGUIMethods
 {
     @FXML
-    TextField registrationnumber;
+    TextField licenceNumber;
     @FXML
     TextField km;
     @FXML
-    TextField maker;
+    ComboBox maker;
     @FXML
     TextField model;
     @FXML
@@ -57,6 +57,17 @@ public final class RegisterCarModuleController implements CommonGUIMethods
     private ObservableList<String> kaskoValues = FXCollections.observableArrayList();
     private ObservableList<Integer> bonusValues = FXCollections.observableArrayList();
     private ObservableList<String> kmValues = FXCollections.observableArrayList();
+    private ObservableList<String> type = FXCollections.observableArrayList(
+            "Stasjonsvogn","SUV","Flerbruksbil","Coupe","Cabriolet","Veteran","Sedan","Kasse","Kombi","Picup","Elbil");
+    private ObservableList<String> makers = FXCollections.observableArrayList(
+            "Alfa Romeo","Aston Martin","Audi","Austin","Bentley","BMW","Buddy","Buick","Cadillac",
+            "Chevrolet","Chrysler","Citroen","Dacia","Daewoo","Daihatsu","Datsun","Dodge","Ferrari",
+            "Fiat","Fisker","Ford","GMC","Honda","Hummer","Hyundai","Infiniti","Isuzu","Iveco","Jaguar",
+            "Jeep","Jensen","Kewet","Kia","Lada","Lamborghini","Lancia","Land Rover","Lexus","Lincon","Lotus",
+            "Maserati","Matra","Mazda","McLaren","Mercedes-Benz","Mercury","MG","Mia Electric","MINI","Mitsubishi",
+            "Morgan","Morris","Nissan","Oldsmobile","Opel","Peugeot","Plymouth","Pontiac","Porche","Renault","Reva",
+            "Rolls Royce","Rover","Saab","Seat","Skoda","Smart","Ssangyong","Subaru","Suzuki","Tesla","Think","Toyota",
+            "Triumph","Volkswagen","Volvo","Andre");
 
     @FXML
     private void initialize()
@@ -71,6 +82,8 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         kmValues.addAll("8 000km", "12 000km", "16 000km", "ubegrenset km");
         yearlyKM.setItems(kmValues);
 
+        maker.setItems(makers);
+
         deductible.setItems(AgentInsuranceController.deductablenumbers);
 
         paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
@@ -83,13 +96,14 @@ public final class RegisterCarModuleController implements CommonGUIMethods
     @Override
     public void clearFields()
     {
-        resetTextFields(registrationnumber, km, maker, model, motorsize, color, buyPrice);
+        resetTextFields(licenceNumber, km, model, motorsize, color, buyPrice);
         fromDate.setValue(LocalDate.now());
         ageRequirements.setIndeterminate(false);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () ->
         {
+            maker.setValue( maker.getItems().get(2) );
             kasko.setValue( kasko.getItems().get(1) );
             bonus.setValue( bonus.getItems().get(2) );
             yearlyKM.setValue( yearlyKM.getItems().get(0) );
@@ -105,11 +119,11 @@ public final class RegisterCarModuleController implements CommonGUIMethods
 
     @Override
     public void addCSSValidation() {
-        RegEX.addCSSTextValidation(registrationnumber, RegEX.isAllChars()); //todo: regex for this?
+        RegEX.addCSSTextValidation(licenceNumber, RegEX.isAllChars()); //todo: regex for this?
         RegEX.addCSSTextValidation(model, RegEX.isAllChars()); //todo: is chars or is letters
         RegEX.addCSSTextValidation(modelYear, RegEX.isNumber(4));
+        RegEX.addCSSTextValidation(color, RegEX.isLetters());
         addCSSTextValidation(RegEX.isNumber(), km, motorsize, buyPrice);
-        addCSSTextValidation(RegEX.isLetters(), maker, color);
     }
 
     private void setInsuranceChoiceListener()

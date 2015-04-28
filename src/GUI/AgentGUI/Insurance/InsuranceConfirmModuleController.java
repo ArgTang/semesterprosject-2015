@@ -7,8 +7,9 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -19,6 +20,20 @@ import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
  */
 public final class InsuranceConfirmModuleController implements CommonGUIMethods
 {
+    @FXML
+    private Label yearlyPremium;
+    @FXML
+    private Label totalFee;
+    @FXML
+    private Label paymentEachTermin;
+
+    @FXML
+    private Pane helperPane;
+    @FXML
+    private Label bonusLabel;
+    @FXML
+    private Label bonusValue;
+
     @FXML
     private TextArea description;
 
@@ -36,6 +51,10 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
     {
         BooleanBinding insuranceIsNotChosen = StartMain.currentInsurance.getInsuranceProperty().isNull();
         endThis.disableProperty().bind(insuranceIsNotChosen);
+
+        bonusLabel.setVisible(false);
+
+        helperPane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null))); //todo: easier way to do this?
     }
 
     @FXML
