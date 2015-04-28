@@ -28,7 +28,7 @@
   </rowConstraints>
    <children>
        <Label text="Registreringsnummer" />
-       <TextField fx:id="registrationnumber" GridPane.columnIndex="1" />
+       <TextField fx:id="licenceNumber" GridPane.columnIndex="1" />
        <Label text="Type" GridPane.rowIndex="1" />
        <ComboBox fx:id="type" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
        <Label text="Størrelse" GridPane.rowIndex="2" />

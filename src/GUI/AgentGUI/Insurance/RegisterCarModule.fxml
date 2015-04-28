@@ -28,7 +28,7 @@
   </rowConstraints>
    <children>
        <Label text= "Registreringsnummer" />
-       <TextField fx:id="registrationnumber" GridPane.columnIndex="1" />
+       <TextField fx:id="licenceNumber" GridPane.columnIndex="1" />
        <Label text="Kmstand" GridPane.rowIndex="1" />
        <TextField fx:id="km" GridPane.columnIndex="1" GridPane.rowIndex="1" />
        <Label text="Merke" GridPane.rowIndex="2" />
