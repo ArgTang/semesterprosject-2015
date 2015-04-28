@@ -19,7 +19,7 @@ public final class InsuranceChooserModuleController
     @FXML
     private void initialize()
     {
-        insuranceTypes.addAll("Hus", "Bil", "Båt", "Reise", "Dyr");
+        insuranceTypes.addAll("Hus", "Bil", "Båt", "Reise", "Dyr", "Innbo");
         insuranceChooser.setItems(insuranceTypes);
         insuranceChooser.getSelectionModel().selectFirst();
         insuranceChooser.requestFocus(); //todo: find a way to set listwiev in focus

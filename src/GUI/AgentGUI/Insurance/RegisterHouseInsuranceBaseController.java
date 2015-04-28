@@ -79,10 +79,10 @@ public final class RegisterHouseInsuranceBaseController implements CommonGUIMeth
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () ->
         {
-            constructedIn.setValue(buildingMaterials.get(0));
-            buildingType.setValue(buildingTypes.get(1));
-            deductible.setValue(AgentInsuranceController.deductablenumbers.get(1));
-            paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+            constructedIn.setValue( constructedIn.getItems().get(0) );
+            buildingType.setValue( buildingType.getItems().get(1) );
+            deductible.setValue( deductible.getItems().get(1) );
+            paymentOption.setValue( paymentOption.getItems().get(0)  );
         };
 
         if(Platform.isFxApplicationThread())

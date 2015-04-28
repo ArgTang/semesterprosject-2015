@@ -72,8 +72,8 @@ public class RegisterAnimalModuleController implements CommonGUIMethods {
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () ->
         {
-            animalType.setValue(animalTypes.get(0));
-            paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+            animalType.setValue( animalType.getItems().get(0) );
+            paymentOption.setValue( paymentOption.getItems().get(0) );
         };
 
         if(Platform.isFxApplicationThread())

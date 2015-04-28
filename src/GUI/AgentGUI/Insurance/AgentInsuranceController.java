@@ -89,6 +89,8 @@ public final class AgentInsuranceController
         loadParent("\\BoatInsuranceModule.fxml");
     }
 
+    private void showHouseholdInsurance() { loadParent("\\householdContentsInsurance.fxml"); }
+
     private void loadParent(String FXMLpath)
     {
         Parent scene = null;
@@ -108,10 +110,6 @@ public final class AgentInsuranceController
             observable -> {
                 StringProperty string = (StringProperty) observable;
                 switch (string.getValue()) {
-                    case "tøm skjerm":
-                        //do nothing
-                        System.out.println("AgentInsuranceController:" + string.getValue());
-                        break;
                     case "[Hus]":
                         showtHouseInsurance();
                         break;
@@ -126,6 +124,9 @@ public final class AgentInsuranceController
                         break;
                     case "[Dyr]":
                         showAnimalInsurance();
+                        break;
+                    case "[Innbo]":
+                        showHouseholdInsurance();
                         break;
                 }
             }

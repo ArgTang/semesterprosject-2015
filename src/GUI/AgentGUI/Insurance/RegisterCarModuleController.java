@@ -91,11 +91,11 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () ->
         {
-            kasko.setValue(kaskoValues.get(1));
-            bonus.setValue(bonusValues.get(2));
-            yearlyKM.setValue(kmValues.get(0));
-            deductible.setValue(AgentInsuranceController.deductablenumbers.get(1));
-            paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
+            kasko.setValue( kasko.getItems().get(1) );
+            bonus.setValue( bonus.getItems().get(2) );
+            yearlyKM.setValue( yearlyKM.getItems().get(0) );
+            deductible.setValue( deductible.getItems().get(1) );
+            paymentOption.setValue( paymentOption.getItems().get(0) );
         };
 
         if(Platform.isFxApplicationThread())

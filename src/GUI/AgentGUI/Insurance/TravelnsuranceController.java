@@ -12,7 +12,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import java.time.LocalDate;
 
-public class TravelnsuranceController {
+public class TravelnsuranceController
+{
 
     @FXML
     private ComboBox<String> type;
@@ -42,8 +43,8 @@ public class TravelnsuranceController {
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () ->
         {
-            paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(0));
-            type.setValue(types.get(0));
+            paymentOption.setValue( paymentOption.getItems().get(0) );
+            type.setValue( type.getItems().get(0) );
         };
 
         if(Platform.isFxApplicationThread())

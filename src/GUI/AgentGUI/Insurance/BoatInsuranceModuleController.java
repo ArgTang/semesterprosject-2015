@@ -88,10 +88,10 @@ public class BoatInsuranceModuleController implements CommonGUIMethods
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () ->
         {
-            type.setValue(types.get(1));
-            kasko.setValue(kaskoValues.get(2));
-            deductible.setValue(AgentInsuranceController.deductablenumbers.get(1));
-            paymentOption.setValue(AgentInsuranceController.paymentOptionNummber.get(1));
+            type.setValue( type.getItems().get(1) );
+            kasko.setValue(kasko.getItems().get(2));
+            deductible.setValue( deductible.getItems().get(1) );
+            paymentOption.setValue( paymentOption.getItems().get(1) );
         };
 
         if(Platform.isFxApplicationThread())
