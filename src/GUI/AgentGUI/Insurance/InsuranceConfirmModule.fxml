@@ -34,16 +34,16 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Årspremie" />
-            <Label fx:id="yearlyPremium" GridPane.columnIndex="1" />
-            <Label text="Avgift" GridPane.rowIndex="1" />
-            <Label fx:id="totalFee" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Beløp per tremin" GridPane.rowIndex="3" />
-            <Label fx:id="paymentEachTermin" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-             
-            <Label fx:id="bonusLabel" text="Opptjent Bonus" GridPane.columnIndex="2" />
-            <Label fx:id="bonusValue" GridPane.columnIndex="3" />
-            <Pane fx:id="helperPane" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+             <Label text="Årspremie" />
+             <Label fx:id="yearlyPremium" GridPane.columnIndex="1" />
+             <Label text="Avgift" GridPane.rowIndex="1" />
+             <Label fx:id="totalFee" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+             <Label text="Beløp per tremin" GridPane.rowIndex="3" />
+             <Label fx:id="paymentEachTermin" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+             <Pane fx:id="helperPane" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+             <Label fx:id="bonusLabel" text="Opptjent Bonus" GridPane.columnIndex="2" />
+             <Label fx:id="bonusValue" GridPane.columnIndex="3" />
          </children>
          <padding>
             <Insets bottom="5.0" />
