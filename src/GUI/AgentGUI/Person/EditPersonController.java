@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.paint.Color;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -123,8 +124,7 @@ public class EditPersonController implements CommonGUIMethods
     }
 
     private void setCustomer(Customer customer) {
-        //todo: if there is an update problem, we need to change this to tesxproperty
-        socialSecurityNumber.setText( customer.getSocialSecurityNumber() );
+        socialSecurityNumber.setText(customer.getSocialSecurityNumber());
         socialSecurityNumber.setEditable(false);
         firstname.setText(customer.getFirstName());
         lastname.setText(customer.getLastName());
@@ -145,75 +145,63 @@ public class EditPersonController implements CommonGUIMethods
     @FXML
     private void updatePerson()
     {
+        System.out.print("her");
         if( !checkValidation() )
+        {
             AlertWindow.messageDialog("Sjekk at du har fylt ut alle felt riktig", "Feil i innfylling");
-
-        List<Integer> phonelist = phones.stream()
-                .mapToInt(string -> Integer.parseInt(string, 10)) //todo: check if nullpointerException here?
-                .boxed()
-                .collect(Collectors.toList());
-
-        if ( StartMain.currentCustomer.getPersonProperty().isNotNull().get())
-        {
-            Person oldPerson = StartMain.currentCustomer.getPerson();
-            //todo: update person
-        }
-        else
-        {
-            newPerson(phonelist);
-        }
-    }
-
-    private void newPerson(List pheonenumbers)
-    {
-        //todo: check in register if exists? maybe not needed, since we check if person is loaded from searchresult in updatePerson method
-
-        if( !checkValidation() )
-        {
-            AlertWindow.errorDialog("Sjekk at alle felter er fylt ut korrekt", "Feil i skjema");
             return;
         }
 
-        String socialsecuritynumber = socialSecurityNumber.getText();
-        String addressString = adress.getText();
-        String emailString = email.getText();
-        String cityString = city.getText();
-        int citynumberString = Integer.parseInt(citynumber.getText(), 10);
-        String firstnameString = firstname.getText();
-        String lastnameString = lastname.getText();
+        String personNumber = socialSecurityNumber.getText();
+        List<Integer> phonelist = phones.stream()
+                                        .filter(string -> !RegEX.isNumber(8).test(string))
+                                        .distinct()
+                                        .mapToInt(string -> Integer.parseInt(string, 10))
+                                        .boxed()
+                                        .collect(Collectors.toList());
 
-        //get valid phonenumbers
-        List phonenumbers = phones.stream()
-                                    .filter(RegEX.isNumber(8))
-                                    .collect(Collectors.toList());
+        ContactInfo contactInfo = new ContactInfo(adress.getText(), Integer.parseInt( citynumber.getText() ), city.getText(), email.getText(), phonelist);
+        Customer customer = new Customer(firstname.getText(), lastname.getText(), personNumber, contactInfo);
 
-        ContactInfo contactInfo = new ContactInfo(addressString, citynumberString, cityString, emailString, phonenumbers );
-        Customer customer = new Customer(firstnameString, lastnameString, socialsecuritynumber, contactInfo);
-        StartMain.customerRegister.addCustomer(customer);
+        if ( StartMain.currentCustomer.getPersonProperty().isNotNull().get())
+        {
+            StartMain.customerRegister.update(customer);
+            StartMain.currentCustomer.setProperty( StartMain.customerRegister.get( personNumber ));
+        }
+        else if ( StartMain.customerRegister.get(socialSecurityNumber.getText()) != null )
+        {
+            AlertWindow.messageDialog("denne personen finnes allerede i registeret, vennligst søk opp personen før du forsøker å endre", "kunde er allerede registrert");
+        }
+        else
+        {
+            StartMain.customerRegister.add(customer);
+            //StartMain.customerRegister.addCustomer(customer);
+        }
     }
 
     private boolean checkValidation()
     {
         // we already do regex, so we only need to check pseudoclass state
+        //todo: user feedbakc -> what textfields are wrong
 
-        if ( socialSecurityNumber.getText().length() == 11 && !socialSecurityNumber.getPseudoClassStates().isEmpty() )
+        if ( socialSecurityNumber.getText().length() != 11 && socialSecurityNumber.getPseudoClassStates().isEmpty() )
             return false;
-        if ( adress.getText().length() > 3 && !adress.getPseudoClassStates().isEmpty() )
+        if ( adress.getText().length() < 3 && adress.getPseudoClassStates().isEmpty() )
             return false;
-        if ( email.getText().length() > 4 && !email.getPseudoClassStates().isEmpty() )
+        if ( email.getText().length() < 4 && email.getPseudoClassStates().isEmpty() )
             return false;
-        if ( city.getText().length() > 2 && !city.getPseudoClassStates().isEmpty() )
+        if ( city.getText().length() < 2 && city.getPseudoClassStates().isEmpty() )
             return false;
-        if ( citynumber.getText().length() == 4 && !citynumber.getPseudoClassStates().isEmpty() )
+        if ( citynumber.getText().length() != 4 && citynumber.getPseudoClassStates().isEmpty() )
             return false;
-        if ( firstname.getText().length() < 1 && !firstname.getPseudoClassStates().isEmpty() )
+        if ( firstname.getText().length() < 1 && firstname.getPseudoClassStates().isEmpty() )
             return false;
-        if ( lastname.getText().length() < 2  && !lastname.getPseudoClassStates().isEmpty() )
+        if ( lastname.getText().length() < 2  && lastname.getPseudoClassStates().isEmpty() )
             return false;
-        //todo: check if this works as intended
-        if ( phones.stream()
-                .filter(RegEX.isNumber(8))
-                .count() == 0 )
+
+        if(  phones.stream()
+                .filter( string -> !RegEX.isNumber(8).test(string) )
+                .count()  == 0)
             return false;
 
         return true;

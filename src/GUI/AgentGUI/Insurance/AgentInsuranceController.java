@@ -5,6 +5,8 @@ import GUI.StartMain;
 import GUI.WindowChangeListener;
 import Insurance.Helper.PaymentOption;
 import Person.Person;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -131,11 +133,14 @@ public final class AgentInsuranceController
         );
 
         StartMain.currentCustomer.getPersonProperty().addListener(
-                observable -> {
-                    SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
-                    Person person = property.getValue();
-                    if (person != null)
-                        setCustomername(person);
+                new InvalidationListener() {
+                    @Override
+                    public void invalidated(Observable observable) {
+                        SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
+                        Person person = property.getValue();
+                        if (person != null)
+                            AgentInsuranceController.this.setCustomername(person);
+                    }
                 }
         );
     }

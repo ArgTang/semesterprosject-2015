@@ -9,7 +9,8 @@ import GUI.AgentGUI.Person.PersonController;
 import GUI.AgentGUI.Search.AgentSearchController;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
-import Register.CustomerRegister;
+import Register.RegisterCustomer;
+import Register.Register;
 import Test.MakePersons;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
@@ -37,7 +38,7 @@ public class StartMain extends Application
     public static final CurrentInsurance currentInsurance = new CurrentInsurance();
     public static final CurrentIncident currentIncident = new CurrentIncident();                            //todo: change this? more generic
 
-    public static CustomerRegister customerRegister = new CustomerRegister();
+    public static RegisterCustomer customerRegister = new RegisterCustomer();
 
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
     public static final WindowWindowListener changeWindowWindowListener = new WindowWindowListener();     //todo: change to this? more generic

@@ -96,25 +96,23 @@ public final class AgentSearchController implements CommonGUIMethods
         // we already do regex, so we only need to check pseudoclass state
         String socialsecurity = searchSocialsecuritynumber.getText();
         if ( socialsecurity.length() > 7 && searchSocialsecuritynumber.getPseudoClassStates().isEmpty() )
-            AlertWindow.messageDialog("vi søker på personnummer her: " + socialsecurity, "søk");
+            searchresults.setAll(StartMain.customerRegister.get(socialsecurity));
 
         String surename = searchSurename.getText();
         if ( surename.length() > 1  &&  searchSurename.getPseudoClassStates().isEmpty() )
-            AlertWindow.messageDialog("søker på fornavn her: " + surename, "søk");
+            searchresults.setAll(StartMain.customerRegister.searchSurename(surename));
 
         String lastname = searchLastname.getText();
         if ( lastname.length() > 1 && searchLastname.getPseudoClassStates().isEmpty() )
-            AlertWindow.messageDialog("søker på etternavn her: " + lastname, "søk");
+            searchresults.setAll( StartMain.customerRegister.searchLastname( lastname ) );
 
         String customerID = searchCustomeriD.getText();
         if ( customerID.length() > 7 && searchCustomeriD.getPseudoClassStates().isEmpty() ) //todo: change this when customerid is done
-            AlertWindow.messageDialog("søker på kundeid her: " + customerID, "søk");
+            searchresults.setAll( StartMain.customerRegister.searchCustomerID(customerID) );
 
         String phone = searchPhone.getText();
         if( phone.length() > 7 && searchPhone.getPseudoClassStates().isEmpty() )
             AlertWindow.messageDialog("søker etter telefon: " + phone, "søk");
-
-        AlertWindow.messageDialog("Søkeknapp", "søkeknapp");
     }
 
     @FXML
