@@ -33,7 +33,7 @@ public class BoatInsuranceModuleController implements CommonGUIMethods
     @FXML
     private ComboBox<String> type;
     @FXML
-    private TextField registrationnumber;
+    private TextField licenceNumber;
     @FXML
     private TextField speed;
     @FXML
@@ -74,7 +74,7 @@ public class BoatInsuranceModuleController implements CommonGUIMethods
     public void clearFields()
     {
         fromDate.setValue(LocalDate.now());
-        resetTextFields(speed, size, motorsize, buyPrice, model, maker, harbor, registrationnumber, modelYear);
+        //resetTextFields(speed, size, motorsize, buyPrice, model, maker, harbor, licenceNumber, modelYear);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () ->
@@ -97,7 +97,7 @@ public class BoatInsuranceModuleController implements CommonGUIMethods
         addCSSTextValidation(RegEX.isNumber(), speed, size, motorsize);
         RegEX.addCSSTextValidation(buyPrice, RegEX.isNumber());
         addCSSTextValidation(RegEX.isLetters(), model, maker, harbor); //todo: allow numbers for harbor? i.e. peer 16
-        addCSSTextValidation(RegEX.isAllChars(), registrationnumber, model);
+        addCSSTextValidation(RegEX.isAllChars(), licenceNumber, model);
         RegEX.addCSSTextValidation(modelYear, RegEX.isNumber(4));
     }
 

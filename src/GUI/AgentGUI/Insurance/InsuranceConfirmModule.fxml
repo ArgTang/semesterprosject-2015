@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Insurance.InsuranceConfirmModuleController">
-   <top>
-      <Label text="Beskrivelse" />
-   </top>
-   <center>
-      <TextArea fx:id="description" promptText="beskrivelse av forsikrings objektet" />
-   </center>
+
+<BorderPane minWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Insurance.InsuranceConfirmModuleController">
    <bottom>
       <HBox alignment="CENTER_RIGHT" spacing="5.0">
          <children>
@@ -24,4 +19,44 @@
          </padding>
       </HBox>
    </bottom>
+   <top>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="2.0" prefHeight="2.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Årspremie" />
+            <Label fx:id="yearlyPremium" GridPane.columnIndex="1" />
+            <Label text="Avgift" GridPane.rowIndex="1" />
+            <Label fx:id="totalFee" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Beløp per tremin" GridPane.rowIndex="3" />
+            <Label fx:id="paymentEachTermin" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+             
+            <Label fx:id="bonusLabel" text="Opptjent Bonus" GridPane.columnIndex="2" />
+            <Label fx:id="bonusValue" GridPane.columnIndex="3" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </GridPane>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+          <top>
+              <Label text="Beskrivelse:" BorderPane.alignment="CENTER_LEFT" />
+          </top>
+         <center>
+            <TextArea fx:id="description" maxHeight="1.7976931348623157E308" promptText="beskrivelse av forsikrings objektet" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </center>
 </BorderPane>

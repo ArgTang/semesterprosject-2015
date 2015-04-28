@@ -32,7 +32,7 @@
        <Label text="Kmstand" GridPane.rowIndex="1" />
        <TextField fx:id="km" GridPane.columnIndex="1" GridPane.rowIndex="1" />
        <Label text="Merke" GridPane.rowIndex="2" />
-       <TextField fx:id="maker" promptText="mercedes, bmw" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+       <ComboBox fx:id="maker" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
        <Label text="Modell" GridPane.rowIndex="3" />
        <TextField fx:id="model" GridPane.columnIndex="1" GridPane.rowIndex="3" />
        <Label text="Motorstørrelse" GridPane.rowIndex="4" />

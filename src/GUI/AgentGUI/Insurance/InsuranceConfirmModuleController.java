@@ -20,6 +20,18 @@ import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
 public final class InsuranceConfirmModuleController implements CommonGUIMethods
 {
     @FXML
+    private Label yearlyPremium;
+    @FXML
+    private Label totalFee;
+    @FXML
+    private Label paymentEachTermin;
+
+    @FXML
+    private Label bonusLabel;
+    @FXML
+    private Label bonusValue;
+
+    @FXML
     private TextArea description;
 
     @FXML
@@ -36,6 +48,8 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
     {
         BooleanBinding insuranceIsNotChosen = StartMain.currentInsurance.getInsuranceProperty().isNull();
         endThis.disableProperty().bind(insuranceIsNotChosen);
+
+        bonusLabel.setVisible(false);
     }
 
     @FXML
