@@ -4,6 +4,8 @@ package Insurance.Property;
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
 import Objects.Property;
+import Person.Customer;
+
 import java.time.LocalDate;
 
 
@@ -15,8 +17,8 @@ public abstract class PropertyInsurance extends Insurance
 {
     Property property;
 
-    public PropertyInsurance(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption)
+    public PropertyInsurance(LocalDate validFrom, int itemValue, String policy, Customer customer, PaymentOption paymentOption, int deductable)
     {
-        super(validFrom, itemValue, policy, paymentOption);
+        super(validFrom, itemValue, policy, customer, paymentOption, deductable);
     }
 }

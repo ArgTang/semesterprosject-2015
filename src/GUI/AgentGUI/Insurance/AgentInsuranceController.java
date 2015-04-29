@@ -29,8 +29,8 @@ public final class AgentInsuranceController
 
     private final StringProperty selectedCustomerName = new SimpleStringProperty();
     public static final BooleanProperty emptyscreen = new SimpleBooleanProperty(false);
-    public static final ObservableList<String> paymentOptionNummber = FXCollections.observableArrayList();
-    public static final ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList();
+    public static final ObservableList<String> paymentOptionNummber = FXCollections.observableArrayList(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
+    public static final ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList(2000, 4000, 8000, 12000);
 
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
 
@@ -61,7 +61,6 @@ public final class AgentInsuranceController
     private void setObservables()
     {
         paymentOptionNummber.addAll(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
-        deductablenumbers.addAll(2000, 4000, 8000, 12000);
     }
 
     public void showtHouseInsurance()

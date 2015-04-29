@@ -21,7 +21,7 @@ public abstract class Incident {
     private final long incidentID;
     private static long incidentIDCounter = 234567;
     private String policeReport;
-    private Insurance ourReference;
+    private int ourInsuranceReference;
     //private type incidentType; // todo: move into the different incidents. make ENUM ?
 
     private String incidentDescription;

@@ -74,8 +74,4 @@ public final class RegisterCustomer extends Register {
                         .collect(Collectors.toList());*/
         return null;
     }
-
-    publi
-
-
 }

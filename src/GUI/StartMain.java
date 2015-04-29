@@ -10,7 +10,7 @@ import GUI.AgentGUI.Search.AgentSearchController;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import Register.RegisterCustomer;
-import Register.Register;
+import Register.RegisterInsurance;
 import Test.MakePersons;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
@@ -39,6 +39,7 @@ public class StartMain extends Application
     public static final CurrentIncident currentIncident = new CurrentIncident();                            //todo: change this? more generic
 
     public static RegisterCustomer customerRegister = new RegisterCustomer();
+    public static RegisterInsurance insuranceRegister = new RegisterInsurance();
 
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
     public static final WindowWindowListener changeWindowWindowListener = new WindowWindowListener();     //todo: change to this? more generic
@@ -49,7 +50,8 @@ public class StartMain extends Application
         //generate Customers in new thread -> might be faster when we generate insurance\incidentCases
         Runnable newthread = () -> MakePersons.makeCustomers(1000);
         Thread thread = new Thread(newthread);
-        thread.start();
+        //thread.start();
+        MakePersons.makeDefaultPerson();
 
         initListeners();
         this.PrimaryStage = primaryStage;

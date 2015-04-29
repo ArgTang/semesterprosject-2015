@@ -1,12 +1,15 @@
+/*
 package Insurance.Property;
 
 import Insurance.Helper.PaymentOption;
 
 import java.time.LocalDate;
 
+*/
 /**
  * Created by steinar on 07.04.2015.
- */
+ *//*
+
 public class ComercialBuilding extends PropertyInsurance {
 
 
@@ -14,3 +17,4 @@ public class ComercialBuilding extends PropertyInsurance {
         super(validFrom, itemValue, policy, paymentOption);
     }
 }
+*/

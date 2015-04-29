@@ -1,6 +1,9 @@
 package Test;
 
 import GUI.StartMain;
+import Insurance.Helper.PaymentOption;
+import Insurance.Insurance;
+import Insurance.Property.HomeInsurance;
 import Person.ContactInfo;
 import Person.Customer;
 
@@ -132,13 +135,20 @@ public class MakePersons
 
     public static void makeDefaultPerson() {
         //todo make default persons and passwords to logintosite
+
+        Customer customer1 = new Customer("AAA", "AAA", "12121212333", makeContactinfo("AAAA"));
+        Insurance insurance1 = new HomeInsurance(LocalDate.now(), 1000000, "policy", customer1, PaymentOption.MONTHLY, 2000);
+
+        StartMain.insuranceRegister.add(insurance1);
+        customer1.addInsuranceNumber(insurance1.getCasenumber());
+        StartMain.customerRegister.add(customer1);
     }
 
     public static void makeCustomers(int numberOfCustomers)
     {
         for(int i = numberOfCustomers; i > 0; i--)
         {
-            StartMain.customerRegister.add( makeCustomer() );
+            StartMain.customerRegister.add(makeCustomer());
         }
     }
 

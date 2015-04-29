@@ -37,7 +37,7 @@
              <Label fx:id="yearlyPremium" GridPane.columnIndex="1" />
              <Label text="Avgift" GridPane.rowIndex="1" />
              <Label fx:id="totalFee" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-             <Label text="Beløp per tremin" GridPane.rowIndex="3" />
+             <Label text="Beløp per termin" GridPane.rowIndex="3" />
              <Label fx:id="paymentEachTermin" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
              <Pane fx:id="helperPane" GridPane.columnSpan="2" GridPane.rowIndex="2" />

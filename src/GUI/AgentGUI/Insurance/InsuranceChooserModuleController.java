@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
-
 /**
  * Created by steinar on 17.04.2015.
  */
@@ -27,6 +26,7 @@ public final class InsuranceChooserModuleController
         insuranceChooser.getSelectionModel().selectedItemProperty().addListener(
                 event ->
                 {
+                    InsuranceConfirmModuleController.clearLabel();
                     String choice = insuranceChooser.getSelectionModel().getSelectedItems().toString();
                     AgentInsuranceController.insuranceChoiceListener.setPropertyString( choice );
                 });

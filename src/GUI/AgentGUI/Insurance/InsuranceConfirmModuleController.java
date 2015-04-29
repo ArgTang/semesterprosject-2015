@@ -4,6 +4,7 @@ import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.StartMain;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -26,7 +27,6 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
     private Label totalFee;
     @FXML
     private Label paymentEachTermin;
-
     @FXML
     private Pane helperPane;
     @FXML
@@ -46,15 +46,26 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
     @FXML
     private Button confirmInsurance;
 
+    public static BooleanProperty confirmOrderButton = new SimpleBooleanProperty(false);
+    public static BooleanProperty insuranceOfferButton = new SimpleBooleanProperty(false);
+    public static IntegerProperty yearlyPremiumLabel = new SimpleIntegerProperty();
+    public static IntegerProperty totalFeeLabel = new SimpleIntegerProperty();
+    public static IntegerProperty paymentEachTerminLabel = new SimpleIntegerProperty();
+    public static StringProperty bonusValueLabel = new SimpleStringProperty();
+
     @FXML
-    private void initialize()
-    {
+    private void initialize() {
         BooleanBinding insuranceIsNotChosen = StartMain.currentInsurance.getInsuranceProperty().isNull();
         endThis.disableProperty().bind(insuranceIsNotChosen);
 
+        yearlyPremium.textProperty().bind(yearlyPremiumLabel.asString());
+        totalFee.textProperty().bind(totalFeeLabel.asString());
+        paymentEachTermin.textProperty().bind(paymentEachTerminLabel.asString());
         bonusLabel.setVisible(false);
 
         helperPane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null))); //todo: easier way to do this?
+
+        confirmOrderButton.bind(confirmInsurance.pressedProperty());
     }
 
     @FXML
@@ -95,9 +106,15 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
     }
 
     @FXML
-    private void confirmInsurance()
-    {
+    private void confirmInsurance() {
+
         AlertWindow.messageDialog("Opprettet Forsikring","Opprettet Forsikring");
+    }
+
+    public static void clearLabel() {
+        yearlyPremiumLabel.setValue(0);
+        paymentEachTerminLabel.setValue(0);
+        totalFeeLabel.setValue(0);
     }
 
     private Optional<LocalDate> makeDialog() //todo: move this to GUIHelper.AlertWindow? http://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/

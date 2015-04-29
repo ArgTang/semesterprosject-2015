@@ -1,6 +1,7 @@
 package Insurance;
 
 import Insurance.Helper.PaymentOption;
+import Person.Customer;
 
 import java.time.LocalDate;
 
@@ -9,8 +10,8 @@ import java.time.LocalDate;
  */
 public final class ValuablesInsurance extends Insurance //TODO: Change class name to something more appropriate, this class is an insurance for a specific high itemValue item. For instance a 100.000,- guitar
 {
-    public ValuablesInsurance(LocalDate validFrom, int itemValue, String policy, PaymentOption paymentOption) {
-        super(validFrom, itemValue, policy, paymentOption);
+    public ValuablesInsurance(LocalDate validFrom, int itemValue, String policy, Customer customer, PaymentOption paymentOption) {
+        super(validFrom, itemValue, policy, customer, paymentOption, 0);
     }
 
 

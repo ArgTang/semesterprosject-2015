@@ -1,6 +1,7 @@
 package Insurance.Animal;
 
 import Insurance.Helper.PaymentOption;
+import Person.Customer;
 
 import java.time.LocalDate;
 
@@ -11,10 +12,10 @@ public class Horse extends Animal
 {
     private boolean clubMembership; //todo: need this?
 
-    public Horse(LocalDate validFrom, int purchasePrice, String policy, PaymentOption paymentOption, String usage, String breed, String dateOfBirth,
-                 String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo)
+    public Horse(LocalDate validFrom, int purchasePrice, String policy, Customer customer, PaymentOption paymentOption, String usage, String breed, String dateOfBirth,
+                 String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo, int deductable)
     {
-        super(validFrom, purchasePrice, policy, paymentOption, usage, breed, dateOfBirth, sex, nutered, earlierIllness, additionalInfo);
+        super(validFrom, purchasePrice, policy, customer, paymentOption, usage, breed, dateOfBirth, sex, nutered, earlierIllness, additionalInfo, deductable);
     }
 
 

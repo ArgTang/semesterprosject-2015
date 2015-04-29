@@ -2,7 +2,7 @@ package GUI.AgentGUI.Person;
 
 import GUI.StartMain;
 import Incident.Incident;
-import Person.Person;
+import Person.Customer;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -47,7 +47,7 @@ public class IncidentTableController
         //todo: might not need this? as users "should" open a new editPersonwindow each time
         StartMain.currentCustomer.getPersonProperty().addListener(
                 observable -> {
-                    SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
+                    SimpleObjectProperty<Customer> property = (SimpleObjectProperty) observable;
                     setCustomer(property.getValue());
                 });
 
@@ -58,11 +58,10 @@ public class IncidentTableController
         });
     }
 
-    private void setCustomer(Person person)
+    private void setCustomer(Customer customer)
     {
-        //person = (Customer) person;
 
-        //theList.add( ((Customer) person).getIncidentNumbers().stream()
-        //                                                      .forEach(IncidentRegister:get);) //TODO: finish this when register is done
+       /* theList.add((customer).getIncidentNumbers().stream()
+                                .forEach(StartMain.insuranceRegister::get) //TODO: finish this when register is done*/
     }
 }

@@ -2,7 +2,11 @@ package GUI.AgentGUI.Person;
 
 import GUI.StartMain;
 import Insurance.Insurance;
-import Person.Person;
+import Person.Customer;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.stream.Collectors;
 
 /**
  * Created by steinar on 23.04.2015.
@@ -32,12 +38,14 @@ public class InsuranseTableController
     @FXML
     private void initialize()
     {
-        typeCollumn.setCellValueFactory(new PropertyValueFactory("type")); //todo getValue from Incident
-        yearCollumn.setCellValueFactory(new PropertyValueFactory("year")); //todo: Get LocalDate.year?
+        typeCollumn.setCellValueFactory(new PropertyValueFactory("InsuranceClass")); //todo getValue from Incident
+        yearCollumn.setCellValueFactory(new PropertyValueFactory("FromYear")); //todo: Get LocalDate.year?
 
-        table.setPlaceholder( new Label("Ingen registrerte forsikringer") ); //todo: add icon here?
+        table.setPlaceholder(new Label("Ingen registrerte forsikringer")); //todo: add icon here?
         table.setItems(theList);
 
+        if ( StartMain.currentCustomer.getPersonProperty().isNotNull().get() )
+            setCustomer(StartMain.currentCustomer.getPerson());
         setListeners();
     }
 
@@ -46,7 +54,7 @@ public class InsuranseTableController
         //todo: might not need this? as users "should" open a new editPersonwindow each time
         StartMain.currentCustomer.getPersonProperty().addListener(
                 observable -> {
-                    SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
+                    SimpleObjectProperty<Customer> property = (SimpleObjectProperty) observable;
                     setCustomer(property.getValue());
                 });
 
@@ -57,11 +65,11 @@ public class InsuranseTableController
         });
     }
 
-    private void setCustomer(Person person)
+    private void setCustomer(Customer customer)
     {
-        //person = (Customer) person;
 
-        //theList.add( ((Customer) person).getInsuranceNumbers().stream()
-        //                                                      .forEach(IncidentRegister:get);) //TODO: finish this when register is done
+        theList.addAll(customer.getInsuranceNumbers().stream()
+                .map(StartMain.insuranceRegister::get)
+                                                     .collect(Collectors.toList()));
     }
 }

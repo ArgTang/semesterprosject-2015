@@ -5,9 +5,9 @@ package Insurance.Helper;
  */
 public enum PaymentOption
 {
-    YEARLY(12, "Årlig"),
-    QUARTERLY(3 ,"Kvartalsvis"),
-    MONTHLY(1, "Månedlig");
+    YEARLY(1, "Årlig"),
+    QUARTERLY(4 ,"Kvartalsvis"),
+    MONTHLY(12, "Månedlig");
 
     private final int monthsInPayment;
     private final String name;

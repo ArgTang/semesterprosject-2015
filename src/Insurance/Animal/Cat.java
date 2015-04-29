@@ -1,6 +1,7 @@
 package Insurance.Animal;
 
 import Insurance.Helper.PaymentOption;
+import Person.Customer;
 
 import java.time.LocalDate;
 
@@ -10,8 +11,8 @@ import java.time.LocalDate;
 public class Cat extends Animal
 {
 
-    public Cat(LocalDate validFrom, int purchasePrice, String policy, PaymentOption paymentOption, String usage, String breed, String dateOfBirth,
-               String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo) {
-        super(validFrom, purchasePrice, policy, paymentOption, usage, breed, dateOfBirth, sex, nutered, earlierIllness, additionalInfo);
+    public Cat(LocalDate validFrom, int purchasePrice, String policy, Customer customer, PaymentOption paymentOption, String usage, String breed, String dateOfBirth,
+               String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo, int deductable) {
+        super(validFrom, purchasePrice, policy, customer, paymentOption, usage, breed, dateOfBirth, sex, nutered, earlierIllness, additionalInfo, deductable);
     }
 }

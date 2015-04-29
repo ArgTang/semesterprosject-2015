@@ -8,8 +8,11 @@ import java.util.Map;
 
 /**
  * Created by steinar on 28.04.2015.
+ *
+ * superclass for our registers
+ * //linky; https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
  */
-public class Register {
+class Register {
 
     Map register;
 

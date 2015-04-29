@@ -2,6 +2,8 @@ package Insurance.Vehicle;
 
 
 import Insurance.Helper.PaymentOption;
+import Person.Customer;
+
 import java.time.LocalDate;
 import java.time.Year;
 
@@ -15,10 +17,10 @@ public final class Car extends Vehicle {
     private String licenceNumber;
     private String color;
 
-    public Car(LocalDate validfrom, int itemValue, String insurancePolicy, PaymentOption paymentOption, String type, String model,
-               Year productionYear, int kilometer, int horsePower, String licenceNumber, String color)
+    public Car(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption, String type, String model,
+               Year productionYear, int kilometer, int horsePower, String licenceNumber, String color, int deductable)
     {
-        super(validfrom, itemValue, insurancePolicy, paymentOption, type, model, productionYear);
+        super(validfrom, itemValue, insurancePolicy, customer, paymentOption, type, model, productionYear, deductable);
         this.kilometer = kilometer;
         this.horsePower = horsePower;
         this.color = color;
