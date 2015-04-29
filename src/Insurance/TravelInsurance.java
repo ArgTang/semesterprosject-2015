@@ -10,7 +10,6 @@ import java.time.LocalDate;
  */
 public final class TravelInsurance extends Insurance {
 
-    int yearlyPremium;
     boolean travelPluss;
     String owner;
 

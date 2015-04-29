@@ -1,5 +1,6 @@
-package GUI.AgentGUI.Insurance;
+package GUI.AgentGUI.Insurance.Modules;
 
+import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
@@ -19,7 +20,7 @@ import java.time.LocalDate;
 /**
  * Created by steinar on 17.04.2015.
  */
-public final class RegisterCarModuleController implements CommonGUIMethods
+public final class CarModuleController implements CommonGUIMethods
 {
     @FXML
     TextField licenceNumber;
@@ -70,8 +71,7 @@ public final class RegisterCarModuleController implements CommonGUIMethods
             "Triumph","Volkswagen","Volvo","Andre");
 
     @FXML
-    private void initialize()
-    {
+    private void initialize() {
         //todo: some of these might be used for more insurances -> move into Vehicle Class
         kaskoValues.addAll("Ansvar", "Delkasko", "Fullkasko");
         kasko.setItems(kaskoValues);
@@ -84,9 +84,8 @@ public final class RegisterCarModuleController implements CommonGUIMethods
 
         maker.setItems(makers);
 
-        deductible.setItems(AgentInsuranceController.deductablenumbers);
-
-        paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
+        deductible.setItems(Insurance.deductablenumbers);
+        paymentOption.setItems(Insurance.paymentOptionNames);
 
         addCSSValidation();
         setInsuranceChoiceListener();
@@ -94,15 +93,13 @@ public final class RegisterCarModuleController implements CommonGUIMethods
     }
 
     @Override
-    public void clearFields()
-    {
+    public void clearFields() {
         resetTextFields(licenceNumber, km, model, motorsize, color, buyPrice);
         fromDate.setValue(LocalDate.now());
         ageRequirements.setIndeterminate(false);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
-        Runnable clear = () ->
-        {
+        Runnable clear = () -> {
             maker.setValue( maker.getItems().get(2) );
             kasko.setValue( kasko.getItems().get(1) );
             bonus.setValue( bonus.getItems().get(2) );
@@ -126,13 +123,11 @@ public final class RegisterCarModuleController implements CommonGUIMethods
         addCSSTextValidation(RegEX.isNumber(), km, motorsize, buyPrice);
     }
 
-    private void setInsuranceChoiceListener()
-    {
+    private void setInsuranceChoiceListener() {
 
         StartMain.currentInsurance.getInsuranceProperty().addListener(
                 observable -> {
                     ObjectProperty<Insurance> insurance = (ObjectProperty<Insurance>) observable;
-
                     if (insurance.isNotNull().get()) {
                         //todo: set insurance
                     } else

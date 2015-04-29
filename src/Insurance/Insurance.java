@@ -29,7 +29,7 @@ public abstract class Insurance
 
     public static int paymentFee = 35;
     public static final ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList(2000, 4000, 8000, 12000);
-    public static final ObservableList<String> paymentOptionNummber = FXCollections.observableArrayList(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
+    public static final ObservableList<String> paymentOptionNames = FXCollections.observableArrayList(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
 
     public Insurance( LocalDate validFrom, int itemValue, String policy, Customer customer, PaymentOption paymentOption, int deductable) {
         this.dateCreated = LocalDateTime.now();

@@ -16,16 +16,14 @@ public final class InsuranceChooserModuleController
     private ObservableList<String> insuranceTypes = FXCollections.observableArrayList();
 
     @FXML
-    private void initialize()
-    {
+    private void initialize() {
         insuranceTypes.addAll("Hus", "Bil", "Båt", "Reise", "Dyr", "Innbo");
         insuranceChooser.setItems(insuranceTypes);
         insuranceChooser.getSelectionModel().selectFirst();
         insuranceChooser.requestFocus(); //todo: find a way to set listwiev in focus
 
         insuranceChooser.getSelectionModel().selectedItemProperty().addListener(
-                event ->
-                {
+                event -> {
                     InsuranceConfirmModuleController.clearLabel();
                     String choice = insuranceChooser.getSelectionModel().getSelectedItems().toString();
                     AgentInsuranceController.insuranceChoiceListener.setPropertyString( choice );

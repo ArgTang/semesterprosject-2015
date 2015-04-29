@@ -1,7 +1,9 @@
-package GUI.AgentGUI.Insurance;
+package GUI.AgentGUI.Insurance.Modules;
 
+import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
+import Insurance.Insurance;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -10,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.time.LocalDate;
 
-public class RegisterAnimalModuleController implements CommonGUIMethods {
+public class AnimalModuleController implements CommonGUIMethods {
 
     @FXML
     private ComboBox<String> animalType;
@@ -49,7 +51,7 @@ public class RegisterAnimalModuleController implements CommonGUIMethods {
 
     @FXML
     public void initialize() {
-        paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
+        paymentOption.setItems(Insurance.paymentOptionNames);
 
         animalTypes.setAll("Hund", "Katt", "Hest");
         animalType.setItems(animalTypes);
@@ -70,8 +72,7 @@ public class RegisterAnimalModuleController implements CommonGUIMethods {
         boy.setSelected(true);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
-        Runnable clear = () ->
-        {
+        Runnable clear = () -> {
             animalType.setValue( animalType.getItems().get(0) );
             paymentOption.setValue( paymentOption.getItems().get(0) );
         };

@@ -1,5 +1,7 @@
-package GUI.AgentGUI.Insurance;
+package GUI.AgentGUI.Insurance.Modules;
 
+import GUI.AgentGUI.Insurance.AgentInsuranceController;
+import GUI.AgentGUI.Insurance.InsuranceConfirmModuleController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import GUI.StartMain;
@@ -15,12 +17,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.stream.IntStream;
 
-public final class householdContentsInsuranceController implements CommonGUIMethods
+public final class HouseholdContentsModuleController implements CommonGUIMethods
 {
     @FXML
     private TextField adress;
@@ -49,22 +50,20 @@ public final class householdContentsInsuranceController implements CommonGUIMeth
     private static HouseholdContents insurance;
 
     @FXML
-    public void initialize()
-    {
-
+    public void initialize() {
         IntStream.range(1, 11).forEach(numbers::add);
         roomnumbers.setItems(numbers);
         personnumber.setItems(numbers);
 
         deductible.setItems(Insurance.deductablenumbers);
-        paymentOption.setItems(Insurance.paymentOptionNummber);
+        paymentOption.setItems(Insurance.paymentOptionNames);
 
         addCSSValidation();
         clearFields();
         setListeners();
+
         //todo: if insurance selected -> set info into page
-        if (StartMain.currentCustomer.getPersonProperty().isNotNull().get())
-        {
+        if (StartMain.currentCustomer.getPersonProperty().isNotNull().get()) {
             //if chosen customer gues that he will sign insurance where he currently lives
             Customer customer = StartMain.currentCustomer.getPerson();
             adress.setText(customer.getAdress());
@@ -75,13 +74,11 @@ public final class householdContentsInsuranceController implements CommonGUIMeth
     }
 
     @Override
-    public void clearFields()
-    {
+    public void clearFields() {
         resetTextFields(adress, citynumber, city, amount);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
-        Runnable clear = () ->
-        {
+        Runnable clear = () -> {
             fromDate.setValue(LocalDate.now());
             deductible.setValue(deductible.getItems().get(1));
             paymentOption.setValue(paymentOption.getItems().get(0));
@@ -96,15 +93,14 @@ public final class householdContentsInsuranceController implements CommonGUIMeth
     }
 
     @Override
-    public void addCSSValidation()
-    {
+    public void addCSSValidation() {
         RegEX.addCSSTextValidation(adress, RegEX.isAdress());
         RegEX.addCSSTextValidation(citynumber, RegEX.isNumber(4));
         RegEX.addCSSTextValidation(city, RegEX.isLetters());
         RegEX.addCSSTextValidation(amount, RegEX.isNumber());
     }
-    private boolean checkValidation()
-    {
+
+    private boolean checkValidation() {
         if (adress.getLength() < 3 && adress.getPseudoClassStates().isEmpty() )
             return false;
         if ( !citynumber.getPseudoClassStates().isEmpty() )
@@ -116,8 +112,7 @@ public final class householdContentsInsuranceController implements CommonGUIMeth
         return true;
     }
 
-    private void setListeners()
-    {
+    private void setListeners() {
         AgentInsuranceController.emptyscreen.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
@@ -126,8 +121,7 @@ public final class householdContentsInsuranceController implements CommonGUIMeth
         makeComboboxListener(roomnumbers, personnumber, deductible, paymentOption);
     }
 
-    private void makeComboboxListener(ComboBox... comboBoxes)
-    {
+    private void makeComboboxListener(ComboBox... comboBoxes) {
         for( ComboBox comboBox : comboBoxes ) {
             comboBox.valueProperty().addListener(listener -> makeInsurance());
         }

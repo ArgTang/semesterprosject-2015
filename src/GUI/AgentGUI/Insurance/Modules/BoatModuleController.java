@@ -1,11 +1,13 @@
-package GUI.AgentGUI.Insurance;
+package GUI.AgentGUI.Insurance.Modules;
 
 /**
  * Created by steinar on 27.04.2015.
  */
 
+import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
+import Insurance.Insurance;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -16,9 +18,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import java.time.LocalDate;
 
-public class BoatInsuranceModuleController implements CommonGUIMethods
+public class BoatModuleController implements CommonGUIMethods
 {
-
     @FXML
     private TextField buyPrice;
     @FXML
@@ -59,11 +60,11 @@ public class BoatInsuranceModuleController implements CommonGUIMethods
         kaskoValues.addAll("Delkasko", "Fullkasko", "Pluss (tyveri)");
         kasko.setItems(kaskoValues);
 
-        types.addAll("innenborsmotor", "utenborsmotor", "seilbåt");
+        types.addAll("Innenbordsmotor", "Utenbordsmotor", "Seilbåt");
         type.setItems(types);
 
-        deductible.setItems(AgentInsuranceController.deductablenumbers);
-        paymentOption.setItems(AgentInsuranceController.paymentOptionNummber);
+        deductible.setItems(Insurance.deductablenumbers);
+        paymentOption.setItems(Insurance.paymentOptionNames);
 
         addCSSValidation();
         clearFields();
@@ -71,14 +72,12 @@ public class BoatInsuranceModuleController implements CommonGUIMethods
     }
 
     @Override
-    public void clearFields()
-    {
+    public void clearFields() {
         fromDate.setValue(LocalDate.now());
-        //resetTextFields(speed, size, motorsize, buyPrice, model, maker, harbor, licenceNumber, modelYear);
+        resetTextFields(speed, size, motorsize, buyPrice, model, maker, harbor, licenceNumber, modelYear);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
-        Runnable clear = () ->
-        {
+        Runnable clear = () -> {
             type.setValue( type.getItems().get(1) );
             kasko.setValue(kasko.getItems().get(2));
             deductible.setValue( deductible.getItems().get(1) );

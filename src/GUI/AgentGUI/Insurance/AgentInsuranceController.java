@@ -49,7 +49,6 @@ public final class AgentInsuranceController
         kundenavn.textProperty().bind(selectedCustomerName);
         kundenavn.setStyle("-fx-font-weight: bold;");
         setListeners();
-        setObservables();
 
         container.setLeft(chooser);
         if( container.getCenter() == null)
@@ -58,37 +57,32 @@ public final class AgentInsuranceController
         return container;
     }
 
-    private void setObservables()
-    {
-        paymentOptionNummber.addAll(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
-    }
-
     public void showtHouseInsurance()
     {
-        loadParent("\\RegisterHouseInsuranceBase.fxml");
+        loadParent("\\Modules\\HouseModule.fxml");
     }
 
     public void showCarinsurance()
     {
-        loadParent("\\RegisterCarModule.fxml");
+        loadParent("\\Modules\\CarModule.fxml");
     }
 
     private void showAnimalInsurance()
     {
-        loadParent("\\RegisterAnimalModule.fxml");
+        loadParent("\\Modules\\AnimalModule.fxml");
     }
 
     private void showTravelInsurance()
     {
-        loadParent("\\TravelInsuranceModule.fxml");
+        loadParent("\\Modules\\TravelModule.fxml");
     }
 
     private void showBoatInsurance()
     {
-        loadParent("\\BoatInsuranceModule.fxml");
+        loadParent("\\Modules\\BoatModule.fxml");
     }
 
-    private void showHouseholdInsurance() { loadParent("\\householdContentsInsurance.fxml"); }
+    private void showHouseholdInsurance() { loadParent("\\Modules\\HouseholdContentsModule.fxml"); }
 
     private void loadParent(String FXMLpath)
     {
