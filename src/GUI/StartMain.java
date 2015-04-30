@@ -10,6 +10,7 @@ import GUI.AgentGUI.Search.AgentSearchController;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import Register.RegisterCustomer;
+import Register.RegisterIncident;
 import Register.RegisterInsurance;
 import Test.MakePersons;
 import javafx.application.Application;
@@ -40,6 +41,7 @@ public class StartMain extends Application
 
     public static RegisterCustomer customerRegister = new RegisterCustomer();
     public static RegisterInsurance insuranceRegister = new RegisterInsurance();
+    public static RegisterIncident incidentRegister = new RegisterIncident();
 
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
     public static final WindowWindowListener changeWindowWindowListener = new WindowWindowListener();     //todo: change to this? more generic
@@ -50,7 +52,7 @@ public class StartMain extends Application
         //generate Customers in new thread -> might be faster when we generate insurance\incidentCases
         Runnable newthread = () -> MakePersons.makeCustomers(1000);
         Thread thread = new Thread(newthread);
-        //thread.start();
+        thread.start();
         MakePersons.makeDefaultPerson();
 
         initListeners();
@@ -102,29 +104,25 @@ public class StartMain extends Application
         return menu;
     }
 
-    private Parent getHomeInsurancePane()
-    {
+    private Parent getHomeInsurancePane() {
         //todo: maybe move controllers to classVariable
         AgentInsuranceController HomeController = new AgentInsuranceController();
         return HomeController.initAgentInsuranceView();
     }
 
-    private Parent getAgenSearchPane()
-    {
+    private Parent getAgenSearchPane() {
         //todo: maybe move controllers to classVariable
         AgentSearchController searchController = new AgentSearchController();
         return searchController.initAgentSearch();
     }
 
-    private Parent getAgentPersonPane()
-    {
+    private Parent getAgentPersonPane() {
         //todo: maybe move controllers to classVariable
         PersonController personController = new PersonController();
         return personController.initEditPerson();
     }
 
-    private void initListeners() throws IOException
-    {
+    private void initListeners() throws IOException {
         changeWindowListener.getStringProperty().addListener(
                 observable -> {
                     StringProperty string = (StringProperty) observable;
@@ -152,8 +150,7 @@ public class StartMain extends Application
     }
 
     //todo: make us switch screens by not using a hardcoded String
-    private void initWindowInvalidationListener() throws IOException
-    {
+    private void initWindowInvalidationListener() throws IOException {
         changeWindowWindowListener.getObjectProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
@@ -163,8 +160,7 @@ public class StartMain extends Application
         });
     }
 
-    private void loadParent(Parent scene)
-    {
+    private void loadParent(Parent scene) {
         fade.setFading(scene);
         rootLayout.setCenter(scene);
         fade.setupFadeout(scene);

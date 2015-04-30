@@ -1,9 +1,7 @@
 package GUI.AgentGUI.Search;
 
-import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
-import GUI.StartMain;
 import Person.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +11,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
+
+import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.*;
+import static Register.RegisterCustomer.*;
 
 /**
  * This Class controlls the Agent Search Window
@@ -50,13 +52,11 @@ public final class AgentSearchController implements CommonGUIMethods
     @FXML
     private TableColumn<Customer, String> tablecity;
 
-    //searchresults go here
     public static final ObservableList<Customer> searchresults = FXCollections.observableArrayList();
 
     @FXML
-    private void initialize()
-    {
-        //this function sets up the binding from searchresult to tables in the view
+    private void initialize() {
+        //these lines sets up the binding from searchresult to he tablecolumns
         tablesocialnumber.setCellValueFactory(new PropertyValueFactory<Customer, String>("SocialSecurityNumber"));
         firstname.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
         lastname.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
@@ -64,7 +64,7 @@ public final class AgentSearchController implements CommonGUIMethods
         tablecity.setCellValueFactory(new PropertyValueFactory<Customer, String>("City"));
 
         //Gets the observable arraylist from witch the search function gets collected into
-        searchresults.setAll( StartMain.customerRegister.getRegister() );
+        searchresults.setAll( customerRegister.getRegister() );
 
         personResults.setPlaceholder(new Label("Her kommer resultatet fra ditt søk")); //todo: add icon here?
         personResults.setItems( searchresults );
@@ -73,79 +73,74 @@ public final class AgentSearchController implements CommonGUIMethods
         addCSSValidation();
     }
 
-    private void setListeners()
-    {
+    private void setListeners() {
         personResults.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldPerson, newPerson) -> {
-                    if (newPerson == null)
-                        return;
-                    StartMain.currentCustomer.setProperty(newPerson);
+                    if (newPerson != null)
+                        currentCustomer.setProperty(newPerson);
                 }
         );
 
         personResults.setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                StartMain.changeWindowListener.setPropertyString("Customer");
+                changeWindowListener.setPropertyString("Customer");
             }
         });
     }
 
     @FXML
-    private void searchFunction()
-    {
+    private void searchFunction() {
         // we already do regex, so we only need to check pseudoclass state
         String socialsecurity = searchSocialsecuritynumber.getText();
         if ( socialsecurity.length() > 7 && searchSocialsecuritynumber.getPseudoClassStates().isEmpty() )
-            searchresults.setAll(StartMain.customerRegister.get(socialsecurity));
+            searchresults.setAll( customerRegister.get( socialsecurity));
 
         String surename = searchSurename.getText();
         if ( surename.length() > 1  &&  searchSurename.getPseudoClassStates().isEmpty() )
-            searchresults.setAll(StartMain.customerRegister.searchSurename(surename));
+            searchresults.setAll( customerRegister.search( matchesInFirstnam(surename)));
 
         String lastname = searchLastname.getText();
         if ( lastname.length() > 1 && searchLastname.getPseudoClassStates().isEmpty() )
-            searchresults.setAll( StartMain.customerRegister.searchLastname( lastname ) );
+            searchresults.setAll( customerRegister.search( matchesInLastname(lastname)));
 
         String customerID = searchCustomeriD.getText();
-        if ( customerID.length() > 7 && searchCustomeriD.getPseudoClassStates().isEmpty() ) //todo: change this when customerid is done
-            searchresults.setAll( StartMain.customerRegister.searchCustomerID(customerID) );
+        if ( customerID.length() > 7 && searchCustomeriD.getPseudoClassStates().isEmpty() )
+            searchresults.setAll( customerRegister.search( matchesInCustomerID(customerID)));
 
         String phone = searchPhone.getText();
-        if( phone.length() > 7 && searchPhone.getPseudoClassStates().isEmpty() )
-            AlertWindow.messageDialog("søker etter telefon: " + phone, "søk");
+        if( phone.length() > 7 && searchPhone.getPseudoClassStates().isEmpty() ) {
+            searchresults.setAll( customerRegister.search( matchesPhonenumer(Integer.parseInt(phone))));
+        }
     }
 
     @FXML
     @Override
-    public void clearFields()
-    {
+    public void clearFields() {
         resetTextFields(searchSocialsecuritynumber);
         resetTextFields(searchSurename);
         resetTextFields(searchLastname);
         resetTextFields(searchCustomeriD);
         resetTextFields(searchPhone);
         searchresults.clear();
-        StartMain.currentCustomer.reset();
+        currentCustomer.reset();
     }
 
     @Override
-    public void addCSSValidation()
-    {
-        RegEX.addCSSTextValidation(searchSocialsecuritynumber, RegEX.isNumber(11));
-        RegEX.addCSSTextValidation(searchSurename, RegEX.isLetters());
-        RegEX.addCSSTextValidation(searchLastname, RegEX.isLetters());
-        RegEX.addCSSTextValidation(searchCustomeriD, RegEX.isAllChars()); //todo:chage this when customer id is ready
-        RegEX.addCSSTextValidation(searchPhone, RegEX.isNumber(8));
+    public void addCSSValidation() {
+        RegEX.addCSSTextValidation(searchSocialsecuritynumber, isNumber(11));
+        RegEX.addCSSTextValidation(searchSurename, isLetters());
+        RegEX.addCSSTextValidation(searchLastname, isLetters());
+        RegEX.addCSSTextValidation(searchCustomeriD, isAllChars()); //todo:chage this when customer id is ready
+        RegEX.addCSSTextValidation(searchPhone, isNumber(8));
     }
 
-    public Parent initAgentSearch()
-    {
-        Parent search = null;
+    public Parent initAgentSearch() {
+        Parent searchPane = null;
         try {
-            search = FXMLLoader.load(getClass().getResource("\\AgentPersonSearch.fxml"));
+            searchPane = FXMLLoader.load(getClass().getResource("\\AgentPersonSearch.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return search;
+        return searchPane;
     }
 }

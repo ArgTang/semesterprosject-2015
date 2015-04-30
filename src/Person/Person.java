@@ -68,7 +68,7 @@ public abstract class Person {
     }
 
     public void addPhonenumber(List<Integer> list) {
-        contactInfo.addPhonenumber(list);
+        contactInfo.setPhonenumbers(list);
     }
 
     @Override

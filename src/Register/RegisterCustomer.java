@@ -19,59 +19,52 @@ public final class RegisterCustomer extends Register {
         super(new HashMap< String, Customer >());
     }
 
-    public boolean add(Customer customer)
-    {
+    public boolean add(Customer customer) {
        return super.add(customer.getSocialSecurityNumber(), customer);
     }
 
-    public Customer get(String key)
-    {
+    public Customer get(String key) {
         return (Customer) super.getWithKey(key);
     }
 
-    public boolean update(Customer customer)
-    {
+    public boolean update(Customer customer) {
         return super.update(customer.getSocialSecurityNumber(), customer);
     }
 
-    //private Predicate<Customer> CustomerFirstnameContainsIgnoreCase() { customer -> customer.getFirstName().matches("(?i:.*" + name + ".*)") };
-
-    //todo: predicates?
-    public List searchSurename(String name)
-    {
-        Collection<Customer> col = super.getRegister();
-        List list =  col.stream()
-                        .filter(customer -> customer.getFirstName().matches("(?i:.*" + name + ".*)"))
-                        .collect(Collectors.toList());
-        return list;
+    public List searchSurename(String name) {
+        return search(matchesInFirstnam(name));
     }
 
-    public List searchLastname(String name)
-    {
-        Collection<Customer> col = super.getRegister();
-        List list =  col.stream()
-                .filter(customer -> customer.getLastName().matches("(?i:.*" + name + ".*)"))
-                .collect(Collectors.toList());
-        return list;
+    public List searchLastname(String name) {
+        return search(matchesInLastname(name));
     }
 
-    public List searchCustomerID(String id)
-    {
-        Collection<Customer> col = super.getRegister();
-        List list =  col.stream()
-                .filter(customer -> customer.getCustomerId().matches("(?i:.*" + id + ".*)"))
-                .collect(Collectors.toList());
-        return list;
+    public List searchCustomerID(String id) {
+        return search(matchesInCustomerID(id));
     }
 
-    //todo: how to do this?????
-    public List searchPhone(String phone)
-    {
+    public List searchForPhone(int phone) {
+        return search(matchesPhonenumer(phone));
+    }
+
+    public List<Customer> searchPhone(int phone) {
         Collection<Customer> col = super.getRegister();
-        /*List list =  col.stream()
-                        .filter(customer -> customer.getPhoneNumbers().stream()
-                                                                    .filter(i ->String.valueOf(i).matches(phone))
-                        .collect(Collectors.toList());*/
-        return null;
+        return col.stream()
+                  .filter(customer -> customer.getPhoneNumbers().stream()
+                          .anyMatch(i -> i == phone))
+                  .collect(Collectors.toList());
+
+    }
+
+    public static final Predicate<Customer> matchesPhonenumer(int phonenumber ) { return customer -> customer.getPhoneNumbers().contains(phonenumber); }
+    public static final Predicate<Customer> matchesInLastname(String match) { return customer -> customer.getLastName().matches("(?i:.*" + match + ".*)"); }
+    public static final Predicate<Customer> matchesInFirstnam(String match) { return customer -> customer.getFirstName().matches("(?i:.*" + match + ".*)" ); }
+    public static final Predicate<Customer> matchesInCustomerID(String match) { return customer -> customer.getCustomerId().matches("(?i:.*" + match + ".*)"); }
+
+    public List<Customer> search(Predicate<Customer> condition) {
+        Collection<Customer> col = super.getRegister();
+        return   col.stream()
+                    .filter(condition)
+                    .collect(Collectors.toList());
     }
 }

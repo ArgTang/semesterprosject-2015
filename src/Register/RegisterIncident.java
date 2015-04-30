@@ -16,7 +16,7 @@ public final class RegisterIncident extends Register{
         return super.add(incident.getIncidentID(), incident);
     }
 
-    public Incident get(String incidetID) {
+    public Incident get(int incidetID) {
         return (Incident) super.getWithKey(incidetID);
     }
 

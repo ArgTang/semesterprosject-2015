@@ -1,9 +1,7 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
-import GUI.StartMain;
 import Insurance.Insurance;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -16,6 +14,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import java.time.LocalDate;
+
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentInsurance;
+import static Insurance.Insurance.*;
 
 /**
  * Created by steinar on 17.04.2015.
@@ -84,8 +87,8 @@ public final class CarModuleController implements CommonGUIMethods
 
         maker.setItems(makers);
 
-        deductible.setItems(Insurance.deductablenumbers);
-        paymentOption.setItems(Insurance.paymentOptionNames);
+        deductible.setItems(deductablenumbers);
+        paymentOption.setItems(paymentOptionNames);
 
         addCSSValidation();
         setInsuranceChoiceListener();
@@ -116,16 +119,16 @@ public final class CarModuleController implements CommonGUIMethods
 
     @Override
     public void addCSSValidation() {
-        RegEX.addCSSTextValidation(licenceNumber, RegEX.isAllChars()); //todo: regex for this?
-        RegEX.addCSSTextValidation(model, RegEX.isAllChars()); //todo: is chars or is letters
-        RegEX.addCSSTextValidation(modelYear, RegEX.isNumber(4));
-        RegEX.addCSSTextValidation(color, RegEX.isLetters());
-        addCSSTextValidation(RegEX.isNumber(), km, motorsize, buyPrice);
+        RegEX.addCSSTextValidation(licenceNumber, isAllChars()); //todo: regex for this?
+        RegEX.addCSSTextValidation(model, isAllChars()); //todo: is chars or is letters
+        RegEX.addCSSTextValidation(modelYear, isNumber(4));
+        RegEX.addCSSTextValidation(color, isLetters());
+        addCSSTextValidation(isNumber(), km, motorsize, buyPrice);
     }
 
     private void setInsuranceChoiceListener() {
 
-        StartMain.currentInsurance.getInsuranceProperty().addListener(
+        currentInsurance.getInsuranceProperty().addListener(
                 observable -> {
                     ObjectProperty<Insurance> insurance = (ObjectProperty<Insurance>) observable;
                     if (insurance.isNotNull().get()) {
@@ -135,7 +138,7 @@ public final class CarModuleController implements CommonGUIMethods
                 }
         );
 
-        AgentInsuranceController.emptyscreen.addListener(observable -> {
+        emptyscreen.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();

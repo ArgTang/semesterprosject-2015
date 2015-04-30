@@ -3,7 +3,6 @@ package GUI.AgentGUI.Insurance.Modules;
 import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
-import Insurance.Insurance;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -11,6 +10,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.time.LocalDate;
+
+import static GUI.GuiHelper.RegEX.*;
+import static Insurance.Insurance.paymentOptionNames;
 
 public class AnimalModuleController implements CommonGUIMethods {
 
@@ -51,7 +53,7 @@ public class AnimalModuleController implements CommonGUIMethods {
 
     @FXML
     public void initialize() {
-        paymentOption.setItems(Insurance.paymentOptionNames);
+        paymentOption.setItems(paymentOptionNames);
 
         animalTypes.setAll("Hund", "Katt", "Hest");
         animalType.setItems(animalTypes);
@@ -85,11 +87,11 @@ public class AnimalModuleController implements CommonGUIMethods {
 
     @Override
     public void addCSSValidation() {
-        addCSSTextValidation(RegEX.isLetters(), name, breed, color, country);
-        RegEX.addCSSTextValidation(chipID, RegEX.isAllChars()); //todo: make regex for this
-        RegEX.addCSSTextValidation(usage, RegEX.isLetters()); //todo: delete when enum is ready
-        RegEX.addCSSTextValidation(sorority, RegEX.isLetters()); //todo: delete when enum is ready
-        RegEX.addCSSTextValidation(value, RegEX.isNumber());
+        addCSSTextValidation(isLetters(), name, breed, color, country);
+        RegEX.addCSSTextValidation(chipID, isAllChars()); //todo: make regex for this
+        RegEX.addCSSTextValidation(usage, isLetters()); //todo: delete when enum is ready
+        RegEX.addCSSTextValidation(sorority, isLetters()); //todo: delete when enum is ready
+        RegEX.addCSSTextValidation(value, isNumber());
     }
 
     private void setListeners() {

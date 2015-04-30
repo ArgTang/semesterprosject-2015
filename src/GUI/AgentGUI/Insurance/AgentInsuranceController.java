@@ -1,7 +1,6 @@
 package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.Fader;
-import GUI.StartMain;
 import GUI.WindowChangeListener;
 import Insurance.Helper.PaymentOption;
 import Person.Person;
@@ -17,6 +16,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
+
+import static GUI.StartMain.currentCustomer;
 
 /**
  * Created by steinar on 15.04.2015.
@@ -125,15 +126,12 @@ public final class AgentInsuranceController
             }
         );
 
-        StartMain.currentCustomer.getPersonProperty().addListener(
-                new InvalidationListener() {
-                    @Override
-                    public void invalidated(Observable observable) {
-                        SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
-                        Person person = property.getValue();
-                        if (person != null)
-                            AgentInsuranceController.this.setCustomername(person);
-                    }
+        currentCustomer.getPersonProperty().addListener(
+                observable -> {
+                    SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
+                    Person person = property.getValue();
+                    if (person != null)
+                        AgentInsuranceController.this.setCustomername(person);
                 }
         );
     }
@@ -145,8 +143,8 @@ public final class AgentInsuranceController
         grid.add(info, 1, 0);
         grid.add(kundenavn, 1, 1);
 
-        if ( StartMain.currentCustomer.getPersonProperty().isNotNull().get() )
-            setCustomername( StartMain.currentCustomer.getPerson() );
+        if ( currentCustomer.getPersonProperty().isNotNull().get() )
+            setCustomername( currentCustomer.getPerson() );
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(grid, chooser);

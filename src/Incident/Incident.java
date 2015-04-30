@@ -1,8 +1,6 @@
 package Incident;
 
-import Insurance.Insurance;
 import Person.Person;
-
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,8 +16,8 @@ public abstract class Incident {
     final LocalDate dayOfIncident; //todo: if string maybe just one string?
     final String timeOfIncident; //todo: string or Localtime? customer might give a timeframe
 
-    private final long incidentID;
-    private static long incidentIDCounter = 234567;
+    private final int incidentID;
+    private static int incidentIDCounter = 234567;
     private String policeReport;
     private int ourInsuranceReference;
     //private type incidentType; // todo: move into the different incidents. make ENUM ?

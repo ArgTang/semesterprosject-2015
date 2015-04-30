@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static GUI.StartMain.currentInsurance;
 import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
 
 /**
@@ -55,7 +56,7 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
 
     @FXML
     private void initialize() {
-        BooleanBinding insuranceIsNotChosen = StartMain.currentInsurance.getInsuranceProperty().isNull();
+        BooleanBinding insuranceIsNotChosen = currentInsurance.getInsuranceProperty().isNull();
         endThis.disableProperty().bind(insuranceIsNotChosen);
 
         yearlyPremium.textProperty().bind(yearlyPremiumLabel.asString());
@@ -83,7 +84,7 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
     {
         if( AlertWindow.confirmDialog("Vil du tømme Skjema?", "tøm skjema") )
         {
-            StartMain.currentInsurance.reset();
+            currentInsurance.reset();
             description.setText("");
 
             Runnable newthread = () -> {

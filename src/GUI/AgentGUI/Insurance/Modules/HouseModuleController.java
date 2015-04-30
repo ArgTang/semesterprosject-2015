@@ -1,12 +1,8 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.AgentGUI.Insurance.AgentInsuranceController;
-import GUI.AgentGUI.Insurance.InsuranceConfirmModuleController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
-import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
-import Insurance.Insurance;
 import Insurance.Property.HomeInsurance;
 import Person.Customer;
 import javafx.application.Platform;
@@ -20,6 +16,12 @@ import javafx.scene.control.TextField;
 
 import java.awt.*;
 import java.time.LocalDate;
+
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.*;
+import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
+import static Insurance.Insurance.*;
 
 
 /**
@@ -61,8 +63,8 @@ public final class HouseModuleController implements CommonGUIMethods
 
     @FXML
     private void initialize() {
-        deductible.setItems(Insurance.deductablenumbers);
-        paymentOption.setItems(Insurance.paymentOptionNames);
+        deductible.setItems(deductablenumbers);
+        paymentOption.setItems(paymentOptionNames);
 
         //todo: ENUM?
         buildingMaterials.addAll("Mur", "Tre");
@@ -77,8 +79,8 @@ public final class HouseModuleController implements CommonGUIMethods
         addCSSValidation();
         clearFields();
 
-        if (StartMain.currentCustomer.getPersonProperty().isNotNull().get()) {
-            Customer customer = StartMain.currentCustomer.getPerson();
+        if (currentCustomer.getPersonProperty().isNotNull().get()) {
+            Customer customer = currentCustomer.getPerson();
             adress.setText(customer.getAdress());
             city.setText(customer.getCity());
             citynumber.setText(String.valueOf( customer.getCitynumbr()));
@@ -91,8 +93,7 @@ public final class HouseModuleController implements CommonGUIMethods
         fromDate.setValue(LocalDate.now());
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
-        Runnable clear = () ->
-        {
+        Runnable clear = () -> {
             constructedIn.setValue( constructedIn.getItems().get(0) );
             buildingType.setValue( buildingType.getItems().get(1) );
             deductible.setValue( deductible.getItems().get(1) );
@@ -107,16 +108,16 @@ public final class HouseModuleController implements CommonGUIMethods
 
     @Override
     public void addCSSValidation() {
-        RegEX.addCSSTextValidation(adress, RegEX.isAdress());
-        RegEX.addCSSTextValidation(citynumber, RegEX.isNumber(4));
-        RegEX.addCSSTextValidation(city, RegEX.isLetters());
-        RegEX.addCSSTextValidation(constructionYear, RegEX.isNumber(4)); //todo: make another regex for this
-        RegEX.addCSSTextValidation(grossArea, RegEX.isNumber()); //todo:make regex for this
-        RegEX.addCSSTextValidation(primaryArea, RegEX.isNumber()); //todo:make regex for this
+        RegEX.addCSSTextValidation(adress, isAdress());
+        RegEX.addCSSTextValidation(citynumber, isNumber(4));
+        RegEX.addCSSTextValidation(city, isLetters());
+        RegEX.addCSSTextValidation(constructionYear, isNumber(4)); //todo: make another regex for this
+        RegEX.addCSSTextValidation(grossArea, isNumber()); //todo:make regex for this
+        RegEX.addCSSTextValidation(primaryArea, isNumber()); //todo:make regex for this
     }
 
     private void setListeners() {
-        AgentInsuranceController.emptyscreen.addListener(observable -> {
+        emptyscreen.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();
@@ -152,7 +153,7 @@ public final class HouseModuleController implements CommonGUIMethods
         FXCollections.reverse(list);
 
         PaymentOption selectedPayment = list.get(paymentOption.getSelectionModel().getSelectedIndex());
-        insurance = new HomeInsurance(fromDate.getValue(),0, "some policy", StartMain.currentCustomer.getPerson(), selectedPayment,
+        insurance = new HomeInsurance(fromDate.getValue(),0, "some policy", currentCustomer.getPerson(), selectedPayment,
                 deductible.getValue(), adress.getText(), parseInt(citynumber), city.getText(), parseInt(constructionYear), constructedIn.getValue(),
                 parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
 
@@ -161,9 +162,9 @@ public final class HouseModuleController implements CommonGUIMethods
 
     private void showPremium() {
         int paymentTermins = insurance.getPaymentOption().getValue();
-        InsuranceConfirmModuleController.yearlyPremiumLabel.setValue(insurance.getAnnualPremium());
-        InsuranceConfirmModuleController.totalFeeLabel.setValue( Insurance.paymentFee * paymentTermins );
-        InsuranceConfirmModuleController.paymentEachTerminLabel.setValue((insurance.getAnnualPremium() + Insurance.paymentFee * paymentTermins) / paymentTermins);
+        yearlyPremiumLabel.setValue(insurance.getAnnualPremium());
+        totalFeeLabel.setValue( paymentFee * paymentTermins );
+        paymentEachTerminLabel.setValue((insurance.getAnnualPremium() + paymentFee * paymentTermins) / paymentTermins);
     }
 
     private int parseInt(TextField textField) {

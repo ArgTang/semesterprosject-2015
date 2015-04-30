@@ -70,8 +70,7 @@ public final class RegEX {
     public static void addCSSTextValidation(TextField textField, Predicate condition)
     {
         //todo: how to add css only when done typing?
-        //todo: cleanup
-        textField.setOnKeyReleased( event ->  { /*System.out.println("CSS");*/ textField.pseudoClassStateChanged(invalidText, condition.test(textField.getText()) /*&& (textField.getText().length() > 3)*/);} );
+        textField.setOnKeyReleased( event -> textField.pseudoClassStateChanged(invalidText, condition.test(textField.getText()))  );
     }
 
     public static void resetCSSValidationRule(TextField textField)

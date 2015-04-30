@@ -1,10 +1,11 @@
 package GUI.AgentGUI;
 
-import GUI.StartMain;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+
+import static GUI.StartMain.changeWindowListener;
 
 /**
  * Created by steinar on 13.04.2015.
@@ -24,8 +25,7 @@ public class AgentMenuController {
     private boolean debug = false;
 
     @FXML
-    private void initialize()
-    {
+    private void initialize() {
         DropShadow shadow = new DropShadow();
         shadow.setOffsetY(2.0);
         shadow.setOffsetX(1.0);
@@ -40,45 +40,40 @@ public class AgentMenuController {
     }
 
     @FXML
-    public void showSearchMenu()
-    {
+    public void showSearchMenu() {
         if(debug)
             System.out.println("søk");
-        StartMain.changeWindowListener.setPropertyString("Agent");
+        changeWindowListener.setPropertyString("Agent");
     }
 
     @FXML
-    public void showCustomerhMenu()
-    {
+    public void showCustomerhMenu() {
         if(debug)
             System.out.println("Kunde");
-        StartMain.changeWindowListener.setPropertyString("Customer");
+        changeWindowListener.setPropertyString("Customer");
 
     }
 
     @FXML
-    public void showInsuranceMenu()
-    {
+    public void showInsuranceMenu() {
         if(debug)
             System.out.println("Forsikring");
-        StartMain.changeWindowListener.setPropertyString("Insurance");
+        changeWindowListener.setPropertyString("Insurance");
 
     }
 
     @FXML
-    public void showIncidentMenu()
-    {
+    public void showIncidentMenu() {
         if(debug)
             System.out.println("Hendelse");
-        StartMain.changeWindowListener.setPropertyString("Incident");
+        changeWindowListener.setPropertyString("Incident");
 
     }
 
     @FXML
-    public void showStatisticsMenu()
-    {
+    public void showStatisticsMenu() {
         if(debug)
             System.out.println("statistikk");
-        StartMain.changeWindowListener.setPropertyString("statistics");
+        changeWindowListener.setPropertyString("statistics");
     }
 }

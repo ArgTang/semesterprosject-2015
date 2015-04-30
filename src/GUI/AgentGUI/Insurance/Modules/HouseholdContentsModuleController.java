@@ -1,10 +1,7 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.AgentGUI.Insurance.AgentInsuranceController;
-import GUI.AgentGUI.Insurance.InsuranceConfirmModuleController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
-import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
 import Insurance.Property.HouseholdContents;
@@ -17,9 +14,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.stream.IntStream;
+
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.*;
+import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
+import static Insurance.Insurance.paymentFee;
 
 public final class HouseholdContentsModuleController implements CommonGUIMethods
 {
@@ -63,9 +67,9 @@ public final class HouseholdContentsModuleController implements CommonGUIMethods
         setListeners();
 
         //todo: if insurance selected -> set info into page
-        if (StartMain.currentCustomer.getPersonProperty().isNotNull().get()) {
+        if (currentCustomer.getPersonProperty().isNotNull().get()) {
             //if chosen customer gues that he will sign insurance where he currently lives
-            Customer customer = StartMain.currentCustomer.getPerson();
+            Customer customer = currentCustomer.getPerson();
             adress.setText(customer.getAdress());
             citynumber.setText(String.valueOf(customer.getCitynumbr()));
             city.setText(customer.getCity());
@@ -94,10 +98,10 @@ public final class HouseholdContentsModuleController implements CommonGUIMethods
 
     @Override
     public void addCSSValidation() {
-        RegEX.addCSSTextValidation(adress, RegEX.isAdress());
-        RegEX.addCSSTextValidation(citynumber, RegEX.isNumber(4));
-        RegEX.addCSSTextValidation(city, RegEX.isLetters());
-        RegEX.addCSSTextValidation(amount, RegEX.isNumber());
+        RegEX.addCSSTextValidation(adress, isAdress());
+        RegEX.addCSSTextValidation(citynumber, isNumber(4));
+        RegEX.addCSSTextValidation(city, isLetters());
+        RegEX.addCSSTextValidation(amount, isNumber());
     }
 
     private boolean checkValidation() {
@@ -113,7 +117,7 @@ public final class HouseholdContentsModuleController implements CommonGUIMethods
     }
 
     private void setListeners() {
-        AgentInsuranceController.emptyscreen.addListener(observable -> {
+        emptyscreen.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();
@@ -137,15 +141,15 @@ public final class HouseholdContentsModuleController implements CommonGUIMethods
 
         insurance = new HouseholdContents( adress.getText(), parseInt(citynumber), city.getText(), roomnumbers.getValue(),
                 personnumber.getValue(), fromDate.getValue(), parseInt(amount), "somePolicy",
-                StartMain.currentCustomer.getPerson(), selectedPayment, deductible.getValue());
+                currentCustomer.getPerson(), selectedPayment, deductible.getValue());
         showPremium();
     }
 
     private void showPremium() {
         int paymentTermins = insurance.getPaymentOption().getValue();
-        InsuranceConfirmModuleController.yearlyPremiumLabel.setValue( insurance.getAnnualPremium() );
-        InsuranceConfirmModuleController.totalFeeLabel.setValue( Insurance.paymentFee * paymentTermins );
-        InsuranceConfirmModuleController.paymentEachTerminLabel.setValue( ( insurance.getAnnualPremium() + Insurance.paymentFee * paymentTermins) / paymentTermins );
+        yearlyPremiumLabel.setValue( insurance.getAnnualPremium() );
+        totalFeeLabel.setValue( paymentFee * paymentTermins );
+        paymentEachTerminLabel.setValue( ( insurance.getAnnualPremium() + paymentFee * paymentTermins) / paymentTermins );
     }
 
     private int parseInt(TextField textField) {

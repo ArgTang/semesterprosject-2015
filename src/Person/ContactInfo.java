@@ -15,30 +15,20 @@ public class ContactInfo
     private String email;
     Set<Integer> phoneNumbers = new HashSet<Integer>(); //TODO: is this needed?
 
-
-    /**
-     *
-     * @param address
-     * @param email
-     * @param city
-     * @param phone
-     */
-
-    public ContactInfo(String address, int citynumber, String city, String email, int phone)
-    {
+    private ContactInfo(String address, int citynumber, String city, String email) {
         this.address = address;
         this.email = email;
         this.city = city;
         this.citynumber = citynumber;
+    }
+
+    public ContactInfo(String address, int citynumber, String city, String email, int phone) {
+        this(address, citynumber, city, email);
         phoneNumbers.add(phone);
     }
 
-    public ContactInfo(String address, int citynumber, String city, String email, List<Integer> phoneNumbers)
-    {
-        this.address = address;
-        this.citynumber = citynumber;
-        this.city = city;
-        this.email = email;
+    public ContactInfo(String address, int citynumber, String city, String email, List<Integer> phoneNumbers) {
+        this(address, citynumber, city, email);
         this.phoneNumbers.addAll(phoneNumbers);
     }
 
@@ -49,18 +39,8 @@ public class ContactInfo
     public Set<Integer> getPhoneNumbers() { return phoneNumbers; }
 
     public void addPhonenumber(int i) { phoneNumbers.add(i); }
-    public void addPhonenumber(List<Integer> list)
-    {
+    public void setPhonenumbers(List<Integer> list) {
         phoneNumbers.clear();
         phoneNumbers.addAll(list);
-    }
-
-    @Override
-    public String toString()
-    {
-        String text = address + ", " + city;
-        text += "\n" + email;
-        text += "\nPhone number(s): " + phoneNumbers;
-        return text;
     }
 }

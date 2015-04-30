@@ -4,10 +4,8 @@ package GUI.AgentGUI.Insurance.Modules;
  * Created by steinar on 27.04.2015.
  */
 
-import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
-import Insurance.Insurance;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -17,6 +15,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import java.time.LocalDate;
+
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.GuiHelper.RegEX.*;
+import static Insurance.Insurance.*;
 
 public class BoatModuleController implements CommonGUIMethods
 {
@@ -63,8 +65,8 @@ public class BoatModuleController implements CommonGUIMethods
         types.addAll("Innenbordsmotor", "Utenbordsmotor", "Seilbåt");
         type.setItems(types);
 
-        deductible.setItems(Insurance.deductablenumbers);
-        paymentOption.setItems(Insurance.paymentOptionNames);
+        deductible.setItems(deductablenumbers);
+        paymentOption.setItems(paymentOptionNames);
 
         addCSSValidation();
         clearFields();
@@ -93,16 +95,16 @@ public class BoatModuleController implements CommonGUIMethods
     @Override
     public void addCSSValidation()
     {
-        addCSSTextValidation(RegEX.isNumber(), speed, size, motorsize);
-        RegEX.addCSSTextValidation(buyPrice, RegEX.isNumber());
-        addCSSTextValidation(RegEX.isLetters(), model, maker, harbor); //todo: allow numbers for harbor? i.e. peer 16
-        addCSSTextValidation(RegEX.isAllChars(), licenceNumber, model);
-        RegEX.addCSSTextValidation(modelYear, RegEX.isNumber(4));
+        addCSSTextValidation(isNumber(), speed, size, motorsize);
+        RegEX.addCSSTextValidation(buyPrice, isNumber());
+        addCSSTextValidation(isLetters(), model, maker, harbor); //todo: allow numbers for harbor? i.e. peer 16
+        addCSSTextValidation(isAllChars(), licenceNumber, model);
+        RegEX.addCSSTextValidation(modelYear, isNumber(4));
     }
 
     private void setListeners()
     {
-        AgentInsuranceController.emptyscreen.addListener(observable -> {
+        emptyscreen.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();

@@ -1,6 +1,5 @@
 package GUI.AgentGUI.Person;
 
-import GUI.StartMain;
 import Incident.Incident;
 import Person.Customer;
 import javafx.beans.property.SimpleObjectProperty;
@@ -11,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import static GUI.StartMain.*;
 
 /**
  * Created by steinar on 23.04.2015.
@@ -31,8 +32,7 @@ public class IncidentTableController
     private ObservableList<Incident> theList = FXCollections.observableArrayList();
 
     @FXML
-    private void initialize()
-    {
+    private void initialize() {
         typeCollumn.setCellValueFactory(new PropertyValueFactory("type")); //todo getValue from Incident
         yearCollumn.setCellValueFactory(new PropertyValueFactory("year")); //todo: Get LocalDate.year?
 
@@ -45,23 +45,29 @@ public class IncidentTableController
     //todo: thi method is used some places ->
     private void setListeners() {
         //todo: might not need this? as users "should" open a new editPersonwindow each time
-        StartMain.currentCustomer.getPersonProperty().addListener(
+        currentCustomer.getPersonProperty().addListener(
                 observable -> {
                     SimpleObjectProperty<Customer> property = (SimpleObjectProperty) observable;
                     setCustomer(property.getValue());
                 });
 
+        table.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldIncident, newIncident) -> {
+                    if (newIncident != null)
+                        currentIncident.setProperty(newIncident);
+                }
+        );
+
         table.setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                StartMain.changeWindowListener.setPropertyString("Incident");
+                changeWindowListener.setPropertyString("Incident");
             }
         });
     }
 
-    private void setCustomer(Customer customer)
-    {
-
-       /* theList.add((customer).getIncidentNumbers().stream()
-                                .forEach(StartMain.insuranceRegister::get) //TODO: finish this when register is done*/
+    private void setCustomer(Customer customer) {
+       customer.getIncidentNumbers().stream()
+                                    .map(incidentRegister::get)
+                                    .forEach(theList::add);
     }
 }

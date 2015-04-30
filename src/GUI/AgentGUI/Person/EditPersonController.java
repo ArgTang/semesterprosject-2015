@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.customerRegister;
+
 /**
  * Created by steinar on 19.04.2015.
  */
@@ -56,9 +60,9 @@ public class EditPersonController implements CommonGUIMethods
         setCurrentPersonListener();
         addCSSValidation();
 
-        if( StartMain.currentCustomer.getPersonProperty().isNotNull().get())
+        if( currentCustomer.getPersonProperty().isNotNull().get())
         {
-            setCustomer( StartMain.currentCustomer.getPerson() );
+            setCustomer( currentCustomer.getPerson() );
             changeCustomer.setTextFill(Color.RED);
         }
         else
@@ -80,18 +84,18 @@ public class EditPersonController implements CommonGUIMethods
     @Override
     public void addCSSValidation()
     {
-        RegEX.addCSSTextValidation(socialSecurityNumber, RegEX.isNumber(11));
-        RegEX.addCSSTextValidation(adress, RegEX.isAdress());
-        RegEX.addCSSTextValidation(citynumber, RegEX.isNumber(4));
-        RegEX.addCSSTextValidation(email, RegEX.isEmail());
-        addCSSTextValidation(RegEX.isLetters(), firstname, lastname, city);
+        RegEX.addCSSTextValidation(socialSecurityNumber, isNumber(11));
+        RegEX.addCSSTextValidation(adress, isAdress());
+        RegEX.addCSSTextValidation(citynumber, isNumber(4));
+        RegEX.addCSSTextValidation(email, isEmail());
+        addCSSTextValidation(isLetters(), firstname, lastname, city);
     }
 
     //todo: put these into an interface (DRY)?? also need to redraw or update label after new name is set
     private void setCurrentPersonListener()
     {
         //todo: might not need this? as users "should" open a new editPersonwindow each time
-        StartMain.currentCustomer.getPersonProperty().addListener(
+        currentCustomer.getPersonProperty().addListener(
                 observable -> {
                     SimpleObjectProperty<Customer> property = (SimpleObjectProperty) observable;
                     if (property.isNotNull().get())
@@ -113,7 +117,7 @@ public class EditPersonController implements CommonGUIMethods
         phonelist.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
             @Override
             public void handle(ListView.EditEvent event) {
-                if (RegEX.isNumber(8).test(event.getNewValue().toString())) {
+                if (isNumber(8).test(event.getNewValue().toString())) {
                     AlertWindow.messageDialog("Telefonnummer må ha 8 siffer", "feil i telefonnummer");
                 } else
                     phonelist.getItems().set(event.getIndex(), event.getNewValue());
@@ -145,16 +149,14 @@ public class EditPersonController implements CommonGUIMethods
     @FXML
     private void updatePerson()
     {
-        System.out.print("her");
-        if( !checkValidation() )
-        {
+        if( !checkValidation() ) {
             AlertWindow.messageDialog("Sjekk at du har fylt ut alle felt riktig", "Feil i innfylling");
             return;
         }
 
         String personNumber = socialSecurityNumber.getText();
         List<Integer> phonelist = phones.stream()
-                                        .filter(string -> !RegEX.isNumber(8).test(string))
+                                        .filter(string -> !isNumber(8).test(string))
                                         .distinct()
                                         .mapToInt(string -> Integer.parseInt(string, 10))
                                         .boxed()
@@ -163,19 +165,13 @@ public class EditPersonController implements CommonGUIMethods
         ContactInfo contactInfo = new ContactInfo(adress.getText(), Integer.parseInt( citynumber.getText() ), city.getText(), email.getText(), phonelist);
         Customer customer = new Customer(firstname.getText(), lastname.getText(), personNumber, contactInfo);
 
-        if ( StartMain.currentCustomer.getPersonProperty().isNotNull().get())
-        {
-            StartMain.customerRegister.update(customer);
-            StartMain.currentCustomer.setProperty( StartMain.customerRegister.get( personNumber ));
-        }
-        else if ( StartMain.customerRegister.get(socialSecurityNumber.getText()) != null )
-        {
+        if ( currentCustomer.getPersonProperty().isNotNull().get()) {
+            customerRegister.update(customer);
+            currentCustomer.setProperty( customerRegister.get( personNumber ));
+        } else if ( customerRegister.get(socialSecurityNumber.getText()) != null ) {
             AlertWindow.messageDialog("denne personen finnes allerede i registeret, vennligst søk opp personen før du forsøker å endre", "kunde er allerede registrert");
-        }
-        else
-        {
-            StartMain.customerRegister.add(customer);
-            //StartMain.customerRegister.addCustomer(customer);
+        } else {
+            customerRegister.add(customer);
         }
     }
 
@@ -200,7 +196,7 @@ public class EditPersonController implements CommonGUIMethods
             return false;
 
         if(  phones.stream()
-                .filter( string -> !RegEX.isNumber(8).test(string) )
+                .filter( string -> !isNumber(8).test(string) )
                 .count()  == 0)
             return false;
 
