@@ -1,6 +1,5 @@
 package Test;
 
-import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
 import Insurance.Property.HomeInsurance;
@@ -9,6 +8,9 @@ import Person.Customer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+
+import static GUI.StartMain.customerRegister;
+import static GUI.StartMain.insuranceRegister;
 
 /**
  * Created by steinar on 30.03.2015.
@@ -122,16 +124,16 @@ public class MakePersons {
 
         Customer customer1 = new Customer("AAA", "AAA", "12121212333", makeContactinfo("AAAA"));
         Insurance insurance1 = new HomeInsurance(LocalDate.now(), 1000000, "policy", customer1, PaymentOption.MONTHLY, 2000,
-                customer1.getAdress(), customer1.getCitynumbr(), customer1.getCity(), 1999, "Tre", 2300000, "Enebolig", 123, 122, true );
+                customer1.getAdress(), customer1.getCitynumber(), customer1.getCity(), 1999, "Tre", 2300000, "Enebolig", 123, 122, true );
 
-        StartMain.insuranceRegister.add(insurance1);
+        insuranceRegister.add(insurance1);
         customer1.addInsuranceNumber(insurance1.getCasenumber());
-        StartMain.customerRegister.add(customer1);
+        customerRegister.add(customer1);
     }
 
     public static void makeCustomers(int numberOfCustomers) {
         for (int i = numberOfCustomers; i > 0; i--) {
-            StartMain.customerRegister.add(makeCustomer());
+            customerRegister.add(makeCustomer());
         }
     }
 

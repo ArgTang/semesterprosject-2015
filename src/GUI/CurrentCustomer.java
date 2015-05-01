@@ -10,7 +10,7 @@ import javafx.beans.property.SimpleObjectProperty;
 public class CurrentCustomer
 {
     //todo: make generic?
-    private final SimpleObjectProperty<Customer> personListener = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<Customer> personListener = new SimpleObjectProperty<>(null);
 
     public final Customer getPerson() { return personListener.get(); }
     public final void setProperty(Customer customer) { personListener.set( customer ); }

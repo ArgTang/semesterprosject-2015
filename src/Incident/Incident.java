@@ -32,7 +32,6 @@ public abstract class Incident {
     private LocalDateTime timeOfPayout; //todo: make these an object? to get them final.
     private int payout;
 
-
     public Incident(String incidentDescription, LocalDate dayOfIncident, String timeOfIncident) {
         this.timeOfReport = LocalDateTime.now();
         this.incidentID = ++incidentIDCounter;
@@ -40,6 +39,7 @@ public abstract class Incident {
         this.dayOfIncident = dayOfIncident;
         this.timeOfIncident = timeOfIncident;
     }
+
     public long getIncidentID() {
         return incidentID;
     }

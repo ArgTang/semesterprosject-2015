@@ -1,11 +1,12 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonPrivateGUIMethods;
+import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
-import Insurance.Insurance;
 import Insurance.Property.HouseholdContents;
 import Person.Customer;
+import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -17,15 +18,16 @@ import javafx.scene.control.TextField;
 
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
-import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.*;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.currentCustomer;
-import static Insurance.Insurance.paymentFee;
+import static Insurance.Insurance.deductablenumbers;
+import static Insurance.Insurance.paymentOptions;
 
-public final class HouseholdContentsModuleController implements CommonGUIMethods
+public final class HouseholdContentsModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods
 {
     @FXML
     private TextField adress;
@@ -34,9 +36,9 @@ public final class HouseholdContentsModuleController implements CommonGUIMethods
     @FXML
     private TextField city;
     @FXML
-    private ComboBox<Integer> roomnumbers;
+    private ComboBox<Integer> numberOfrooms;
     @FXML
-    private ComboBox<Integer> personnumber;
+    private ComboBox<Integer> numberOfPersons;
     @FXML
     private Checkbox plussForsikring;
 
@@ -54,27 +56,33 @@ public final class HouseholdContentsModuleController implements CommonGUIMethods
     private static HouseholdContents insurance;
 
     @FXML
-    public void initialize() {
+    @Override
+    protected void initialize() {
         IntStream.range(1, 11).forEach(numbers::add);
-        roomnumbers.setItems(numbers);
-        personnumber.setItems(numbers);
+        numberOfrooms.setItems(numbers);
+        numberOfPersons.setItems(numbers);
 
-        deductible.setItems(Insurance.deductablenumbers);
-        paymentOption.setItems(Insurance.paymentOptionNames);
+        deductible.setItems(deductablenumbers);
+        paymentOption.setItems(paymentOptions.stream()
+                                             .map(PaymentOption::getName)
+                                             .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
         addCSSValidation();
         clearFields();
         setListeners();
 
         //todo: if insurance selected -> set info into page
-        if (currentCustomer.getPersonProperty().isNotNull().get()) {
-            //if chosen customer gues that he will sign insurance where he currently lives
-            Customer customer = currentCustomer.getPerson();
-            adress.setText(customer.getAdress());
-            citynumber.setText(String.valueOf(customer.getCitynumbr()));
-            city.setText(customer.getCity());
-            amount.setText("500000");
-        }
+        //display tempcustomer if no customer is found
+        Customer customer;
+        if (currentCustomer.getPersonProperty().isNotNull().get())
+            customer = currentCustomer.getPerson();
+        else
+            customer = RegisterCustomer.tempCustomer;
+
+        adress.setText(customer.getAdress());
+        citynumber.setText(String.valueOf(customer.getCitynumber()));
+        city.setText(customer.getCity());
+        amount.setText("500000");
     }
 
     @Override
@@ -86,8 +94,8 @@ public final class HouseholdContentsModuleController implements CommonGUIMethods
             fromDate.setValue(LocalDate.now());
             deductible.setValue(deductible.getItems().get(1));
             paymentOption.setValue(paymentOption.getItems().get(0));
-            roomnumbers.setValue(roomnumbers.getItems().get(1));
-            personnumber.setValue(personnumber.getItems().get(0));
+            numberOfrooms.setValue(numberOfrooms.getItems().get(1));
+            numberOfPersons.setValue(numberOfPersons.getItems().get(0));
         };
 
         if(Platform.isFxApplicationThread())
@@ -104,55 +112,45 @@ public final class HouseholdContentsModuleController implements CommonGUIMethods
         RegEX.addCSSTextValidation(amount, isNumber());
     }
 
-    private boolean checkValidation() {
-        if (adress.getLength() < 3 && adress.getPseudoClassStates().isEmpty() )
+    @Override
+    protected boolean checkValidation() {
+        if (validationIsOk(3).negate().test(adress))
             return false;
-        if ( !citynumber.getPseudoClassStates().isEmpty() )
+        if (!citynumber.getPseudoClassStates().isEmpty() )
             return false;
-        if (city.getLength() < 2 && city.getPseudoClassStates().isEmpty())
+        if (validationIsOk(2).negate().test(city))
             return false;
-        if (amount.getLength() < 2 && amount.getPseudoClassStates().isEmpty())
+        if (validationIsOk(4).negate().test(amount))
             return false;
         return true;
     }
 
-    private void setListeners() {
+    @Override
+    protected void setListeners() {
         emptyscreen.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();
         });
-        makeComboboxListener(roomnumbers, personnumber, deductible, paymentOption);
+        addComboboxListener(numberOfrooms, numberOfPersons, deductible, paymentOption);
     }
 
-    private void makeComboboxListener(ComboBox... comboBoxes) {
-        for( ComboBox comboBox : comboBoxes ) {
-            comboBox.valueProperty().addListener(listener -> makeInsurance());
-        }
-    }
-
-    private void makeInsurance() {
+    @Override
+    protected void makeInsurance() {
         if (!checkValidation())
             return;
-        ObservableList<PaymentOption> list = FXCollections.observableArrayList(PaymentOption.values());
-        FXCollections.reverse(list);
 
-        PaymentOption selectedPayment = list.get( paymentOption.getSelectionModel().getSelectedIndex() );
-
-        insurance = new HouseholdContents( adress.getText(), parseInt(citynumber), city.getText(), roomnumbers.getValue(),
-                personnumber.getValue(), fromDate.getValue(), parseInt(amount), "somePolicy",
-                currentCustomer.getPerson(), selectedPayment, deductible.getValue());
-        showPremium();
-    }
-
-    private void showPremium() {
-        int paymentTermins = insurance.getPaymentOption().getValue();
-        yearlyPremiumLabel.setValue( insurance.getAnnualPremium() );
-        totalFeeLabel.setValue( paymentFee * paymentTermins );
-        paymentEachTerminLabel.setValue( ( insurance.getAnnualPremium() + paymentFee * paymentTermins) / paymentTermins );
-    }
-
-    private int parseInt(TextField textField) {
-        return Integer.parseInt(textField.getText());
+        PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
+        try {
+            insurance = new HouseholdContents(adress.getText(), parseInt(citynumber), city.getText(), numberOfrooms.getValue(),
+                    numberOfPersons.getValue(), fromDate.getValue(), parseInt(amount), "somePolicy",
+                    currentCustomer.getPerson(), selectedPayment, deductible.getValue());
+            showPremium(insurance);
+        } catch (Exception e) {
+            HouseholdContents tempInsurance = new HouseholdContents(adress.getText(), parseInt(citynumber), city.getText(), numberOfrooms.getValue(),
+                    numberOfPersons.getValue(), fromDate.getValue(), parseInt(amount), "somePolicy",
+                    RegisterCustomer.tempCustomer, selectedPayment, deductible.getValue());
+            showPremium(tempInsurance);
+        }
     }
 }

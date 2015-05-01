@@ -49,12 +49,8 @@
         <TextField fx:id="chipID" GridPane.columnIndex="1" GridPane.rowIndex="6" />
         <Label text="Bruksområde" GridPane.rowIndex="7" />
         <TextField fx:id="usage" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-        <Label text="Kastrert" GridPane.rowIndex="8" />
-        <CheckBox fx:id="neutered" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
         <Label text="Orginal land" GridPane.rowIndex="9" />
         <TextField fx:id="country" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-        <Label text="Klubb" GridPane.rowIndex="10" />
-        <TextField fx:id="sorority" GridPane.columnIndex="1" GridPane.rowIndex="10" />
         <Label text="Verdi" GridPane.rowIndex="11" />
         <TextField fx:id="value" GridPane.columnIndex="1" GridPane.rowIndex="11" />
         <Label text="Fra dato" GridPane.rowIndex="12" />

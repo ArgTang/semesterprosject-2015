@@ -8,21 +8,12 @@ import java.util.Set;
  */
 public abstract class Person {
 
-    //todo: Merge Person and Object package together.
     private String firstName;
     private String lastName;
     private String socialSecurityNumber; //If we make this a number: 0304052345 will become 304052345
     private ContactInfo contactInfo;
     private String password;
 
-    /**
-     * Person constructor
-     *
-     * @param firstName
-     * @param lastName
-     * @param socialSecurityNumber
-     * @param contactInfo
-     */
     public Person(String firstName, String lastName, String socialSecurityNumber, ContactInfo contactInfo) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,32 +24,25 @@ public abstract class Person {
     public String getFirstName() {
         return firstName;
     }
-
     public String getLastName() {
         return lastName;
     }
-
     public String getAdress() {
         return contactInfo.getAddress();
     }
-
     public String getCity() {
         return contactInfo.getCity();
     }
-
-    public int getCitynumbr() {
+    public int getCitynumber() {
         return contactInfo.getCitynumber();
     }
-
     public String getEmail() {
         return contactInfo.getEmail();
     }
-
     public String getSocialSecurityNumber()
     {
         return socialSecurityNumber;
     }
-
     public Set<Integer> getPhoneNumbers() {
         return contactInfo.getPhoneNumbers();
     }
@@ -66,15 +50,7 @@ public abstract class Person {
     public void addPhonenumber(int phonenumber) {
         contactInfo.addPhonenumber(phonenumber);
     }
+    public void addPhonenumber(List<Integer> list) { contactInfo.setPhonenumbers(list); }
 
-    public void addPhonenumber(List<Integer> list) {
-        contactInfo.setPhonenumbers(list);
-    }
-
-    @Override
-    public String toString() {
-        String text = firstName + " " + lastName;
-        text += "\n" + contactInfo.toString();
-        return text;
-    }
+    public void setPassword(String password) { this.password = password; }
 }

@@ -46,11 +46,11 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <columns>
-                   <TableColumn fx:id="tablesocialnumber" editable="false" minWidth="60.0" prefWidth="60.0" text="Personnummer" />
-                   <TableColumn fx:id="firstname" editable="false" minWidth="80.0" text="Fornavn" />
-                   <TableColumn fx:id="lastname" editable="false" minWidth="50.0" prefWidth="50.0" text="Etternavn" />
-                   <TableColumn fx:id="tableadress" editable="false" minWidth="70.0" prefWidth="70.0" text="Adresse" />
-                   <TableColumn fx:id="tablecity" editable="false" minWidth="50.0" prefWidth="50.0" text="Poststed" />
+                   <TableColumn fx:id="socialnumberColumn" editable="false" minWidth="60.0" prefWidth="60.0" text="Personnummer" />
+                   <TableColumn fx:id="firstnameColumn" editable="false" minWidth="80.0" text="Fornavn" />
+                   <TableColumn fx:id="lastnameColumn" editable="false" minWidth="50.0" prefWidth="50.0" text="Etternavn" />
+                   <TableColumn fx:id="adressColumn" editable="false" minWidth="70.0" prefWidth="70.0" text="Adresse" />
+                   <TableColumn fx:id="cityColumn" editable="false" minWidth="50.0" prefWidth="50.0" text="Poststed" />
                </columns>
             </TableView>
          </children>

@@ -50,8 +50,10 @@ public class InsuranseTableController
         currentCustomer.getPersonProperty().addListener(
                 observable -> {
                     SimpleObjectProperty<Customer> property = (SimpleObjectProperty) observable;
-                    setCustomer(property.getValue());
-                });
+                    if (property.isNotNull().get())
+                        setCustomer(property.getValue());
+                }
+        );
 
         table.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldInsirance, newInsurance) -> {

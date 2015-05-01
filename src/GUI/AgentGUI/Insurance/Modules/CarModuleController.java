@@ -1,7 +1,9 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonPrivateGUIMethods;
+import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
+import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -13,17 +15,20 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.currentInsurance;
-import static Insurance.Insurance.*;
+import static Insurance.Insurance.deductablenumbers;
+import static Insurance.Insurance.paymentOptions;
 
 /**
  * Created by steinar on 17.04.2015.
  */
-public final class CarModuleController implements CommonGUIMethods
+public final class CarModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods
 {
     @FXML
     TextField licenceNumber;
@@ -74,7 +79,8 @@ public final class CarModuleController implements CommonGUIMethods
             "Triumph","Volkswagen","Volvo","Andre");
 
     @FXML
-    private void initialize() {
+    @Override
+    protected void initialize() {
         //todo: some of these might be used for more insurances -> move into Vehicle Class
         kaskoValues.addAll("Ansvar", "Delkasko", "Fullkasko");
         kasko.setItems(kaskoValues);
@@ -88,10 +94,12 @@ public final class CarModuleController implements CommonGUIMethods
         maker.setItems(makers);
 
         deductible.setItems(deductablenumbers);
-        paymentOption.setItems(paymentOptionNames);
+        paymentOption.setItems(paymentOptions.stream()
+                                             .map(PaymentOption::getName)
+                                             .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
         addCSSValidation();
-        setInsuranceChoiceListener();
+        setListeners();
         clearFields();
     }
 
@@ -126,7 +134,34 @@ public final class CarModuleController implements CommonGUIMethods
         addCSSTextValidation(isNumber(), km, motorsize, buyPrice);
     }
 
-    private void setInsuranceChoiceListener() {
+    @Override
+    protected boolean checkValidation() {
+        if (validationIsOk(6).negate().test(licenceNumber))
+            return false;
+
+        if (validationIsOk(2).negate().test(model))
+            return false;
+
+        if (!modelYear.getPseudoClassStates().isEmpty())
+            return false;
+
+        if (validationIsOk(1).negate().test(color))
+            return false;
+
+        if (validationIsOk(1).negate().test(km))
+            return false;
+
+        if (validationIsOk(2).negate().test(motorsize))
+            return false;
+
+        if (validationIsOk(3).negate().test(buyPrice))
+            return false;
+
+        return true;
+    }
+
+    @Override
+    protected void setListeners() {
 
         currentInsurance.getInsuranceProperty().addListener(
                 observable -> {
@@ -143,5 +178,14 @@ public final class CarModuleController implements CommonGUIMethods
             if (bool.get())
                 clearFields();
         });
+    }
+
+    @Override
+    protected void makeInsurance() {
+        if (!checkValidation())
+            return;
+
+        PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
+
     }
 }

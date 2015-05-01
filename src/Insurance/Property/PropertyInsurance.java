@@ -1,12 +1,9 @@
 package Insurance.Property;
 
-
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
 import Person.Customer;
-
 import java.time.LocalDate;
-
 
 /**
  * Created by steinar on 27.03.2015.

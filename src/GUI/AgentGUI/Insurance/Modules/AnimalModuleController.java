@@ -1,20 +1,24 @@
 package GUI.AgentGUI.Insurance.Modules;
 
 import GUI.AgentGUI.Insurance.AgentInsuranceController;
-import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonPrivateGUIMethods;
+import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
+import Insurance.Helper.PaymentOption;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import static GUI.GuiHelper.RegEX.*;
-import static Insurance.Insurance.paymentOptionNames;
+import static Insurance.Insurance.paymentOptions;
 
-public class AnimalModuleController implements CommonGUIMethods {
+public final class AnimalModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods {
 
     @FXML
     private ComboBox<String> animalType;
@@ -37,11 +41,7 @@ public class AnimalModuleController implements CommonGUIMethods {
     @FXML
     private TextField usage;
     @FXML
-    private CheckBox neutered;
-    @FXML
     private TextField country;
-    @FXML
-    private TextField sorority;
     @FXML
     private TextField value;
     @FXML
@@ -53,7 +53,9 @@ public class AnimalModuleController implements CommonGUIMethods {
 
     @FXML
     public void initialize() {
-        paymentOption.setItems(paymentOptionNames);
+        paymentOption.setItems(paymentOptions.stream()
+                                             .map(PaymentOption::getName)
+                                             .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
         animalTypes.setAll("Hund", "Katt", "Hest");
         animalType.setItems(animalTypes);
@@ -69,7 +71,7 @@ public class AnimalModuleController implements CommonGUIMethods {
 
     @Override
     public void clearFields() {
-        resetTextFields(name, breed, color, chipID, usage, country, sorority, value);
+        resetTextFields(name, breed, color, chipID, usage, country, value);
         fromDate.setValue(LocalDate.now());
         boy.setSelected(true);
 
@@ -90,15 +92,37 @@ public class AnimalModuleController implements CommonGUIMethods {
         addCSSTextValidation(isLetters(), name, breed, color, country);
         RegEX.addCSSTextValidation(chipID, isAllChars()); //todo: make regex for this
         RegEX.addCSSTextValidation(usage, isLetters()); //todo: delete when enum is ready
-        RegEX.addCSSTextValidation(sorority, isLetters()); //todo: delete when enum is ready
         RegEX.addCSSTextValidation(value, isNumber());
     }
 
-    private void setListeners() {
+    @Override
+    protected boolean checkValidation() {
+        return validationIsOk(3, name, breed, color, country, usage, value, chipID);
+    }
+
+    @Override
+    protected void setListeners() {
         AgentInsuranceController.emptyscreen.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();
         });
+
+        birthday.valueProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    //if too old refuse insurance
+                    //horsemaxage = 22
+                    //DogMaxage = 10
+                    //catmaxage = 13
+                });
+    }
+
+    @Override
+    protected void makeInsurance() {
+        if (!checkValidation())
+            return;
+        
+        PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
+
     }
 }

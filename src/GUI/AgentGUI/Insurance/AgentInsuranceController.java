@@ -4,8 +4,6 @@ import GUI.GuiHelper.Fader;
 import GUI.WindowChangeListener;
 import Insurance.Helper.PaymentOption;
 import Person.Person;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 
 import static GUI.StartMain.currentCustomer;
@@ -30,7 +29,7 @@ public final class AgentInsuranceController
 
     private final StringProperty selectedCustomerName = new SimpleStringProperty();
     public static final BooleanProperty emptyscreen = new SimpleBooleanProperty(false);
-    public static final ObservableList<String> paymentOptionNummber = FXCollections.observableArrayList(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
+    public static final ObservableList<String> paymentOptionNames = FXCollections.observableArrayList(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
     public static final ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList(2000, 4000, 8000, 12000);
 
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
@@ -58,32 +57,29 @@ public final class AgentInsuranceController
         return container;
     }
 
-    public void showtHouseInsurance()
-    {
+    public void showtHouseInsurance() {
         loadParent("\\Modules\\HouseModule.fxml");
     }
 
-    public void showCarinsurance()
-    {
+    public void showCarinsurance() {
         loadParent("\\Modules\\CarModule.fxml");
     }
 
-    private void showAnimalInsurance()
-    {
+    private void showAnimalInsurance() {
         loadParent("\\Modules\\AnimalModule.fxml");
     }
 
-    private void showTravelInsurance()
-    {
+    private void showTravelInsurance() {
         loadParent("\\Modules\\TravelModule.fxml");
     }
 
-    private void showBoatInsurance()
-    {
+    private void showBoatInsurance() {
         loadParent("\\Modules\\BoatModule.fxml");
     }
 
-    private void showHouseholdInsurance() { loadParent("\\Modules\\HouseholdContentsModule.fxml"); }
+    private void showHouseholdInsurance() {
+        loadParent("\\Modules\\HouseholdContentsModule.fxml");
+    }
 
     private void loadParent(String FXMLpath)
     {

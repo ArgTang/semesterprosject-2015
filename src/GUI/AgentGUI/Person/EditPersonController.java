@@ -1,25 +1,22 @@
 package GUI.AgentGUI.Person;
 
 import GUI.GuiHelper.AlertWindow;
-import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
-import GUI.StartMain;
 import Person.ContactInfo;
 import Person.Customer;
-import Person.Person;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.paint.Color;
+
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static GUI.GuiHelper.RegEX.*;
@@ -29,7 +26,7 @@ import static GUI.StartMain.customerRegister;
 /**
  * Created by steinar on 19.04.2015.
  */
-public class EditPersonController implements CommonGUIMethods
+public class EditPersonController implements CommonPublicGUIMethods
 {
     @FXML
     TextField socialSecurityNumber;
@@ -57,7 +54,7 @@ public class EditPersonController implements CommonGUIMethods
     private void initialize()
     {
         phonelist.setItems(phones);
-        setCurrentPersonListener();
+        setListeners();
         addCSSValidation();
 
         if( currentCustomer.getPersonProperty().isNotNull().get())
@@ -92,7 +89,7 @@ public class EditPersonController implements CommonGUIMethods
     }
 
     //todo: put these into an interface (DRY)?? also need to redraw or update label after new name is set
-    private void setCurrentPersonListener()
+    private void setListeners()
     {
         //todo: might not need this? as users "should" open a new editPersonwindow each time
         currentCustomer.getPersonProperty().addListener(
@@ -133,7 +130,7 @@ public class EditPersonController implements CommonGUIMethods
         firstname.setText(customer.getFirstName());
         lastname.setText(customer.getLastName());
         adress.setText(customer.getAdress());
-        citynumber.setText(String.valueOf(customer.getCitynumbr()));
+        citynumber.setText(String.valueOf(customer.getCitynumber()));
         city.setText(customer.getCity());
         email.setText(customer.getEmail());
 
@@ -182,17 +179,17 @@ public class EditPersonController implements CommonGUIMethods
 
         if ( socialSecurityNumber.getText().length() != 11 && socialSecurityNumber.getPseudoClassStates().isEmpty() )
             return false;
-        if ( adress.getText().length() < 3 && adress.getPseudoClassStates().isEmpty() )
+        if ( validationIsOk(3).negate().test(adress) )
             return false;
-        if ( email.getText().length() < 4 && email.getPseudoClassStates().isEmpty() )
+        if ( validationIsOk(4).negate().test(email) )
             return false;
-        if ( city.getText().length() < 2 && city.getPseudoClassStates().isEmpty() )
+        if ( validationIsOk(2).negate().test(city))
             return false;
-        if ( citynumber.getText().length() != 4 && citynumber.getPseudoClassStates().isEmpty() )
+        if ( citynumber.getPseudoClassStates().isEmpty() )
             return false;
-        if ( firstname.getText().length() < 1 && firstname.getPseudoClassStates().isEmpty() )
+        if ( validationIsOk(1).negate().test(firstname))
             return false;
-        if ( lastname.getText().length() < 2  && lastname.getPseudoClassStates().isEmpty() )
+        if ( validationIsOk(2).negate().test(lastname))
             return false;
 
         if(  phones.stream()

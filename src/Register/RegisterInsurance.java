@@ -9,15 +9,13 @@ import java.util.HashMap;
  */
 public final class RegisterInsurance extends  Register{
 
-    private static int idCounter = 1;
+    private static int idCounter = 3456;
 
-    public RegisterInsurance()
-    {
+    public RegisterInsurance() {
         super(new HashMap<Integer, Insurance>());
     }
 
-    public boolean add(Insurance insurance)
-    {
+    public boolean add(Insurance insurance) {
         if (insurance.setCasenumber(idCounter) == idCounter && super.add(insurance.getCasenumber(), insurance)) {
             ++idCounter;
             return true;
@@ -25,13 +23,11 @@ public final class RegisterInsurance extends  Register{
         return false;
     }
 
-    public Insurance get(int insuranceID)
-    {
+    public Insurance get(int insuranceID) {
         return (Insurance) super.getWithKey(insuranceID);
     }
 
-    public boolean update(Insurance insurance)
-    {
+    public boolean update(Insurance insurance) {
         return super.update(insurance.getCasenumber(), insurance);
     }
 }

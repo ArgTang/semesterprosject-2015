@@ -1,6 +1,6 @@
 package GUI.AgentGUI.Search;
 
-import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Person.Customer;
 import javafx.collections.FXCollections;
@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.io.IOException;
 
 import static GUI.GuiHelper.RegEX.*;
@@ -20,7 +21,7 @@ import static Register.RegisterCustomer.*;
  * This Class controlls the Agent Search Window
  * Created by steinar on 13.04.2015.
  */
-public final class AgentSearchController implements CommonGUIMethods
+public final class AgentSearchController implements CommonPublicGUIMethods
 {
     // Register all search InputFields
     @FXML
@@ -38,30 +39,30 @@ public final class AgentSearchController implements CommonGUIMethods
     @FXML
     private Button searchButton;
 
-    //Register PersonOutputTable
+    //register search output table
     @FXML
     private TableView<Customer> personResults;
     @FXML
-    private TableColumn<Customer, String> tablesocialnumber;
+    private TableColumn<Customer, String> socialnumberColumn;
     @FXML
-    private TableColumn<Customer, String> firstname;
+    private TableColumn<Customer, String> firstnameColumn;
     @FXML
-    private TableColumn<Customer, String> lastname;
+    private TableColumn<Customer, String> lastnameColumn;
     @FXML
-    private TableColumn<Customer, String> tableadress;
+    private TableColumn<Customer, String> adressColumn;
     @FXML
-    private TableColumn<Customer, String> tablecity;
+    private TableColumn<Customer, String> cityColumn;
 
     public static final ObservableList<Customer> searchresults = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
         //these lines sets up the binding from searchresult to he tablecolumns
-        tablesocialnumber.setCellValueFactory(new PropertyValueFactory<Customer, String>("SocialSecurityNumber"));
-        firstname.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
-        lastname.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
-        tableadress.setCellValueFactory(new PropertyValueFactory<Customer, String>("Adress"));
-        tablecity.setCellValueFactory(new PropertyValueFactory<Customer, String>("City"));
+        socialnumberColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("SocialSecurityNumber"));
+        firstnameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
+        lastnameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
+        adressColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("Adress"));
+        cityColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("City"));
 
         //Gets the observable arraylist from witch the search function gets collected into
         searchresults.setAll( customerRegister.getRegister() );
@@ -92,23 +93,23 @@ public final class AgentSearchController implements CommonGUIMethods
     private void searchFunction() {
         // we already do regex, so we only need to check pseudoclass state
         String socialsecurity = searchSocialsecuritynumber.getText();
-        if ( socialsecurity.length() > 7 && searchSocialsecuritynumber.getPseudoClassStates().isEmpty() )
+        if ( validationIsOk(7).test(searchSocialsecuritynumber) )
             searchresults.setAll( customerRegister.get( socialsecurity));
 
         String surename = searchSurename.getText();
-        if ( surename.length() > 1  &&  searchSurename.getPseudoClassStates().isEmpty() )
+        if ( validationIsOk(1).test(searchSurename) )
             searchresults.setAll( customerRegister.search( matchesInFirstnam(surename)));
 
         String lastname = searchLastname.getText();
-        if ( lastname.length() > 1 && searchLastname.getPseudoClassStates().isEmpty() )
+        if ( validationIsOk(1).test(searchLastname) )
             searchresults.setAll( customerRegister.search( matchesInLastname(lastname)));
 
         String customerID = searchCustomeriD.getText();
-        if ( customerID.length() > 7 && searchCustomeriD.getPseudoClassStates().isEmpty() )
+        if ( validationIsOk(7).test(searchCustomeriD) )
             searchresults.setAll( customerRegister.search( matchesInCustomerID(customerID)));
 
         String phone = searchPhone.getText();
-        if( phone.length() > 7 && searchPhone.getPseudoClassStates().isEmpty() ) {
+        if( validationIsOk(7).test(searchPhone) ) {
             searchresults.setAll( customerRegister.search( matchesPhonenumer(Integer.parseInt(phone))));
         }
     }
@@ -128,8 +129,7 @@ public final class AgentSearchController implements CommonGUIMethods
     @Override
     public void addCSSValidation() {
         RegEX.addCSSTextValidation(searchSocialsecuritynumber, isNumber(11));
-        RegEX.addCSSTextValidation(searchSurename, isLetters());
-        RegEX.addCSSTextValidation(searchLastname, isLetters());
+        addCSSTextValidation(isLetters(), searchSurename, searchLastname);
         RegEX.addCSSTextValidation(searchCustomeriD, isAllChars()); //todo:chage this when customer id is ready
         RegEX.addCSSTextValidation(searchPhone, isNumber(8));
     }

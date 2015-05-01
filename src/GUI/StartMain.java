@@ -25,6 +25,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.awt.*;
 import java.io.IOException;
 
@@ -106,8 +107,8 @@ public class StartMain extends Application
 
     private Parent getHomeInsurancePane() {
         //todo: maybe move controllers to classVariable
-        AgentInsuranceController HomeController = new AgentInsuranceController();
-        return HomeController.initAgentInsuranceView();
+        AgentInsuranceController insuranceController = new AgentInsuranceController();
+        return insuranceController.initAgentInsuranceView();
     }
 
     private Parent getAgenSearchPane() {

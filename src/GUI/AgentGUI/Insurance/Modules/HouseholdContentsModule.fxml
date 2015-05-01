@@ -31,9 +31,9 @@
        <TextField fx:id="city" promptText="Jordbærhaugen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
        <Label text="Antall rom" GridPane.rowIndex="4" />
-       <ComboBox fx:id="roomnumbers" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+       <ComboBox fx:id="numberOfrooms" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
        <Label text="Antall personer" GridPane.rowIndex="5" />
-       <ComboBox fx:id="personnumber" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+       <ComboBox fx:id="numberOfPersons" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
        <TextField fx:id="amount" GridPane.columnIndex="1" GridPane.rowIndex="6" />
        <Label text="Beløp" GridPane.rowIndex="6" />
 

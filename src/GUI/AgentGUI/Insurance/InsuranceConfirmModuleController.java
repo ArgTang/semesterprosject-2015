@@ -1,8 +1,7 @@
 package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.AlertWindow;
-import GUI.GuiHelper.CommonGUIMethods;
-import GUI.StartMain;
+import GUI.GuiHelper.CommonPublicGUIMethods;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
@@ -14,13 +13,14 @@ import javafx.scene.paint.Color;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.currentInsurance;
 import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
 
 /**
  * Created by steinar on 15.04.2015.
  */
-public final class InsuranceConfirmModuleController implements CommonGUIMethods
+public final class InsuranceConfirmModuleController implements CommonPublicGUIMethods
 {
     @FXML
     private Label yearlyPremium;
@@ -56,17 +56,24 @@ public final class InsuranceConfirmModuleController implements CommonGUIMethods
 
     @FXML
     private void initialize() {
-        BooleanBinding insuranceIsNotChosen = currentInsurance.getInsuranceProperty().isNull();
-        endThis.disableProperty().bind(insuranceIsNotChosen);
-
         yearlyPremium.textProperty().bind(yearlyPremiumLabel.asString());
         totalFee.textProperty().bind(totalFeeLabel.asString());
         paymentEachTermin.textProperty().bind(paymentEachTerminLabel.asString());
         bonusLabel.setVisible(false);
 
         helperPane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null))); //todo: easier way to do this?
+        setListeners();
+    }
 
-        confirmOrderButton.bind(confirmInsurance.pressedProperty());
+    private void setListeners()
+    {
+        BooleanBinding insuranceIsNotChosen = currentInsurance.getInsuranceProperty().isNull();
+        endThis.disableProperty().bind(insuranceIsNotChosen);
+
+        confirmOrderButton.bind( confirmInsurance.pressedProperty() );
+        confirmInsurance.disableProperty().bind( currentCustomer.getPersonProperty().isNull() );
+        insuranceOffer.disableProperty().bind( currentCustomer.getPersonProperty().isNull() );
+
     }
 
     @FXML

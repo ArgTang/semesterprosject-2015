@@ -4,8 +4,10 @@ package GUI.AgentGUI.Insurance.Modules;
  * Created by steinar on 27.04.2015.
  */
 
-import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonPrivateGUIMethods;
+import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
+import Insurance.Helper.PaymentOption;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -14,13 +16,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
 import static GUI.GuiHelper.RegEX.*;
-import static Insurance.Insurance.*;
+import static Insurance.Insurance.deductablenumbers;
+import static Insurance.Insurance.paymentOptions;
 
-public class BoatModuleController implements CommonGUIMethods
+public final class BoatModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods
 {
     @FXML
     private TextField buyPrice;
@@ -57,8 +62,8 @@ public class BoatModuleController implements CommonGUIMethods
     private ObservableList<String> types = FXCollections.observableArrayList();
 
     @FXML
-    public void initialize()
-    {
+    @Override
+    protected void initialize() {
         kaskoValues.addAll("Delkasko", "Fullkasko", "Pluss (tyveri)");
         kasko.setItems(kaskoValues);
 
@@ -66,7 +71,9 @@ public class BoatModuleController implements CommonGUIMethods
         type.setItems(types);
 
         deductible.setItems(deductablenumbers);
-        paymentOption.setItems(paymentOptionNames);
+        paymentOption.setItems(paymentOptions.stream()
+                                             .map(PaymentOption::getName)
+                                             .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
         addCSSValidation();
         clearFields();
@@ -93,21 +100,42 @@ public class BoatModuleController implements CommonGUIMethods
     }
 
     @Override
-    public void addCSSValidation()
-    {
+    public void addCSSValidation() {
         addCSSTextValidation(isNumber(), speed, size, motorsize);
         RegEX.addCSSTextValidation(buyPrice, isNumber());
-        addCSSTextValidation(isLetters(), model, maker, harbor); //todo: allow numbers for harbor? i.e. peer 16
+        addCSSTextValidation(isLetters(), maker, harbor); //todo: allow numbers for harbor? i.e. peer 16
         addCSSTextValidation(isAllChars(), licenceNumber, model);
         RegEX.addCSSTextValidation(modelYear, isNumber(4));
     }
 
-    private void setListeners()
-    {
+    @Override
+    protected boolean checkValidation() {
+
+        //todo: what if we want to give feedbavk to user for what and witch Textfield are wrong ??
+        if ( !validationIsOk(1, size, speed, motorsize) )
+            return false;
+
+        if ( !validationIsOk(3, maker, harbor, licenceNumber, model, modelYear, buyPrice ) )
+            return false;
+
+        return true;
+    }
+
+    @Override
+    protected void setListeners() {
         emptyscreen.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();
         });
+    }
+
+    @Override
+    protected void makeInsurance() {
+        if (!checkValidation())
+            return;
+
+        PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
+
     }
 }

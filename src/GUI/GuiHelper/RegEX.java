@@ -2,6 +2,7 @@ package GUI.GuiHelper;
 
 import javafx.css.PseudoClass;
 import javafx.scene.control.TextField;
+
 import java.util.function.Predicate;
 
 /**
@@ -32,49 +33,42 @@ public final class RegEX {
     private static final String EMAIL = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
     private static final String ADRESS = "^((.){1,}(\\d){1,}(.){0,})$";
 
-    public static  Predicate<String> isAdress()
-    {
-        return string -> !string.matches(ADRESS);
-    }
+    public static final Predicate<String> isAdress() { return string -> !string.matches(ADRESS); }
+    public static final Predicate<String> isLetters() { return string -> !string.matches(LETTERS); }
+    public static final Predicate<String> isEmail() { return string -> !string.matches(EMAIL); }
+    public static final Predicate<String> isAllChars() { return string -> !string.matches(ALLCHARS); }
+    public static final Predicate<String> isNumber() { return string -> !string.matches(NUMBER + "+"); }
+    public static final Predicate<String> isNumber(int lenght) { return string -> !string.matches(NUMBER + "{" + (lenght-1) + "}"); }
+    public static final Predicate<String> isLongerThan(int length) { return string -> !(string.length() > length); }
+    public static final Predicate<String> isPassword() { return (string -> isAllChars().and(isLongerThan(5)).test(string)); }
 
-    public  static Predicate<String> isLetters()
-    {
-        return string -> !string.matches(LETTERS);
-    }
+    public static final Predicate<TextField> validationIsOk(int minLength) { return textfield -> textfield.getLength() > minLength && textfield.getPseudoClassStates().isEmpty() ;}
 
-    public static Predicate<String> isEmail()
-    {
-        return string -> !string.matches(EMAIL);
-    }
-
-    public static Predicate<String> isAllChars()
-    {
-        return string -> !string.matches(ALLCHARS);
-    }
-
-    public static Predicate<String> isNumber()
-    {
-        return string -> !string.matches(NUMBER + "+");
-    }
-
-    public static Predicate<String> isNumber(int lenght)
-    {
-        return string -> !string.matches(NUMBER + "{" + (lenght-1) + "}");
-    }
-
-    public static Predicate<String> isPassword()
-    {//TODO: how to use isAllChars() predicate here?
-        return string -> !string.matches(ALLCHARS) && string.length() > 5;
-    }
-
-    public static void addCSSTextValidation(TextField textField, Predicate condition)
-    {
+    public static void addCSSTextValidation(TextField textField, Predicate condition) {
         //todo: how to add css only when done typing?
-        textField.setOnKeyReleased( event -> textField.pseudoClassStateChanged(invalidText, condition.test(textField.getText()))  );
+        textField.setOnKeyReleased(event -> textField.pseudoClassStateChanged(invalidText, condition.test(textField.getText())));
     }
 
-    public static void resetCSSValidationRule(TextField textField)
-    {
+    public static void resetCSSValidationRule(TextField textField) {
             textField.pseudoClassStateChanged(invalidText, false);
+    }
+
+    public static void resetTextFields(TextField... textFields) { //Varangs!!
+        for(TextField textField: textFields) {
+            textField.setText("");
+            RegEX.resetCSSValidationRule(textField);
+        }
+    }
+
+    public static void addCSSTextValidation(Predicate condition, TextField... textFields) { //Varangs!!
+        for (TextField textField: textFields)
+            RegEX.addCSSTextValidation(textField, condition);
+    }
+
+    public static final boolean validationIsOk(int minLength, TextField... textFields) { //Varangs!!
+        for(TextField textField: textFields)
+            if (validationIsOk(minLength).negate().test(textField))
+                return false;
+        return true;
     }
 }

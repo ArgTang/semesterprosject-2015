@@ -1,11 +1,13 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonPrivateGUIMethods;
+import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
 import Insurance.Property.HomeInsurance;
 import Person.Customer;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,18 +18,20 @@ import javafx.scene.control.TextField;
 
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
-import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.*;
+import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.currentCustomer;
-import static Insurance.Insurance.*;
+import static Insurance.Insurance.deductablenumbers;
+import static Insurance.Insurance.paymentOptions;
 
 
 /**
  * Created by steinar on 16.04.2015.
  */
-public final class HouseModuleController implements CommonGUIMethods
+public final class HouseModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods
 {
     @FXML
     private TextField adress;
@@ -62,9 +66,12 @@ public final class HouseModuleController implements CommonGUIMethods
     private static HomeInsurance insurance;
 
     @FXML
-    private void initialize() {
+    @Override
+    protected void initialize() {
         deductible.setItems(deductablenumbers);
-        paymentOption.setItems(paymentOptionNames);
+        paymentOption.setItems(paymentOptions.stream()
+                                             .map(PaymentOption::getName)
+                                             .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
         //todo: ENUM?
         buildingMaterials.addAll("Mur", "Tre");
@@ -83,7 +90,7 @@ public final class HouseModuleController implements CommonGUIMethods
             Customer customer = currentCustomer.getPerson();
             adress.setText(customer.getAdress());
             city.setText(customer.getCity());
-            citynumber.setText(String.valueOf( customer.getCitynumbr()));
+            citynumber.setText(String.valueOf( customer.getCitynumber()));
         }
     }
 
@@ -116,58 +123,53 @@ public final class HouseModuleController implements CommonGUIMethods
         RegEX.addCSSTextValidation(primaryArea, isNumber()); //todo:make regex for this
     }
 
-    private void setListeners() {
+    @Override
+    protected void setListeners() {
         emptyscreen.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();
         });
+
         addComboboxListener(constructedIn, buildingType, deductible, paymentOption);
+
+        confirmOrderButton.addListener(observable -> {
+            BooleanProperty bool = (BooleanProperty) observable;
+            if (bool.get()) {
+                makeInsurance();
+                saveInsurance(insurance);
+            }
+        });
     }
 
-    private boolean checkValidation() {
-        if (adress.getLength() < 3 && adress.getPseudoClassStates().isEmpty() )
+    @Override
+    protected boolean checkValidation() {
+        //todo: implement varang?
+        if (validationIsOk(3).negate().test(adress) )
             return false;
         if (!citynumber.getPseudoClassStates().isEmpty())
             return false;
-        if (city.getLength() < 2 && city.getPseudoClassStates().isEmpty())
+        if (validationIsOk(2).negate().test(city))
             return false;
         if (!constructionYear.getPseudoClassStates().isEmpty())
             return false;
-        if (grossArea.getLength() < 1 && grossArea.getPseudoClassStates().isEmpty())
+        if (validationIsOk(2).negate().test(grossArea))
             return false;
-        if (primaryArea.getLength() < 1 && primaryArea.getPseudoClassStates().isEmpty())
+        if (!validationIsOk(2).negate().test(primaryArea))
             return false;
         return true;
     }
 
-    private void addComboboxListener(ComboBox... comboBoxes) {
-        for( ComboBox comboBox : comboBoxes )
-            comboBox.valueProperty().addListener(observable -> makeInsurance() );
-    }
-
-    private void makeInsurance() {
+    @Override
+    protected void makeInsurance() {
         if (!checkValidation())
             return;
-        ObservableList<PaymentOption> list = FXCollections.observableArrayList(PaymentOption.values());
-        FXCollections.reverse(list);
 
-        PaymentOption selectedPayment = list.get(paymentOption.getSelectionModel().getSelectedIndex());
+        PaymentOption selectedPayment = paymentOptions.get(paymentOption.getSelectionModel().getSelectedIndex());
         insurance = new HomeInsurance(fromDate.getValue(),0, "some policy", currentCustomer.getPerson(), selectedPayment,
                 deductible.getValue(), adress.getText(), parseInt(citynumber), city.getText(), parseInt(constructionYear), constructedIn.getValue(),
                 parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
 
-        showPremium();
-    }
-
-    private void showPremium() {
-        int paymentTermins = insurance.getPaymentOption().getValue();
-        yearlyPremiumLabel.setValue(insurance.getAnnualPremium());
-        totalFeeLabel.setValue( paymentFee * paymentTermins );
-        paymentEachTerminLabel.setValue((insurance.getAnnualPremium() + paymentFee * paymentTermins) / paymentTermins);
-    }
-
-    private int parseInt(TextField textField) {
-        return Integer.parseInt(textField.getText());
+        showPremium(insurance);
     }
 }

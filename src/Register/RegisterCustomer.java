@@ -1,10 +1,10 @@
 package Register;
 
+import Person.ContactInfo;
 import Person.Customer;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -14,13 +14,15 @@ import java.util.stream.Collectors;
  */
 public final class RegisterCustomer extends Register {
 
-    public RegisterCustomer()
-    {
+    private static final ContactInfo contactinfo = new ContactInfo("oslogata 3", 2341, "oslo", "lastname@email.com", 12345678);
+    public static final Customer tempCustomer = new Customer("ola", "normann", "11111111111", contactinfo);
+
+    public RegisterCustomer() {
         super(new HashMap< String, Customer >());
     }
 
     public boolean add(Customer customer) {
-       return super.add(customer.getSocialSecurityNumber(), customer);
+           return super.add(customer.getSocialSecurityNumber(), customer);
     }
 
     public Customer get(String key) {
@@ -31,29 +33,12 @@ public final class RegisterCustomer extends Register {
         return super.update(customer.getSocialSecurityNumber(), customer);
     }
 
-    public List searchSurename(String name) {
-        return search(matchesInFirstnam(name));
-    }
-
-    public List searchLastname(String name) {
-        return search(matchesInLastname(name));
-    }
-
-    public List searchCustomerID(String id) {
-        return search(matchesInCustomerID(id));
-    }
-
-    public List searchForPhone(int phone) {
-        return search(matchesPhonenumer(phone));
-    }
-
     public List<Customer> searchPhone(int phone) {
         Collection<Customer> col = super.getRegister();
         return col.stream()
                   .filter(customer -> customer.getPhoneNumbers().stream()
                           .anyMatch(i -> i == phone))
                   .collect(Collectors.toList());
-
     }
 
     public static final Predicate<Customer> matchesPhonenumer(int phonenumber ) { return customer -> customer.getPhoneNumbers().contains(phonenumber); }
