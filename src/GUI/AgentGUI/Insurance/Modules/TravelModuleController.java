@@ -21,7 +21,7 @@ import javafx.scene.control.DatePicker;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.StartMain.currentCustomer;
@@ -72,7 +72,7 @@ public final class TravelModuleController extends CommonPrivateGUIMethods implem
 
     @Override
     protected void setListeners() {
-        emptyscreen.addListener(observable -> {
+        emptyscreenButton.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();

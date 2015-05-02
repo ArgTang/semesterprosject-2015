@@ -9,7 +9,7 @@ import java.time.LocalDate;
 /**
  * Created by steinar on 07.04.2015.
  */
-public class Animal extends Insurance
+public class AnimalInsurance extends Insurance
 {
     double purchasePrice;
     String usage; //TODO: Add enum for different usages //need this? horses and\or dogs only?
@@ -21,8 +21,8 @@ public class Animal extends Insurance
     AdditionalInfo additionalInfo;
     String countryOrigin;
 
-    public Animal(LocalDate validFrom, int purchasePrice, String policy, Customer customer, PaymentOption paymentOption, String usage, String breed,
-                  String dateOfBirth, String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo, int deductable)
+    public AnimalInsurance(LocalDate validFrom, int purchasePrice, String policy, Customer customer, PaymentOption paymentOption, String usage, String breed,
+                           String dateOfBirth, String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo, int deductable)
     {
         super(validFrom, purchasePrice, policy, customer, paymentOption, deductable);
         this.purchasePrice = purchasePrice;

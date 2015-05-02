@@ -8,7 +8,7 @@ import java.time.LocalDate;
 /**
  * Created by nugGet on 25.04.2015.
  */
-public class Cat extends Animal
+public class Cat extends AnimalInsurance
 {
 
     public Cat(LocalDate validFrom, int purchasePrice, String policy, Customer customer, PaymentOption paymentOption, String usage, String breed, String dateOfBirth,

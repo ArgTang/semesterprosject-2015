@@ -9,6 +9,7 @@ import java.util.Map;
 /**
  * Created by steinar on 09.04.2015.
  */
+@Deprecated
 public final class WitnessRegister  implements CommonRegisterMethods
 {
     Map< Long, Witness> register = new HashMap();

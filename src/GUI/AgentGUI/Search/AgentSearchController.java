@@ -94,14 +94,14 @@ public final class AgentSearchController implements CommonPublicGUIMethods
         // we already do regex, so we only need to check pseudoclass state
         String socialsecurity = searchSocialsecuritynumber.getText();
         if ( validationIsOk(7).test(searchSocialsecuritynumber) )
-            searchresults.setAll( customerRegister.get( socialsecurity));
+            searchresults.setAll( customerRegister.get(socialsecurity));
 
         String surename = searchSurename.getText();
-        if ( validationIsOk(1).test(searchSurename) )
+        if ( validationIsOk(1, searchSurename) )
             searchresults.setAll( customerRegister.search( matchesInFirstnam(surename)));
 
         String lastname = searchLastname.getText();
-        if ( validationIsOk(1).test(searchLastname) )
+        if ( validationIsOk(1, searchLastname) )
             searchresults.setAll( customerRegister.search( matchesInLastname(lastname)));
 
         String customerID = searchCustomeriD.getText();
@@ -117,21 +117,17 @@ public final class AgentSearchController implements CommonPublicGUIMethods
     @FXML
     @Override
     public void clearFields() {
-        resetTextFields(searchSocialsecuritynumber);
-        resetTextFields(searchSurename);
-        resetTextFields(searchLastname);
-        resetTextFields(searchCustomeriD);
-        resetTextFields(searchPhone);
+        resetTextFields(searchSocialsecuritynumber, searchSurename, searchLastname, searchCustomeriD, searchPhone);
         searchresults.clear();
         currentCustomer.reset();
     }
 
     @Override
     public void addCSSValidation() {
-        RegEX.addCSSTextValidation(searchSocialsecuritynumber, isNumber(11));
+        RegEX.addCSSTextValidation(searchSocialsecuritynumber, isNumberWithLength(11));
         addCSSTextValidation(isLetters(), searchSurename, searchLastname);
-        RegEX.addCSSTextValidation(searchCustomeriD, isAllChars()); //todo:chage this when customer id is ready
-        RegEX.addCSSTextValidation(searchPhone, isNumber(8));
+        RegEX.addCSSTextValidation(searchCustomeriD, isNumber()); //todo:change this when customer id is ready
+        RegEX.addCSSTextValidation(searchPhone, isNumberWithLength(8));
     }
 
     public Parent initAgentSearch() {
@@ -139,6 +135,7 @@ public final class AgentSearchController implements CommonPublicGUIMethods
         try {
             searchPane = FXMLLoader.load(getClass().getResource("\\AgentPersonSearch.fxml"));
         } catch (IOException e) {
+            System.out.println("could not find file AgentPersonSearch.fxml");
             e.printStackTrace();
         }
         return searchPane;

@@ -9,6 +9,7 @@ import java.util.Map;
 /**
  * Created by steinar on 09.04.2015.
  */
+@Deprecated
 public class EmployeeRegister  implements CommonRegisterMethods
 {
     Map< String, Person > register = new HashMap();

@@ -10,6 +10,7 @@ import java.util.Map;
  * superclass for our registers
  * //linky; https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
  */
+@Deprecated
 class Register {
 
     Map register;

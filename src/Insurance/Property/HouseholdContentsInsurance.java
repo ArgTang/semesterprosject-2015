@@ -8,7 +8,7 @@ import java.time.LocalDate;
 /**
  * Created by steinar on 29.04.2015.
  */
-public class HouseholdContents extends Insurance{
+public class HouseholdContentsInsurance extends Insurance{
 
     private String address;
     private int citynumber;
@@ -22,8 +22,8 @@ public class HouseholdContents extends Insurance{
     private double roomMatesAdjust = 0.6;
     private double valueAdjust = 0.002;
 
-    public HouseholdContents(String address, int citynumber, String city, int roomCount, int roomMates, LocalDate validFrom,
-                             int itemValue, String policy, Customer customer, PaymentOption paymentOption, int deductable) {
+    public HouseholdContentsInsurance(String address, int citynumber, String city, int roomCount, int roomMates, LocalDate validFrom,
+                                      int itemValue, String policy, Customer customer, PaymentOption paymentOption, int deductable) {
         super(validFrom, itemValue, policy, customer, paymentOption, deductable);
         this.address = address;
         this.citynumber = citynumber;

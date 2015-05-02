@@ -1,5 +1,6 @@
 package Insurance;
 
+import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
 import Person.Customer;
 import javafx.collections.FXCollections;
@@ -55,9 +56,10 @@ public abstract class Insurance
     public void setAnnualPremium(int annualPremium) { this.annualPremium = annualPremium; }
     public int getCasenumber() { return casenumber; }
     public int getFromYear() { return validFrom.getYear(); }
-    public Class getInsuranceClass() { return this.getClass(); }
     public PaymentOption getPaymentOption() { return paymentOption; }
     public int getAnnualPremium() { return annualPremium; }
     public int getItemValue() { return itemValue; }
     public int getDeductable() { return deductable; }
+
+    public String getInsuranceName() { return StartMain.currentInsurance.getNameOfInsurance(this); }
 }

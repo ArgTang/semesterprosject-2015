@@ -8,7 +8,7 @@ import java.time.LocalDate;
 /**
  * Created by nugGet on 25.04.2015.
  */
-public class Horse extends Animal
+public class Horse extends AnimalInsurance
 {
     private boolean clubMembership; //todo: need this?
 

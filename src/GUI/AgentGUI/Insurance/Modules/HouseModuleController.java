@@ -20,7 +20,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
@@ -117,16 +117,16 @@ public final class HouseModuleController extends CommonPrivateGUIMethods impleme
     @Override
     public void addCSSValidation() {
         RegEX.addCSSTextValidation(adress, isAdress());
-        RegEX.addCSSTextValidation(citynumber, isNumber(4));
+        RegEX.addCSSTextValidation(citynumber, isNumberWithLength(4));
         RegEX.addCSSTextValidation(city, isLetters());
-        RegEX.addCSSTextValidation(constructionYear, isNumber(4)); //todo: make another regex for this
+        RegEX.addCSSTextValidation(constructionYear, isNumberWithLength(4)); //todo: make another regex for this
         RegEX.addCSSTextValidation(grossArea, isNumber()); //todo:make regex for this
         RegEX.addCSSTextValidation(primaryArea, isNumber()); //todo:make regex for this
     }
 
     @Override
     protected void setListeners() {
-        emptyscreen.addListener(observable -> {
+        emptyscreenButton.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();

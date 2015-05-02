@@ -4,7 +4,7 @@ import GUI.GuiHelper.CommonPrivateGUIMethods;
 import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
-import Insurance.Property.HouseholdContents;
+import Insurance.Property.HouseholdContentsInsurance;
 import Person.Customer;
 import Register.RegisterCustomer;
 import javafx.application.Platform;
@@ -22,7 +22,7 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
@@ -56,7 +56,7 @@ public final class HouseholdContentsModuleController extends CommonPrivateGUIMet
     private ComboBox<String> paymentOption;
 
     public static final ObservableList<Integer> numbers = FXCollections.observableArrayList();
-    private static HouseholdContents insurance;
+    private static HouseholdContentsInsurance insurance;
 
     @FXML
     @Override
@@ -110,7 +110,7 @@ public final class HouseholdContentsModuleController extends CommonPrivateGUIMet
     @Override
     public void addCSSValidation() {
         RegEX.addCSSTextValidation(adress, isAdress());
-        RegEX.addCSSTextValidation(citynumber, isNumber(4));
+        RegEX.addCSSTextValidation(citynumber, isNumberWithLength(4));
         RegEX.addCSSTextValidation(city, isLetters());
         RegEX.addCSSTextValidation(amount, isNumber());
     }
@@ -130,7 +130,7 @@ public final class HouseholdContentsModuleController extends CommonPrivateGUIMet
 
     @Override
     protected void setListeners() {
-        emptyscreen.addListener(observable -> {
+        emptyscreenButton.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();
@@ -156,12 +156,12 @@ public final class HouseholdContentsModuleController extends CommonPrivateGUIMet
 
         PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
         try {
-            insurance = new HouseholdContents(adress.getText(), parseInt(citynumber), city.getText(), numberOfrooms.getValue(),
+            insurance = new HouseholdContentsInsurance(adress.getText(), parseInt(citynumber), city.getText(), numberOfrooms.getValue(),
                     numberOfPersons.getValue(), fromDate.getValue(), parseInt(amount), "somePolicy",
                     currentCustomer.getPerson(), selectedPayment, deductible.getValue());
             showPremium(insurance);
         } catch (Exception e) {
-            HouseholdContents tempInsurance = new HouseholdContents(adress.getText(), parseInt(citynumber), city.getText(), numberOfrooms.getValue(),
+            HouseholdContentsInsurance tempInsurance = new HouseholdContentsInsurance(adress.getText(), parseInt(citynumber), city.getText(), numberOfrooms.getValue(),
                     numberOfPersons.getValue(), fromDate.getValue(), parseInt(amount), "somePolicy",
                     RegisterCustomer.tempCustomer, selectedPayment, deductible.getValue());
             showPremium(tempInsurance);

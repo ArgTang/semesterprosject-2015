@@ -4,7 +4,7 @@ import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.GuiHelper.CommonPrivateGUIMethods;
 import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
-import Insurance.Animal.Animal;
+import Insurance.Animal.AnimalInsurance;
 import Insurance.Helper.PaymentOption;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -55,7 +55,7 @@ public final class AnimalModuleController extends CommonPrivateGUIMethods implem
 
     private static final ObservableList<String> animalTypes = FXCollections.observableArrayList();
 
-    private static Animal insurance;
+    private static AnimalInsurance insurance;
     @FXML
     public void initialize() {
         paymentOption.setItems(paymentOptions.stream()
@@ -107,7 +107,7 @@ public final class AnimalModuleController extends CommonPrivateGUIMethods implem
 
     @Override
     protected void setListeners() {
-        AgentInsuranceController.emptyscreen.addListener(observable -> {
+        AgentInsuranceController.emptyscreenButton.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();

@@ -21,7 +21,7 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
@@ -136,7 +136,7 @@ public final class CarModuleController extends CommonPrivateGUIMethods implement
     public void addCSSValidation() {
         RegEX.addCSSTextValidation(licenceNumber, isAllChars()); //todo: regex for this?
         RegEX.addCSSTextValidation(model, isAllChars()); //todo: is chars or is letters
-        RegEX.addCSSTextValidation(modelYear, isNumber(4));
+        RegEX.addCSSTextValidation(modelYear, isNumberWithLength(4));
         RegEX.addCSSTextValidation(color, isLetters());
         addCSSTextValidation(isNumber(), km, horsePower, buyPrice);
     }
@@ -180,7 +180,7 @@ public final class CarModuleController extends CommonPrivateGUIMethods implement
                 }
         );
 
-        emptyscreen.addListener(observable -> {
+        emptyscreenButton.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();

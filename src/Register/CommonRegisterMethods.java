@@ -5,6 +5,7 @@ import java.util.Map;
 /**
  * Created by steinar on 10.04.2015.
  */
+@Deprecated
 interface CommonRegisterMethods {
 
     //todo: maybe this will work but wont save us much code? but its a good way to show we know generics :)

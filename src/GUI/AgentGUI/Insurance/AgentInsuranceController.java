@@ -2,7 +2,13 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.Fader;
 import GUI.WindowChangeListener;
+import Insurance.Animal.AnimalInsurance;
 import Insurance.Helper.PaymentOption;
+import Insurance.*;
+import Insurance.Property.HomeInsurance;
+import Insurance.Property.HouseholdContentsInsurance;
+import Insurance.Vehicle.BoatInsurance;
+import Insurance.Vehicle.CarInsurance;
 import Person.Person;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -15,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 
 /**
  * Created by steinar on 15.04.2015.
@@ -26,15 +33,17 @@ public final class AgentInsuranceController
     private Label kundenavn = new Label();
 
     private final StringProperty selectedCustomerName = new SimpleStringProperty();
-    public static final BooleanProperty emptyscreen = new SimpleBooleanProperty(false);
+    public static final BooleanProperty emptyscreenButton = new SimpleBooleanProperty(false);
+
+    @Deprecated
     public static final ObservableList<String> paymentOptionNames = FXCollections.observableArrayList(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
+    @Deprecated
     public static final ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList(2000, 4000, 8000, 12000);
 
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
     private static Parent chooserModule, confirmModule, house, car, animal, travel, boat, household;
 
-    public Parent initAgentInsuranceView()
-    {
+    public Parent initAgentInsuranceView() {
 
         chooserModule = showChooserModule();
         confirmModule = showConfirmModule();
@@ -63,7 +72,6 @@ public final class AgentInsuranceController
 
         return confirmModule;
     }
-
 
     public void showtHouseInsurance() {
         if (house == null)
@@ -101,8 +109,7 @@ public final class AgentInsuranceController
         setFade(household);
     }
 
-    private Parent loadParent(String FXMLpath)
-    {
+    private Parent loadParent(String FXMLpath) {
         Parent scene = null;
         try {
             scene = FXMLLoader.load(getClass().getResource(FXMLpath));
@@ -146,12 +153,21 @@ public final class AgentInsuranceController
             }
         );
 
+
+        currentInsurance.getInsuranceProperty().addListener( observable1 -> {
+            if (currentInsurance.getInsuranceProperty().isNull().get())
+                return;
+
+            String insurance = currentInsurance.getNameOfInsurance(currentInsurance.getInsurance());
+            insuranceChoiceListener.setPropertyString("[" + insurance + "]");
+        });
+
         currentCustomer.getPersonProperty().addListener(
                 observable -> {
                     SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
                     Person person = property.getValue();
                     if (person != null)
-                        AgentInsuranceController.this.setCustomername(person);
+                        setCustomername(person);
                 }
         );
     }

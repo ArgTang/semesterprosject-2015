@@ -81,9 +81,9 @@ public class EditPersonController implements CommonPublicGUIMethods
     @Override
     public void addCSSValidation()
     {
-        RegEX.addCSSTextValidation(socialSecurityNumber, isNumber(11));
+        RegEX.addCSSTextValidation(socialSecurityNumber, isNumberWithLength(11));
         RegEX.addCSSTextValidation(adress, isAdress());
-        RegEX.addCSSTextValidation(citynumber, isNumber(4));
+        RegEX.addCSSTextValidation(citynumber, isNumberWithLength(4));
         RegEX.addCSSTextValidation(email, isEmail());
         addCSSTextValidation(isLetters(), firstname, lastname, city);
     }
@@ -106,7 +106,7 @@ public class EditPersonController implements CommonPublicGUIMethods
             @Override
             public void handle(ListView.EditEvent event) {
                 System.out.println(event.getNewValue());
-                //RegEX.addCSSTextValidation(textfield, RegEX.isNumber(8));
+                //RegEX.addCSSTextValidation(textfield, RegEX.isNumberWithLength(8));
             }
         });
 
@@ -114,7 +114,7 @@ public class EditPersonController implements CommonPublicGUIMethods
         phonelist.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
             @Override
             public void handle(ListView.EditEvent event) {
-                if (isNumber(8).test(event.getNewValue().toString())) {
+                if (isNumberWithLength(8).test(event.getNewValue().toString())) {
                     AlertWindow.messageDialog("Telefonnummer må ha 8 siffer", "feil i telefonnummer");
                 } else
                     phonelist.getItems().set(event.getIndex(), event.getNewValue());
@@ -153,7 +153,7 @@ public class EditPersonController implements CommonPublicGUIMethods
 
         String personNumber = socialSecurityNumber.getText();
         List<Integer> phonelist = phones.stream()
-                                        .filter(string -> !isNumber(8).test(string))
+                                        .filter(string -> !isNumberWithLength(8).test(string))
                                         .distinct()
                                         .mapToInt(string -> Integer.parseInt(string, 10))
                                         .boxed()
@@ -193,7 +193,7 @@ public class EditPersonController implements CommonPublicGUIMethods
             return false;
 
         if(  phones.stream()
-                .filter( string -> !isNumber(8).test(string) )
+                .filter( string -> !isNumberWithLength(8).test(string) )
                 .count()  == 0)
             return false;
 

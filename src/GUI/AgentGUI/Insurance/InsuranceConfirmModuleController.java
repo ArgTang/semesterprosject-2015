@@ -65,14 +65,13 @@ public final class InsuranceConfirmModuleController implements CommonPublicGUIMe
         setListeners();
     }
 
-    private void setListeners()
-    {
+    private void setListeners() {
         BooleanBinding insuranceIsNotChosen = currentInsurance.getInsuranceProperty().isNull();
         endThis.disableProperty().bind(insuranceIsNotChosen);
 
         confirmInsurance.setDefaultButton(true);
-        confirmOrderButton.bind( confirmInsurance.pressedProperty() );
-        confirmInsurance.disableProperty().bind( currentCustomer.getPersonProperty().isNull() );
+        confirmOrderButton.bind(confirmInsurance.pressedProperty());
+        confirmInsurance.disableProperty().bind(currentCustomer.getPersonProperty().isNull());
         insuranceOffer.disableProperty().bind( currentCustomer.getPersonProperty().isNull() );
 
     }
@@ -88,16 +87,14 @@ public final class InsuranceConfirmModuleController implements CommonPublicGUIMe
 
     @FXML
     @Override
-    public void clearFields()
-    {
-        if( AlertWindow.confirmDialog("Vil du tømme Skjema?", "tøm skjema") )
-        {
+    public void clearFields() {
+        if( AlertWindow.confirmDialog("Vil du tømme Skjema?", "tøm skjema") ) {
             currentInsurance.reset();
             description.setText("");
 
             Runnable newthread = () -> {
-                AgentInsuranceController.emptyscreen.setValue(true);
-                AgentInsuranceController.emptyscreen.setValue(false);};
+                AgentInsuranceController.emptyscreenButton.setValue(true);
+                AgentInsuranceController.emptyscreenButton.setValue(false);};
             Thread thread = new Thread(newthread);
             thread.start();
         }

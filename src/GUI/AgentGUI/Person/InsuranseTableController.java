@@ -17,6 +17,7 @@ import static GUI.StartMain.*;
  *
  *
  */
+
 public class InsuranseTableController
 {
     @FXML
@@ -27,16 +28,15 @@ public class InsuranseTableController
     @FXML
     private TableColumn<Insurance, Integer> yearCollumn;
 
-    private ObservableList<Insurance> theList = FXCollections.observableArrayList();
+    private ObservableList<Insurance> tableList = FXCollections.observableArrayList();
 
     @FXML
-    private void initialize()
-    {
-        typeCollumn.setCellValueFactory(new PropertyValueFactory("InsuranceClass")); //todo getValue from Incident
+    private void initialize() {
+        typeCollumn.setCellValueFactory(new PropertyValueFactory("InsuranceName")); //todo getValue from Incident
         yearCollumn.setCellValueFactory(new PropertyValueFactory("FromYear")); //todo: Get LocalDate.year?
 
         table.setPlaceholder(new Label("Ingen registrerte forsikringer")); //todo: add icon here?
-        table.setItems(theList);
+        table.setItems(tableList);
 
         if ( currentCustomer.getPersonProperty().isNotNull().get() )
             setCustomer(currentCustomer.getPerson());
@@ -57,6 +57,11 @@ public class InsuranseTableController
         );
 
         table.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown()) {
+                Insurance  insurance= table.getSelectionModel().selectedItemProperty().get();
+                if (insurance != null)
+                    currentInsurance.setProperty(insurance);
+            }
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
                 changeWindowListener.setPropertyString("Insurance");
             }
@@ -64,9 +69,9 @@ public class InsuranseTableController
     }
 
     private void setCustomer(Customer customer) {
-        theList.clear();
+        tableList.clear();
         customer.getInsuranceNumbers().stream()
                                       .map(insuranceRegister::get)
-                                      .forEach(theList::add);
+                                      .forEach(tableList::add);
     }
 }

@@ -28,7 +28,7 @@ public class IncidentTableController
     @FXML
     private TableColumn<Incident, Integer> yearCollumn;
 
-    private ObservableList<Incident> theList = FXCollections.observableArrayList();
+    private ObservableList<Incident> tableList = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
@@ -36,14 +36,13 @@ public class IncidentTableController
         yearCollumn.setCellValueFactory(new PropertyValueFactory("year")); //todo: Get LocalDate.year?
 
         table.setPlaceholder(new Label("Ingen registrerte hendelsere")); //todo: add icon here?
-        table.setItems(theList);
+        table.setItems(tableList);
 
         setListeners();
     }
 
     private void setListeners() {
         currentCustomer.getPersonProperty().addListener((observable, oldValue, newCustomer) -> {
-            System.out.println("customer changed");
             if (newCustomer != null)
                 setCustomer(newCustomer);
         });
@@ -56,6 +55,11 @@ public class IncidentTableController
         );
 
         table.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown()) {
+                Incident  incident= table.getSelectionModel().selectedItemProperty().get();
+                if (incident != null)
+                    currentIncident.setProperty(incident);
+            }
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
                 changeWindowListener.setPropertyString("Incident");
             }
@@ -65,6 +69,6 @@ public class IncidentTableController
     private void setCustomer(Customer customer) {
        customer.getIncidentNumbers().stream()
                                     .map(incidentRegister::get)
-                                    .forEach(theList::add);
+                                    .forEach(tableList::add);
     }
 }

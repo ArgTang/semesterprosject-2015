@@ -22,7 +22,7 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
@@ -111,7 +111,7 @@ public final class BoatModuleController extends CommonPrivateGUIMethods implemen
         RegEX.addCSSTextValidation(buyPrice, isNumber());
         addCSSTextValidation(isLetters(), maker, harbor); //todo: allow numbers for harbor? i.e. peer 16
         addCSSTextValidation(isAllChars(), licenceNumber, model);
-        RegEX.addCSSTextValidation(modelYear, isNumber(4));
+        RegEX.addCSSTextValidation(modelYear, isNumberWithLength(4));
     }
 
     @Override
@@ -129,7 +129,7 @@ public final class BoatModuleController extends CommonPrivateGUIMethods implemen
 
     @Override
     protected void setListeners() {
-        emptyscreen.addListener(observable -> {
+        emptyscreenButton.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();
