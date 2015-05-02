@@ -2,7 +2,6 @@ package GUI.AgentGUI.Person;
 
 import Insurance.Insurance;
 import Person.Customer;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -44,16 +43,11 @@ public class InsuranseTableController
         setListeners();
     }
 
-    //todo: thi method is used some places ->
     private void setListeners() {
-        //todo: might not need this? as users "should" open a new editPersonwindow each time
-        currentCustomer.getPersonProperty().addListener(
-                observable -> {
-                    SimpleObjectProperty<Customer> property = (SimpleObjectProperty) observable;
-                    if (property.isNotNull().get())
-                        setCustomer(property.getValue());
-                }
-        );
+        currentCustomer.getPersonProperty().addListener((observable, oldValue, newCustomer) -> {
+            if (newCustomer != null)
+                setCustomer(newCustomer);
+        });
 
         table.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldInsirance, newInsurance) -> {
@@ -70,6 +64,7 @@ public class InsuranseTableController
     }
 
     private void setCustomer(Customer customer) {
+        theList.clear();
         customer.getInsuranceNumbers().stream()
                                       .map(insuranceRegister::get)
                                       .forEach(theList::add);

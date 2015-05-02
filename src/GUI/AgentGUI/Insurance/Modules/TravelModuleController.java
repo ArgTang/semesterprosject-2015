@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.StartMain.currentCustomer;
 import static Insurance.Insurance.paymentOptions;
@@ -77,9 +78,11 @@ public final class TravelModuleController extends CommonPrivateGUIMethods implem
                 clearFields();
         });
 
+
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
-            if (bool.get()) {
+            if (insuranceChoiceListener.getPropertyString().equals("[Reise]") && bool.get()){
+                System.out.println("saveinsurance");
                 makeInsurance();
                 saveInsurance(insurance);
             }

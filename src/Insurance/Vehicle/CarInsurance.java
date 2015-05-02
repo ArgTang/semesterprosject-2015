@@ -10,17 +10,17 @@ import java.time.Year;
 /**
  * Created by steinar on 27.03.2015.
  */
-public final class Car extends Vehicle {
+public final class CarInsurance extends Vehicle {
 
     private int kilometer, horsePower;
     byte bonus; //todo: maybe arraylist -> observable list see Agentgui.insurance.CarModuleController
     private String licenceNumber;
     private String color;
 
-    public Car(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption, String type, String model,
-               Year productionYear, int kilometer, int horsePower, String licenceNumber, String color, int deductable)
+    public CarInsurance(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption, String maker, String model,
+                        int productionYear, int kilometer, int horsePower, String licenceNumber, String color, int deductable)
     {
-        super(validfrom, itemValue, insurancePolicy, customer, paymentOption, type, model, productionYear, deductable);
+        super(validfrom, itemValue, insurancePolicy, customer, paymentOption, maker, model, productionYear, deductable);
         this.kilometer = kilometer;
         this.horsePower = horsePower;
         this.color = color;

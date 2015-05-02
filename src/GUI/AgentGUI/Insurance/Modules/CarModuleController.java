@@ -5,7 +5,9 @@ import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
+import Insurance.Vehicle.CarInsurance;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -20,7 +22,10 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
+import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
@@ -39,7 +44,7 @@ public final class CarModuleController extends CommonPrivateGUIMethods implement
     @FXML
     TextField model;
     @FXML
-    TextField motorsize;
+    TextField horsePower;
     @FXML
     TextField modelYear;
     @FXML
@@ -78,6 +83,8 @@ public final class CarModuleController extends CommonPrivateGUIMethods implement
             "Rolls Royce","Rover","Saab","Seat","Skoda","Smart","Ssangyong","Subaru","Suzuki","Tesla","Think","Toyota",
             "Triumph","Volkswagen","Volvo","Andre");
 
+    CarInsurance insurance;
+
     @FXML
     @Override
     protected void initialize() {
@@ -105,7 +112,7 @@ public final class CarModuleController extends CommonPrivateGUIMethods implement
 
     @Override
     public void clearFields() {
-        resetTextFields(licenceNumber, km, model, motorsize, color, buyPrice);
+        resetTextFields(licenceNumber, km, model, horsePower, color, buyPrice);
         fromDate.setValue(LocalDate.now());
         ageRequirements.setIndeterminate(false);
 
@@ -131,7 +138,7 @@ public final class CarModuleController extends CommonPrivateGUIMethods implement
         RegEX.addCSSTextValidation(model, isAllChars()); //todo: is chars or is letters
         RegEX.addCSSTextValidation(modelYear, isNumber(4));
         RegEX.addCSSTextValidation(color, isLetters());
-        addCSSTextValidation(isNumber(), km, motorsize, buyPrice);
+        addCSSTextValidation(isNumber(), km, horsePower, buyPrice);
     }
 
     @Override
@@ -151,7 +158,7 @@ public final class CarModuleController extends CommonPrivateGUIMethods implement
         if (validationIsOk(1).negate().test(km))
             return false;
 
-        if (validationIsOk(2).negate().test(motorsize))
+        if (validationIsOk(2).negate().test(horsePower))
             return false;
 
         if (validationIsOk(3).negate().test(buyPrice))
@@ -178,6 +185,14 @@ public final class CarModuleController extends CommonPrivateGUIMethods implement
             if (bool.get())
                 clearFields();
         });
+
+        confirmOrderButton.addListener(observable -> {
+            BooleanProperty bool = (BooleanProperty) observable;
+            if (insuranceChoiceListener.getPropertyString().equals("[Bil]") && bool.get()) {
+                makeInsurance();
+                saveInsurance(insurance);
+            }
+        });
     }
 
     @Override
@@ -186,6 +201,10 @@ public final class CarModuleController extends CommonPrivateGUIMethods implement
             return;
 
         PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
+        insurance = new CarInsurance( fromDate.getValue(), parseInt(buyPrice),"comePolicy", currentCustomer.getPerson(), selectedPayment,
+        maker.getValue().toString(), model.getText(), parseInt(modelYear), parseInt(km), parseInt(horsePower), licenceNumber.getText(),
+        color.getText(), Integer.parseInt( deductible.getValue().toString() ) );
 
+        System.out.print("");
     }
 }

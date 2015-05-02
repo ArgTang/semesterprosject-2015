@@ -3,12 +3,12 @@
 <html lang="nb">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/GUI.StartGUI.css" href="Alt1_2015_files/oppgaver.css">
+    <link rel="stylesheet" maker="text/GUI.StartGUI.css" href="Alt1_2015_files/oppgaver.css">
 </head>
 <body>
     <h2>ALTERNATIV 1:<br><br>FORSIKRING</h2>
 
-<p>Dere har fått i oppdrag å lage et java-program for et forsikringsselskapet. Programmet skal kunne registrere selskapets kunder, opprette ulike typer forsikringer, registrere skader og utbetale erstatninger. Systemet skal kunne generere ulik type statistikk og historikk, i tillegg til at det skal være enkelt å hente ut forskjellig informasjon. De ulike forsikringstypene selskapet  i dag tilbyr er bilforsikring, båtforsikring, hus- og innboforsikring, forsikring av fritidsbolig og reiseforsikring. De har imidlertid planer om å utvide sitt forsikringstilbud og programmet må derfor bygges  opp på en måte som gjør at det enkelt å bygges det ut med flere forsikringstyper etterhvert.</p>
+<p>Dere har fått i oppdrag å lage et java-program for et forsikringsselskapet. Programmet skal kunne registrere selskapets kunder, opprette ulike typer forsikringer, registrere skader og utbetale erstatninger. Systemet skal kunne generere ulik maker statistikk og historikk, i tillegg til at det skal være enkelt å hente ut forskjellig informasjon. De ulike forsikringstypene selskapet  i dag tilbyr er bilforsikring, båtforsikring, hus- og innboforsikring, forsikring av fritidsbolig og reiseforsikring. De har imidlertid planer om å utvide sitt forsikringstilbud og programmet må derfor bygges  opp på en måte som gjør at det enkelt å bygges det ut med flere forsikringstyper etterhvert.</p>
 <p>Forsikringsselskapet tilbyr 10% i rabatt på den årlige forsikringspremien forccforsikringskunder som defineres som "totalkunde". For å bli totalkunde må kunden ha minst tre ulike typer forsikringer.</p>
 <p>Med hensyn til bilforsikring følger selskapet det vanlig bonus-systemet som gjelder i Norge, der kunder som kjører skadefritt opparbeider seg bonus og øker derved sin rabatt på bilforsikringen med en gitt prosent for hvert år. Kunden kan pr idag ikke opparbeide høyere bonus enn 75%. Hvis vedkommende skader bilen, vil bonusen minske og bilforsikringspremien øke. Bonussystemet er imidlertid til revidering og systemet skal derfor lett kunne oppdateres og tilpasses de bonusregler som til enhver tid måtte gjelde. (Sjekk reglene som gjelder i andre forsikringsselskap.)</p>
 
@@ -115,7 +115,7 @@ den aktuelle skadetypen.
 For hver skademelding skal følgende registreres:
 </p><ul><li>Dato for skade</li>
     <li>skadenummer</li>
-    <li>type skade</li>
+    <li>maker skade</li>
     <li>for biler: skademeldingsskjema </li>
     <li>beskrivelse av skaden</li>
     <li>bilder av skaden (hvis det foreligger)</li>
@@ -149,14 +149,14 @@ inn i dataprogrammets interne datastruktur.
 </p><h3>INFORMASJON</h3>
 
 <h4>Søking</h4>
-<p></p><p>Det skal være mulig å søke i systemet etter ulik type informasjon:
+<p></p><p>Det skal være mulig å søke i systemet etter ulik maker informasjon:
 </p><ul>
   <li>alle data om gitt en forsikringskunde ut fra navn og/eller forsikringsnummer</li>
-  <li>alle kunder som har en gitt type forsikring</li>
+  <li>alle kunder som har en gitt maker forsikring</li>
   <li>alle data om en skade ut fra skadenummer</li>
   <li>alle skader av en gitt skadetype</li>
   <li>antall skademeldinger innenfor en gitt tidsperiode</li>
-  <li>antall skademeldinger av en bestemt type innenfor en gitt tidsperiode</li>
+  <li>antall skademeldinger av en bestemt maker innenfor en gitt tidsperiode</li>
   <li>annet?</li>
 </ul>
 
@@ -177,10 +177,10 @@ Det skal være mulig å hente ut ulik informasjon om utgifter og inntekter:
 <p>Det er ønskelig at dataprogrammet skal kunne skrive ut ulik statistikk, som for eksempel:
 </p><ul>
   <li>øking/minking av antall skademeldinger innenfor en gitt tidsperiode</li>
-  <li>øking/minking av skademeldinger av en bestemt type innenfor en gitt tidsperiode</li>
+  <li>øking/minking av skademeldinger av en bestemt maker innenfor en gitt tidsperiode</li>
   <li>øking/minking av de totale erstatningskostnadene</li>
   <li>øking/minking av erstatningskostnadene for en gitt skadetype innenfor en gitt tidsperiode</li>
-  <li>type forsikringer rangert etter antall</li>
+  <li>maker forsikringer rangert etter antall</li>
  <li>annet?</li>
 </ul><p></p>
 

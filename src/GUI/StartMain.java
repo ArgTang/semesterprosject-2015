@@ -47,9 +47,10 @@ public class StartMain extends Application
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
     public static final WindowWindowListener changeWindowWindowListener = new WindowWindowListener();     //todo: change to this? more generic
 
+    private static Parent welcome, agentSearch, agentPerson, agentMenu, agentInsurance, agentIncident, agentStatistics;
+
     @Override
-    public void start(Stage primaryStage) throws Exception
-    {
+    public void start(Stage primaryStage) throws Exception {
         //generate Customers in new thread -> might be faster when we generate insurance\incidentCases
         Runnable newthread = () -> MakePersons.makeCustomers(1000);
         Thread thread = new Thread(newthread);
@@ -74,53 +75,64 @@ public class StartMain extends Application
         primaryStage.show();
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
         launch(args);
     }
-    private void startup() throws IOException
-    {
-        WelcomeController welcomeController = new WelcomeController();
-        Parent welcome = welcomeController.initWelcome();
+
+    private void startup() throws IOException {
+        if (welcome == null) {
+            WelcomeController welcomeController = new WelcomeController();
+            welcome = welcomeController.initWelcome();
+        }
         PrimaryStage.setTitle("Velkommen");
         loadParent(welcome);
     }
 
-    private Parent initAgentMenu()
-    {
-        Parent agentMenu = null;
+    private Parent getAgentMenu() {
+        PrimaryStage.setTitle("HUBC Forsikring"); //todo: change name when name is ready
+        if (agentMenu != null)
+            return agentMenu;
+
         try {
-            agentMenu = FXMLLoader.load(getClass().getResource("\\AgentGUI\\AgentMenu.fxml"));
+            Parent menu = FXMLLoader.load(getClass().getResource("\\AgentGUI\\AgentMenu.fxml"));
+            Separator separator = new Separator();
+            separator.setPadding(new Insets(0, 0, 5, 0));
+            VBox agentMenuContainer = new VBox();
+            agentMenuContainer.getChildren().addAll(menu, separator);
+            agentMenu = agentMenuContainer;
         } catch (IOException e) {
+            System.out.println("failed loading agentmenu.fxml");
             e.printStackTrace();
         }
-
-        Separator separator = new Separator();
-        separator.setPadding(new Insets(0, 0, 5, 0));
-        VBox menu = new VBox();
-        menu.getChildren().addAll(agentMenu, separator);
-
-        PrimaryStage.setTitle("HUBC Forsikring"); //todo: change name when name is ready
-        return menu;
+        return agentMenu;
     }
 
-    private Parent getHomeInsurancePane() {
-        //todo: maybe move controllers to classVariable
+    private Parent getInsurancePane() {
+        if (agentInsurance != null)
+            return agentInsurance;
+
         AgentInsuranceController insuranceController = new AgentInsuranceController();
-        return insuranceController.initAgentInsuranceView();
+        agentInsurance  = insuranceController.initAgentInsuranceView();
+        return agentInsurance;
     }
 
     private Parent getAgenSearchPane() {
-        //todo: maybe move controllers to classVariable
+        if (agentSearch != null)
+            return agentSearch;
+
         AgentSearchController searchController = new AgentSearchController();
-        return searchController.initAgentSearch();
+        agentSearch = searchController.initAgentSearch();
+        return agentSearch;
     }
 
     private Parent getAgentPersonPane() {
-        //todo: maybe move controllers to classVariable
+        if (agentPerson != null)
+            return agentPerson;
+
         PersonController personController = new PersonController();
-        return personController.initEditPerson();
+        agentPerson = personController.initEditPerson();
+        return agentPerson;
     }
 
     private void initListeners() throws IOException {
@@ -132,7 +144,7 @@ public class StartMain extends Application
                             loadParent( getAgentPersonPane() );
                             break;
                         case "Insurance":
-                            loadParent( getHomeInsurancePane() );
+                            loadParent( getInsurancePane() );
                             break;
                         case "Incident":
                             AlertWindow.messageDialog("Her kommer hendelsesvindu", "Hendelsesvindu");
@@ -143,7 +155,7 @@ public class StartMain extends Application
                         case "Agent":
                         default:
                             loadParent( getAgenSearchPane() );
-                            rootLayout.setTop(initAgentMenu());
+                            rootLayout.setTop(getAgentMenu());
                             break;
                     }
                 }

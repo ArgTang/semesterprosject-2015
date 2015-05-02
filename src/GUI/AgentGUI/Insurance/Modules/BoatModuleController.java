@@ -8,7 +8,9 @@ import GUI.GuiHelper.CommonPrivateGUIMethods;
 import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
+import Insurance.Vehicle.BoatInsurance;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +23,8 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
+import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
@@ -60,6 +64,8 @@ public final class BoatModuleController extends CommonPrivateGUIMethods implemen
 
     private ObservableList<String> kaskoValues = FXCollections.observableArrayList();
     private ObservableList<String> types = FXCollections.observableArrayList();
+
+    private static BoatInsurance insurance;
 
     @FXML
     @Override
@@ -127,6 +133,14 @@ public final class BoatModuleController extends CommonPrivateGUIMethods implemen
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
                 clearFields();
+        });
+
+        confirmOrderButton.addListener(observable -> {
+            BooleanProperty bool = (BooleanProperty) observable;
+            if (insuranceChoiceListener.getPropertyString().equals("[Båt]") && bool.get()) {
+                makeInsurance();
+                saveInsurance(insurance);
+            }
         });
     }
 

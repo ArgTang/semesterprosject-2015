@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.currentCustomer;
@@ -135,7 +136,8 @@ public final class HouseModuleController extends CommonPrivateGUIMethods impleme
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
-            if (bool.get()) {
+            if (insuranceChoiceListener.getPropertyString().equals("[Hus]") && bool.get()) {
+                System.out.println("saveinsurance");
                 makeInsurance();
                 saveInsurance(insurance);
             }

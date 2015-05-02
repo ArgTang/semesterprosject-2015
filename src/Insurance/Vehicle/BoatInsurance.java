@@ -9,14 +9,14 @@ import java.time.Year;
 /**
  * Created by steinar on 27.03.2015.
  */
-public final class Boat extends Vehicle
+public final class BoatInsurance extends Vehicle
 {
     private int knots, feet;
     String boattype;//seilbåt, innenbors eller utenborsmotor
     private String registrationnumber;
 
-    public Boat(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption, String type,
-                String model, Year productionYear, int kilometer, int horsePower, int knots, int feet, String boattype, int deductable)
+    public BoatInsurance(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption, String type,
+                         String model, int productionYear, int kilometer, int horsePower, int knots, int feet, String boattype, int deductable)
     {
         super(validfrom, itemValue, insurancePolicy, customer, paymentOption, type, model, productionYear, deductable);
 

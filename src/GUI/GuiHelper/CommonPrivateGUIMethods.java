@@ -27,9 +27,15 @@ public abstract class CommonPrivateGUIMethods {
         Customer customer =  currentCustomer.getPerson();
         if (customer == null)
             throw new NoSuchElementException("Har du glemt å finne eller opprette kunden?");
-        if ( insuranceRegister.add(insurance) )
+        if ( insuranceRegister.add(insurance) ) {
             customer.addInsuranceNumber(insurance.getCasenumber());
-        else
+
+            //todo: find a better way for this
+            currentCustomer.reset();
+            currentCustomer.setProperty(customer);
+
+            //currentCustomer.getPersonProperty().notifyAll(); //IllegalMonitorSateException????
+        } else
             throw new IllegalArgumentException("denne finnes allerede i registeret");
     }
 

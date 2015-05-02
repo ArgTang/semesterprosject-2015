@@ -14,8 +14,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-
 import static GUI.StartMain.currentCustomer;
 
 /**
@@ -33,69 +31,95 @@ public final class AgentInsuranceController
     public static final ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList(2000, 4000, 8000, 12000);
 
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
+    private static Parent chooserModule, confirmModule, house, car, animal, travel, boat, household;
 
     public Parent initAgentInsuranceView()
     {
-        Parent chooser = null;
-        Parent confirmModule = null;
-        try {
-            chooser =  FXMLLoader.load( getClass().getResource("\\InsuranceChooserModule.fxml"));
-            confirmModule = FXMLLoader.load(getClass().getResource("\\InsuranceConfirmModule.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        chooser = setlabel(chooser);
+        chooserModule = showChooserModule();
+        confirmModule = showConfirmModule();
+        chooserModule = setlabel(chooserModule);
         kundenavn.textProperty().bind(selectedCustomerName);
         kundenavn.setStyle("-fx-font-weight: bold;");
         setListeners();
 
-        container.setLeft(chooser);
+        container.setLeft(chooserModule);
         if( container.getCenter() == null)
             showtHouseInsurance();
         container.setRight(confirmModule);
         return container;
     }
 
+    private Parent showChooserModule() {
+        if (chooserModule == null)
+            chooserModule = loadParent("\\InsuranceChooserModule.fxml");
+
+        return chooserModule;
+    }
+
+    private Parent showConfirmModule() {
+        if (confirmModule == null)
+            confirmModule = loadParent("\\InsuranceConfirmModule.fxml");
+
+        return confirmModule;
+    }
+
+
     public void showtHouseInsurance() {
-        loadParent("\\Modules\\HouseModule.fxml");
+        if (house == null)
+            house = loadParent("\\Modules\\HouseModule.fxml");
+        setFade(house);
     }
 
     public void showCarinsurance() {
-        loadParent("\\Modules\\CarModule.fxml");
+        if (car == null)
+            car = loadParent("\\Modules\\CarModule.fxml");
+        setFade(car);
     }
 
     private void showAnimalInsurance() {
-        loadParent("\\Modules\\AnimalModule.fxml");
+        if (animal == null)
+            animal = loadParent("\\Modules\\AnimalModule.fxml");
+        setFade(animal);
     }
 
     private void showTravelInsurance() {
-        loadParent("\\Modules\\TravelModule.fxml");
+        if (travel == null)
+            travel = loadParent("\\Modules\\TravelModule.fxml");
+        setFade(travel);
     }
 
     private void showBoatInsurance() {
-        loadParent("\\Modules\\BoatModule.fxml");
+        if (boat == null)
+            boat = loadParent("\\Modules\\BoatModule.fxml");
+        setFade(travel);
     }
 
     private void showHouseholdInsurance() {
-        loadParent("\\Modules\\HouseholdContentsModule.fxml");
+        if (household == null)
+            household = loadParent("\\Modules\\HouseholdContentsModule.fxml");
+        setFade(household);
     }
 
-    private void loadParent(String FXMLpath)
+    private Parent loadParent(String FXMLpath)
     {
         Parent scene = null;
         try {
             scene = FXMLLoader.load(getClass().getResource(FXMLpath));
-            fade.setFading(scene);
-            container.setCenter(scene);
-            fade.setupFadeout(scene);
-        } catch (IOException e) {
+        } catch (Exception e) {
+            System.out.println("cant find file: " + FXMLpath);
             e.printStackTrace();
         }
+        return scene;
     }
 
-    private void setListeners()
-    {
+    private void setFade(Parent scene) {
+        fade.setFading(scene);
+        container.setCenter(scene);
+        fade.setupFadeout(scene);
+    }
+
+    private void setListeners() {
         insuranceChoiceListener.getStringProperty().addListener(
             observable -> {
                 StringProperty string = (StringProperty) observable;
@@ -132,8 +156,7 @@ public final class AgentInsuranceController
         );
     }
 
-    private Parent setlabel(Parent chooser)
-    {
+    private Parent setlabel(Parent chooser) {
         GridPane grid= new GridPane();
         Label info = new Label("Du behandler nå:");
         grid.add(info, 1, 0);
@@ -147,8 +170,7 @@ public final class AgentInsuranceController
         return vBox;
     }
 
-    private void setCustomername(Person person)
-    {
+    private void setCustomername(Person person) {
         String navnet = person.getFirstName() + " " + person.getLastName();
         selectedCustomerName.setValue(navnet);
     }

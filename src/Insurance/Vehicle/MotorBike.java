@@ -17,7 +17,7 @@ public final class MotorBike extends Vehicle {
     private String color;
 
     public MotorBike(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption, String type, String model,
-                     Year productionYear, int kilometer, int horsePower, String registrationnumber, String color, int deductable)
+                     int productionYear, int kilometer, int horsePower, String registrationnumber, String color, int deductable)
     {
         super(validfrom, itemValue, insurancePolicy, customer, paymentOption, type, model, productionYear, deductable);
         this.kilometer = kilometer;

@@ -70,6 +70,7 @@ public final class InsuranceConfirmModuleController implements CommonPublicGUIMe
         BooleanBinding insuranceIsNotChosen = currentInsurance.getInsuranceProperty().isNull();
         endThis.disableProperty().bind(insuranceIsNotChosen);
 
+        confirmInsurance.setDefaultButton(true);
         confirmOrderButton.bind( confirmInsurance.pressedProperty() );
         confirmInsurance.disableProperty().bind( currentCustomer.getPersonProperty().isNull() );
         insuranceOffer.disableProperty().bind( currentCustomer.getPersonProperty().isNull() );

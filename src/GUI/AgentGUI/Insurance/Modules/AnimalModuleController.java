@@ -4,8 +4,10 @@ import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.GuiHelper.CommonPrivateGUIMethods;
 import GUI.GuiHelper.CommonPublicGUIMethods;
 import GUI.GuiHelper.RegEX;
+import Insurance.Animal.Animal;
 import Insurance.Helper.PaymentOption;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +17,8 @@ import javafx.scene.control.*;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
+import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
 import static Insurance.Insurance.paymentOptions;
 
@@ -51,6 +55,7 @@ public final class AnimalModuleController extends CommonPrivateGUIMethods implem
 
     private static final ObservableList<String> animalTypes = FXCollections.observableArrayList();
 
+    private static Animal insurance;
     @FXML
     public void initialize() {
         paymentOption.setItems(paymentOptions.stream()
@@ -108,6 +113,14 @@ public final class AnimalModuleController extends CommonPrivateGUIMethods implem
                 clearFields();
         });
 
+        confirmOrderButton.addListener(observable -> {
+            BooleanProperty bool = (BooleanProperty) observable;
+            if (insuranceChoiceListener.getPropertyString().equals("[Hus]") && bool.get()) {
+                makeInsurance();
+                saveInsurance(insurance);
+            }
+        });
+
         birthday.valueProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     //if too old refuse insurance
@@ -121,7 +134,7 @@ public final class AnimalModuleController extends CommonPrivateGUIMethods implem
     protected void makeInsurance() {
         if (!checkValidation())
             return;
-        
+
         PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
 
     }

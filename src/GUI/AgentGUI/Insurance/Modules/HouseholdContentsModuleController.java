@@ -8,6 +8,7 @@ import Insurance.Property.HouseholdContents;
 import Person.Customer;
 import Register.RegisterCustomer;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreen;
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
+import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.currentCustomer;
 import static Insurance.Insurance.deductablenumbers;
@@ -132,7 +135,18 @@ public final class HouseholdContentsModuleController extends CommonPrivateGUIMet
             if (bool.get())
                 clearFields();
         });
+
         addComboboxListener(numberOfrooms, numberOfPersons, deductible, paymentOption);
+
+        confirmOrderButton.removeListener((observable) -> {});
+        confirmOrderButton.addListener(observable -> {
+            BooleanProperty bool = (BooleanProperty) observable;
+            if (insuranceChoiceListener.getPropertyString().equals("[Innbo]") && bool.get()) {
+                System.out.println("saveinsurance");
+                makeInsurance();
+                saveInsurance(insurance);
+            }
+        });
     }
 
     @Override
