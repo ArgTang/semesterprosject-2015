@@ -16,10 +16,8 @@ import java.io.IOException;
  */
 public class PersonController
 {
-    HBox container = new HBox();
-
-    public Parent initEditPerson()
-    {
+    public Parent initEditPerson() {
+        HBox container = new HBox();
         Parent editPerson = null;
         Parent insuranceTable = null;
         Parent incidentTable = null;
@@ -28,12 +26,13 @@ public class PersonController
             insuranceTable = FXMLLoader.load( getClass().getResource("\\InsuranseTable.fxml") );
             incidentTable = FXMLLoader.load( getClass().getResource("\\IncidentTable.fxml") );
         } catch (IOException e) {
+            System.out.println("failed loading fxml file in PersonController");
             e.printStackTrace();
         }
 
         editPerson = addParentLabel(editPerson, "Persondata:");
-        insuranceTable = initTable(insuranceTable, "Registrerte forsikringer:");
-        incidentTable = initTable( incidentTable, "Registrerte hendelser:");
+        insuranceTable = addParentLabel(insuranceTable, "Registrerte forsikringer:");
+        incidentTable = addParentLabel( incidentTable, "Registrerte hendelser:");
 
         HBox.setMargin(editPerson, new Insets(0, 20, 0, 0));
         container.prefWidth(Region.USE_COMPUTED_SIZE);
@@ -43,9 +42,7 @@ public class PersonController
         return container;
     }
 
-    private Parent addParentLabel(Parent parent, String title)
-    {
-
+    private Parent addParentLabel(Parent parent, String title) {
         VBox.setVgrow(parent, Priority.ALWAYS);
         VBox vbox= new VBox();
         HBox.setHgrow(vbox, Priority.ALWAYS);
@@ -54,21 +51,5 @@ public class PersonController
         vbox.setSpacing(2);
         vbox.getChildren().addAll(label, parent);
         return vbox;
-    }
-
-    private Parent initTable(Parent table, String string)
-    {
-        table = addParentLabel(table, string);
-        //add observable array here
-        if (string.contains("hendelse"))
-        {
-
-        }
-        else
-        {
-
-        }
-
-        return table;
     }
 }

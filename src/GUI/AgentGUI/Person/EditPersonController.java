@@ -5,7 +5,6 @@ import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Person.ContactInfo;
 import Person.Customer;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -46,7 +45,7 @@ public class EditPersonController extends CommonGUIMethods
     @FXML
     ListView phonelist;
     @FXML
-    Button changeCustomer;
+    Button changeCustomerButton;
 
     private ObservableList<String> phones = FXCollections.observableArrayList();
 
@@ -54,20 +53,15 @@ public class EditPersonController extends CommonGUIMethods
     @Override
     protected void initialize() {
         phonelist.setItems(phones);
+        phonelist.setCellFactory(TextFieldListCell.forListView());
         setListeners();
         addCSSValidation();
-
-        if( currentCustomer.getPersonProperty().isNotNull().get())
-            changeCustomer.setTextFill(Color.RED);
-        else {
-            //todo: do we need option to add more than 3 phonenumbers?
-            changeCustomer.setText("Registrer ny kunde");
-            phones.addAll("", "", "");
-        }
+        setCustomer();
     }
 
     @Override
     public void clearFields() {
+        currentCustomer.reset();
         socialSecurityNumber.setEditable(true);
         resetTextFields(socialSecurityNumber, firstname, lastname, adress, citynumber, city, email);
         phones.clear();
@@ -86,14 +80,7 @@ public class EditPersonController extends CommonGUIMethods
     //todo: put these into an interface (DRY)?? also need to redraw or update label after new name is set
     @Override
     protected void setListeners() {
-        currentCustomer.getPersonProperty().addListener(
-                observable -> {
-                    SimpleObjectProperty<Customer> property = (SimpleObjectProperty) observable;
-                    if (property.isNotNull().get())
-                        setCustomer();
-                });
-
-        phonelist.setCellFactory(TextFieldListCell.forListView());
+        currentCustomer.getPersonProperty().addListener(observable -> setCustomer());
 
         //todo: find a way to add cssValidation when editing Listview
         phonelist.setOnEditStart(new EventHandler<ListView.EditEvent>() {
@@ -121,6 +108,9 @@ public class EditPersonController extends CommonGUIMethods
     @Override
     protected void setCustomer() {
         Customer customer = currentCustomer.getPerson();
+        setRegisterButton();
+        if (customer == null)
+            return;
         socialSecurityNumber.setText(customer.getSocialSecurityNumber());
         socialSecurityNumber.setEditable(false);
         firstname.setText(customer.getFirstName());
@@ -139,9 +129,22 @@ public class EditPersonController extends CommonGUIMethods
             phones.add("");
     }
 
+    // this will change the button text to new or change customer dependant on wether a currentcustomer is selected
+    //todo: change na,e to something better
+    private void setRegisterButton() {
+        if( currentCustomer.getPersonProperty().isNotNull().get()) {
+            changeCustomerButton.setTextFill(Color.RED);
+            changeCustomerButton.setText("Endre Kunde");
+        } else {
+            //todo: do we need option to add more than 3 phonenumbers?
+            changeCustomerButton.setText("Registrer ny kunde");
+            changeCustomerButton.setTextFill(Color.BLACK);
+            phones.addAll("", "", "");
+        }
+    }
+
     @FXML
-    private void updatePerson()
-    {
+    private void updatePerson() {
         if( !checkValidation() ) {
             AlertWindow.messageDialog("Sjekk at du har fylt ut alle felt riktig", "Feil i innfylling");
             return;
@@ -169,8 +172,7 @@ public class EditPersonController extends CommonGUIMethods
     }
 
     @Override
-    protected boolean checkValidation()
-    {
+    protected boolean checkValidation() {
         // we already do regex, so we only need to check pseudoclass state
         //todo: user feedbakc -> what textfields are wrong
 
@@ -189,16 +191,16 @@ public class EditPersonController extends CommonGUIMethods
         if ( validationIsOk(2).negate().test(lastname))
             return false;
 
-        if(  phones.stream()
-                .filter( string -> !isNumberWithLength(8).test(string) )
-                .count()  == 0)
+        if(   phones.stream()
+                    .filter( string -> !isNumberWithLength(8).test(string) )
+                    .count()  == 0)
             return false;
 
         return true;
     }
+
     @Override
     protected void makeInsurance() {
         throw  new NoSuchMethodError("EditPerson dont handle Insurances");
     }
-
 }

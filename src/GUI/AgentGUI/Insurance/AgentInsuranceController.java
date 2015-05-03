@@ -2,11 +2,8 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.Fader;
 import GUI.WindowChangeListener;
-import Insurance.Helper.PaymentOption;
 import Person.Person;
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -29,12 +26,8 @@ public final class AgentInsuranceController
     private final StringProperty selectedCustomerName = new SimpleStringProperty();
     public static final BooleanProperty emptyscreenButton = new SimpleBooleanProperty(false);
 
-    @Deprecated
-    public static final ObservableList<String> paymentOptionNames = FXCollections.observableArrayList(PaymentOption.MONTHLY.getName(), PaymentOption.QUARTERLY.getName(), PaymentOption.YEARLY.getName());
-    @Deprecated
-    public static final ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList(2000, 4000, 8000, 12000);
-
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
+
     private static Parent chooserModule, confirmModule, house, car, animal, travel, boat, household;
 
     public Parent initAgentInsuranceView() {
@@ -146,7 +139,6 @@ public final class AgentInsuranceController
                 }
             }
         );
-
 
         currentInsurance.getInsuranceProperty().addListener( observable1 -> {
             if (currentInsurance.getInsuranceProperty().isNull().get())

@@ -5,6 +5,7 @@ import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
 import Insurance.Property.HomeInsurance;
 import Person.Customer;
+import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -116,6 +117,7 @@ public final class HouseModuleController extends CommonGUIMethods
         RegEX.addCSSTextValidation(constructionYear, isNumberWithLength(4)); //todo: make another regex for this
         RegEX.addCSSTextValidation(grossArea, isNumber()); //todo:make regex for this
         RegEX.addCSSTextValidation(primaryArea, isNumber()); //todo:make regex for this
+        RegEX.addCSSTextValidation(taxedvalue, isNumber());
     }
 
     @Override
@@ -158,7 +160,9 @@ public final class HouseModuleController extends CommonGUIMethods
             return false;
         if (validationIsOk(2).negate().test(grossArea))
             return false;
-        if (!validationIsOk(2).negate().test(primaryArea))
+        if (validationIsOk(2).negate().test(primaryArea))
+            return false;
+        if (validationIsOk(3).negate().test(taxedvalue))
             return false;
         return true;
     }
@@ -169,11 +173,19 @@ public final class HouseModuleController extends CommonGUIMethods
             return;
 
         PaymentOption selectedPayment = paymentOptions.get(paymentOption.getSelectionModel().getSelectedIndex());
-        insurance = new HomeInsurance(fromDate.getValue(),0, "some policy", currentCustomer.getPerson(), selectedPayment,
-                deductible.getValue(), adress.getText(), parseInt(citynumber), city.getText(), parseInt(constructionYear), constructedIn.getValue(),
-                parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
 
-        showPremium(insurance);
+        try {
+            insurance = new HomeInsurance(fromDate.getValue(), 0, "some policy", currentCustomer.getPerson(), selectedPayment,
+                    deductible.getValue(), adress.getText(), parseInt(citynumber), city.getText(), parseInt(constructionYear), constructedIn.getValue(),
+                    parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
+            showPremium(insurance);
+        } catch (Exception expected) {
+            //if currentcustomer == null getPremium with tempcustomer
+            HomeInsurance testinsurance = new HomeInsurance(fromDate.getValue(), 0, "some policy", RegisterCustomer.tempCustomer, selectedPayment,
+                    deductible.getValue(), adress.getText(), parseInt(citynumber), city.getText(), parseInt(constructionYear), constructedIn.getValue(),
+                    parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
+            showPremium(testinsurance);
+        }
     }
 
     @Override

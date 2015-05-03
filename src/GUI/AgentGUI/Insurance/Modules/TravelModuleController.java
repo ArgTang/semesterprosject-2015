@@ -36,7 +36,6 @@ public final class TravelModuleController extends CommonGUIMethods
     @FXML
     private ComboBox<String> paymentOption;
 
-
     private static final ObservableList<String> types = FXCollections.observableArrayList();
     private static TravelInsurance insurance;
 
@@ -62,7 +61,8 @@ public final class TravelModuleController extends CommonGUIMethods
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () -> {
             paymentOption.setValue( paymentOption.getItems().get(0) );
-            type.setValue( type.getItems().get(0) );};
+            type.setValue( type.getItems().get(0) );
+        };
 
         if(Platform.isFxApplicationThread())
             clear.run();
@@ -105,8 +105,8 @@ public final class TravelModuleController extends CommonGUIMethods
         try {
             insurance = new TravelInsurance(fromDate.getValue(), "something", currentCustomer.getPerson(), selectedPayment, pluss);
             showPremium(insurance);
-        } catch (Exception e) {
-            //we dont care that the error gets ignored
+        } catch (Exception expected) {
+            //if currentcustomer == null getPreium with tempcustomer
             TravelInsurance testinsurance = new TravelInsurance(fromDate.getValue(), "something", RegisterCustomer.tempCustomer, selectedPayment, pluss);
             showPremium(testinsurance);
         }

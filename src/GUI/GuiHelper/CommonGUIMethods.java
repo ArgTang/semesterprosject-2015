@@ -53,19 +53,25 @@ public abstract class CommonGUIMethods {
 
     protected final void addComboboxListener(ComboBox... comboBoxes) {
         for( ComboBox comboBox : comboBoxes )
-            comboBox.getSelectionModel().selectedItemProperty().addListener(observable -> makeInsurance() );
-            //comboBox.valueProperty().addListener(observable -> makeInsurance());
+            //comboBox.getSelectionModel().selectedItemProperty().addListener(observable -> makeInsurance() );
+            comboBox.valueProperty().addListener(observable -> makeInsurance());
     }
 
 
     protected final void addTextfieldListener(TextField... textFields) {
-        for (TextField textField: textFields)
+        for (TextField textField: textFields) {
             textField.setOnAction(event -> makeInsurance());
+            textField.focusedProperty().addListener(observable -> {
+                if (!textField.focusedProperty().getValue())
+                    makeInsurance();
+            });
+        }
     }
 
     protected int parseInt(TextField textField) {
         return Integer.parseInt(textField.getText());
     }
+
     protected Customer getCustomerOrDummyCustomer() {
         Customer customer = currentCustomer.getPerson();
         if (customer == null)

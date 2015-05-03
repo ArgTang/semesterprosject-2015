@@ -39,7 +39,7 @@
          <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.vgrow="NEVER">
              <children>
                  <Button fx:id="emptyFields" onAction="#clearFields" text="Tøm skjerm" />
-                 <Button fx:id="changeCustomer" onAction="#updatePerson" text="Endre kunde" />
+                 <Button fx:id="changeCustomerButton" onAction="#updatePerson" text="Endre kunde" />
                  <!--<Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="Opprett kunde" />-->
              </children>
          <GridPane.margin>

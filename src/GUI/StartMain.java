@@ -45,8 +45,10 @@ public class StartMain extends Application
     public static RegisterIncident incidentRegister = new RegisterIncident();
 
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
+    @Deprecated
     public static final WindowWindowListener changeWindowWindowListener = new WindowWindowListener();     //todo: change to this? more generic
 
+    //"storage" for the different Panes
     private static Parent welcome, agentSearch, agentPerson, agentMenu, agentInsurance, agentIncident, agentStatistics;
 
     @Override
@@ -57,7 +59,7 @@ public class StartMain extends Application
         thread.start();
         MakePersons.makeDefaultPerson();
 
-        initListeners();
+        setListeners();
         this.PrimaryStage = primaryStage;
         Scene scene = new Scene(rootLayout);
         rootLayout.setPadding(new Insets(5, 5, 5, 5));
@@ -135,7 +137,7 @@ public class StartMain extends Application
         return agentPerson;
     }
 
-    private void initListeners() throws IOException {
+    private void setListeners() throws IOException {
         changeWindowListener.getStringProperty().addListener(
                 observable -> {
                     StringProperty string = (StringProperty) observable;
