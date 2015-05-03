@@ -1,7 +1,6 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.GuiHelper.CommonPrivateGUIMethods;
-import GUI.GuiHelper.CommonPublicGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
@@ -33,7 +32,7 @@ import static Insurance.Insurance.paymentOptions;
 /**
  * Created by steinar on 17.04.2015.
  */
-public final class CarModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods
+public final class CarModuleController extends CommonGUIMethods
 {
     @FXML
     TextField licenceNumber;
@@ -139,6 +138,11 @@ public final class CarModuleController extends CommonPrivateGUIMethods implement
         RegEX.addCSSTextValidation(modelYear, isNumberWithLength(4));
         RegEX.addCSSTextValidation(color, isLetters());
         addCSSTextValidation(isNumber(), km, horsePower, buyPrice);
+    }
+
+    @Override
+    protected void setCustomer() {
+
     }
 
     @Override

@@ -1,7 +1,6 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.GuiHelper.CommonPrivateGUIMethods;
-import GUI.GuiHelper.CommonPublicGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
 import Insurance.Property.HomeInsurance;
@@ -9,6 +8,7 @@ import Person.Customer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,7 +32,7 @@ import static Insurance.Insurance.paymentOptions;
 /**
  * Created by steinar on 16.04.2015.
  */
-public final class HouseModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods
+public final class HouseModuleController extends CommonGUIMethods
 {
     @FXML
     private TextField adress;
@@ -86,13 +86,7 @@ public final class HouseModuleController extends CommonPrivateGUIMethods impleme
         setListeners();
         addCSSValidation();
         clearFields();
-
-        if (currentCustomer.getPersonProperty().isNotNull().get()) {
-            Customer customer = currentCustomer.getPerson();
-            adress.setText(customer.getAdress());
-            city.setText(customer.getCity());
-            citynumber.setText(String.valueOf( customer.getCitynumber()));
-        }
+        setCustomer();
     }
 
     @Override
@@ -133,14 +127,21 @@ public final class HouseModuleController extends CommonPrivateGUIMethods impleme
         });
 
         addComboboxListener(constructedIn, buildingType, deductible, paymentOption);
+        addTextfieldListener(adress, citynumber, city, constructionYear, grossArea, primaryArea, taxedvalue);
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
             if (insuranceChoiceListener.getPropertyString().equals("[Hus]") && bool.get()) {
                 System.out.println("saveinsurance");
                 makeInsurance();
-                saveInsurance(insurance);
+                //saveInsurance(insurance);
             }
+        });
+
+        insuranceChoiceListener.getStringProperty().addListener( observable -> {
+            SimpleStringProperty property = (SimpleStringProperty) observable;
+            if (property.get().equals("[Hus]"))
+                makeInsurance();
         });
     }
 
@@ -173,5 +174,14 @@ public final class HouseModuleController extends CommonPrivateGUIMethods impleme
                 parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
 
         showPremium(insurance);
+    }
+
+    @Override
+    protected void setCustomer() {
+        Customer customer = getCustomerOrDummyCustomer();
+
+        adress.setText(customer.getAdress());
+        city.setText(customer.getCity());
+        citynumber.setText(String.valueOf( customer.getCitynumber()));
     }
 }

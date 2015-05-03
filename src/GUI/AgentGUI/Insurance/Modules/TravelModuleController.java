@@ -4,14 +4,14 @@ package GUI.AgentGUI.Insurance.Modules;
  * Created by steinar on 27.04.2015.
  */
 
-import GUI.GuiHelper.CommonPrivateGUIMethods;
-import GUI.GuiHelper.CommonPublicGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import Insurance.Helper.PaymentOption;
 import Insurance.TravelInsurance;
 import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,7 +27,7 @@ import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrd
 import static GUI.StartMain.currentCustomer;
 import static Insurance.Insurance.paymentOptions;
 
-public final class TravelModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods
+public final class TravelModuleController extends CommonGUIMethods
 {
     @FXML
     private ComboBox<String> type;
@@ -78,10 +78,16 @@ public final class TravelModuleController extends CommonPrivateGUIMethods implem
                 clearFields();
         });
 
+        insuranceChoiceListener.getStringProperty().addListener(observable -> {
+            SimpleStringProperty property = (SimpleStringProperty) observable;
+            if (property.get().equals("[Reise]"))
+                makeInsurance();
+        });
+
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
-            if (insuranceChoiceListener.getPropertyString().equals("[Reise]") && bool.get()){
+            if (insuranceChoiceListener.getPropertyString().equals("[Reise]") && bool.get()) {
                 System.out.println("saveinsurance");
                 makeInsurance();
                 saveInsurance(insurance);
@@ -109,6 +115,8 @@ public final class TravelModuleController extends CommonPrivateGUIMethods implem
     //no textfields -> no action
     @Override
     public void addCSSValidation() { throw  new NoSuchMethodError("TravelInsirance have no textfields"); }
+    @Override
+    protected void setCustomer() { throw new NoSuchMethodError("travelInsurance have no CustomerSpecific data to set"); }
     @Override
     protected boolean checkValidation() { throw  new NoSuchMethodError("TravelInsurance have no textfields"); }
 }

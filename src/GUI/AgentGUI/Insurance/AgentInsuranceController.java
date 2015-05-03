@@ -2,13 +2,7 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.Fader;
 import GUI.WindowChangeListener;
-import Insurance.Animal.AnimalInsurance;
 import Insurance.Helper.PaymentOption;
-import Insurance.*;
-import Insurance.Property.HomeInsurance;
-import Insurance.Property.HouseholdContentsInsurance;
-import Insurance.Vehicle.BoatInsurance;
-import Insurance.Vehicle.CarInsurance;
 import Person.Person;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;

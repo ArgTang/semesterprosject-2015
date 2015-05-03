@@ -2,6 +2,7 @@ package GUI.GuiHelper;
 
 import javafx.css.PseudoClass;
 import javafx.scene.control.TextField;
+
 import java.util.function.Predicate;
 
 /**

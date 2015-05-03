@@ -4,8 +4,7 @@ package GUI.AgentGUI.Insurance.Modules;
  * Created by steinar on 27.04.2015.
  */
 
-import GUI.GuiHelper.CommonPrivateGUIMethods;
-import GUI.GuiHelper.CommonPublicGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
 import Insurance.Vehicle.BoatInsurance;
@@ -29,7 +28,7 @@ import static GUI.GuiHelper.RegEX.*;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
 
-public final class BoatModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods
+public final class BoatModuleController extends CommonGUIMethods
 {
     @FXML
     private TextField buyPrice;
@@ -112,6 +111,11 @@ public final class BoatModuleController extends CommonPrivateGUIMethods implemen
         addCSSTextValidation(isLetters(), maker, harbor); //todo: allow numbers for harbor? i.e. peer 16
         addCSSTextValidation(isAllChars(), licenceNumber, model);
         RegEX.addCSSTextValidation(modelYear, isNumberWithLength(4));
+    }
+
+    @Override
+    protected void setCustomer() {
+
     }
 
     @Override

@@ -1,8 +1,7 @@
 package GUI.AgentGUI.Insurance.Modules;
 
 import GUI.AgentGUI.Insurance.AgentInsuranceController;
-import GUI.GuiHelper.CommonPrivateGUIMethods;
-import GUI.GuiHelper.CommonPublicGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Animal.AnimalInsurance;
 import Insurance.Helper.PaymentOption;
@@ -22,8 +21,8 @@ import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrd
 import static GUI.GuiHelper.RegEX.*;
 import static Insurance.Insurance.paymentOptions;
 
-public final class AnimalModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods {
-
+public final class AnimalModuleController extends CommonGUIMethods
+{
     @FXML
     private ComboBox<String> animalType;
     @FXML
@@ -98,6 +97,11 @@ public final class AnimalModuleController extends CommonPrivateGUIMethods implem
         RegEX.addCSSTextValidation(chipID, isAllChars()); //todo: make regex for this
         RegEX.addCSSTextValidation(usage, isLetters()); //todo: delete when enum is ready
         RegEX.addCSSTextValidation(value, isNumber());
+    }
+
+    @Override
+    protected void setCustomer() {
+
     }
 
     @Override

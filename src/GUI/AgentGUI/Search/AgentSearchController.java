@@ -1,6 +1,6 @@
 package GUI.AgentGUI.Search;
 
-import GUI.GuiHelper.CommonPublicGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Person.Customer;
 import javafx.collections.FXCollections;
@@ -21,7 +21,7 @@ import static Register.RegisterCustomer.*;
  * This Class controlls the Agent Search Window
  * Created by steinar on 13.04.2015.
  */
-public final class AgentSearchController implements CommonPublicGUIMethods
+public final class AgentSearchController extends CommonGUIMethods
 {
     // Register all search InputFields
     @FXML
@@ -56,7 +56,8 @@ public final class AgentSearchController implements CommonPublicGUIMethods
     public static final ObservableList<Customer> searchresults = FXCollections.observableArrayList();
 
     @FXML
-    private void initialize() {
+    @Override
+    protected void initialize() {
         //these lines sets up the binding from searchresult to he tablecolumns
         socialnumberColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("SocialSecurityNumber"));
         firstnameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
@@ -74,7 +75,8 @@ public final class AgentSearchController implements CommonPublicGUIMethods
         addCSSValidation();
     }
 
-    private void setListeners() {
+    @Override
+    protected void setListeners() {
         personResults.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldPerson, newPerson) -> {
                     if (newPerson != null)
@@ -88,6 +90,8 @@ public final class AgentSearchController implements CommonPublicGUIMethods
             }
         });
     }
+
+
 
     @FXML
     private void searchFunction() {
@@ -123,7 +127,7 @@ public final class AgentSearchController implements CommonPublicGUIMethods
     }
 
     @Override
-    public void addCSSValidation() {
+    protected void addCSSValidation() {
         RegEX.addCSSTextValidation(searchSocialsecuritynumber, isNumberWithLength(11));
         addCSSTextValidation(isLetters(), searchSurename, searchLastname);
         RegEX.addCSSTextValidation(searchCustomeriD, isNumber()); //todo:change this when customer id is ready
@@ -139,5 +143,18 @@ public final class AgentSearchController implements CommonPublicGUIMethods
             e.printStackTrace();
         }
         return searchPane;
+    }
+
+    @Override
+    protected void makeInsurance() {
+        throw new NoSuchMethodError("AgentSearchController have no use for this function");
+    }
+    @Override
+    protected void setCustomer() {
+        throw new NoSuchMethodError("AgentSearchController have no use for this function");
+    }
+    @Override
+    protected boolean checkValidation() {
+        throw new NoSuchMethodError("AgentSearchController have no use for this function");
     }
 }

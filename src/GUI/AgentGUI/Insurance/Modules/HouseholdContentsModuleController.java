@@ -1,7 +1,6 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.GuiHelper.CommonPrivateGUIMethods;
-import GUI.GuiHelper.CommonPublicGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
 import Insurance.Property.HouseholdContentsInsurance;
@@ -10,6 +9,7 @@ import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,7 +30,7 @@ import static GUI.StartMain.currentCustomer;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
 
-public final class HouseholdContentsModuleController extends CommonPrivateGUIMethods implements CommonPublicGUIMethods
+public final class HouseholdContentsModuleController extends CommonGUIMethods
 {
     @FXML
     private TextField adress;
@@ -73,19 +73,9 @@ public final class HouseholdContentsModuleController extends CommonPrivateGUIMet
         addCSSValidation();
         clearFields();
         setListeners();
+        setCustomer();
 
         //todo: if insurance selected -> set info into page
-        //display tempcustomer if no customer is found
-        Customer customer;
-        if (currentCustomer.getPersonProperty().isNotNull().get())
-            customer = currentCustomer.getPerson();
-        else
-            customer = RegisterCustomer.tempCustomer;
-
-        adress.setText(customer.getAdress());
-        citynumber.setText(String.valueOf(customer.getCitynumber()));
-        city.setText(customer.getCity());
-        amount.setText("500000");
     }
 
     @Override
@@ -116,6 +106,16 @@ public final class HouseholdContentsModuleController extends CommonPrivateGUIMet
     }
 
     @Override
+    protected void setCustomer() {
+        Customer customer = getCustomerOrDummyCustomer();
+
+        adress.setText(customer.getAdress());
+        citynumber.setText(String.valueOf(customer.getCitynumber()));
+        city.setText(customer.getCity());
+        amount.setText("500000");
+    }
+
+    @Override
     protected boolean checkValidation() {
         if (validationIsOk(3).negate().test(adress))
             return false;
@@ -138,7 +138,6 @@ public final class HouseholdContentsModuleController extends CommonPrivateGUIMet
 
         addComboboxListener(numberOfrooms, numberOfPersons, deductible, paymentOption);
 
-        confirmOrderButton.removeListener((observable) -> {});
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
             if (insuranceChoiceListener.getPropertyString().equals("[Innbo]") && bool.get()) {
@@ -146,6 +145,12 @@ public final class HouseholdContentsModuleController extends CommonPrivateGUIMet
                 makeInsurance();
                 saveInsurance(insurance);
             }
+        });
+
+        insuranceChoiceListener.getStringProperty().addListener(observable -> {
+            SimpleStringProperty property = (SimpleStringProperty) observable;
+            if (property.get().equals("[Innbo]"))
+                makeInsurance();
         });
     }
 

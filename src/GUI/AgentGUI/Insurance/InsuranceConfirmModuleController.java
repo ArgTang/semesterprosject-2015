@@ -1,7 +1,7 @@
 package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.AlertWindow;
-import GUI.GuiHelper.CommonPublicGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
@@ -20,7 +20,7 @@ import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
 /**
  * Created by steinar on 15.04.2015.
  */
-public final class InsuranceConfirmModuleController implements CommonPublicGUIMethods
+public final class InsuranceConfirmModuleController extends CommonGUIMethods
 {
     @FXML
     private Label yearlyPremium;
@@ -55,7 +55,8 @@ public final class InsuranceConfirmModuleController implements CommonPublicGUIMe
     public static StringProperty bonusValueLabel = new SimpleStringProperty();
 
     @FXML
-    private void initialize() {
+    @Override
+    protected void initialize() {
         yearlyPremium.textProperty().bind(yearlyPremiumLabel.asString());
         totalFee.textProperty().bind(totalFeeLabel.asString());
         paymentEachTermin.textProperty().bind(paymentEachTerminLabel.asString());
@@ -65,15 +66,15 @@ public final class InsuranceConfirmModuleController implements CommonPublicGUIMe
         setListeners();
     }
 
-    private void setListeners() {
+    @Override
+    protected void setListeners() {
         BooleanBinding insuranceIsNotChosen = currentInsurance.getInsuranceProperty().isNull();
         endThis.disableProperty().bind(insuranceIsNotChosen);
 
         confirmInsurance.setDefaultButton(true);
         confirmOrderButton.bind(confirmInsurance.pressedProperty());
         confirmInsurance.disableProperty().bind(currentCustomer.getPersonProperty().isNull());
-        insuranceOffer.disableProperty().bind( currentCustomer.getPersonProperty().isNull() );
-
+        insuranceOffer.disableProperty().bind(currentCustomer.getPersonProperty().isNull());
     }
 
     @FXML
@@ -100,11 +101,6 @@ public final class InsuranceConfirmModuleController implements CommonPublicGUIMe
         }
     }
 
-    @Override
-    public void addCSSValidation() {
-        //no textfields here
-    }
-
     @FXML
     private void saveInsuranceOffer()
     {
@@ -114,7 +110,7 @@ public final class InsuranceConfirmModuleController implements CommonPublicGUIMe
     @FXML
     private void confirmInsurance() {
 
-        AlertWindow.messageDialog("Opprettet Forsikring","Opprettet Forsikring");
+        AlertWindow.messageDialog("Opprettet Forsikring", "Opprettet Forsikring");
     }
 
     public static void clearLabel() {
@@ -159,5 +155,23 @@ public final class InsuranceConfirmModuleController implements CommonPublicGUIMe
                                                 return Optional.empty(); });
 
         return dialog.showAndWait();
+    }
+
+
+    @Override
+    public void addCSSValidation() {
+        throw new NoSuchMethodError("InsuranceConfirmModule dont have any textfields");
+    }
+    @Override
+    protected void setCustomer() {
+        throw new NoSuchMethodError("InsuranceConfirmModule dont have a need for this function");
+    }
+    @Override
+    protected void makeInsurance() {
+        throw new NoSuchMethodError("InsuranceConfirmModule dont have a need for this function");
+    }
+    @Override
+    protected boolean checkValidation() {
+        throw new NoSuchMethodError("InsuranceConfirmModule dont have a need for this function");
     }
 }

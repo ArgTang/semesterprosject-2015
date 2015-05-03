@@ -1,7 +1,7 @@
 package GUI.AgentGUI.Person;
 
 import GUI.GuiHelper.AlertWindow;
-import GUI.GuiHelper.CommonPublicGUIMethods;
+import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Person.ContactInfo;
 import Person.Customer;
@@ -26,7 +26,7 @@ import static GUI.StartMain.customerRegister;
 /**
  * Created by steinar on 19.04.2015.
  */
-public class EditPersonController implements CommonPublicGUIMethods
+public class EditPersonController extends CommonGUIMethods
 {
     @FXML
     TextField socialSecurityNumber;
@@ -51,19 +51,15 @@ public class EditPersonController implements CommonPublicGUIMethods
     private ObservableList<String> phones = FXCollections.observableArrayList();
 
     @FXML
-    private void initialize()
-    {
+    @Override
+    protected void initialize() {
         phonelist.setItems(phones);
         setListeners();
         addCSSValidation();
 
         if( currentCustomer.getPersonProperty().isNotNull().get())
-        {
-            setCustomer( currentCustomer.getPerson() );
             changeCustomer.setTextFill(Color.RED);
-        }
-        else
-        {
+        else {
             //todo: do we need option to add more than 3 phonenumbers?
             changeCustomer.setText("Registrer ny kunde");
             phones.addAll("", "", "");
@@ -71,16 +67,14 @@ public class EditPersonController implements CommonPublicGUIMethods
     }
 
     @Override
-    public void clearFields()
-    {
+    public void clearFields() {
         socialSecurityNumber.setEditable(true);
         resetTextFields(socialSecurityNumber, firstname, lastname, adress, citynumber, city, email);
         phones.clear();
     }
 
     @Override
-    public void addCSSValidation()
-    {
+    protected void addCSSValidation() {
         RegEX.addCSSTextValidation(socialSecurityNumber, isNumberWithLength(11));
         RegEX.addCSSTextValidation(adress, isAdress());
         RegEX.addCSSTextValidation(citynumber, isNumberWithLength(4));
@@ -88,15 +82,15 @@ public class EditPersonController implements CommonPublicGUIMethods
         addCSSTextValidation(isLetters(), firstname, lastname, city);
     }
 
+
     //todo: put these into an interface (DRY)?? also need to redraw or update label after new name is set
-    private void setListeners()
-    {
-        //todo: might not need this? as users "should" open a new editPersonwindow each time
+    @Override
+    protected void setListeners() {
         currentCustomer.getPersonProperty().addListener(
                 observable -> {
                     SimpleObjectProperty<Customer> property = (SimpleObjectProperty) observable;
                     if (property.isNotNull().get())
-                        setCustomer(property.getValue());
+                        setCustomer();
                 });
 
         phonelist.setCellFactory(TextFieldListCell.forListView());
@@ -124,7 +118,9 @@ public class EditPersonController implements CommonPublicGUIMethods
         //phonelist.setOnEditCommit( event -> phonelist.getItems().set(event.getIndex(), event.getNewValue()));
     }
 
-    private void setCustomer(Customer customer) {
+    @Override
+    protected void setCustomer() {
+        Customer customer = currentCustomer.getPerson();
         socialSecurityNumber.setText(customer.getSocialSecurityNumber());
         socialSecurityNumber.setEditable(false);
         firstname.setText(customer.getFirstName());
@@ -172,7 +168,8 @@ public class EditPersonController implements CommonPublicGUIMethods
         }
     }
 
-    private boolean checkValidation()
+    @Override
+    protected boolean checkValidation()
     {
         // we already do regex, so we only need to check pseudoclass state
         //todo: user feedbakc -> what textfields are wrong
@@ -199,4 +196,9 @@ public class EditPersonController implements CommonPublicGUIMethods
 
         return true;
     }
+    @Override
+    protected void makeInsurance() {
+        throw  new NoSuchMethodError("EditPerson dont handle Insurances");
+    }
+
 }

@@ -2,6 +2,7 @@ package GUI.GuiHelper;
 
 import Insurance.Insurance;
 import Person.Customer;
+import Register.RegisterCustomer;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -15,12 +16,15 @@ import static Insurance.Insurance.paymentFee;
 /**
  * Created by steinar on 01.05.2015.
  */
-public abstract class CommonPrivateGUIMethods {
+public abstract class CommonGUIMethods {
+
+    public abstract void clearFields();
 
     protected abstract void setListeners();
     protected abstract void makeInsurance();
     protected abstract void initialize();
     protected abstract void addCSSValidation();
+    protected abstract void setCustomer();
     protected abstract boolean checkValidation();
 
     protected void saveInsurance(Insurance insurance) {
@@ -46,13 +50,26 @@ public abstract class CommonPrivateGUIMethods {
         paymentEachTerminLabel.setValue( ( insurance.getAnnualPremium() + paymentFee * paymentTermins) / paymentTermins );
     }
 
-    protected void addComboboxListener(ComboBox... comboBoxes) {
+
+    protected final void addComboboxListener(ComboBox... comboBoxes) {
         for( ComboBox comboBox : comboBoxes )
             comboBox.getSelectionModel().selectedItemProperty().addListener(observable -> makeInsurance() );
             //comboBox.valueProperty().addListener(observable -> makeInsurance());
     }
 
+
+    protected final void addTextfieldListener(TextField... textFields) {
+        for (TextField textField: textFields)
+            textField.setOnAction(event -> makeInsurance());
+    }
+
     protected int parseInt(TextField textField) {
         return Integer.parseInt(textField.getText());
+    }
+    protected Customer getCustomerOrDummyCustomer() {
+        Customer customer = currentCustomer.getPerson();
+        if (customer == null)
+            customer = RegisterCustomer.tempCustomer;
+        return customer;
     }
 }
