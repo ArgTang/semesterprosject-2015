@@ -133,10 +133,10 @@ public final class HouseModuleController extends CommonGUIMethods
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
-            if (insuranceChoiceListener.getPropertyString().equals("[Hus]") && bool.get()) {
+            if ( bool.get() && insuranceChoiceListener.getPropertyString().equals("Hus") ) {
                 System.out.println("saveinsurance");
                 makeInsurance();
-                //saveInsurance(insurance);
+                saveInsurance(insurance);
             }
         });
 
@@ -150,19 +150,19 @@ public final class HouseModuleController extends CommonGUIMethods
     @Override
     protected boolean checkValidation() {
         //todo: implement varang?
-        if (validationIsOk(3).negate().test(adress) )
+        if (validationIsOk(3).test(adress) )
             return false;
-        if (!citynumber.getPseudoClassStates().isEmpty())
+        if (pseudoOK.test(citynumber))
             return false;
-        if (validationIsOk(2).negate().test(city))
+        if (validationIsOk(2).test(city))
             return false;
-        if (!constructionYear.getPseudoClassStates().isEmpty())
+        if (pseudoOK.test(constructionYear))
             return false;
-        if (validationIsOk(2).negate().test(grossArea))
+        if (validationIsOk(2).test(grossArea))
             return false;
-        if (validationIsOk(2).negate().test(primaryArea))
+        if (validationIsOk(2).test(primaryArea))
             return false;
-        if (validationIsOk(3).negate().test(taxedvalue))
+        if (validationIsOk(3).test(taxedvalue))
             return false;
         return true;
     }

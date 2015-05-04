@@ -1,13 +1,16 @@
 package Insurance;
 
 import GUI.StartMain;
+import Incident.Incident;
 import Insurance.Helper.PaymentOption;
 import Person.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * Created by steinar on 27.03.2015.
@@ -26,6 +29,7 @@ public abstract class Insurance
     private String owner;
     private int casenumber = -1;
     private int deductable; //egenandel
+    private Set<Integer> incidentIDs;
 
     public static int paymentFee = 35;
     public static final ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList(2000, 4000, 8000, 12000);
@@ -53,6 +57,13 @@ public abstract class Insurance
         return casenumber;
     }
 
+    public void addIncident(Incident incident) {
+        incidentIDs.add(incident.getIncidentID());
+    }
+    public Set<Integer> getIncidentIDs() {
+        return incidentIDs;
+    }
+
     public void setAnnualPremium(int annualPremium) { this.annualPremium = annualPremium; }
     public int getCasenumber() { return casenumber; }
     public int getFromYear() { return validFrom.getYear(); }
@@ -62,4 +73,5 @@ public abstract class Insurance
     public int getDeductable() { return deductable; }
 
     public String getInsuranceName() { return StartMain.currentInsurance.getNameOfInsurance(this); }
+
 }

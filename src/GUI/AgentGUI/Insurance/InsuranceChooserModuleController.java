@@ -30,5 +30,7 @@ public final class InsuranceChooserModuleController
                     String choice = insuranceChooser.getSelectionModel().getSelectedItems().toString();
                     insuranceChoiceListener.setPropertyString( choice );
                 });
+
+        insuranceChoiceListener.setPropertyString( insuranceTypes.get(0) );
     }
 }

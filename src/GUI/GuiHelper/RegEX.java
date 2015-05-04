@@ -28,7 +28,7 @@ public final class RegEX {
     //todo: make sure all of the regular expressions works as intended
     private static final String NUMBER = "[1-9]{1}[\\d]";
     private static final String ALLCHARS = "[\\wøØæÆåÅ]+";
-    private static final String LETTERS = " ([^\\d\\W]+|[øØæÆåÅ ]+( )?)+";
+    private static final String LETTERS = "([^\\d\\WøØæÆåÅ ]+( )?)+";
     private static final String EMAIL = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
     private static final String ADRESS = "^((.){1,}(\\d){1,}(.){0,})$";
 
@@ -41,7 +41,10 @@ public final class RegEX {
     public static final Predicate<String> isLongerThan(int length) { return string -> !(string.length() > length); }
     public static final Predicate<String> isPassword() { return (string -> isAllChars().and(isLongerThan(5)).test(string)); }
 
-    public static final Predicate<TextField> validationIsOk(int minLength) { return textfield -> textfield.getLength() > minLength && textfield.getPseudoClassStates().isEmpty() ;}
+    public static final Predicate<TextField> validationIsOk(int minLength) { return textfield -> !(textfield.getLength() > minLength && pseudoOK.negate().test(textfield)); }
+    //if pseudoclass is not empty -> check if it contains invalidText pseudoclass
+    public static final Predicate<TextField> pseudoOK = textField -> !(textField.getPseudoClassStates().isEmpty() || !textField.getPseudoClassStates().toString().contains("invalidText"));
+
 
     public static void addCSSTextValidation(TextField textField, Predicate condition) {
         //todo: how to add css only when done typing?
@@ -65,7 +68,7 @@ public final class RegEX {
     @SafeVarargs
     public static boolean validationIsOk(int minLength, TextField... textFields) {
         for(TextField textField: textFields)
-            if (validationIsOk(minLength).negate().test(textField))
+            if (validationIsOk(minLength).test(textField))
                 return false;
         return true;
     }

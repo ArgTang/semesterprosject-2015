@@ -5,12 +5,12 @@ import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
 import Insurance.Vehicle.CarInsurance;
+import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -22,12 +22,13 @@ import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
-import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
+import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.*;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.currentInsurance;
-import static Insurance.Insurance.deductablenumbers;
-import static Insurance.Insurance.paymentOptions;
+import static Insurance.Insurance.*;
+import static Insurance.Vehicle.CarInsurance.bonusValues;
+import static Insurance.Vehicle.CarInsurance.kaskoValues;
 
 /**
  * Created by steinar on 17.04.2015.
@@ -66,38 +67,16 @@ public final class CarModuleController extends CommonGUIMethods
     @FXML
     ComboBox paymentOption;
 
-    //combobox values:
-    private ObservableList<String> kaskoValues = FXCollections.observableArrayList();
-    private ObservableList<Integer> bonusValues = FXCollections.observableArrayList();
-    private ObservableList<String> kmValues = FXCollections.observableArrayList();
-    private ObservableList<String> type = FXCollections.observableArrayList(
-            "Stasjonsvogn","SUV","Flerbruksbil","Coupe","Cabriolet","Veteran","Sedan","Kasse","Kombi","Picup","Elbil");
-    private ObservableList<String> makers = FXCollections.observableArrayList(
-            "Alfa Romeo","Aston Martin","Audi","Austin","Bentley","BMW","Buddy","Buick","Cadillac",
-            "Chevrolet","Chrysler","Citroen","Dacia","Daewoo","Daihatsu","Datsun","Dodge","Ferrari",
-            "Fiat","Fisker","Ford","GMC","Honda","Hummer","Hyundai","Infiniti","Isuzu","Iveco","Jaguar",
-            "Jeep","Jensen","Kewet","Kia","Lada","Lamborghini","Lancia","Land Rover","Lexus","Lincon","Lotus",
-            "Maserati","Matra","Mazda","McLaren","Mercedes-Benz","Mercury","MG","Mia Electric","MINI","Mitsubishi",
-            "Morgan","Morris","Nissan","Oldsmobile","Opel","Peugeot","Plymouth","Pontiac","Porche","Renault","Reva",
-            "Rolls Royce","Rover","Saab","Seat","Skoda","Smart","Ssangyong","Subaru","Suzuki","Tesla","Think","Toyota",
-            "Triumph","Volkswagen","Volvo","Andre");
-
     CarInsurance insurance;
 
     @FXML
     @Override
     protected void initialize() {
         //todo: some of these might be used for more insurances -> move into Vehicle Class
-        kaskoValues.addAll("Ansvar", "Delkasko", "Fullkasko");
         kasko.setItems(kaskoValues);
-
-        bonusValues.addAll(0, 10, 20, 30, 40, 50, 60, 70, 75);
         bonus.setItems(bonusValues);
-
-        kmValues.addAll("8 000km", "12 000km", "16 000km", "ubegrenset km");
-        yearlyKM.setItems(kmValues);
-
-        maker.setItems(makers);
+        yearlyKM.setItems(CarInsurance.kmValues);
+        maker.setItems(CarInsurance.makers);
 
         deductible.setItems(deductablenumbers);
         paymentOption.setItems(paymentOptions.stream()
@@ -111,9 +90,9 @@ public final class CarModuleController extends CommonGUIMethods
 
     @Override
     public void clearFields() {
-        resetTextFields(licenceNumber, km, model, horsePower, color, buyPrice);
+        resetTextFields(licenceNumber, km, model, horsePower, modelYear, color, buyPrice);
         fromDate.setValue(LocalDate.now());
-        ageRequirements.setIndeterminate(false);
+//        ageRequirements.setIndeterminate(false);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () -> {
@@ -147,25 +126,25 @@ public final class CarModuleController extends CommonGUIMethods
 
     @Override
     protected boolean checkValidation() {
-        if (validationIsOk(6).negate().test(licenceNumber))
+        if (validationIsOk(4).test(licenceNumber))
             return false;
 
-        if (validationIsOk(2).negate().test(model))
+        if (validationIsOk(2).test(model))
             return false;
 
-        if (!modelYear.getPseudoClassStates().isEmpty())
+        if (pseudoOK.test(modelYear))
             return false;
 
-        if (validationIsOk(1).negate().test(color))
+        if (validationIsOk(1).test(color))
             return false;
 
-        if (validationIsOk(1).negate().test(km))
+        if (validationIsOk(1).test(km))
             return false;
 
-        if (validationIsOk(2).negate().test(horsePower))
+        if (validationIsOk(2).test(horsePower))
             return false;
 
-        if (validationIsOk(3).negate().test(buyPrice))
+        if (validationIsOk(3).test(buyPrice))
             return false;
 
         return true;
@@ -173,6 +152,9 @@ public final class CarModuleController extends CommonGUIMethods
 
     @Override
     protected void setListeners() {
+
+        addComboboxListener(maker, kasko, bonus, yearlyKM, deductible, paymentOption);
+        addTextfieldListener(licenceNumber, model, modelYear, color, buyPrice);
 
         currentInsurance.getInsuranceProperty().addListener(
                 observable -> {
@@ -204,11 +186,34 @@ public final class CarModuleController extends CommonGUIMethods
         if (!checkValidation())
             return;
 
-        PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
-        insurance = new CarInsurance( fromDate.getValue(), parseInt(buyPrice),"comePolicy", currentCustomer.getPerson(), selectedPayment,
-        maker.getValue().toString(), model.getText(), parseInt(modelYear), parseInt(km), parseInt(horsePower), licenceNumber.getText(),
-        color.getText(), Integer.parseInt( deductible.getValue().toString() ) );
+        PaymentOption selectedPayment = paymentOptions.get(paymentOption.getSelectionModel().getSelectedIndex());
+        int bonus = bonusValues.get(this.bonus.getSelectionModel().getSelectedIndex());
+        String kasko = kaskoValues.get(this.kasko.getSelectionModel().getSelectedIndex());
+        String yearlyKM = CarInsurance.kmValues.get(this.yearlyKM.getSelectionModel().getSelectedIndex());
 
-        System.out.print("");
+        try {
+            insurance = new CarInsurance(fromDate.getValue(), parseInt(buyPrice), "comePolicy", currentCustomer.getPerson(), selectedPayment,
+                    maker.getValue().toString(), model.getText(), parseInt(modelYear), parseInt(km), parseInt(horsePower), licenceNumber.getText(),
+                    color.getText(), Integer.parseInt(deductible.getValue().toString()), bonus, kasko, yearlyKM);
+            showPremium(insurance);
+        } catch (Exception expected) {
+            Insurance tempinsurance = new CarInsurance(fromDate.getValue(), parseInt(buyPrice), "comePolicy",
+                    RegisterCustomer.tempCustomer, selectedPayment, maker.getValue().toString(), model.getText(),
+                    parseInt(modelYear), parseInt(km), parseInt(horsePower), licenceNumber.getText(),
+                    color.getText(), Integer.parseInt(deductible.getValue().toString()), bonus, kasko, yearlyKM);
+            showPremium(tempinsurance);
+        }
+    }
+
+    @Override
+    protected void showPremium(Insurance insurance) {
+        CarInsurance carInsurance = (CarInsurance) insurance;
+        int paymentTermins = insurance.getPaymentOption().getValue();
+        double bonus = 1-(carInsurance.getCurrentBonus()/100.0);
+
+        yearlyPremiumLabel.setValue( insurance.getAnnualPremium() * bonus  );
+        totalFeeLabel.setValue( paymentFee * paymentTermins );
+        paymentEachTerminLabel.setValue(  ( insurance.getAnnualPremium() * bonus + paymentFee * paymentTermins) / paymentTermins );
+        bonusValueLabel.setValue(String.valueOf( 100 - (bonus * 100) ) );
     }
 }

@@ -1,6 +1,7 @@
 package Incident;
 
 import Person.Person;
+
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,7 +41,7 @@ public abstract class Incident {
         this.timeOfIncident = timeOfIncident;
     }
 
-    public long getIncidentID() {
+    public int getIncidentID() {
         return incidentID;
     }
 }

@@ -3,6 +3,7 @@ package Insurance.Vehicle;
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
 import Person.Customer;
+
 import java.time.LocalDate;
 
 /**
@@ -10,7 +11,7 @@ import java.time.LocalDate;
  */
 public abstract class Vehicle extends Insurance
 {
-    private String maker, model; //todo: maker -> maker? if so rename
+    private String maker, model;
     private int productionYear;
 
     public Vehicle(LocalDate validFrom, int itemValue, String policy, Customer customer, PaymentOption paymentOption, String maker, String model, int productionYear, int deductable)

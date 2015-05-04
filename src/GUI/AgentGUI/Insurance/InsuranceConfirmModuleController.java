@@ -4,6 +4,8 @@ import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -13,6 +15,7 @@ import javafx.scene.paint.Color;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.currentInsurance;
 import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
@@ -60,10 +63,10 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
         yearlyPremium.textProperty().bind(yearlyPremiumLabel.asString());
         totalFee.textProperty().bind(totalFeeLabel.asString());
         paymentEachTermin.textProperty().bind(paymentEachTerminLabel.asString());
-        bonusLabel.setVisible(false);
 
         helperPane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null))); //todo: easier way to do this?
         setListeners();
+        clearLabel();
     }
 
     @Override
@@ -71,10 +74,29 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
         BooleanBinding insuranceIsNotChosen = currentInsurance.getInsuranceProperty().isNull();
         endThis.disableProperty().bind(insuranceIsNotChosen);
 
-        confirmInsurance.setDefaultButton(true);
-        confirmOrderButton.bind(confirmInsurance.pressedProperty());
+        //confirmOrderButton.bind(confirmInsurance.pressedProperty());
+        confirmInsurance.pressedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    confirmOrderButton.set(true);
+                    confirmOrderButton.set(false);
+                }
+            }
+        });
         confirmInsurance.disableProperty().bind(currentCustomer.getPersonProperty().isNull());
         insuranceOffer.disableProperty().bind(currentCustomer.getPersonProperty().isNull());
+
+        bonusValue.textProperty().bind(bonusValueLabel);
+        bonusValueLabel.addListener(observable -> {
+            if ( bonusValueLabel.getValue().equalsIgnoreCase("0") ) {
+                bonusLabel.setVisible(false);
+                bonusValue.setVisible(false);
+            } else {
+                bonusLabel.setVisible(true);
+                bonusValue.setVisible(true);
+            }
+        });
     }
 
     @FXML
@@ -94,8 +116,8 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
             description.setText("");
 
             Runnable newthread = () -> {
-                AgentInsuranceController.emptyscreenButton.setValue(true);
-                AgentInsuranceController.emptyscreenButton.setValue(false);};
+                emptyscreenButton.setValue(true);
+                emptyscreenButton.setValue(false);};
             Thread thread = new Thread(newthread);
             thread.start();
         }
@@ -117,11 +139,10 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
         yearlyPremiumLabel.setValue(0);
         paymentEachTerminLabel.setValue(0);
         totalFeeLabel.setValue(0);
+        bonusValueLabel.setValue("0");
     }
 
-    private Optional<LocalDate> makeDialog() //todo: move this to GUIHelper.AlertWindow? http://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
-    {
-        //todo: disable buttn when no insurance is chosen
+    private Optional<LocalDate> makeDialog() {
         Dialog dialog = new Dialog();
         Alert alert = new Alert(Alert.AlertType.WARNING);
         //dialog.setGraphic(alert.getGraphic().getClip()); //InvocationTargetException //todo: find a way to get warning icon and add to this dialog
@@ -156,7 +177,6 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
 
         return dialog.showAndWait();
     }
-
 
     @Override
     public void addCSSValidation() {

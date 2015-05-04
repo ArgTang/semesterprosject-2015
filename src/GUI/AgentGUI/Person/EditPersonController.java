@@ -1,8 +1,10 @@
 package GUI.AgentGUI.Person;
 
+import GUI.AgentGUI.Search.AgentSearchController;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
+import GUI.StartMain;
 import Person.ContactInfo;
 import Person.Customer;
 import javafx.collections.FXCollections;
@@ -77,7 +79,6 @@ public class EditPersonController extends CommonGUIMethods
     }
 
 
-    //todo: put these into an interface (DRY)?? also need to redraw or update label after new name is set
     @Override
     protected void setListeners() {
         currentCustomer.getPersonProperty().addListener(observable -> setCustomer());
@@ -159,16 +160,23 @@ public class EditPersonController extends CommonGUIMethods
                                         .collect(Collectors.toList());
 
         ContactInfo contactInfo = new ContactInfo(adress.getText(), Integer.parseInt( citynumber.getText() ), city.getText(), email.getText(), phonelist);
-        Customer customer = new Customer(firstname.getText(), lastname.getText(), personNumber, contactInfo);
+        Customer newcustomer = new Customer(firstname.getText(), lastname.getText(), personNumber, contactInfo);
+        Customer oldcustomer = currentCustomer.getPerson();
+
+        oldcustomer.getInsuranceNumbers().stream().forEach(newcustomer::addInsuranceNumber);
+        oldcustomer.getIncidentNumbers().stream().forEach(newcustomer::addIncidentNumber);
 
         if ( currentCustomer.getPersonProperty().isNotNull().get()) {
-            customerRegister.update(customer);
+            customerRegister.update(newcustomer);
             currentCustomer.setProperty( customerRegister.get( personNumber ));
         } else if ( customerRegister.get(socialSecurityNumber.getText()) != null ) {
             AlertWindow.messageDialog("denne personen finnes allerede i registeret, vennligst søk opp personen før du forsøker å endre", "kunde er allerede registrert");
         } else {
-            customerRegister.add(customer);
+            customerRegister.add(newcustomer);
         }
+
+        //TODO: update searchresult each time
+        AgentSearchController.searchresults.setAll(StartMain.customerRegister.getRegister());
     }
 
     @Override
@@ -178,17 +186,17 @@ public class EditPersonController extends CommonGUIMethods
 
         if ( socialSecurityNumber.getText().length() != 11 && socialSecurityNumber.getPseudoClassStates().isEmpty() )
             return false;
-        if ( validationIsOk(3).negate().test(adress) )
+        if ( validationIsOk(3).test(adress) )
             return false;
-        if ( validationIsOk(4).negate().test(email) )
+        if ( validationIsOk(4).test(email) )
             return false;
-        if ( validationIsOk(2).negate().test(city))
+        if ( validationIsOk(2).test(city))
             return false;
-        if ( citynumber.getPseudoClassStates().isEmpty() )
+        if ( pseudoOK.test(citynumber) )
             return false;
-        if ( validationIsOk(1).negate().test(firstname))
+        if ( validationIsOk(1).test(firstname))
             return false;
-        if ( validationIsOk(2).negate().test(lastname))
+        if ( validationIsOk(2).test(lastname))
             return false;
 
         if(   phones.stream()

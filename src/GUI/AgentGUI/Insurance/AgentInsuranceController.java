@@ -140,7 +140,7 @@ public final class AgentInsuranceController
             }
         );
 
-        currentInsurance.getInsuranceProperty().addListener( observable1 -> {
+        currentInsurance.getInsuranceProperty().addListener( observable -> {
             if (currentInsurance.getInsuranceProperty().isNull().get())
                 return;
 

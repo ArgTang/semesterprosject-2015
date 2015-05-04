@@ -27,8 +27,8 @@ public class AgentMenuController {
     @FXML
     private void initialize() {
         DropShadow shadow = new DropShadow();
-        shadow.setOffsetY(2.0);
-        shadow.setOffsetX(1.0);
+        shadow.setOffsetY(0.0);
+        shadow.setOffsetX(0.0);
         shadow.setColor(Color.GRAY);
         shadow.setRadius(1);
 

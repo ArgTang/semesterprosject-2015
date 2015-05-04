@@ -122,10 +122,10 @@ public final class BoatModuleController extends CommonGUIMethods
     protected boolean checkValidation() {
 
         //todo: what if we want to give feedbavk to user for what and witch Textfield are wrong ??
-        if ( !validationIsOk(1, size, speed, motorsize) )
+        if ( validationIsOk(1, size, speed, motorsize) )
             return false;
 
-        if ( !validationIsOk(3, maker, harbor, licenceNumber, model, modelYear, buyPrice ) )
+        if ( validationIsOk(3, maker, harbor, licenceNumber, model, modelYear, buyPrice ) )
             return false;
 
         return true;

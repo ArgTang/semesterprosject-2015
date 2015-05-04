@@ -58,6 +58,7 @@ public abstract class CommonGUIMethods {
     }
 
 
+    // setOnAction -> enter key. focusedProperty -> if lostfocus -> try to show price for insurance
     protected final void addTextfieldListener(TextField... textFields) {
         for (TextField textField: textFields) {
             textField.setOnAction(event -> makeInsurance());
