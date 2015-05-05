@@ -24,7 +24,7 @@ public abstract class CommonGUIMethods {
     protected abstract void makeInsurance();
     protected abstract void initialize();
     protected abstract void addCSSValidation();
-    protected abstract void setCustomer();
+    //protected abstract void setCustomer();
     protected abstract boolean checkValidation();
 
     protected void saveInsurance(Insurance insurance) {
@@ -53,15 +53,18 @@ public abstract class CommonGUIMethods {
 
     protected final void addComboboxListener(ComboBox... comboBoxes) {
         for( ComboBox comboBox : comboBoxes )
-            //comboBox.getSelectionModel().selectedItemProperty().addListener(observable -> makeInsurance() );
-            comboBox.valueProperty().addListener(observable -> makeInsurance());
+            comboBox.getSelectionModel().selectedItemProperty().addListener(observable -> makeInsurance() );
+/*            comboBox.valueProperty().addListener(observable -> {
+                if (!comboBox.focusedProperty().getValue())
+                    makeInsurance();
+            });*/
     }
 
 
     // setOnAction -> enter key. focusedProperty -> if lostfocus -> try to show price for insurance
     protected final void addTextfieldListener(TextField... textFields) {
         for (TextField textField: textFields) {
-            textField.setOnAction(event -> makeInsurance());
+            //textField.setOnAction(event -> makeInsurance());
             textField.focusedProperty().addListener(observable -> {
                 if (!textField.focusedProperty().getValue())
                     makeInsurance();

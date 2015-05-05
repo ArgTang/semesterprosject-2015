@@ -99,7 +99,6 @@ public final class AnimalModuleController extends CommonGUIMethods
         RegEX.addCSSTextValidation(value, isNumber());
     }
 
-    @Override
     protected void setCustomer() {
 
     }

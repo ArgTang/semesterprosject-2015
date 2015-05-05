@@ -1,4 +1,4 @@
-package GUI;
+package GUI.CurrentObjectListeners;
 
 import Insurance.Animal.AnimalInsurance;
 import Insurance.Insurance;

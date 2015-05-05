@@ -4,13 +4,17 @@ package GUI.AgentGUI.Insurance.Modules;
  * Created by steinar on 27.04.2015.
  */
 
+import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
 import Insurance.Vehicle.BoatInsurance;
+import Insurance.Vehicle.VehicleInsurance;
+import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,8 +29,12 @@ import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
+import static Insurance.Vehicle.BoatInsurance.*;
+import static Insurance.Vehicle.BoatInsurance.minBoatValueforMandatoryRegistration;
+import static Insurance.Vehicle.VehicleInsurance.kaskoValues;
 
 public final class BoatModuleController extends CommonGUIMethods
 {
@@ -61,18 +69,13 @@ public final class BoatModuleController extends CommonGUIMethods
     @FXML
     private ComboBox<String> paymentOption;
 
-    private ObservableList<String> kaskoValues = FXCollections.observableArrayList();
-    private ObservableList<String> types = FXCollections.observableArrayList();
-
     private static BoatInsurance insurance;
 
     @FXML
     @Override
     protected void initialize() {
-        kaskoValues.addAll("Delkasko", "Fullkasko", "Pluss (tyveri)");
-        kasko.setItems(kaskoValues);
 
-        types.addAll("Innenbordsmotor", "Utenbordsmotor", "Seilbåt");
+        kasko.setItems(kaskoValues);
         type.setItems(types);
 
         deductible.setItems(deductablenumbers);
@@ -88,7 +91,7 @@ public final class BoatModuleController extends CommonGUIMethods
     @Override
     public void clearFields() {
         fromDate.setValue(LocalDate.now());
-        resetTextFields(speed, size, motorsize, buyPrice, model, maker, harbor, licenceNumber, modelYear);
+        resetTextFields(speed, size, motorsize, model, maker, harbor, licenceNumber, modelYear, buyPrice);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () -> {
@@ -107,32 +110,37 @@ public final class BoatModuleController extends CommonGUIMethods
     @Override
     public void addCSSValidation() {
         addCSSTextValidation(isNumber(), speed, size, motorsize);
-        RegEX.addCSSTextValidation(buyPrice, isNumber());
         addCSSTextValidation(isLetters(), maker, harbor); //todo: allow numbers for harbor? i.e. peer 16
         addCSSTextValidation(isAllChars(), licenceNumber, model);
         RegEX.addCSSTextValidation(modelYear, isNumberWithLength(4));
     }
 
     @Override
-    protected void setCustomer() {
-
-    }
-
-    @Override
     protected boolean checkValidation() {
 
         //todo: what if we want to give feedbavk to user for what and witch Textfield are wrong ??
-        if ( validationIsOk(1, size, speed, motorsize) )
+        if ( !validationIsOk(0, size, speed, motorsize))
             return false;
 
-        if ( validationIsOk(3, maker, harbor, licenceNumber, model, modelYear, buyPrice ) )
+        if ( !validationIsOk(2, maker, harbor, model, modelYear, buyPrice) )
             return false;
 
+
+        if (buyPrice.getLength() > 2 && parseInt(buyPrice) > minBoatValueforMandatoryRegistration)
+            if ( !validationIsOk(2).test(licenceNumber) ) {
+                AlertWindow.messageDialog("Registreringsnummer er obligatorisk for båter med verdi over " +
+                        minBoatValueforMandatoryRegistration, "Registreringsnummer påkrevd");
+                return false;
+            }
         return true;
     }
 
     @Override
     protected void setListeners() {
+
+        addComboboxListener(type, kasko, deductible, paymentOption);
+        addTextfieldListener(speed, size, motorsize, modelYear);
+
         emptyscreenButton.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
@@ -143,7 +151,14 @@ public final class BoatModuleController extends CommonGUIMethods
             BooleanProperty bool = (BooleanProperty) observable;
             if (insuranceChoiceListener.getPropertyString().equals("[Båt]") && bool.get()) {
                 makeInsurance();
-                saveInsurance(insurance);
+                //saveInsurance(insurance);
+            }
+        });
+
+        insuranceChoiceListener.getStringProperty().addListener(observable -> {
+            SimpleStringProperty property = (SimpleStringProperty) observable;
+            if (property.get().equals("[Båt]")) {
+                makeInsurance();
             }
         });
     }
@@ -155,5 +170,19 @@ public final class BoatModuleController extends CommonGUIMethods
 
         PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
 
+        try {
+            insurance = new BoatInsurance(fromDate.getValue(), parseInt(buyPrice),"somePolicy", currentCustomer.getPerson(),
+                    selectedPayment, maker.getText(), model.getText(), parseInt(modelYear), parseInt(motorsize),
+                    parseInt(speed), parseInt(size), type.getSelectionModel().getSelectedItem(), deductible.getSelectionModel().getSelectedItem() );
+            showPremium(insurance);
+        } catch (Exception expected) {
+            BoatInsurance tempinsurance = new BoatInsurance(fromDate.getValue(), parseInt(buyPrice),"somePolicy",
+                    RegisterCustomer.tempCustomer,  selectedPayment, maker.getText(), model.getText(), parseInt(modelYear),
+                    parseInt(motorsize), parseInt(speed), parseInt(size), type.getSelectionModel().getSelectedItem(),
+                    deductible.getSelectionModel().getSelectedItem() );
+            showPremium(tempinsurance);
+        }
+
+        System.out.print("");
     }
 }

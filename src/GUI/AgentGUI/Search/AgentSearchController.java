@@ -150,10 +150,6 @@ public final class AgentSearchController extends CommonGUIMethods
         throw new NoSuchMethodError("AgentSearchController have no use for this function");
     }
     @Override
-    protected void setCustomer() {
-        throw new NoSuchMethodError("AgentSearchController have no use for this function");
-    }
-    @Override
     protected boolean checkValidation() {
         throw new NoSuchMethodError("AgentSearchController have no use for this function");
     }

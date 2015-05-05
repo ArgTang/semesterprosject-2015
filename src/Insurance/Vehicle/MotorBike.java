@@ -4,12 +4,11 @@ import Insurance.Helper.PaymentOption;
 import Person.Customer;
 
 import java.time.LocalDate;
-import java.time.Year;
 
 /**
  * Created by steinar on 07.04.2015.
  */
-public final class MotorBike extends Vehicle {
+public final class MotorBike extends VehicleInsurance {
 
     private int kilometer, horsePower;
     byte bonus; //todo: maybe enum ( steps of 10)  ?

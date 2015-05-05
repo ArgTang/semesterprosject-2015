@@ -105,7 +105,6 @@ public final class HouseholdContentsModuleController extends CommonGUIMethods
         RegEX.addCSSTextValidation(amount, isNumber());
     }
 
-    @Override
     protected void setCustomer() {
         Customer customer = getCustomerOrDummyCustomer();
 
@@ -117,13 +116,13 @@ public final class HouseholdContentsModuleController extends CommonGUIMethods
 
     @Override
     protected boolean checkValidation() {
-        if (validationIsOk(3).test(adress))
+        if (!validationIsOk(3).test(adress))
             return false;
         if (pseudoOK.test(citynumber))
             return false;
-        if (validationIsOk(2).test(city))
+        if (!validationIsOk(2).test(city))
             return false;
-        if (validationIsOk(4).test(amount))
+        if (!validationIsOk(4).test(amount))
             return false;
         return true;
     }
@@ -137,6 +136,7 @@ public final class HouseholdContentsModuleController extends CommonGUIMethods
         });
 
         addComboboxListener(numberOfrooms, numberOfPersons, deductible, paymentOption);
+        addTextfieldListener(amount);
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
@@ -149,8 +149,10 @@ public final class HouseholdContentsModuleController extends CommonGUIMethods
 
         insuranceChoiceListener.getStringProperty().addListener(observable -> {
             SimpleStringProperty property = (SimpleStringProperty) observable;
-            if (property.get().equals("[Innbo]"))
+            if (property.get().equals("[Innbo]")) {
+                setCustomer();
                 makeInsurance();
+            }
         });
     }
 

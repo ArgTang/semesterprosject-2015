@@ -1,5 +1,6 @@
-package GUI;
+package GUI.CurrentObjectListeners;
 
+import GUI.StartMain;
 import Person.Customer;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

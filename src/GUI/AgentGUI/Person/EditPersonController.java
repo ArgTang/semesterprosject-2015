@@ -106,7 +106,6 @@ public class EditPersonController extends CommonGUIMethods
         //phonelist.setOnEditCommit( event -> phonelist.getItems().set(event.getIndex(), event.getNewValue()));
     }
 
-    @Override
     protected void setCustomer() {
         Customer customer = currentCustomer.getPerson();
         setRegisterButton();

@@ -54,7 +54,7 @@ public final class WelcomeController
         StackPane pane = new StackPane();
 
         pane.setAlignment(Pos.CENTER_LEFT);
-        pane.setMargin(welcome, new Insets(0, 0, 100, 200));
+        StackPane.setMargin(welcome, new Insets(0, 0, 100, 200));
 
         pane.getChildren().addAll(welcome);
 

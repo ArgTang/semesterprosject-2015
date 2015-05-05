@@ -116,7 +116,5 @@ public final class TravelModuleController extends CommonGUIMethods
     @Override
     public void addCSSValidation() { throw  new NoSuchMethodError("TravelInsirance have no textfields"); }
     @Override
-    protected void setCustomer() { throw new NoSuchMethodError("travelInsurance have no CustomerSpecific data to set"); }
-    @Override
     protected boolean checkValidation() { throw  new NoSuchMethodError("TravelInsurance have no textfields"); }
 }

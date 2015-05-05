@@ -2,9 +2,9 @@ package Register;
 
 import Person.ContactInfo;
 import Person.Customer;
+
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;

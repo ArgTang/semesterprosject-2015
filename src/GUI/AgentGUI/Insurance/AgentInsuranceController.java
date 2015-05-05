@@ -1,7 +1,7 @@
 package GUI.AgentGUI.Insurance;
 
+import GUI.CurrentObjectListeners.WindowChangeListener;
 import GUI.GuiHelper.Fader;
-import GUI.WindowChangeListener;
 import Person.Person;
 import javafx.beans.property.*;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import static GUI.CurrentObjectListeners.CurrentInsurance.getNameOfInsurance;
 import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.currentInsurance;
 
@@ -32,11 +33,11 @@ public final class AgentInsuranceController
 
     public Parent initAgentInsuranceView() {
 
-        chooserModule = showChooserModule();
-        confirmModule = showConfirmModule();
-        chooserModule = setlabel(chooserModule);
         kundenavn.textProperty().bind(selectedCustomerName);
         kundenavn.setStyle("-fx-font-weight: bold;");
+
+        confirmModule = showConfirmModule();
+        chooserModule = setlabel(showChooserModule());
         setListeners();
 
         container.setLeft(chooserModule);
@@ -87,7 +88,7 @@ public final class AgentInsuranceController
     private void showBoatInsurance() {
         if (boat == null)
             boat = loadParent("\\Modules\\BoatModule.fxml");
-        setFade(travel);
+        setFade(boat);
     }
 
     private void showHouseholdInsurance() {
@@ -144,7 +145,7 @@ public final class AgentInsuranceController
             if (currentInsurance.getInsuranceProperty().isNull().get())
                 return;
 
-            String insurance = currentInsurance.getNameOfInsurance(currentInsurance.getInsurance());
+            String insurance = getNameOfInsurance(currentInsurance.getInsurance());
             insuranceChoiceListener.setPropertyString("[" + insurance + "]");
         });
 

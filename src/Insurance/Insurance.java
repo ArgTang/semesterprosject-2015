@@ -1,6 +1,5 @@
 package Insurance;
 
-import GUI.StartMain;
 import Incident.Incident;
 import Insurance.Helper.PaymentOption;
 import Person.Customer;
@@ -11,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
+import static GUI.CurrentObjectListeners.CurrentInsurance.getNameOfInsurance;
 
 /**
  * Created by steinar on 27.03.2015.
@@ -72,6 +73,5 @@ public abstract class Insurance
     public int getItemValue() { return itemValue; }
     public int getDeductable() { return deductable; }
 
-    public String getInsuranceName() { return StartMain.currentInsurance.getNameOfInsurance(this); }
-
+    public String getInsuranceName() { return getNameOfInsurance(this); }
 }

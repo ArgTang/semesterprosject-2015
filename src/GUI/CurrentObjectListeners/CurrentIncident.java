@@ -1,4 +1,4 @@
-package GUI;
+package GUI.CurrentObjectListeners;
 
 import Incident.Incident;
 import javafx.beans.property.ObjectProperty;

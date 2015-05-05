@@ -129,7 +129,7 @@ public final class HouseModuleController extends CommonGUIMethods
         });
 
         addComboboxListener(constructedIn, buildingType, deductible, paymentOption);
-        addTextfieldListener(adress, citynumber, city, constructionYear, grossArea, primaryArea, taxedvalue);
+        addTextfieldListener(constructionYear, grossArea, primaryArea, taxedvalue);
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
@@ -142,27 +142,29 @@ public final class HouseModuleController extends CommonGUIMethods
 
         insuranceChoiceListener.getStringProperty().addListener( observable -> {
             SimpleStringProperty property = (SimpleStringProperty) observable;
-            if (property.get().equals("[Hus]"))
+            if (property.get().equals("[Hus]")) {
+                setCustomer();
                 makeInsurance();
+            }
         });
     }
 
     @Override
     protected boolean checkValidation() {
         //todo: implement varang?
-        if (validationIsOk(3).test(adress) )
+        if (!validationIsOk(3).test(adress) )
             return false;
         if (pseudoOK.test(citynumber))
             return false;
-        if (validationIsOk(2).test(city))
+        if (!validationIsOk(2).test(city))
             return false;
         if (pseudoOK.test(constructionYear))
             return false;
-        if (validationIsOk(2).test(grossArea))
+        if (!validationIsOk(2).test(grossArea))
             return false;
-        if (validationIsOk(2).test(primaryArea))
+        if (!validationIsOk(2).test(primaryArea))
             return false;
-        if (validationIsOk(3).test(taxedvalue))
+        if (!validationIsOk(3).test(taxedvalue))
             return false;
         return true;
     }
@@ -188,7 +190,6 @@ public final class HouseModuleController extends CommonGUIMethods
         }
     }
 
-    @Override
     protected void setCustomer() {
         Customer customer = getCustomerOrDummyCustomer();
 

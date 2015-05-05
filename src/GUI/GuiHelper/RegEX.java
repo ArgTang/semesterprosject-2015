@@ -7,8 +7,8 @@ import java.util.function.Predicate;
 
 /**
  * Created by steinar on 16.03.2015.
- * This is a class for doing input validation.
- * Add more Predicates and function as needed.
+ * This is a class for doing input validation on textfields.
+ * Add more Predicates and functions as needed.
  *
  *  To use any of the predicates you can do like this: RegEX.isAdress.test(somestringhere)
  *
@@ -41,7 +41,7 @@ public final class RegEX {
     public static final Predicate<String> isLongerThan(int length) { return string -> !(string.length() > length); }
     public static final Predicate<String> isPassword() { return (string -> isAllChars().and(isLongerThan(5)).test(string)); }
 
-    public static final Predicate<TextField> validationIsOk(int minLength) { return textfield -> !(textfield.getLength() > minLength && pseudoOK.negate().test(textfield)); }
+    public static final Predicate<TextField> validationIsOk(int minLength) { return textfield -> textfield.getLength() > minLength && pseudoOK.negate().test(textfield); }
     //if pseudoclass is not empty -> check if it contains invalidText pseudoclass
     public static final Predicate<TextField> pseudoOK = textField -> !(textField.getPseudoClassStates().isEmpty() || !textField.getPseudoClassStates().toString().contains("invalidText"));
 
@@ -68,7 +68,7 @@ public final class RegEX {
     @SafeVarargs
     public static boolean validationIsOk(int minLength, TextField... textFields) {
         for(TextField textField: textFields)
-            if (validationIsOk(minLength).test(textField))
+            if (!validationIsOk(minLength).test(textField))
                 return false;
         return true;
     }

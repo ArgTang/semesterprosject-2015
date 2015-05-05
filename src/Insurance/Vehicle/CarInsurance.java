@@ -14,7 +14,7 @@ import static java.lang.Math.pow;
 /**
  * Created by steinar on 27.03.2015.
  */
-public final class CarInsurance extends Vehicle {
+public final class CarInsurance extends VehicleInsurance {
 
     private int totalKilometer, horsePower;
     byte bonus; //todo: maybe arraylist -> observable list see Agentgui.insurance.CarModuleController
@@ -23,7 +23,6 @@ public final class CarInsurance extends Vehicle {
     private String kasko;
     private String yearlyKm;
 
-    public static final ObservableList<String> kaskoValues = FXCollections.observableArrayList("Ansvar", "Delkasko", "Fullkasko");
     public static final ObservableList<Integer> bonusValues = FXCollections.observableArrayList(0, 10, 20, 30, 40, 50, 60, 70, 75);
     public static final ObservableList<String> kmValues = FXCollections.observableArrayList("8 000km", "12 000km", "16 000km", "ubegrenset km");
     public static final ObservableList<String> type = FXCollections.observableArrayList(

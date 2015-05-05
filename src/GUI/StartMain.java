@@ -7,6 +7,7 @@ package GUI;
 import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.AgentGUI.Person.PersonController;
 import GUI.AgentGUI.Search.AgentSearchController;
+import GUI.CurrentObjectListeners.*;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import Register.RegisterCustomer;

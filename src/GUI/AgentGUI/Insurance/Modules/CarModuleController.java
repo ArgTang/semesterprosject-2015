@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -72,7 +73,7 @@ public final class CarModuleController extends CommonGUIMethods
     @FXML
     @Override
     protected void initialize() {
-        //todo: some of these might be used for more insurances -> move into Vehicle Class
+        //todo: some of these might be used for more insurances -> move into VehicleInsurance Class
         kasko.setItems(kaskoValues);
         bonus.setItems(bonusValues);
         yearlyKM.setItems(CarInsurance.kmValues);
@@ -120,31 +121,26 @@ public final class CarModuleController extends CommonGUIMethods
     }
 
     @Override
-    protected void setCustomer() {
-
-    }
-
-    @Override
     protected boolean checkValidation() {
-        if (validationIsOk(4).test(licenceNumber))
+        if (!validationIsOk(4).test(licenceNumber))
             return false;
 
-        if (validationIsOk(2).test(model))
+        if (!validationIsOk(2).test(model))
             return false;
 
         if (pseudoOK.test(modelYear))
             return false;
 
-        if (validationIsOk(1).test(color))
+        if (!validationIsOk(1).test(color))
             return false;
 
-        if (validationIsOk(1).test(km))
+        if (!validationIsOk(1).test(km))
             return false;
 
-        if (validationIsOk(2).test(horsePower))
+        if (!validationIsOk(2).test(horsePower))
             return false;
 
-        if (validationIsOk(3).test(buyPrice))
+        if (!validationIsOk(3).test(buyPrice))
             return false;
 
         return true;
@@ -153,8 +149,8 @@ public final class CarModuleController extends CommonGUIMethods
     @Override
     protected void setListeners() {
 
-        addComboboxListener(maker, kasko, bonus, yearlyKM, deductible, paymentOption);
-        addTextfieldListener(licenceNumber, model, modelYear, color, buyPrice);
+        addComboboxListener(kasko, bonus, yearlyKM, deductible, paymentOption);
+        addTextfieldListener(modelYear, buyPrice);
 
         currentInsurance.getInsuranceProperty().addListener(
                 observable -> {
@@ -178,6 +174,12 @@ public final class CarModuleController extends CommonGUIMethods
                 makeInsurance();
                 saveInsurance(insurance);
             }
+        });
+
+        insuranceChoiceListener.getStringProperty().addListener(observable -> {
+            SimpleStringProperty property = (SimpleStringProperty) observable;
+            if (property.get().equals("[Bil]"))
+                makeInsurance();
         });
     }
 

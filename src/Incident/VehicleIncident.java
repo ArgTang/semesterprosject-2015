@@ -1,6 +1,7 @@
 package Incident;
 
-import Insurance.Vehicle.Vehicle;
+import Insurance.Vehicle.VehicleInsurance;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class VehicleIncident extends Incident {
 
-    List<Vehicle> vehicles;
+    List<VehicleInsurance> vehicles;
     boolean carRent;
     int carRentcost;
     int daysofRentingCar; //todo: decide if List is better
