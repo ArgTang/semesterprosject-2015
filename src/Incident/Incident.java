@@ -15,13 +15,11 @@ public abstract class Incident {
 
     final LocalDateTime timeOfReport;
     final LocalDate dayOfIncident; //todo: if string maybe just one string?
-    final String timeOfIncident; //todo: string or Localtime? customer might give a timeframe
 
     private final int incidentID;
     private static int incidentIDCounter = 234567;
     private String policeReport;
     private int ourInsuranceReference;
-    //private type incidentType; // todo: move into the different incidents. make ENUM ?
 
     private String incidentDescription;
     private String detailedDamageDescription;
@@ -38,7 +36,6 @@ public abstract class Incident {
         this.incidentID = ++incidentIDCounter;
         this.incidentDescription = incidentDescription;
         this.dayOfIncident = dayOfIncident;
-        this.timeOfIncident = timeOfIncident;
     }
 
     public int getIncidentID() {

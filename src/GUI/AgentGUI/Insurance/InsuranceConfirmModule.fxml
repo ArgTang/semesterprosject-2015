@@ -54,7 +54,7 @@
               <Label text="Beskrivelse:" BorderPane.alignment="CENTER_LEFT" />
           </top>
          <center>
-            <TextArea fx:id="description" maxHeight="1.7976931348623157E308" promptText="beskrivelse av forsikrings objektet" BorderPane.alignment="CENTER" />
+            <TextArea fx:id="description" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
    </center>

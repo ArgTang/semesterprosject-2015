@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane minWidth="700.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Incident.IncidentConfirmModuleController">
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" spacing="5.0">
+         <children>
+            <Button fx:id="clearScheme" text="Tøm skjema" />
+            <Button fx:id="confirmIncident" text="Lagre rapport" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <center>
+      <BorderPane BorderPane.alignment="CENTER">
+          <top>
+              <Label text="Beskrivelse:" BorderPane.alignment="CENTER_LEFT" />
+          </top>
+         <center>
+            <TextArea fx:id="description" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </center>
+   <top>
+      <BorderPane BorderPane.alignment="CENTER">
+         <center>
+            <TextField fx:id="filenames" BorderPane.alignment="CENTER" />
+         </center>
+         <right>
+            <HBox spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="addFiles" text="Legg til filer" />
+                  <Button fx:id="openFolder" text="Åpne mappe" />
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </HBox>
+         </right>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
+      </BorderPane>
+   </top>
+</BorderPane>

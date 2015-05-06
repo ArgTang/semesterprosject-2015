@@ -60,11 +60,15 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
     @FXML
     @Override
     protected void initialize() {
+        description.setPromptText("beskrivelse av forsikrings objektet");
+
         yearlyPremium.textProperty().bind(yearlyPremiumLabel.asString());
         totalFee.textProperty().bind(totalFeeLabel.asString());
         paymentEachTermin.textProperty().bind(paymentEachTerminLabel.asString());
+        helperPane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null))); //todo: easier way to do this
 
-        helperPane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null))); //todo: easier way to do this?
+        insuranceOffer.setVisible(false); //todo: delete after offer is implemented
+
         setListeners();
         clearLabel();
     }
@@ -84,6 +88,7 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
                 }
             }
         });
+
         confirmInsurance.disableProperty().bind(currentCustomer.getPersonProperty().isNull());
         insuranceOffer.disableProperty().bind(currentCustomer.getPersonProperty().isNull());
 
@@ -144,7 +149,7 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
 
     private Optional<LocalDate> makeDialog() {
         Dialog dialog = new Dialog();
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        //Alert alert = new Alert(Alert.AlertType.WARNING);
         //dialog.setGraphic(alert.getGraphic().getClip()); //InvocationTargetException //todo: find a way to get warning icon and add to this dialog
         //Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
 //        Image icon = alertStage.getIcons().stream().findFirst().get(); //this do crash
@@ -159,13 +164,14 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
         DatePicker datePicker = new DatePicker();
         datePicker.setValue(LocalDate.now());
         datePicker.setPrefWidth(Region.USE_COMPUTED_SIZE);
+
         HBox dateContainer= new HBox();
         dateContainer.setSpacing(5);
         dateContainer.setPadding(new Insets(20, 20, 20, 20));
         dateContainer.getChildren().addAll(label, datePicker);
         dialog.getDialogPane().setContent(dateContainer);
 
-        ButtonType ok = new ButtonType("Ja jeg er sikker", OK_DONE);
+        ButtonType ok = new ButtonType("Ja, jeg er sikker", OK_DONE);
         ButtonType cancel = new ButtonType("Avbryt", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().addAll(ok, cancel );
 

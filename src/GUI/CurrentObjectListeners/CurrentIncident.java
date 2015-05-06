@@ -14,6 +14,6 @@ public final class CurrentIncident
 
     public Incident getIncident() { return incidentListener.get(); }
     public void setProperty(Incident incident) { incidentListener.set(incident); }
-    public ObjectProperty<Incident> getPersonProperty() { return incidentListener; }
+    public ObjectProperty<Incident> getIncidentProperty() { return incidentListener; }
     public void reset() { incidentListener.setValue(null); }
 }

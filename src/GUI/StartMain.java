@@ -4,6 +4,7 @@ package GUI;
  * Created by steinar on 29.03.2015.
  */
 
+import GUI.AgentGUI.Incident.AgentIncidentController;
 import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.AgentGUI.Person.PersonController;
 import GUI.AgentGUI.Search.AgentSearchController;
@@ -111,6 +112,15 @@ public class StartMain extends Application
         return agentMenu;
     }
 
+    private Parent getIncidentPane() {
+        if (agentIncident != null)
+            return agentIncident;
+
+        AgentIncidentController incidentController = new AgentIncidentController();
+        agentIncident  = incidentController.initAgentIncidentView();
+        return agentIncident;
+    }
+
     private Parent getInsurancePane() {
         if (agentInsurance != null)
             return agentInsurance;
@@ -150,7 +160,7 @@ public class StartMain extends Application
                             loadParent( getInsurancePane() );
                             break;
                         case "Incident":
-                            AlertWindow.messageDialog("Her kommer hendelsesvindu", "Hendelsesvindu");
+                            loadParent( getIncidentPane() );
                             break;
                         case "statistics":
                             AlertWindow.messageDialog("her kommer  snart statistikkskjerm", "statistikkskjerm");
