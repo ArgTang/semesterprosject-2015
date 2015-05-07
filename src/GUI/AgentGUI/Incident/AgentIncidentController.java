@@ -32,7 +32,7 @@ public final class AgentIncidentController
 
     public static final WindowChangeListener incidentChoiceListener = new WindowChangeListener();
 
-    private static Parent chooserModule, confirmModule, house, car, animal, travel, boat, household;
+    private static Parent chooserModule, confirmModule, incidentReport;
 
     public Parent initAgentIncidentView() {
 
@@ -45,23 +45,30 @@ public final class AgentIncidentController
 
         container.setLeft(chooserModule);
         if( container.getCenter() == null)
-            //showtHouseInsurance();
+            container.setCenter( showIncidentReport() );
         container.setRight(confirmModule);
         return container;
     }
 
     private Parent showChooserModule() {
         if (chooserModule == null)
-            chooserModule = loadParent("\\IncidentChooserModule.fxml");
+            chooserModule = loadParent("\\IncidentTable.fxml");
 
         return chooserModule;
     }
 
-    private  Parent showConfirmModule() {
+    private Parent showConfirmModule() {
         if (confirmModule == null)
             confirmModule = loadParent("\\IncidentConfirmModule.fxml");
 
         return confirmModule;
+    }
+
+    private Parent showIncidentReport() {
+        if (incidentReport == null)
+            incidentReport = loadParent("\\IncidentReport.fxml");
+
+        return incidentReport;
     }
 
     private Parent loadParent(String FXMLpath) {

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="5.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Incident.IncidentReportController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+       <Label text="Brann" GridPane.rowIndex="1" />
+       <CheckBox fx:id="fire" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+       <Label text="Tyveri" GridPane.rowIndex="2" />
+       <CheckBox fx:id="burglary" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+       <Label text="Vannskade" GridPane.rowIndex="3" />
+       <CheckBox fx:id="waterdamage" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+       <Label text="Personskade" GridPane.rowIndex="4" />
+       <CheckBox fx:id="personDamage" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+       <Label text="Kjøretøy" GridPane.rowIndex="7" />
+       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+           <children>
+               <RadioButton fx:id="oneVehicleInvolved" mnemonicParsing="false" text="Ett kjøretøy" />
+               <RadioButton fx:id="moreVehiclesInvolved" mnemonicParsing="false" text="Fler Kjøretøy" />
+           </children>
+           <GridPane.margin>
+               <Insets right="5.0" />
+           </GridPane.margin>
+       </HBox>
+       <Label text="Naturkatastrofe" GridPane.rowIndex="5" />
+       <CheckBox fx:id="nature" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+       
+       <Label text="Verdi på tapt gjendstand" GridPane.rowIndex="9" />
+       <TextField fx:id="claimedValue" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+       <Label text="Skade takst" GridPane.rowIndex="10" />
+       <TextField GridPane.columnIndex="1" GridPane.rowIndex="10" />
+       <Label text="Ekstrautlegg" GridPane.rowIndex="11" />
+       <TextField GridPane.columnIndex="1" GridPane.rowIndex="11" />
+       <Label text="Utbetaltdato" GridPane.rowIndex="12" />
+       <Label fx:id="payedDate" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+       <Label text="TotaltubetalingsBeløp" GridPane.rowIndex="13" />
+       <Label fx:id="payedTot" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+      <Label text="Hendelse Dato" />
+      <DatePicker fx:id="dateOfIncident" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+      <Label text="Uhell" GridPane.rowIndex="6" />
+      <CheckBox fx:id="accident" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+   </children>
+   <padding>
+      <Insets left="8.0" right="8.0" />
+   </padding>
+</GridPane>

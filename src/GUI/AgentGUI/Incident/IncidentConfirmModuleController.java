@@ -17,10 +17,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
+import static GUI.AgentGUI.Incident.AgentIncidentController.emptyscreenButton;
 import static GUI.StartMain.currentIncident;
 
 /**
@@ -50,16 +50,22 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
     @Override
     protected void initialize() {
         description.setPromptText("Beskrivelse av Hendelsen");
+
+        filenames.setText("Husk å legg til bilder, videoer og andre dokumenter!");
+        filenames.setDisable(true);
         filenames.setEditable(false);
+        filenames.setFocusTraversable(false);
+        filenames.setStyle("-fx-background-insets:0, 0, 0, 0;");
         setListeners();
     }
 
     @Override
     protected void setListeners() {
-        openFolder.pressedProperty().addListener(listener -> { if ( openFolder.pressedProperty().get()) openFolder("dfsa");});
-        addFiles.pressedProperty().addListener( listener -> { if ( addFiles.pressedProperty().get()) showFileadderDialog();});
+        openFolder.pressedProperty().addListener(listener -> { if (openFolder.pressedProperty().get()) openFolder("dfsa");});
+        addFiles.pressedProperty().addListener( listener -> { if ( addFiles.pressedProperty().get()) showFileAdderDialog();});
 
-        clearScheme.onActionProperty().addListener(listener -> clearFields());
+        clearScheme.pressedProperty().addListener(listener -> {
+            if (clearScheme.pressedProperty().get()) clearScheme();});
         confirmIncident.disableProperty().bind(currentIncident.getIncidentProperty().isNull());
         confirmIncident.onActionProperty().addListener(listener -> confirmIncident());
         confirmIncidentButton.bind(confirmIncident.pressedProperty());
@@ -75,20 +81,22 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
         });*/
     }
 
-    private void showFileadderDialog() {
+    private void showFileAdderDialog() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Legg til filer");
         fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter("All Files", "*.*"));
 
         List<File> returnedFiles = fileChooser.showOpenMultipleDialog(null);
 
+        filenames.setDisable(false);
+        filenames.setText("");
         //convert java io -> nio library
         if (!returnedFiles.isEmpty()) {
             List<Path> selectedFiles = new ArrayList<>();
             returnedFiles.stream()
-                         .map(file -> file.toPath())
+                         .map(File::toPath)
                          .forEach(selectedFiles::add);
-            selectedFiles.stream().forEach(System.out::println);
+
             copyToNewDir(selectedFiles);
         }
     }
@@ -97,7 +105,7 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
     public void clearScheme() {
         if (AlertWindow.confirmDialog("Vil du tømme Skjema?", "tøm skjema")) {
             currentIncident.reset();
-            description.setText("");
+            clearFields();
 
             Runnable newthread = () -> {
                 emptyscreenButton.setValue(true);
@@ -112,7 +120,6 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
     public void clearFields() {
         description.setText("");
         filenames.setText("");
-
     }
 
     @FXML
@@ -161,7 +168,7 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
         try {
             for (Path source : files) {
                 Files.copy(source, destination.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
-                filenames.appendText(", " + source.getFileName());
+                filenames.appendText(source.getFileName() + " ");
             }
         } catch (IOException e) {
             System.out.println("failed copy file");
