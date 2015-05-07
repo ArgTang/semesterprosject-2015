@@ -22,8 +22,7 @@ public class Fader
     private FadeTransition fader = new FadeTransition();
     private double FADETIME = 0.4;
 
-    public Parent setFading(Parent scene)
-    {
+    public Parent setFading(Parent scene) {
         if (fader != null)
             fader.play();
         fader = new FadeTransition(Duration.seconds(FADETIME), scene);
@@ -34,8 +33,7 @@ public class Fader
         return scene;
     }
 
-     public void setupFadeout(Parent scene)
-    {
+     public void setupFadeout(Parent scene) {
         fader = new FadeTransition(Duration.millis(FADETIME), scene);
         fader.setInterpolator(Interpolator.EASE_OUT);
         fader.setFromValue(1.0);

@@ -1,15 +1,13 @@
 package Register;
 
 import Insurance.Insurance;
-
 import java.util.HashMap;
-
 
 /**
  * Created by steinar on 28.04.2015.
  */
-public final class RegisterInsurance extends  Register{
-
+public final class RegisterInsurance extends  Register
+{
     private static int idCounter = 3456;
 
     public RegisterInsurance() {

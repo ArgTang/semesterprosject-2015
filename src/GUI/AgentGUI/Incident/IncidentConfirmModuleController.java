@@ -26,7 +26,8 @@ import static GUI.StartMain.currentIncident;
 /**
  * Created by steinar on 15.04.2015.
  */
-public final class IncidentConfirmModuleController extends CommonGUIMethods {
+public final class IncidentConfirmModuleController extends CommonGUIMethods
+{
     @FXML
     private TextArea description;
 
@@ -55,12 +56,8 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods {
 
     @Override
     protected void setListeners() {
-        openFolder.pressedProperty().addListener(listener -> openFolder("dfsa"));
-        addFiles.pressedProperty().addListener(
-                listener -> {
-                    if (addFiles.pressedProperty().get())
-                        showFileadderDialog();
-                });
+        openFolder.pressedProperty().addListener(listener -> { if ( openFolder.pressedProperty().get()) openFolder("dfsa");});
+        addFiles.pressedProperty().addListener( listener -> { if ( addFiles.pressedProperty().get()) showFileadderDialog();});
 
         clearScheme.onActionProperty().addListener(listener -> clearFields());
         confirmIncident.disableProperty().bind(currentIncident.getIncidentProperty().isNull());

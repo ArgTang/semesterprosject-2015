@@ -1,5 +1,6 @@
 package Person;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,8 +8,9 @@ import java.util.Set;
 /**
  * Created by nugGet on 09.04.2015.
  */
-public class ContactInfo
+public class ContactInfo implements Serializable
 {
+    private static final long serialVersionUID = 6526322295622776147L;
     private String address;
     private int citynumber;
     private String city; //TODO: Add a class containing every postal codes in Norway

@@ -15,8 +15,8 @@ import javafx.stage.Modality;
  *  - Except multichoice
  */
 
-public final class AlertWindow {
-
+public final class AlertWindow
+{
     public static boolean messageDialog( String message, String title ) {
         Alert.AlertType aType = Alert.AlertType.INFORMATION;
         return alert(message, title, aType);
@@ -50,5 +50,3 @@ public final class AlertWindow {
         return alert.showAndWait().get() == ButtonType.OK;
     }
 }
-
-

@@ -8,7 +8,8 @@ import java.util.List;
 /**
  * Created by steinar on 27.03.2015.
  */
-public class VehicleIncident extends Incident {
+public class VehicleIncident extends Incident
+{
 
     List<VehicleInsurance> vehicles;
     boolean carRent;

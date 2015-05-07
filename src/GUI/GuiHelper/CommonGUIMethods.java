@@ -16,10 +16,9 @@ import static Insurance.Insurance.paymentFee;
 /**
  * Created by steinar on 01.05.2015.
  */
-public abstract class CommonGUIMethods {
-
+public abstract class CommonGUIMethods
+{
     public abstract void clearFields();
-
     protected abstract void setListeners();
     protected abstract void makeInsurance();
     protected abstract void initialize();

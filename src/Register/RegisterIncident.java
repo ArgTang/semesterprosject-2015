@@ -1,14 +1,13 @@
 package Register;
 
 import Incident.Incident;
-
 import java.util.HashMap;
 
 /**
  * Created by steinar on 28.04.2015.
  */
-public final class RegisterIncident extends Register{
-
+public final class RegisterIncident extends Register
+{
     public RegisterIncident() {
         super(new HashMap< Integer, Incident>());
     }

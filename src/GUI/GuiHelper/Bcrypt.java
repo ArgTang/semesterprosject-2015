@@ -61,7 +61,8 @@ import java.security.SecureRandom;
  * @version 0.4
  */
 //@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"INT_BAD_COMPARISON_WITH_NONNEGATIVE_VALUE"})
-public class Bcrypt {
+public class Bcrypt
+{
     // BCrypt parameters
     private static final int GENSALT_DEFAULT_LOG2_ROUNDS = 10;
     private static final int BCRYPT_SALT_LEN = 16;

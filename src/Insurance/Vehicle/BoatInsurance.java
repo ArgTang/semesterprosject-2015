@@ -22,10 +22,8 @@ public final class BoatInsurance extends VehicleInsurance
     public static final ObservableList<String> types = FXCollections.observableArrayList("Innenbordsmotor", "Utenbordsmotor", "Seilbåt");
 
     public BoatInsurance(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption, String maker,
-                         String model, int productionYear, int horsePower, int knots, int feet, String boattype, int deductable)
-    {
+                         String model, int productionYear, int horsePower, int knots, int feet, String boattype, int deductable) {
         super(validfrom, itemValue, insurancePolicy, customer, paymentOption, maker, model, productionYear, deductable);
-
         //todo: if value > 50 000 registrationnumber required. here or in gui?
         this.horsepower = horsePower;
         this.knots = knots;
@@ -37,7 +35,6 @@ public final class BoatInsurance extends VehicleInsurance
     public int getKnots() { return knots; }
     public int getFeet() { return feet; }
     public void setRegistrationNumber(String registrationnumber) { this.licenceNumber = registrationnumber; }
-
 
     private void calculatePremium() {
         double base = (getItemValue()+2000) * 0.005;

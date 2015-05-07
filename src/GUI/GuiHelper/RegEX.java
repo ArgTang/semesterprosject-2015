@@ -21,7 +21,8 @@ import java.util.function.Predicate;
  *  }
  */
 
-public final class RegEX {
+public final class RegEX
+{
 
     public static final PseudoClass invalidText = PseudoClass.getPseudoClass("invalidText");
 

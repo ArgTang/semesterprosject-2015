@@ -6,6 +6,7 @@ import Person.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
@@ -18,8 +19,9 @@ import static GUI.CurrentObjectListeners.CurrentInsurance.getNameOfInsurance;
  * Base information for the different insurance types
  */
 
-public abstract class Insurance
+public abstract class Insurance implements Serializable
 {
+    private static final long serialVersionUID = 7526472295622776147L;
     private final LocalDateTime dateCreated;
     private final LocalDate validFrom;
     private LocalDate endDate;

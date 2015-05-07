@@ -14,13 +14,13 @@ public final class Customer extends Person
     private List<Integer> insuranceNumbers;
     private List<Integer> incidentNumbers;
 
-    public Customer( String firstName, String lastName, String socialSecurityNumber, ContactInfo contactInfo )
-    {
+    public Customer( String firstName, String lastName, String socialSecurityNumber, ContactInfo contactInfo ) {
         super(firstName, lastName, socialSecurityNumber, contactInfo);
         customerId = "cust" + idCount++;
         insuranceNumbers = new ArrayList<Integer>();
         incidentNumbers = new ArrayList<Integer>();
     }
+
     public String getCustomerId() { return customerId; }
     public void addInsuranceNumber( int nr ) { insuranceNumbers.add( nr ); }
     public void addIncidentNumber( int nr ) { incidentNumbers.add( nr ); }

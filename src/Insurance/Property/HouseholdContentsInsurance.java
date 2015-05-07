@@ -9,8 +9,8 @@ import java.time.LocalDate;
 /**
  * Created by steinar on 29.04.2015.
  */
-public class HouseholdContentsInsurance extends Insurance{
-
+public class HouseholdContentsInsurance extends Insurance
+{
     private String address;
     private int citynumber;
     private String city;

@@ -1,13 +1,15 @@
 package Person;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 /**
  * Created by steinar on 27.03.2015.
  */
-public abstract class Person {
-
+public abstract class Person implements Serializable
+{
+    private static final long serialVersionUID = 6526472295622776147L;
     private String firstName;
     private String lastName;
     private String socialSecurityNumber; //If we make this a number: 0304052345 will become 304052345

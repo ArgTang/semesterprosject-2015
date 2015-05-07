@@ -22,8 +22,7 @@ public class AnimalInsurance extends Insurance
     String countryOrigin;
 
     public AnimalInsurance(LocalDate validFrom, int purchasePrice, String policy, Customer customer, PaymentOption paymentOption, String usage, String breed,
-                           String dateOfBirth, String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo, int deductable)
-    {
+                           String dateOfBirth, String sex, boolean nutered, boolean earlierIllness, AdditionalInfo additionalInfo, int deductable) {
         super(validFrom, purchasePrice, policy, customer, paymentOption, deductable);
         this.purchasePrice = purchasePrice;
         this.usage = usage;

@@ -2,6 +2,7 @@ package Incident;
 
 import Person.Person;
 
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,8 +12,9 @@ import java.util.List;
 /**
  * Created by steinar on 27.03.2015.
  */
-public abstract class Incident {
-
+public abstract class Incident implements Serializable
+{
+    private static final long serialVersionUID = 5526472295622776147L;
     final LocalDateTime timeOfReport;
     final LocalDate dayOfIncident; //todo: if string maybe just one string?
 

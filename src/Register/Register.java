@@ -1,5 +1,6 @@
 package Register;
 
+import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,4 +42,32 @@ abstract class Register {
     }
 
     public Collection getRegister() { return register.values(); }
+
+    public void saveRegister() throws IOException {
+        ObjectOutputStream output = null;
+        try {
+            output = new ObjectOutputStream( new FileOutputStream("Register.data"));
+            output.writeObject(register);
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (output != null )
+                output.close();
+        }
+    }
+
+    public void loadRegister() {
+
+        ObjectInputStream input = null;
+        try {
+            input = new ObjectInputStream( new FileInputStream("Register.data"));
+            register = (Map)input.readObject();
+            input.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
