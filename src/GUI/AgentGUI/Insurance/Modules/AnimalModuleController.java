@@ -2,6 +2,7 @@ package GUI.AgentGUI.Insurance.Modules;
 
 import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonInsuranceMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Animal.AnimalInsurance;
 import Insurance.Helper.PaymentOption;
@@ -21,7 +22,7 @@ import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrd
 import static GUI.GuiHelper.RegEX.*;
 import static Insurance.Insurance.paymentOptions;
 
-public final class AnimalModuleController extends CommonGUIMethods
+public final class AnimalModuleController extends CommonInsuranceMethods
 {
     @FXML
     private ComboBox<String> animalType;
@@ -134,11 +135,26 @@ public final class AnimalModuleController extends CommonGUIMethods
     }
 
     @Override
+    protected void setInsurance() {
+
+    }
+
+    @Override
     protected void makeInsurance() {
         if (!checkValidation())
             return;
 
         PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
+
+    }
+
+    @Override
+    protected void freezeInput() {
+
+    }
+
+    @Override
+    protected void unfreezeInput() {
 
     }
 }

@@ -18,11 +18,6 @@ public class HouseholdContentsInsurance extends Insurance
     private int roomMates;
     private boolean pluss;
 
-    private int basePremium = 500;
-    private double roomCountAdjust = 0.4;
-    private double roomMatesAdjust = 0.6;
-    private double valueAdjust = 0.002;
-
     public HouseholdContentsInsurance(String address, int citynumber, String city, int roomCount, int roomMates, LocalDate validFrom,
                                       int itemValue, String policy, Customer customer, PaymentOption paymentOption, int deductable) {
         super(validFrom, itemValue, policy, customer, paymentOption, deductable);
@@ -36,11 +31,35 @@ public class HouseholdContentsInsurance extends Insurance
     }
 
     private void premiumCalculation() {
+        final int basePremium = 500;
+        final double roomCountAdjust = 0.4;
+        final double roomMatesAdjust = 0.6;
+        final double valueAdjust = 0.002;
+
         double premium;
         double adjust = (roomCount*roomCountAdjust)+(roomMates*roomMatesAdjust);
         double valueadjust = ( 12000.0-getDeductable() ) / 10000.0;
         valueadjust += 0.3*(pluss ? 1:0);
-        premium = (valueadjust + adjust)* basePremium + getItemValue()*this.valueAdjust;
+        premium = (valueadjust + adjust)* basePremium + getItemValue()*valueAdjust;
         super.setAnnualPremium( (int) premium );
+    }
+
+    public String getAddress() {
+        return address;
+    }
+    public int getCitynumber() {
+        return citynumber;
+    }
+    public String getCity() {
+        return city;
+    }
+    public int getRoomCount() {
+        return roomCount;
+    }
+    public int getRoomMates() {
+        return roomMates;
+    }
+    public boolean isPluss() {
+        return pluss;
     }
 }

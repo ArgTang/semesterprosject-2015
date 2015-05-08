@@ -4,19 +4,20 @@ package GUI.AgentGUI.Insurance.Modules;
  * Created by steinar on 27.04.2015.
  */
 
+import GUI.CurrentObjectListeners.CurrentInsurance;
 import GUI.GuiHelper.AlertWindow;
-import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonInsuranceMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
+import Insurance.Insurance;
+import Insurance.Property.HouseholdContentsInsurance;
 import Insurance.Vehicle.BoatInsurance;
-import Insurance.Vehicle.VehicleInsurance;
 import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -30,13 +31,14 @@ import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceLis
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
 import static Insurance.Vehicle.BoatInsurance.*;
 import static Insurance.Vehicle.BoatInsurance.minBoatValueforMandatoryRegistration;
 import static Insurance.Vehicle.VehicleInsurance.kaskoValues;
 
-public final class BoatModuleController extends CommonGUIMethods
+public final class BoatModuleController extends CommonInsuranceMethods
 {
     @FXML
     private TextField buyPrice;
@@ -90,6 +92,8 @@ public final class BoatModuleController extends CommonGUIMethods
 
     @Override
     public void clearFields() {
+        if ( !speed.editableProperty().get() )
+            unfreezeInput();
         fromDate.setValue(LocalDate.now());
         resetTextFields(speed, size, motorsize, model, maker, harbor, licenceNumber, modelYear, buyPrice);
 
@@ -147,11 +151,20 @@ public final class BoatModuleController extends CommonGUIMethods
                 clearFields();
         });
 
+        currentInsurance.getInsuranceProperty().addListener(
+                listener -> {
+                    Boolean isNotNull = currentInsurance.getInsuranceProperty().isNotNull().get();
+                    if (isNotNull && currentInsurance.getInsurance() instanceof BoatInsurance) {
+                        insurance = (BoatInsurance)currentInsurance.getInsurance();
+                        setInsurance();
+                    }
+                });
+
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
             if (insuranceChoiceListener.getPropertyString().equals("[Båt]") && bool.get()) {
                 makeInsurance();
-                //saveInsurance(insurance);
+                saveInsurance(insurance);
             }
         });
 
@@ -164,25 +177,58 @@ public final class BoatModuleController extends CommonGUIMethods
     }
 
     @Override
+    protected void setInsurance() {
+        if ( insurance.getEndDate() != null )
+            freezeInput();
+        licenceNumber.setText(insurance.getLicenceNumber());
+        setInt(size, insurance.getFeet());
+        setInt(speed, insurance.getKnots());
+        setInt(motorsize, insurance.getHorsepower());
+        maker.setText(insurance.getMaker());
+        harbor.setText(insurance.getharbor());
+        model.setText(insurance.getModel());
+        setInt(modelYear, insurance.getProductionYear());
+        setInt(buyPrice, insurance.getItemValue());
+
+        fromDate.setValue(insurance.getFromDate());
+        type.setValue(insurance.getBoattype());
+        kasko.setValue(insurance.getKasko());
+        deductible.setValue(insurance.getDeductable());
+        paymentOption.setValue(insurance.getPaymentOption().getName());
+   }
+
+    @Override
     protected void makeInsurance() {
         if (!checkValidation())
             return;
 
         PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
-
         try {
             insurance = new BoatInsurance(fromDate.getValue(), parseInt(buyPrice),"somePolicy", currentCustomer.getPerson(),
                     selectedPayment, maker.getText(), model.getText(), parseInt(modelYear), parseInt(motorsize),
-                    parseInt(speed), parseInt(size), type.getSelectionModel().getSelectedItem(), deductible.getSelectionModel().getSelectedItem() );
+                    parseInt(speed), parseInt(size), type.getSelectionModel().getSelectedItem(), harbor.getText(),
+                    kasko.getSelectionModel().getSelectedItem(), deductible.getSelectionModel().getSelectedItem() );
+            insurance.setRegistrationNumber(licenceNumber.getText());
             showPremium(insurance);
         } catch (Exception expected) {
             BoatInsurance tempinsurance = new BoatInsurance(fromDate.getValue(), parseInt(buyPrice),"somePolicy",
                     RegisterCustomer.tempCustomer,  selectedPayment, maker.getText(), model.getText(), parseInt(modelYear),
                     parseInt(motorsize), parseInt(speed), parseInt(size), type.getSelectionModel().getSelectedItem(),
-                    deductible.getSelectionModel().getSelectedItem() );
+                    harbor.getText(), kasko.getSelectionModel().getSelectedItem(),  deductible.getSelectionModel().getSelectedItem() );
+            tempinsurance.setRegistrationNumber(licenceNumber.getText());
             showPremium(tempinsurance);
         }
+    }
 
-        System.out.print("");
+    @Override
+    protected void freezeInput() {
+        freezeInputs(size, speed, motorsize, maker, harbor, model, modelYear, buyPrice);
+        freezeInputs(type, kasko, deductible, paymentOption, fromDate);
+    }
+
+    @Override
+    protected void unfreezeInput() {
+        unFreezeInputs(size, speed, motorsize, maker, harbor, model, modelYear, buyPrice);
+        unFreezeInputs(type, kasko, deductible, paymentOption, fromDate);
     }
 }

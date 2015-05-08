@@ -77,6 +77,7 @@ public class StartMain extends Application
         rootLayout.setPrefSize(SCREEN.getWidth() / 1.35, SCREEN.getHeight() / 1.5); //todo: change this maybe?
 
         startup();
+        makePanes();
 
         //adding rules for CSS Validation
         String css = StartMain.class.getResource("\\css\\login.css").toExternalForm();
@@ -119,6 +120,13 @@ public class StartMain extends Application
             e.printStackTrace();
         }
         return agentMenu;
+    }
+
+    private void makePanes(){
+        AgentIncidentController incidentController = new AgentIncidentController();
+        agentIncident  = incidentController.initAgentIncidentView();
+        AgentInsuranceController insuranceController = new AgentInsuranceController();
+        agentInsurance  = insuranceController.initAgentInsuranceView();
     }
 
     private Parent getIncidentPane() {

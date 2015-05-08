@@ -4,9 +4,11 @@ package GUI.AgentGUI.Insurance.Modules;
  * Created by steinar on 27.04.2015.
  */
 
-import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonInsuranceMethods;
 import Insurance.Helper.PaymentOption;
+import Insurance.Insurance;
 import Insurance.TravelInsurance;
+import Insurance.Vehicle.BoatInsurance;
 import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -25,9 +27,10 @@ import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.paymentOptions;
 
-public final class TravelModuleController extends CommonGUIMethods
+public final class TravelModuleController extends CommonInsuranceMethods
 {
     @FXML
     private ComboBox<String> type;
@@ -56,6 +59,8 @@ public final class TravelModuleController extends CommonGUIMethods
 
     @Override
     public void clearFields() {
+        if ( !fromDate.editableProperty().get() )
+            unfreezeInput();
         fromDate.setValue(LocalDate.now());
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
@@ -72,6 +77,8 @@ public final class TravelModuleController extends CommonGUIMethods
 
     @Override
     protected void setListeners() {
+        addComboboxListener(type, paymentOption);
+
         emptyscreenButton.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
@@ -87,14 +94,32 @@ public final class TravelModuleController extends CommonGUIMethods
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
-            if (insuranceChoiceListener.getPropertyString().equals("[Reise]") && bool.get()) {
+            if ( bool.get() && insuranceChoiceListener.getPropertyString().equals("[Reise]") ) {
                 System.out.println("saveinsurance");
                 makeInsurance();
                 saveInsurance(insurance);
             }
         });
 
-        addComboboxListener(type, paymentOption);
+        currentInsurance.getInsuranceProperty().addListener(
+                listener -> {
+                    Boolean isNotNull = currentInsurance.getInsuranceProperty().isNotNull().get();
+                    if (isNotNull && currentInsurance.getInsurance() instanceof TravelInsurance) {
+                        insurance = (TravelInsurance)currentInsurance.getInsurance();
+                        setInsurance();
+                    }
+                });
+    }
+
+    @Override
+    protected void setInsurance() {
+        if (insurance.getEndDate() != null)
+            freezeInput();
+
+        fromDate.setValue(insurance.getFromDate());
+        int types = insurance.isTravelPluss() ?  1:0;
+        type.setValue( type.getItems().get(types) );
+        paymentOption.setValue( insurance.getPaymentOption().getName() );
     }
 
     @Override
@@ -110,6 +135,15 @@ public final class TravelModuleController extends CommonGUIMethods
             TravelInsurance testinsurance = new TravelInsurance(fromDate.getValue(), "something", RegisterCustomer.tempCustomer, selectedPayment, pluss);
             showPremium(testinsurance);
         }
+    }
+
+    @Override
+    protected void freezeInput() {
+        freezeInputs(fromDate, type, paymentOption);
+    }
+    @Override
+    protected void unfreezeInput() {
+        unFreezeInputs(fromDate, type, paymentOption);
     }
 
     //no textfields -> no action

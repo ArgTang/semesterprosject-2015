@@ -45,4 +45,13 @@ public abstract class PropertyInsurance extends Insurance
     public String getType() { return type; }
     public int getGrossArea() { return grossArea; }
     public int getPrimaryArea() { return primaryArea; }
+    public String getAdress() {
+        return adress;
+    }
+    public int getCitynumber() {
+        return citynumber;
+    }
+    public String getCity() {
+        return city;
+    }
 }

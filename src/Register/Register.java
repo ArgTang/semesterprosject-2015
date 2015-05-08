@@ -42,6 +42,9 @@ abstract class Register {
     }
 
     public Collection getRegister() { return register.values(); }
+    protected int getNumberofObjectsStored() {
+        return register.size();
+    }
 
     public void saveRegister() throws IOException {
         ObjectOutputStream output = null;

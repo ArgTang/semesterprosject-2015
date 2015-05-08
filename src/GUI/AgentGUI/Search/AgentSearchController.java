@@ -91,8 +91,6 @@ public final class AgentSearchController extends CommonGUIMethods
         });
     }
 
-
-
     @FXML
     private void searchFunction() {
         // we already do regex, so we only need to check pseudoclass state
@@ -145,10 +143,6 @@ public final class AgentSearchController extends CommonGUIMethods
         return searchPane;
     }
 
-    @Override
-    protected void makeInsurance() {
-        throw new NoSuchMethodError("AgentSearchController have no use for this function");
-    }
     @Override
     protected boolean checkValidation() {
         throw new NoSuchMethodError("AgentSearchController have no use for this function");

@@ -205,9 +205,4 @@ public class EditPersonController extends CommonGUIMethods
 
         return true;
     }
-
-    @Override
-    protected void makeInsurance() {
-        throw  new NoSuchMethodError("EditPerson dont handle Insurances");
-    }
 }

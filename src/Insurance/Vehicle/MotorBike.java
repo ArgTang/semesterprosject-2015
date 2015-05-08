@@ -15,10 +15,11 @@ public final class MotorBike extends VehicleInsurance {
     private String registrationnumber;
     private String color;
 
-    public MotorBike(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption, String type, String model,
-                     int productionYear, int kilometer, int horsePower, String registrationnumber, String color, int deductable)
+    public MotorBike(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption,
+                     String type, String model, int productionYear, int kilometer, int horsePower, String registrationnumber,
+                     String color, int deductable, String kasko)
     {
-        super(validfrom, itemValue, insurancePolicy, customer, paymentOption, type, model, productionYear, deductable);
+        super(validfrom, itemValue, insurancePolicy, customer, paymentOption, type, model, productionYear, deductable, kasko);
         this.kilometer = kilometer;
         this.horsePower = horsePower;
         this.registrationnumber = registrationnumber;

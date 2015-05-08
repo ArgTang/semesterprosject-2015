@@ -67,7 +67,10 @@ public abstract class Insurance implements Serializable
         return incidentIDs;
     }
 
-    public void setAnnualPremium(int annualPremium) { this.annualPremium = annualPremium; }
+    public void setAnnualPremium(int annualPremium) {
+        if (endDate != null)
+            throw new IllegalArgumentException("This insurance is ended, change of data is not allowed");
+        this.annualPremium = annualPremium; }
     public int getCasenumber() { return casenumber; }
     public int getFromYear() { return validFrom.getYear(); }
     public PaymentOption getPaymentOption() { return paymentOption; }
@@ -76,4 +79,11 @@ public abstract class Insurance implements Serializable
     public int getDeductable() { return deductable; }
 
     public String getInsuranceName() { return getNameOfInsurance(this); }
+    public void endInsuranse(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+    public LocalDate getFromDate() { return validFrom; }
 }

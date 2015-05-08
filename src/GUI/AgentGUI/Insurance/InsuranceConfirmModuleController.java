@@ -189,11 +189,8 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
         throw new NoSuchMethodError("InsuranceConfirmModule dont have any textfields");
     }
     @Override
-    protected void makeInsurance() {
-        throw new NoSuchMethodError("InsuranceConfirmModule dont have a need for this function");
-    }
-    @Override
     protected boolean checkValidation() {
         throw new NoSuchMethodError("InsuranceConfirmModule dont have a need for this function");
     }
+
 }

@@ -18,8 +18,7 @@ public abstract class Incident implements Serializable
     final LocalDateTime timeOfReport;
     final LocalDate dayOfIncident; //todo: if string maybe just one string?
 
-    private final int incidentID;
-    private static int incidentIDCounter = 234567;
+    private int incidentID = -1;
     private String policeReport;
     private int ourInsuranceReference;
 
@@ -35,7 +34,6 @@ public abstract class Incident implements Serializable
 
     public Incident(String incidentDescription, LocalDate dayOfIncident, String timeOfIncident) {
         this.timeOfReport = LocalDateTime.now();
-        this.incidentID = ++incidentIDCounter;
         this.incidentDescription = incidentDescription;
         this.dayOfIncident = dayOfIncident;
     }
@@ -43,4 +41,5 @@ public abstract class Incident implements Serializable
     public int getIncidentID() {
         return incidentID;
     }
+    public void setIncidentID(int ID) { incidentID = ID; }
 }

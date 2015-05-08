@@ -22,6 +22,10 @@ public final class TravelInsurance extends Insurance
         premiumCalculation();
     }
 
+    public boolean isTravelPluss() {
+        return travelPluss;
+    }
+
     private void premiumCalculation()
     {
         super.setAnnualPremium( basePremium + plusPremuim*(travelPluss ? 1:0) );

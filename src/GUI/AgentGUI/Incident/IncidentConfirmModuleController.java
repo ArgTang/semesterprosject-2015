@@ -55,6 +55,7 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
         filenames.setDisable(true);
         filenames.setEditable(false);
         filenames.setFocusTraversable(false);
+        //http://stackoverflow.com/questions/6092500/how-do-i-remove-the-default-border-glow-of-a-javafx-button-when-selected?lq=1
         filenames.setStyle("-fx-background-insets:0, 0, 0, 0;");
         setListeners();
     }
@@ -179,10 +180,6 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
     @Override
     public void addCSSValidation() {
         throw new NoSuchMethodError("InsuranceConfirmModule dont have any textfields");
-    }
-    @Override
-    protected void makeInsurance() {
-        throw new NoSuchMethodError("InsuranceConfirmModule dont have a need for this function");
     }
     @Override
     protected boolean checkValidation() {

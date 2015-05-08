@@ -51,17 +51,19 @@ public class InsuranseTableController
 
         table.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldInsirance, newInsurance) -> {
-                    if (newInsurance != null)
+                    if (newInsurance != null) {
                         currentInsurance.setProperty(newInsurance);
+                    }
                 }
         );
 
         table.setOnMousePressed(event -> {
-            if (event.isPrimaryButtonDown()) {
+            //todo test if this is needed
+/*            if (event.isPrimaryButtonDown()) {
                 Insurance  insurance= table.getSelectionModel().selectedItemProperty().get();
                 if (insurance != null)
                     currentInsurance.setProperty(insurance);
-            }
+            }*/
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
                 changeWindowListener.setPropertyString("Insurance");
             }

@@ -1,8 +1,11 @@
 package GUI.AgentGUI.Insurance.Modules;
 
+import GUI.CurrentObjectListeners.CurrentInsurance;
 import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonInsuranceMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
+import Insurance.Insurance;
 import Insurance.Property.HomeInsurance;
 import Person.Customer;
 import Register.RegisterCustomer;
@@ -26,6 +29,7 @@ import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceLis
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
 
@@ -33,7 +37,7 @@ import static Insurance.Insurance.paymentOptions;
 /**
  * Created by steinar on 16.04.2015.
  */
-public final class HouseModuleController extends CommonGUIMethods
+public final class HouseModuleController extends CommonInsuranceMethods
 {
     @FXML
     private TextField adress;
@@ -92,6 +96,8 @@ public final class HouseModuleController extends CommonGUIMethods
 
     @Override
     public void clearFields() {
+        if (adress.disabledProperty().get())
+            unfreezeInput();
         resetTextFields(adress, citynumber, city, constructionYear, grossArea, primaryArea, taxedvalue);
         fromDate.setValue(LocalDate.now());
 
@@ -147,6 +153,15 @@ public final class HouseModuleController extends CommonGUIMethods
                 makeInsurance();
             }
         });
+
+        currentInsurance.getInsuranceProperty().addListener(
+                listener -> {
+                    Boolean isNotNull = currentInsurance.getInsuranceProperty().isNotNull().get();
+                    if (isNotNull && currentInsurance.getInsurance() instanceof HomeInsurance) {
+                        insurance = (HomeInsurance) currentInsurance.getInsurance();
+                        setInsurance();
+                    }
+                });
     }
 
     @Override
@@ -169,6 +184,7 @@ public final class HouseModuleController extends CommonGUIMethods
         return true;
     }
 
+
     @Override
     protected void makeInsurance() {
         if (!checkValidation())
@@ -188,6 +204,36 @@ public final class HouseModuleController extends CommonGUIMethods
                     parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
             showPremium(testinsurance);
         }
+    }
+    @Override
+    protected void setInsurance() {
+        if (insurance.getEndDate() != null)
+            freezeInput();
+
+        adress.setText(insurance.getAdress());
+        city.setText(insurance.getCity());
+        setInt(citynumber, insurance.getCitynumber());
+        setInt(constructionYear, insurance.getConstructionYear());
+        setInt(grossArea, insurance.getGrossArea());
+        setInt(primaryArea, insurance.getPrimaryArea());
+        setInt(taxedvalue, insurance.getTaxedvalue());
+        constructedIn.setValue(insurance.getBuildingMaterial());
+        buildingType.setValue(insurance.getType());
+        deductible.setValue(insurance.getDeductable());
+        paymentOption.setValue(insurance.getPaymentOption().getName());
+        fromDate.setValue(insurance.getFromDate());
+    }
+
+    @Override
+    protected void freezeInput() {
+        freezeInputs(adress, city, citynumber, constructionYear, grossArea, primaryArea, taxedvalue);
+        freezeInputs(constructedIn, buildingType, deductible, paymentOption, fromDate);
+    }
+
+    @Override
+    protected void unfreezeInput() {
+        unFreezeInputs(adress, city, citynumber, constructionYear, grossArea, primaryArea, taxedvalue);
+        unFreezeInputs(constructedIn, buildingType, deductible, paymentOption, fromDate);
     }
 
     protected void setCustomer() {

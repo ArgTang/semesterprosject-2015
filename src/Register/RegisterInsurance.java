@@ -8,18 +8,13 @@ import java.util.HashMap;
  */
 public final class RegisterInsurance extends  Register
 {
-    private static int idCounter = 3456;
-
     public RegisterInsurance() {
         super(new HashMap<Integer, Insurance>());
     }
 
     public boolean add(Insurance insurance) {
-        if (insurance.setCasenumber(idCounter) == idCounter && super.add(insurance.getCasenumber(), insurance)) {
-            ++idCounter;
-            return true;
-        }
-        return false;
+        insurance.setCasenumber(super.getNumberofObjectsStored()+1);
+        return  super.add(insurance.getCasenumber(), insurance);
     }
 
     public Insurance get(int insuranceID) {

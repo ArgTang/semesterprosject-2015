@@ -1,8 +1,11 @@
 package GUI.AgentGUI.Insurance.Modules;
 
+import GUI.CurrentObjectListeners.CurrentInsurance;
 import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonInsuranceMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
+import Insurance.Insurance;
 import Insurance.Property.HouseholdContentsInsurance;
 import Person.Customer;
 import Register.RegisterCustomer;
@@ -27,10 +30,11 @@ import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceLis
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
 
-public final class HouseholdContentsModuleController extends CommonGUIMethods
+public final class HouseholdContentsModuleController extends CommonInsuranceMethods
 {
     @FXML
     private TextField adress;
@@ -80,6 +84,8 @@ public final class HouseholdContentsModuleController extends CommonGUIMethods
 
     @Override
     public void clearFields() {
+        if (adress.disabledProperty().get())
+            unfreezeInput();
         resetTextFields(adress, citynumber, city, amount);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
@@ -154,6 +160,31 @@ public final class HouseholdContentsModuleController extends CommonGUIMethods
                 makeInsurance();
             }
         });
+
+        currentInsurance.getInsuranceProperty().addListener(
+                listener -> {
+                    Boolean isNotNull = currentInsurance.getInsuranceProperty().isNotNull().get();
+                    if (isNotNull && currentInsurance.getInsurance() instanceof HouseholdContentsInsurance) {
+                        insurance = (HouseholdContentsInsurance) currentInsurance.getInsurance();
+                        setInsurance();
+                    }
+                });
+    }
+
+    @Override
+    protected void setInsurance() {
+        if ( insurance.getEndDate() != null )
+            freezeInput();
+
+        adress.setText(insurance.getAddress());
+        city.setText(insurance.getCity());
+        setInt(citynumber, insurance.getCitynumber());
+        setInt(amount, insurance.getItemValue());
+        numberOfPersons.setValue(insurance.getRoomMates());
+        numberOfrooms.setValue(insurance.getRoomCount());
+        deductible.setValue(insurance.getDeductable());
+        paymentOption.setValue(insurance.getPaymentOption().getName());
+        fromDate.setValue(insurance.getFromDate());
     }
 
     @Override
@@ -173,5 +204,18 @@ public final class HouseholdContentsModuleController extends CommonGUIMethods
                     RegisterCustomer.tempCustomer, selectedPayment, deductible.getValue());
             showPremium(tempInsurance);
         }
+    }
+
+    @Override
+    protected void freezeInput() {
+        freezeInputs(adress, city, citynumber, amount);
+        freezeInputs(numberOfPersons, numberOfrooms, deductible, paymentOption, fromDate);
+
+    }
+
+    @Override
+    protected void unfreezeInput() {
+        unFreezeInputs(adress, city, citynumber, amount);
+        unFreezeInputs(numberOfPersons, numberOfrooms, deductible, paymentOption, fromDate);
     }
 }

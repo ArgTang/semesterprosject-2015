@@ -20,7 +20,7 @@ public final class CarInsurance extends VehicleInsurance {
     byte bonus; //todo: maybe arraylist -> observable list see Agentgui.insurance.CarModuleController
     private String licenceNumber;
     private String color;
-    private String kasko;
+
     private String yearlyKm;
 
     public static final ObservableList<Integer> bonusValues = FXCollections.observableArrayList(0, 10, 20, 30, 40, 50, 60, 70, 75);
@@ -38,20 +38,31 @@ public final class CarInsurance extends VehicleInsurance {
             "Triumph","Volkswagen","Volvo","Andre");
 
     public CarInsurance(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption, String maker, String model,
-                        int productionYear, int totalKilometer, int horsePower, String licenceNumber, String color, int deductable, int bonus, String kasko, String yearlyKm)
-    {
-        super(validfrom, itemValue, insurancePolicy, customer, paymentOption, maker, model, productionYear, deductable);
+                        int productionYear, int totalKilometer, int horsePower, String licenceNumber, String color, int deductable, int bonus, String kasko, String yearlyKm) {
+        super(validfrom, itemValue, insurancePolicy, customer, paymentOption, maker, model, productionYear, deductable, kasko);
         this.totalKilometer = totalKilometer;
         this.horsePower = horsePower;
         this.color = color;
         this.bonus = (byte) bonus;
-        this.kasko = kasko;
         this.yearlyKm = yearlyKm;
         calculateAndSetAnnualPremium();
     }
 
     public int getTotalKilometer() { return totalKilometer; }
     public int getHorsePower() { return horsePower; }
+    public byte getBonus() {
+        return bonus;
+    }
+    public String getLicenceNumber() {
+        return licenceNumber;
+    }
+    public String getColor() {
+        return color;
+    }
+    public String getYearlyKm() {
+        return yearlyKm;
+    }
+
 
 
     public int getCurrentBonus() {
@@ -94,6 +105,8 @@ public final class CarInsurance extends VehicleInsurance {
             kmprYearAdjust = 1.7;
 
         double price = (basePrice*(buyPriceAdjust+(horseAdjust/2)))/ageAdjust;
+
+        String kasko = getKasko();
 
         if (kasko.equals(kaskoValues.get(0)))
             price = price * kmprYearAdjust * 1;

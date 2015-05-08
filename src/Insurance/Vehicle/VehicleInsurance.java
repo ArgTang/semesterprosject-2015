@@ -15,11 +15,12 @@ public abstract class VehicleInsurance extends Insurance
 {
     private String maker, model;
     private int productionYear;
+    private String kasko;
 
     public static final ObservableList<String> kaskoValues = FXCollections.observableArrayList("Delkasko", "Fullkasko", "Pluss (tyveri)");
 
-    public VehicleInsurance(LocalDate validFrom, int itemValue, String policy, Customer customer, PaymentOption paymentOption, String maker, String model, int productionYear, int deductable)
-    {
+    public VehicleInsurance(LocalDate validFrom, int itemValue, String policy, Customer customer, PaymentOption paymentOption,
+                            String maker, String model, int productionYear, int deductable, String kasko) {
         super(validFrom, itemValue, policy, customer, paymentOption, deductable);
         this.maker = maker;
         this.model = model;
@@ -30,4 +31,7 @@ public abstract class VehicleInsurance extends Insurance
     public String getMaker() { return maker; }
     public String getModel() { return model; }
     public int getProductionYear() { return productionYear; }
+    public String getKasko() {
+        return kasko;
+    }
 }

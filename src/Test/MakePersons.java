@@ -132,8 +132,11 @@ public class MakePersons {
     }
 
     public static void makeCustomers(int numberOfCustomers) {
+        MakeInsuranceContracts makeinsurance = new MakeInsuranceContracts();
         for (int i = numberOfCustomers; i > 0; i--) {
-            customerRegister.add(makeCustomer());
+            Customer customer = makeCustomer();
+            makeinsurance.generate(customer);
+            customerRegister.add(customer);
         }
     }
 

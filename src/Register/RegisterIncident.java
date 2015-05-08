@@ -13,7 +13,8 @@ public final class RegisterIncident extends Register
     }
 
     public boolean add(Incident incident) {
-        return super.add(incident.getIncidentID(), incident);
+        incident.setIncidentID( super.getNumberofObjectsStored()+1 );
+        return super.add( incident.getIncidentID(), incident );
     }
 
     public Incident get(int incidetID) {

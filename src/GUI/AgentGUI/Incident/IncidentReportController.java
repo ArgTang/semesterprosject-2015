@@ -1,7 +1,6 @@
 package GUI.AgentGUI.Incident;
 
 import GUI.GuiHelper.CommonGUIMethods;
-import GUI.GuiHelper.RegEX;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -99,8 +98,4 @@ public class IncidentReportController extends CommonGUIMethods
             checkBox.setSelected(false);
     }
 
-    @Override
-    protected void makeInsurance() {
-        throw new NoSuchMethodError("we dont make insurancepolicies in IncidentReportController");
-    }
 }

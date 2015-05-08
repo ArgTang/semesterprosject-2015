@@ -1,6 +1,6 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.GuiHelper.CommonGUIMethods;
+import GUI.GuiHelper.CommonInsuranceMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
@@ -8,7 +8,6 @@ import Insurance.Vehicle.CarInsurance;
 import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -34,14 +33,14 @@ import static Insurance.Vehicle.CarInsurance.kaskoValues;
 /**
  * Created by steinar on 17.04.2015.
  */
-public final class CarModuleController extends CommonGUIMethods
+public final class CarModuleController extends CommonInsuranceMethods
 {
     @FXML
     TextField licenceNumber;
     @FXML
     TextField km;
     @FXML
-    ComboBox maker;
+    ComboBox<String> maker;
     @FXML
     TextField model;
     @FXML
@@ -58,15 +57,15 @@ public final class CarModuleController extends CommonGUIMethods
     @FXML
     CheckBox ageRequirements;
     @FXML
-    ComboBox kasko;
+    ComboBox<String> kasko;
     @FXML
-    ComboBox bonus;
+    ComboBox<Integer> bonus;
     @FXML
-    ComboBox yearlyKM;
+    ComboBox<String> yearlyKM;
     @FXML
-    ComboBox deductible;
+    ComboBox<Integer> deductible;
     @FXML
-    ComboBox paymentOption;
+    ComboBox<String> paymentOption;
 
     CarInsurance insurance;
 
@@ -91,9 +90,10 @@ public final class CarModuleController extends CommonGUIMethods
 
     @Override
     public void clearFields() {
+        if ( !km.editableProperty().get() )
+            unfreezeInput();
         resetTextFields(licenceNumber, km, model, horsePower, modelYear, color, buyPrice);
         fromDate.setValue(LocalDate.now());
-//        ageRequirements.setIndeterminate(false);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () -> {
@@ -152,16 +152,6 @@ public final class CarModuleController extends CommonGUIMethods
         addComboboxListener(kasko, bonus, yearlyKM, deductible, paymentOption);
         addTextfieldListener(modelYear, buyPrice);
 
-        currentInsurance.getInsuranceProperty().addListener(
-                observable -> {
-                    ObjectProperty<Insurance> insurance = (ObjectProperty<Insurance>) observable;
-                    if (insurance.isNotNull().get()) {
-                        //todo: set insurance
-                    } else
-                        clearFields();
-                }
-        );
-
         emptyscreenButton.addListener(observable -> {
             SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
             if (bool.get())
@@ -181,6 +171,35 @@ public final class CarModuleController extends CommonGUIMethods
             if (property.get().equals("[Bil]"))
                 makeInsurance();
         });
+
+        currentInsurance.getInsuranceProperty().addListener(
+                listener -> {
+                    Boolean isNotNull = currentInsurance.getInsuranceProperty().isNotNull().get();
+                    if (isNotNull && currentInsurance.getInsurance() instanceof CarInsurance) {
+                        insurance = (CarInsurance)currentInsurance.getInsurance();
+                        setInsurance();
+                    }
+                });
+    }
+
+    @Override
+    protected void setInsurance() {
+        if ( insurance.getEndDate() != null )
+            freezeInput();
+
+        licenceNumber.setText(insurance.getLicenceNumber());
+        model.setText(insurance.getModel());
+        setInt(modelYear, insurance.getProductionYear());
+        color.setText(insurance.getColor());
+        setInt(km, insurance.getTotalKilometer());
+        setInt(horsePower, insurance.getHorsePower());
+        setInt(buyPrice, insurance.getItemValue());
+
+        maker.setValue(insurance.getMaker());
+        kasko.setValue(insurance.getKasko());
+        deductible.setValue(insurance.getDeductable());
+        paymentOption.setValue(insurance.getPaymentOption().getName());
+
     }
 
     @Override
@@ -205,6 +224,18 @@ public final class CarModuleController extends CommonGUIMethods
                     color.getText(), Integer.parseInt(deductible.getValue().toString()), bonus, kasko, yearlyKM);
             showPremium(tempinsurance);
         }
+    }
+
+    @Override
+    protected void freezeInput() {
+        freezeInputs(licenceNumber, model, modelYear, color, km, horsePower, buyPrice, maker );
+        freezeInputs(kasko, deductible, paymentOption, fromDate, bonus, yearlyKM);
+    }
+
+    @Override
+    protected void unfreezeInput() {
+        unFreezeInputs(licenceNumber, model, modelYear, color, km, horsePower, buyPrice, maker);
+        unFreezeInputs(kasko, deductible, paymentOption, fromDate, bonus, yearlyKM);
     }
 
     @Override
