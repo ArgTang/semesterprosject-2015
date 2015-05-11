@@ -100,10 +100,6 @@ public final class AnimalModuleController extends CommonInsuranceMethods
         RegEX.addCSSTextValidation(value, isNumber());
     }
 
-    protected void setCustomer() {
-
-    }
-
     @Override
     protected boolean checkValidation() {
         return validationIsOk(3, name, breed, color, country, usage, value, chipID);
@@ -139,7 +135,6 @@ public final class AnimalModuleController extends CommonInsuranceMethods
     }
     @Override
     protected void showInsurance() {
-
     }
 
     @Override
@@ -148,16 +143,5 @@ public final class AnimalModuleController extends CommonInsuranceMethods
             return;
 
         PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
-
-    }
-
-    @Override
-    protected void freezeInput() {
-
-    }
-
-    @Override
-    protected void unfreezeInput() {
-
     }
 }

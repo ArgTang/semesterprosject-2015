@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
 import java.util.stream.Collectors;
@@ -33,6 +34,14 @@ public final class TravelModuleController extends CommonInsuranceMethods
     private DatePicker fromDate;
     @FXML
     private ComboBox<String> paymentOption;
+    @FXML
+    private TextField showtype;
+    @FXML
+    private TextField showfromDate;
+    @FXML
+    private TextField showpaymentOption;
+
+
 
     private static final ObservableList<String> types = FXCollections.observableArrayList();
     private static TravelInsurance insurance;
@@ -40,6 +49,7 @@ public final class TravelModuleController extends CommonInsuranceMethods
     @FXML
     @Override
     protected void initialize() {
+        freezeTextfields(showfromDate, showpaymentOption, showtype);
         paymentOption.setItems(paymentOptions.stream()
                                              .map(PaymentOption::getName)
                                              .collect(Collectors.toCollection(FXCollections::observableArrayList)));
@@ -59,12 +69,11 @@ public final class TravelModuleController extends CommonInsuranceMethods
 
     @Override
     public void clearFields() {
-        if ( !fromDate.editableProperty().get() )
-            unfreezeInput();
-        fromDate.setValue(LocalDate.now());
-
+        hideNode(showfromDate, showpaymentOption, showtype);
+        showNode(type, paymentOption, fromDate);
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () -> {
+            fromDate.setValue(LocalDate.now());
             paymentOption.setValue( paymentOption.getItems().get(0) );
             type.setValue( type.getItems().get(0) );
         };
@@ -98,15 +107,13 @@ public final class TravelModuleController extends CommonInsuranceMethods
     }
     @Override
     protected void showInsurance() {
-        if (insurance.getEndDate() != null)
-            freezeInput();
-        else
-            unfreezeInput();
+        showNode(showfromDate, showpaymentOption, showtype);
+        hideNode(type, paymentOption, fromDate);
 
-        fromDate.setValue(insurance.getFromDate());
+        showfromDate.setText(insurance.getFromDate().toString());
         int types = insurance.isTravelPluss() ?  1:0;
-        type.setValue( type.getItems().get(types) );
-        paymentOption.setValue( insurance.getPaymentOption().getName() );
+        showtype.setText(type.getItems().get(types));
+        showpaymentOption.setText(insurance.getPaymentOption().getName());
         confirmOrderButton.setValue(false);
     }
 
@@ -123,15 +130,6 @@ public final class TravelModuleController extends CommonInsuranceMethods
             TravelInsurance testinsurance = new TravelInsurance(fromDate.getValue(), "something", RegisterCustomer.tempCustomer, selectedPayment, pluss);
             showPremium(testinsurance);
         }
-    }
-
-    @Override
-    protected void freezeInput() {
-        freezeInputs(fromDate, type, paymentOption);
-    }
-    @Override
-    protected void unfreezeInput() {
-        unFreezeInputs(fromDate, type, paymentOption);
     }
 
     //no textfields -> no action

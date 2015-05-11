@@ -34,42 +34,58 @@ import static Insurance.Vehicle.CarInsurance.kaskoValues;
 public final class CarModuleController extends CommonInsuranceMethods
 {
     @FXML
-    TextField licenceNumber;
+    private TextField licenceNumber;
     @FXML
-    TextField km;
+    private TextField km;
     @FXML
-    ComboBox<String> maker;
+    private ComboBox<String> maker;
     @FXML
-    TextField model;
+    private TextField showmaker;
     @FXML
-    TextField horsePower;
+    private TextField model;
     @FXML
-    TextField modelYear;
+    private TextField horsePower;
     @FXML
-    TextField color;
+    private TextField modelYear;
     @FXML
-    TextField buyPrice;
+    private TextField color;
+    @FXML
+    private TextField buyPrice;
 
     @FXML
-    DatePicker fromDate;
+    private DatePicker fromDate;
     @FXML
-    CheckBox ageRequirements;
+    private TextField showfromDate;
     @FXML
-    ComboBox<String> kasko;
+    private CheckBox ageRequirements;
     @FXML
-    ComboBox<Integer> bonus;
+    private ComboBox<String> kasko;
     @FXML
-    ComboBox<String> yearlyKM;
+    private TextField showkasko;
     @FXML
-    ComboBox<Integer> deductible;
+    private ComboBox<Integer> bonus;
     @FXML
-    ComboBox<String> paymentOption;
+    private TextField showbonus;
+    @FXML
+    private ComboBox<String> yearlyKM;
+    @FXML
+    private TextField showyearlyKM;
+    @FXML
+    private ComboBox<Integer> deductible;
+    @FXML
+    private TextField showdeductible;
+    @FXML
+    private ComboBox<String> paymentOption;
+    @FXML
+    private TextField showpaymentOption;
+
 
     private static CarInsurance insurance;
 
     @FXML
     @Override
     protected void initialize() {
+        freezeTextfields(showfromDate, showbonus, showdeductible, showkasko, showmaker, showpaymentOption, showyearlyKM);
         //todo: some of these might be used for more insurances -> move into VehicleInsurance Class
         kasko.setItems(kaskoValues);
         bonus.setItems(bonusValues);
@@ -94,8 +110,9 @@ public final class CarModuleController extends CommonInsuranceMethods
 
     @Override
     public void clearFields() {
-        if ( !km.editableProperty().get() )
-            unfreezeInput();
+        hideNode(showfromDate, showbonus, showdeductible, showkasko, showmaker, showpaymentOption, showyearlyKM);
+        showNode(fromDate, bonus, deductible, kasko, maker, paymentOption, yearlyKM);
+        unfreezeTextfields(licenceNumber, km, model, horsePower, modelYear, color, buyPrice);
         resetTextFields(licenceNumber, km, model, horsePower, modelYear, color, buyPrice);
         fromDate.setValue(LocalDate.now());
 
@@ -176,10 +193,12 @@ public final class CarModuleController extends CommonInsuranceMethods
     protected void loadCurrentInsurance() {
         CarModuleController.insurance  = (CarInsurance) insuranceListener.get();
     }
+
     @Override
     protected void showInsurance() {
-        if ( insurance.getEndDate() != null )
-            freezeInput();
+        showNode(showfromDate, showbonus, showdeductible, showkasko, showmaker, showpaymentOption, showyearlyKM);
+        hideNode(fromDate, bonus, deductible, kasko, maker, paymentOption, yearlyKM);
+        freezeTextfields(licenceNumber, model, modelYear, color, km, horsePower, buyPrice);
 
         licenceNumber.setText(insurance.getLicenceNumber());
         model.setText(insurance.getModel());
@@ -189,11 +208,11 @@ public final class CarModuleController extends CommonInsuranceMethods
         setInt(horsePower, insurance.getHorsePower());
         setInt(buyPrice, insurance.getItemValue());
 
-        maker.setValue(insurance.getMaker());
-        kasko.setValue(insurance.getKasko());
-        deductible.setValue(insurance.getDeductable());
-        paymentOption.setValue(insurance.getPaymentOption().getName());
-
+        showmaker.setText(insurance.getMaker());
+        showkasko.setText(insurance.getKasko());
+        setInt(showdeductible, insurance.getDeductable());
+        showpaymentOption.setText(insurance.getPaymentOption().getName());
+        showfromDate.setText(insurance.getFromDate().toString());
     }
 
     @Override
@@ -218,18 +237,6 @@ public final class CarModuleController extends CommonInsuranceMethods
                     color.getText(), Integer.parseInt(deductible.getValue().toString()), bonus, kasko, yearlyKM);
             showPremium(tempinsurance);
         }
-    }
-
-    @Override
-    protected void freezeInput() {
-        freezeInputs(licenceNumber, model, modelYear, color, km, horsePower, buyPrice, maker );
-        freezeInputs(kasko, deductible, paymentOption, fromDate, bonus, yearlyKM);
-    }
-
-    @Override
-    protected void unfreezeInput() {
-        unFreezeInputs(licenceNumber, model, modelYear, color, km, horsePower, buyPrice, maker);
-        unFreezeInputs(kasko, deductible, paymentOption, fromDate, bonus, yearlyKM);
     }
 
     @Override

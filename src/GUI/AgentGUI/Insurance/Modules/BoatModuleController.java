@@ -48,6 +48,8 @@ public final class BoatModuleController extends CommonInsuranceMethods
     @FXML
     private ComboBox<String> type;
     @FXML
+    private TextField showtype;
+    @FXML
     private TextField licenceNumber;
     @FXML
     private TextField speed;
@@ -59,18 +61,26 @@ public final class BoatModuleController extends CommonInsuranceMethods
     @FXML
     private DatePicker fromDate;
     @FXML
+    private TextField showfromDate;
+    @FXML
     private ComboBox<String> kasko;
+    @FXML
+    private TextField showkasko;
     @FXML
     private ComboBox<Integer> deductible;
     @FXML
+    private TextField showdeductible;
+    @FXML
     private ComboBox<String> paymentOption;
+    @FXML
+    private TextField showpaymentOption;
 
     private static BoatInsurance insurance;
 
     @FXML
     @Override
     protected void initialize() {
-
+        freezeTextfields(showdeductible, showfromDate, showkasko, showpaymentOption, showtype);
         kasko.setItems(kaskoValues);
         type.setItems(types);
 
@@ -92,13 +102,13 @@ public final class BoatModuleController extends CommonInsuranceMethods
 
     @Override
     public void clearFields() {
-        if ( !speed.editableProperty().get() )
-            unfreezeInput();
-        fromDate.setValue(LocalDate.now());
-        resetTextFields(speed, size, motorsize, model, maker, harbor, licenceNumber, modelYear, buyPrice);
-
+        showNode(deductible, fromDate, kasko, paymentOption, type);
+        hideNode(showdeductible, showfromDate, showkasko, showpaymentOption, showtype);
+        unfreezeTextfields(licenceNumber, size, speed, motorsize, maker, harbor, model, modelYear, buyPrice);
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () -> {
+            fromDate.setValue(LocalDate.now());
+            resetTextFields(speed, size, motorsize, model, maker, harbor, licenceNumber, modelYear, buyPrice);
             type.setValue( type.getItems().get(1) );
             kasko.setValue(kasko.getItems().get(2));
             deductible.setValue( deductible.getItems().get(1) );
@@ -128,7 +138,6 @@ public final class BoatModuleController extends CommonInsuranceMethods
         if ( !validationIsOk(2, maker, harbor, model, modelYear, buyPrice) )
             return false;
 
-
         if (buyPrice.getLength() > 2 && parseInt(buyPrice) > minBoatValueforMandatoryRegistration)
             if ( !validationIsOk(2).test(licenceNumber) ) {
                 AlertWindow.messageDialog("Registreringsnummer er obligatorisk for båter med verdi over " +
@@ -140,7 +149,6 @@ public final class BoatModuleController extends CommonInsuranceMethods
 
     @Override
     protected void setListeners() {
-
         addComboboxListener(type, kasko, deductible, paymentOption);
         addTextfieldListener(speed, size, motorsize, modelYear);
 
@@ -163,8 +171,10 @@ public final class BoatModuleController extends CommonInsuranceMethods
     }
     @Override
     protected void showInsurance() {
-        if ( insurance.getEndDate() != null )
-            freezeInput();
+        hideNode(deductible, fromDate, kasko, paymentOption, type);
+        showNode(showdeductible, showfromDate, showkasko, showpaymentOption, showtype);
+        freezeTextfields(licenceNumber, size, speed, motorsize, maker, harbor, model, modelYear, buyPrice);
+
         licenceNumber.setText(insurance.getLicenceNumber());
         setInt(size, insurance.getFeet());
         setInt(speed, insurance.getKnots());
@@ -175,11 +185,11 @@ public final class BoatModuleController extends CommonInsuranceMethods
         setInt(modelYear, insurance.getProductionYear());
         setInt(buyPrice, insurance.getItemValue());
 
-        fromDate.setValue(insurance.getFromDate());
-        type.setValue(insurance.getBoattype());
-        kasko.setValue(insurance.getKasko());
-        deductible.setValue(insurance.getDeductable());
-        paymentOption.setValue(insurance.getPaymentOption().getName());
+        showfromDate.setText(insurance.getFromDate().toString());
+        showtype.setText(insurance.getBoattype());
+        showkasko.setText(insurance.getKasko());
+        setInt(showdeductible, insurance.getDeductable());
+        showpaymentOption.setText(insurance.getPaymentOption().getName());
    }
 
     @Override
@@ -203,17 +213,5 @@ public final class BoatModuleController extends CommonInsuranceMethods
             tempinsurance.setRegistrationNumber(licenceNumber.getText());
             showPremium(tempinsurance);
         }
-    }
-
-    @Override
-    protected void freezeInput() {
-        freezeInputs(size, speed, motorsize, maker, harbor, model, modelYear, buyPrice);
-        freezeInputs(type, kasko, deductible, paymentOption, fromDate);
-    }
-
-    @Override
-    protected void unfreezeInput() {
-        unFreezeInputs(size, speed, motorsize, maker, harbor, model, modelYear, buyPrice);
-        unFreezeInputs(type, kasko, deductible, paymentOption, fromDate);
     }
 }

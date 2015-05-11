@@ -16,10 +16,13 @@
    <children>
        <Label text="Type" />
        <ComboBox fx:id="type" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+       <TextField fx:id="showtype" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
        <Label text="Fraddato" GridPane.rowIndex="1" />
        <DatePicker fx:id="fromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+       <TextField fx:id="showfromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
        <Label text="Betalingsvalg" GridPane.rowIndex="2" />
        <ComboBox fx:id="paymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+       <TextField fx:id="showpaymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
    <padding>
       <Insets left="8.0" right="8.0" />

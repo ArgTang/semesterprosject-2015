@@ -24,13 +24,9 @@ import static Insurance.Insurance.paymentFee;
  */
 public abstract class CommonInsuranceMethods extends CommonGUIMethods
 {
-    //todo: is there a eay to make this function so that i can specify what type of Insurance when i @Override
-    //protected abstract  <T extends Insurance> void setInsurance(T insurance);
     protected abstract void loadCurrentInsurance();
     protected abstract void showInsurance();
     protected abstract void makeInsurance();
-    protected abstract void freezeInput();
-    protected abstract void unfreezeInput();
 
     protected void saveInsurance(Insurance insurance) {
         Customer customer = currentCustomer.get();
@@ -52,7 +48,7 @@ public abstract class CommonInsuranceMethods extends CommonGUIMethods
         int paymentTermins = insurance.getPaymentOption().getValue();
         yearlyPremiumLabel.setValue( insurance.getAnnualPremium() );
         totalFeeLabel.setValue( paymentFee * paymentTermins );
-        paymentEachTerminLabel.setValue( ( insurance.getAnnualPremium() + paymentFee * paymentTermins) / paymentTermins );
+        paymentEachTerminLabel.setValue( (insurance.getAnnualPremium() + paymentFee * paymentTermins) / paymentTermins );
     }
 
     protected void setEmptyScreenListener() {
@@ -64,18 +60,17 @@ public abstract class CommonInsuranceMethods extends CommonGUIMethods
     }
 
     protected <neededClass extends Insurance> void setCurrentInsuranceListener(final Class<neededClass> someClass) {
-        insuranceListener.addListener(
-            listener -> {
-                Boolean isNotNull = insuranceListener.isNotNull().get();
-                if (isNotNull && someClass.equals(insuranceListener.get().getClass())) {
-                    loadCurrentInsurance();
-                    showInsurance();
-                }
+        insuranceListener.addListener( listener -> {
+            Boolean isNotNull = insuranceListener.isNotNull().get();
+            if (isNotNull && someClass.equals( insuranceListener.get().getClass())) {
+                loadCurrentInsurance();
+                showInsurance();
+            }
         });
     }
 
     protected void setInsurancechoiceListeners(String typeofclassString) {
-        changeWindowListener.getProperty().addListener(observable -> {
+        changeWindowListener.getProperty().addListener( observable -> {
             SimpleStringProperty property = (SimpleStringProperty) observable;
             if (property.get().equals(typeofclassString)) {
                 makeInsurance();
@@ -85,43 +80,40 @@ public abstract class CommonInsuranceMethods extends CommonGUIMethods
 
     protected final void addComboboxListener(ComboBox... comboBoxes) {
         for( ComboBox comboBox : comboBoxes )
-            comboBox.getSelectionModel().selectedItemProperty().addListener(observable -> makeInsurance() );
+            comboBox.getSelectionModel().selectedItemProperty().addListener(observable -> makeInsurance());
     }
-
 
     // setOnAction -> enter key. focusedProperty -> if lostfocus -> try to show price for insurance
     protected final void addTextfieldListener(TextField... textFields) {
         for (TextField textField: textFields) {
             //textField.setOnAction(event -> makeInsurance());
-            textField.focusedProperty().addListener(observable -> {
+            textField.focusedProperty().addListener( observable -> {
                 if (!textField.focusedProperty().getValue())
                     makeInsurance();
             });
         }
     }
 
-    /**
-     * This function disables inputfields.
-     * Both TextFields and ComboboxesWork :)
-     */
-    protected void freezeInputs(Node... UserEditableNodes) {
-        freezer(UserEditableNodes, true);
-    }
-    /**
-     * This function enables inputfields.
-     * Both TextFields and ComboboxesWork :)
-     */
-    protected void unFreezeInputs(Node... UserEditableNodes) {
-        freezer(UserEditableNodes, false);
-    }
-
-    private void freezer(Node[] UserEditableNodes, boolean value){
-        for (Node UserEditableNode: UserEditableNodes)
-            UserEditableNode.setDisable(value);
-    }
-
-    public static void setBoldFont(Node... nodes){
+    public static void setBoldFont(Node... nodes) {
         for(Node node: nodes)
             node.setStyle("-fx-font-weight: bold;");
+    }
+
+    protected void hideNode(Node... nodes) {
+        for (Node node: nodes)
+            node.setVisible(false);
+    }
+    protected void showNode(Node... nodes) {
+        for (Node node: nodes)
+            node.setVisible(true);
+    }
+
+    protected void freezeTextfields(TextField... textFields) {
+        for (TextField textField: textFields)
+            textField.setEditable(false);
+    }
+    protected void unfreezeTextfields(TextField... textFields) {
+        for (TextField textField: textFields)
+            textField.setEditable(true);
     }
 }

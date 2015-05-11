@@ -1,6 +1,5 @@
 package GUI.AgentGUI.Person;
 
-import GUI.CurrentObjectListeners.CurrentInsurance;
 import Insurance.Insurance;
 import Person.Customer;
 import javafx.collections.FXCollections;
@@ -11,8 +10,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
-import static GUI.CurrentObjectListeners.CurrentInsurance.getNameOfInsurance;
 import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
 import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.StartMain.changeWindowListener;

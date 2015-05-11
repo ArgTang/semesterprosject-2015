@@ -33,6 +33,7 @@
        <TextField fx:id="km" GridPane.columnIndex="1" GridPane.rowIndex="1" />
        <Label text="Merke" GridPane.rowIndex="2" />
        <ComboBox fx:id="maker" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+       <TextField fx:id="showmaker" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
        <Label text="Modell" GridPane.rowIndex="3" />
        <TextField fx:id="model" GridPane.columnIndex="1" GridPane.rowIndex="3" />
        <Label text="Motorstørrelse" GridPane.rowIndex="4" />
@@ -46,18 +47,24 @@
 
        <Label text="Fra dato" GridPane.rowIndex="9" />
        <DatePicker fx:id="fromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-      <!-- <Label text="Bruker over 25 år" GridPane.rowIndex="10" />
+       <TextField fx:id="showfromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+       <!-- <Label text="Bruker over 25 år" GridPane.rowIndex="10" />
        <CheckBox fx:id="ageRequirements" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" wrapText="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10"></CheckBox>
       --> <Label text="Bonus" GridPane.rowIndex="11" />
        <ComboBox fx:id="bonus" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+       <TextField fx:id="showbonus" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="11" />
        <Label text="Kasko" GridPane.rowIndex="12" />
        <ComboBox fx:id="kasko" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+       <TextField fx:id="showkasko" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="12" />
        <Label text="ÅrligKm" GridPane.rowIndex="13" />
        <ComboBox fx:id="yearlyKM" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+       <TextField fx:id="showyearlyKM" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="13" />
        <Label text="Egenandel" GridPane.rowIndex="14" />
        <ComboBox fx:id="deductible" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+       <TextField fx:id="showdeductible" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="14" />
        <Label text="Betalingsvalg" GridPane.rowIndex="15" />
        <ComboBox fx:id="paymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+       <TextField fx:id="showpaymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="15" />
    </children>
    <padding>
       <Insets left="8.0" right="8.0" />

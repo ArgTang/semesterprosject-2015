@@ -1,10 +1,8 @@
 package GUI.AgentGUI.Incident;
 
-import GUI.GuiHelper.CommonInsuranceMethods;
 import Person.Person;
 import javafx.beans.property.*;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -19,7 +17,6 @@ import static java.lang.String.valueOf;
 /**
  * Created by steinar on 15.04.2015.
  */
-
 
 //todo: copied from InsuranceModule -> needs adjusting
 public final class AgentIncidentController

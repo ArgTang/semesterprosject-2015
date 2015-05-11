@@ -26,7 +26,6 @@ public final class AgentInsuranceController
     private static BorderPane container = new BorderPane();
     private Fader fade = new Fader();
     private Label customerName = new Label();
-    private Label Insuranceinfo = new Label();
 
     private final StringProperty selectedCustomerName = new SimpleStringProperty();
     public static final BooleanProperty emptyscreenButton = new SimpleBooleanProperty(false);
@@ -169,8 +168,6 @@ public final class AgentInsuranceController
         Label info = new Label("Du behandler nå:");
         grid.add(info, 0, 0);
         grid.add(customerName, 0, 1);
-        //grid.add(incidentInfo, 0, 2);
-        //grid.add(incidentID, 1, 2);
 
         if ( currentCustomer.isNotNull().get() )
             setCustomername( currentCustomer.get() );

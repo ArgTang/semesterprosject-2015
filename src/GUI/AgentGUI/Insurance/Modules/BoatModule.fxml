@@ -30,6 +30,7 @@
        <TextField fx:id="licenceNumber" GridPane.columnIndex="1" />
        <Label text="Type" GridPane.rowIndex="1" />
        <ComboBox fx:id="type" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+       <TextField fx:id="showtype" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
        <Label text="Størrelse" GridPane.rowIndex="2" />
        <TextField fx:id="size" GridPane.columnIndex="1" GridPane.rowIndex="2" />
        <Label text="Merke" GridPane.rowIndex="3" />
@@ -50,12 +51,16 @@
 
        <Label text="Fra dato" GridPane.rowIndex="11" />
        <DatePicker fx:id="fromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+       <TextField fx:id="showfromDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="11" />
        <Label text="Kasko" GridPane.rowIndex="12" />
        <ComboBox fx:id="kasko" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+       <TextField fx:id="showkasko" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="12" />
        <Label text="Egenandel" GridPane.rowIndex="13" />
        <ComboBox fx:id="deductible" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+       <TextField fx:id="showdeductible" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="13" />
        <Label text="Betalingsvalg" GridPane.rowIndex="14" />
        <ComboBox fx:id="paymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+       <TextField fx:id="showpaymentOption" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="14" />
    </children>
    <padding>
       <Insets left="8.0" right="8.0" />

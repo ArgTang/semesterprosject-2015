@@ -40,19 +40,29 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
     @FXML
     private ComboBox<Integer> numberOfrooms;
     @FXML
+    private TextField shownumberOfrooms;
+    @FXML
     private ComboBox<Integer> numberOfPersons;
+    @FXML
+    private TextField shownumberOfPersons;
     @FXML
     private Checkbox plussForsikring;
 
     @FXML
     private DatePicker fromDate;
     @FXML
+    private TextField showfromDate;
+    @FXML
     private TextField amount;
 
     @FXML
     private ComboBox<Integer> deductible;
     @FXML
+    private TextField showdeductible;
+    @FXML
     private ComboBox<String> paymentOption;
+    @FXML
+    private TextField showpaymentOption;
 
     public static final ObservableList<Integer> numbers = FXCollections.observableArrayList();
     private static HouseholdContentsInsurance insurance;
@@ -60,6 +70,7 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
     @FXML
     @Override
     protected void initialize() {
+        freezeTextfields(showdeductible, showfromDate, shownumberOfPersons, shownumberOfrooms, showpaymentOption);
         IntStream.range(1, 11).forEach(numbers::add);
         numberOfrooms.setItems(numbers);
         numberOfPersons.setItems(numbers);
@@ -82,9 +93,10 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
 
     @Override
     public void clearFields() {
-        if (adress.disabledProperty().get())
-            unfreezeInput();
+        hideNode(showdeductible, showfromDate, shownumberOfPersons, shownumberOfrooms, showpaymentOption);
+        showNode(deductible, fromDate, numberOfPersons, numberOfrooms, paymentOption);
         resetTextFields(adress, citynumber, city, amount);
+        unfreezeTextfields(adress, city, citynumber, amount);
 
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () -> {
@@ -162,18 +174,19 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
     }
     @Override
     protected void showInsurance() {
-        if ( insurance.getEndDate() != null )
-            freezeInput();
+        showNode(showdeductible, showfromDate, shownumberOfPersons, shownumberOfrooms, showpaymentOption);
+        hideNode(deductible, fromDate, numberOfPersons, numberOfrooms, paymentOption);
+        freezeTextfields(adress, city, citynumber, amount);
 
         adress.setText(insurance.getAddress());
         city.setText(insurance.getCity());
         setInt(citynumber, insurance.getCitynumber());
         setInt(amount, insurance.getItemValue());
-        numberOfPersons.setValue(insurance.getRoomMates());
-        numberOfrooms.setValue(insurance.getRoomCount());
-        deductible.setValue(insurance.getDeductable());
-        paymentOption.setValue(insurance.getPaymentOption().getName());
-        fromDate.setValue(insurance.getFromDate());
+        setInt(shownumberOfrooms, insurance.getRoomCount());
+        setInt(shownumberOfPersons, insurance.getRoomMates());
+        setInt(showdeductible, insurance.getDeductable());
+        showpaymentOption.setText(insurance.getPaymentOption().getName());
+        showfromDate.setText(insurance.getFromDate().toString());
     }
 
     @Override
@@ -193,18 +206,5 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
                     RegisterCustomer.tempCustomer, selectedPayment, deductible.getValue());
             showPremium(tempInsurance);
         }
-    }
-
-    @Override
-    protected void freezeInput() {
-        freezeInputs(adress, city, citynumber, amount);
-        freezeInputs(numberOfPersons, numberOfrooms, deductible, paymentOption, fromDate);
-
-    }
-
-    @Override
-    protected void unfreezeInput() {
-        unFreezeInputs(adress, city, citynumber, amount);
-        unFreezeInputs(numberOfPersons, numberOfrooms, deductible, paymentOption, fromDate);
     }
 }

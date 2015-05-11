@@ -43,9 +43,14 @@ public final class HouseModuleController extends CommonInsuranceMethods
     @FXML
     private ComboBox<String> constructedIn;
     @FXML
+    private TextField showconstructedIn;
+
+    @FXML
     private TextField constructionYear;
     @FXML
     private ComboBox<String> buildingType;
+    @FXML
+    private TextField showbuildingType;
     @FXML
     private TextField grossArea;
     @FXML
@@ -58,9 +63,15 @@ public final class HouseModuleController extends CommonInsuranceMethods
     @FXML
     private DatePicker fromDate;
     @FXML
+    private TextField showfromDate;
+    @FXML
     private ComboBox<Integer> deductible;
     @FXML
+    private TextField showdeductible;
+    @FXML
     private ComboBox<String> paymentOption;
+    @FXML
+    private TextField showpaymentOption;
 
     private ObservableList<String> buildingMaterials = FXCollections.observableArrayList("Mur", "Tre");
     private ObservableList<String> buildingTypes = FXCollections.observableArrayList("Rekkehus", "Enebolig", "Leilighet", "Tomannsbolig");
@@ -69,6 +80,7 @@ public final class HouseModuleController extends CommonInsuranceMethods
     @FXML
     @Override
     protected void initialize() {
+        freezeTextfields(showbuildingType, showconstructedIn, showdeductible, showpaymentOption);
         deductible.setItems(deductablenumbers);
         paymentOption.setItems(paymentOptions.stream()
                                              .map(PaymentOption::getName)
@@ -91,13 +103,13 @@ public final class HouseModuleController extends CommonInsuranceMethods
 
     @Override
     public void clearFields() {
-        if (adress.disabledProperty().get())
-            unfreezeInput();
-        resetTextFields(adress, citynumber, city, constructionYear, grossArea, primaryArea, taxedvalue);
-        fromDate.setValue(LocalDate.now());
-
+        hideNode(showbuildingType, showconstructedIn, showdeductible, showfromDate, showpaymentOption);
+        showNode(buildingType, constructedIn, deductible, fromDate, paymentOption);
+        unfreezeTextfields(adress, city, citynumber, constructionYear, grossArea, primaryArea, taxedvalue);
         //explanation -> https://thierrywasyl.wordpress.com/2014/02/09/update-your-scene-in-javafx/
         Runnable clear = () -> {
+            resetTextFields(adress, citynumber, city, constructionYear, grossArea, primaryArea, taxedvalue);
+            fromDate.setValue(LocalDate.now());
             constructedIn.setValue( constructedIn.getItems().get(0) );
             buildingType.setValue( buildingType.getItems().get(1) );
             deductible.setValue( deductible.getItems().get(1) );
@@ -152,8 +164,9 @@ public final class HouseModuleController extends CommonInsuranceMethods
     }
     @Override
     protected void showInsurance() {
-        if (insurance.getEndDate() != null)
-            freezeInput();
+        showNode(showbuildingType, showconstructedIn, showdeductible, showfromDate, showpaymentOption);
+        hideNode(buildingType, constructedIn, deductible, fromDate, paymentOption);
+        freezeTextfields(adress, city, citynumber, constructionYear, grossArea, primaryArea, taxedvalue);
 
         adress.setText(insurance.getAdress());
         city.setText(insurance.getCity());
@@ -162,11 +175,11 @@ public final class HouseModuleController extends CommonInsuranceMethods
         setInt(grossArea, insurance.getGrossArea());
         setInt(primaryArea, insurance.getPrimaryArea());
         setInt(taxedvalue, insurance.getTaxedvalue());
-        constructedIn.setValue(insurance.getBuildingMaterial());
-        buildingType.setValue(insurance.getType());
-        deductible.setValue(insurance.getDeductable());
-        paymentOption.setValue(insurance.getPaymentOption().getName());
-        fromDate.setValue(insurance.getFromDate());
+        showconstructedIn.setText(insurance.getBuildingMaterial());
+        showbuildingType.setText(insurance.getType());
+        setInt(showdeductible, insurance.getDeductable());
+        showpaymentOption.setText(insurance.getPaymentOption().getName());
+        showfromDate.setText(insurance.getFromDate().toString());
     }
 
     @Override
@@ -209,18 +222,6 @@ public final class HouseModuleController extends CommonInsuranceMethods
                     parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
             showPremium(testinsurance);
         }
-    }
-
-    @Override
-    protected void freezeInput() {
-        freezeInputs(adress, city, citynumber, constructionYear, grossArea, primaryArea, taxedvalue);
-        freezeInputs(constructedIn, buildingType, deductible, paymentOption, fromDate);
-    }
-
-    @Override
-    protected void unfreezeInput() {
-        unFreezeInputs(adress, city, citynumber, constructionYear, grossArea, primaryArea, taxedvalue);
-        unFreezeInputs(constructedIn, buildingType, deductible, paymentOption, fromDate);
     }
 
     protected void setCustomer() {
