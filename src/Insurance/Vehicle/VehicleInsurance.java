@@ -25,7 +25,7 @@ public abstract class VehicleInsurance extends Insurance
         this.maker = maker;
         this.model = model;
         this.productionYear = productionYear;
-
+        this.kasko = kasko;
     }
 
     public String getMaker() { return maker; }

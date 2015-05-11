@@ -76,7 +76,7 @@ public class MakeInsuranceContracts
             day = randomGenerator.nextInt(31);
         } while (day > date.lengthOfMonth());
 
-        date.plusDays(day);
+        date = date.plusDays(day);
         return date;
     }
 

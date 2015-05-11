@@ -29,7 +29,6 @@ public class StartController implements Initializable {
 
     //todo: abstract this. needs to be aplyaple to ALL textfields. Predicates, functionable interface?
     public void addListener() {
-        final PseudoClass invalidText = PseudoClass.getPseudoClass("invalidText");
 
     }
 

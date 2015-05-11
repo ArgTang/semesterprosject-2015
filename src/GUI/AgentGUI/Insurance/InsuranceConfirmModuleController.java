@@ -51,12 +51,12 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
     @FXML
     private Button confirmInsurance;
 
-    public static BooleanProperty confirmOrderButton = new SimpleBooleanProperty(false);
-    public static BooleanProperty insuranceOfferButton = new SimpleBooleanProperty(false);
-    public static IntegerProperty yearlyPremiumLabel = new SimpleIntegerProperty();
-    public static IntegerProperty totalFeeLabel = new SimpleIntegerProperty();
-    public static IntegerProperty paymentEachTerminLabel = new SimpleIntegerProperty();
-    public static StringProperty bonusValueLabel = new SimpleStringProperty();
+    public static final BooleanProperty confirmOrderButton = new SimpleBooleanProperty(false);
+    public static final BooleanProperty insuranceOfferButton = new SimpleBooleanProperty(false);
+    public static final IntegerProperty yearlyPremiumLabel = new SimpleIntegerProperty();
+    public static final IntegerProperty totalFeeLabel = new SimpleIntegerProperty();
+    public static final IntegerProperty paymentEachTerminLabel = new SimpleIntegerProperty();
+    public static final StringProperty bonusValueLabel = new SimpleStringProperty();
 
     @FXML
     @Override
@@ -79,8 +79,8 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
 
         BooleanBinding insuranceIsChosen = insuranceListener.isNotNull();
         BooleanProperty isNotNull = new SimpleBooleanProperty(
-                insuranceListener.isNotNull().equals(true) &&
-                        insuranceListener.get().getEndDate().equals(null));
+                insuranceListener.isNotNull().get() &&
+                        insuranceListener.get().getEndDate()== null);
         boolean b = true;
         //BooleanBinding das = Bindings.when(() -> isNotNull);
         //endThis.disableProperty().bind(insuranceIsChosen);

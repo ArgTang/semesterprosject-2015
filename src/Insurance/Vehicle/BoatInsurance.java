@@ -63,7 +63,7 @@ public final class BoatInsurance extends VehicleInsurance
         if (boattype.equals(types.get(1)))
             typeAdjust = 10;
 
-        double sizeadjust = feet/ typeAdjust;
+        double sizeadjust = (double)feet/ (double)typeAdjust;
         double helperadjuster = (12000 - getDeductable())/500 + pow(poweradjust, age/10);
 
         double total = ((base*helperadjuster)/8)*sizeadjust;

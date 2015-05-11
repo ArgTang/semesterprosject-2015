@@ -34,7 +34,7 @@ public abstract class Insurance implements Serializable
     private int deductable; //egenandel
     private Set<Integer> incidentIDs;
 
-    public static int paymentFee = 35;
+    public static final int paymentFee = 35;
     public static final ObservableList<Integer> deductablenumbers = FXCollections.observableArrayList(2000, 4000, 8000, 12000);
     public static final ObservableList<PaymentOption> paymentOptions = FXCollections.observableArrayList(PaymentOption.values());
 
@@ -56,7 +56,6 @@ public abstract class Insurance implements Serializable
         //deny new casenumber if alreaddy given
         if (this.casenumber < 1)
             this.casenumber = casenumber;
-
         return casenumber;
     }
 

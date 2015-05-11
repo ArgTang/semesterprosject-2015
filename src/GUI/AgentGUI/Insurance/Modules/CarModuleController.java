@@ -227,12 +227,12 @@ public final class CarModuleController extends CommonInsuranceMethods
 
         try {
             insurance = new CarInsurance(fromDate.getValue(), parseInt(buyPrice), "comePolicy", currentCustomer.get(), selectedPayment,
-                    maker.getValue().toString(), model.getText(), parseInt(modelYear), parseInt(km), parseInt(horsePower), licenceNumber.getText(),
+                    maker.getValue(), model.getText(), parseInt(modelYear), parseInt(km), parseInt(horsePower), licenceNumber.getText(),
                     color.getText(), Integer.parseInt(deductible.getValue().toString()), bonus, kasko, yearlyKM);
             showPremium(insurance);
         } catch (Exception expected) {
             Insurance tempinsurance = new CarInsurance(fromDate.getValue(), parseInt(buyPrice), "comePolicy",
-                    RegisterCustomer.tempCustomer, selectedPayment, maker.getValue().toString(), model.getText(),
+                    RegisterCustomer.tempCustomer, selectedPayment, maker.getValue(), model.getText(),
                     parseInt(modelYear), parseInt(km), parseInt(horsePower), licenceNumber.getText(),
                     color.getText(), Integer.parseInt(deductible.getValue().toString()), bonus, kasko, yearlyKM);
             showPremium(tempinsurance);

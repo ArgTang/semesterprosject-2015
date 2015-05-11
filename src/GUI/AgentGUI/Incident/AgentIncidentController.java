@@ -29,7 +29,7 @@ public final class AgentIncidentController
     private final StringProperty selectedCustomerName = new SimpleStringProperty();
     public static final BooleanProperty emptyscreenButton = new SimpleBooleanProperty(false);
 
-    private static Parent chooserModule, confirmModule, incidentReport;
+    private Parent chooserModule, confirmModule, incidentReport;
 
     public Parent initAgentIncidentView() {
         customerName.textProperty().bind(selectedCustomerName);

@@ -142,6 +142,6 @@ public final class AnimalModuleController extends CommonInsuranceMethods
         if (!checkValidation())
             return;
 
-        PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
+        //PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
     }
 }

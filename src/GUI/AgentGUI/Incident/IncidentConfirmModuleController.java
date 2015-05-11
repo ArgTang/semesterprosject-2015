@@ -45,7 +45,7 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
     private Button openFolder;
 
 
-    public static BooleanProperty confirmIncidentButton = new SimpleBooleanProperty(false);
+    public static final BooleanProperty confirmIncidentButton = new SimpleBooleanProperty(false);
 
     @FXML
     @Override

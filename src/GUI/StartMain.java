@@ -42,9 +42,9 @@ public class StartMain extends Application
     public static final CurrentInsurance currentInsurance = new CurrentInsurance();
     public static final CurrentIncident currentIncident = new CurrentIncident();                            //todo: change this? more generic
 
-    public static RegisterCustomer customerRegister = new RegisterCustomer();
-    public static RegisterInsurance insuranceRegister = new RegisterInsurance();
-    public static RegisterIncident incidentRegister = new RegisterIncident();
+    public static final RegisterCustomer customerRegister = new RegisterCustomer();
+    public static final RegisterInsurance insuranceRegister = new RegisterInsurance();
+    public static final RegisterIncident incidentRegister = new RegisterIncident();
 
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
     //"storage" for the different Panes

@@ -27,7 +27,7 @@ public final class HomeInsurance extends PropertyInsurance
         String type = getType();
         double typeadjust = type.matches("(?i:.*rekkehus.*)") || type.matches("(?i:.*tomannsbolig.*)") ? 0.5:0;
         typeadjust += type.matches("(?i:.*enebolig.*)") ? 1:0.8;
-        double yearAdjust = (LocalDate.now().getYear() - getConstructionYear())/100;
+        double yearAdjust = (double)(LocalDate.now().getYear() - getConstructionYear())/100.0;
         double deductableAdjust = ( 12000.0-getDeductable() ) / 10000.0;
         double totalAdjust = (yearAdjust+typeadjust+deductableAdjust)/materialAdjust;
 
