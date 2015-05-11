@@ -8,9 +8,7 @@ import javafx.scene.control.*;
 import java.time.LocalDate;
 
 import static GUI.AgentGUI.Incident.AgentIncidentController.emptyscreenButton;
-import static GUI.GuiHelper.RegEX.addCSSTextValidation;
-import static GUI.GuiHelper.RegEX.isNumber;
-import static GUI.GuiHelper.RegEX.validationIsOk;
+import static GUI.GuiHelper.RegEX.*;
 
 /**
  * Created by steinar on 07.05.2015.

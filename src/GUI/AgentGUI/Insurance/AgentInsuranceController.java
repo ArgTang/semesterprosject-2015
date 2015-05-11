@@ -3,7 +3,10 @@ package GUI.AgentGUI.Insurance;
 import GUI.CurrentObjectListeners.WindowChangeListener;
 import GUI.GuiHelper.Fader;
 import Person.Person;
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -12,8 +15,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import static GUI.CurrentObjectListeners.CurrentInsurance.getNameOfInsurance;
-import static GUI.StartMain.currentCustomer;
-import static GUI.StartMain.currentInsurance;
+import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 
 /**
  * Created by steinar on 15.04.2015.
@@ -115,46 +118,47 @@ public final class AgentInsuranceController
     }
 
     private void setListeners() {
-        insuranceChoiceListener.getStringProperty().addListener(
-            observable -> {
-                StringProperty string = (StringProperty) observable;
-                switch (string.getValue()) {
-                    case "[Hus]":
-                        showtHouseInsurance();
-                        break;
-                    case "[Bil]":
-                        showCarinsurance();
-                        break;
-                    case "[Reise]":
-                        showTravelInsurance();
-                        break;
-                    case "[Båt]":
-                        showBoatInsurance();
-                        break;
-                    case "[Dyr]":
-                        showAnimalInsurance();
-                        break;
-                    case "[Innbo]":
-                        showHouseholdInsurance();
-                        break;
+        insuranceChoiceListener.getProperty().addListener(
+                observable -> {
+                    StringProperty string = (StringProperty) observable;
+                    switch (string.getValue()) {
+                        case "Hus":
+                            showtHouseInsurance();
+                            break;
+                        case "Bil":
+                            showCarinsurance();
+                            break;
+                        case "Reise":
+                            showTravelInsurance();
+                            break;
+                        case "Båt":
+                            showBoatInsurance();
+                            break;
+                        case "Dyr":
+                            showAnimalInsurance();
+                            break;
+                        case "Innbo":
+                            showHouseholdInsurance();
+                            break;
+                    }
                 }
-            }
         );
 
-        currentInsurance.getInsuranceProperty().addListener( observable -> {
-            if (currentInsurance.getInsuranceProperty().isNull().get())
+        insuranceListener.addListener(observable -> {
+            if (insuranceListener.isNull().get())
                 return;
 
-            String insurance = getNameOfInsurance(currentInsurance.getInsurance());
-            insuranceChoiceListener.setPropertyString("[" + insurance + "]");
+            String insuranceName = getNameOfInsurance(insuranceListener.get());
+            insuranceChoiceListener.setString(insuranceName);
         });
 
-        currentCustomer.getPersonProperty().addListener(
+        currentCustomer.addListener(
                 observable -> {
-                    SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
-                    Person person = property.getValue();
+                    Person person = currentCustomer.get();
                     if (person != null)
                         setCustomername(person);
+                    else
+                        selectedCustomerName.setValue("Vennligst velg kunde");
                 }
         );
     }
@@ -165,8 +169,8 @@ public final class AgentInsuranceController
         grid.add(info, 1, 0);
         grid.add(kundenavn, 1, 1);
 
-        if ( currentCustomer.getPersonProperty().isNotNull().get() )
-            setCustomername( currentCustomer.getPerson() );
+        if ( currentCustomer.isNotNull().get() )
+            setCustomername( currentCustomer.get() );
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(grid, chooser);

@@ -43,14 +43,14 @@ public class AgentMenuController {
     public void showSearchMenu() {
         if(debug)
             System.out.println("søk");
-        changeWindowListener.setPropertyString("Agent");
+        changeWindowListener.setString("Agent");
     }
 
     @FXML
     public void showCustomerhMenu() {
         if(debug)
             System.out.println("Kunde");
-        changeWindowListener.setPropertyString("Customer");
+        changeWindowListener.setString("Customer");
 
     }
 
@@ -58,7 +58,7 @@ public class AgentMenuController {
     public void showInsuranceMenu() {
         if(debug)
             System.out.println("Forsikring");
-        changeWindowListener.setPropertyString("Insurance");
+        changeWindowListener.setString("Insurance");
 
     }
 
@@ -66,7 +66,7 @@ public class AgentMenuController {
     public void showIncidentMenu() {
         if(debug)
             System.out.println("Hendelse");
-        changeWindowListener.setPropertyString("Incident");
+        changeWindowListener.setString("Incident");
 
     }
 
@@ -74,6 +74,6 @@ public class AgentMenuController {
     public void showStatisticsMenu() {
         if(debug)
             System.out.println("statistikk");
-        changeWindowListener.setPropertyString("statistics");
+        changeWindowListener.setString("statistics");
     }
 }

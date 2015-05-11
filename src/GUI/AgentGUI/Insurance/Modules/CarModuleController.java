@@ -8,7 +8,6 @@ import Insurance.Vehicle.CarInsurance;
 import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -20,12 +19,11 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.*;
+import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
-import static GUI.StartMain.currentCustomer;
-import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.*;
 import static Insurance.Vehicle.CarInsurance.bonusValues;
 import static Insurance.Vehicle.CarInsurance.kaskoValues;
@@ -67,7 +65,7 @@ public final class CarModuleController extends CommonInsuranceMethods
     @FXML
     ComboBox<String> paymentOption;
 
-    CarInsurance insurance;
+    private static CarInsurance insurance;
 
     @FXML
     @Override
@@ -83,9 +81,15 @@ public final class CarModuleController extends CommonInsuranceMethods
                                              .map(PaymentOption::getName)
                                              .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
-        addCSSValidation();
+        if (insuranceListener.get() instanceof CarInsurance) {
+            loadCurrentInsurance();
+            showInsurance();
+        } else {
+            clearFields();
+            makeInsurance();
+        }
         setListeners();
-        clearFields();
+        addCSSValidation();
     }
 
     @Override
@@ -148,42 +152,32 @@ public final class CarModuleController extends CommonInsuranceMethods
 
     @Override
     protected void setListeners() {
-
         addComboboxListener(kasko, bonus, yearlyKM, deductible, paymentOption);
         addTextfieldListener(modelYear, buyPrice);
-
-        emptyscreenButton.addListener(observable -> {
-            SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
-            if (bool.get())
-                clearFields();
-        });
+        setEmptyScreenListener();
+        setCurrentInsuranceListener(CarInsurance.class);
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
-            if (insuranceChoiceListener.getPropertyString().equals("[Bil]") && bool.get()) {
+            if (bool.get() && insuranceChoiceListener.getString().equals("Bil")) {
                 makeInsurance();
                 saveInsurance(insurance);
             }
         });
 
-        insuranceChoiceListener.getStringProperty().addListener(observable -> {
+        insuranceChoiceListener.getProperty().addListener(observable -> {
             SimpleStringProperty property = (SimpleStringProperty) observable;
-            if (property.get().equals("[Bil]"))
+            if (property.get().equals("Bil"))
                 makeInsurance();
         });
-
-        currentInsurance.getInsuranceProperty().addListener(
-                listener -> {
-                    Boolean isNotNull = currentInsurance.getInsuranceProperty().isNotNull().get();
-                    if (isNotNull && currentInsurance.getInsurance() instanceof CarInsurance) {
-                        insurance = (CarInsurance)currentInsurance.getInsurance();
-                        setInsurance();
-                    }
-                });
     }
 
     @Override
-    protected void setInsurance() {
+    protected void loadCurrentInsurance() {
+        CarModuleController.insurance  = (CarInsurance) insuranceListener.get();
+    }
+    @Override
+    protected void showInsurance() {
         if ( insurance.getEndDate() != null )
             freezeInput();
 
@@ -213,7 +207,7 @@ public final class CarModuleController extends CommonInsuranceMethods
         String yearlyKM = CarInsurance.kmValues.get(this.yearlyKM.getSelectionModel().getSelectedIndex());
 
         try {
-            insurance = new CarInsurance(fromDate.getValue(), parseInt(buyPrice), "comePolicy", currentCustomer.getPerson(), selectedPayment,
+            insurance = new CarInsurance(fromDate.getValue(), parseInt(buyPrice), "comePolicy", currentCustomer.get(), selectedPayment,
                     maker.getValue().toString(), model.getText(), parseInt(modelYear), parseInt(km), parseInt(horsePower), licenceNumber.getText(),
                     color.getText(), Integer.parseInt(deductible.getValue().toString()), bonus, kasko, yearlyKM);
             showPremium(insurance);

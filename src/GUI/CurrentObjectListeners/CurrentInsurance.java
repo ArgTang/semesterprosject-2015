@@ -7,7 +7,6 @@ import Insurance.Property.HouseholdContentsInsurance;
 import Insurance.TravelInsurance;
 import Insurance.Vehicle.BoatInsurance;
 import Insurance.Vehicle.CarInsurance;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 /**
@@ -15,13 +14,15 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public final class CurrentInsurance
 {
-    //todo: make generic?
-    private  final SimpleObjectProperty<Insurance> insuranseListener = new SimpleObjectProperty<>();
+/*
+    private final SimpleObjectProperty<? extends Insurance> insuranceListener = new SimpleObjectProperty<>();
 
-    public Insurance getInsurance() { return insuranseListener.get(); }
-    public void setProperty(Insurance insurance) { insuranseListener.set( insurance ); }
-    public ObjectProperty<Insurance> getInsuranceProperty() { return insuranseListener; }
-    public void reset() { insuranseListener.setValue(null); }
+    public <T extends Insurance> T getInsurance() { return insuranceListener.get(); }
+    public <? extends Insurance> void setInsurance(T insurance) { insuranceListener.set( insurance ); }*/
+    //todo: make generic?
+    public static final SimpleObjectProperty<Insurance> insuranceListener = new SimpleObjectProperty<>(null);
+
+    public void reset() { insuranceListener.setValue(null); }
 
     public static String getNameOfInsurance(Insurance insurance) {
         if (insurance instanceof HomeInsurance)

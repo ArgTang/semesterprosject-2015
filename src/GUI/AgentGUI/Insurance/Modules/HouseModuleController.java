@@ -1,17 +1,13 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.CurrentObjectListeners.CurrentInsurance;
-import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.CommonInsuranceMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
-import Insurance.Insurance;
 import Insurance.Property.HomeInsurance;
 import Person.Customer;
 import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,12 +20,11 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
+import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
-import static GUI.StartMain.currentCustomer;
-import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
 
@@ -67,8 +62,8 @@ public final class HouseModuleController extends CommonInsuranceMethods
     @FXML
     private ComboBox<String> paymentOption;
 
-    private ObservableList<String> buildingMaterials = FXCollections.observableArrayList();
-    private ObservableList<String> buildingTypes = FXCollections.observableArrayList();
+    private ObservableList<String> buildingMaterials = FXCollections.observableArrayList("Mur", "Tre");
+    private ObservableList<String> buildingTypes = FXCollections.observableArrayList("Rekkehus", "Enebolig", "Leilighet", "Tomannsbolig");
     private static HomeInsurance insurance;
 
     @FXML
@@ -79,19 +74,19 @@ public final class HouseModuleController extends CommonInsuranceMethods
                                              .map(PaymentOption::getName)
                                              .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
-        //todo: ENUM?
-        buildingMaterials.addAll("Mur", "Tre");
         constructedIn.setItems(buildingMaterials);
-
-        //todo: ENUM?
-        buildingTypes.addAll("Rekkehus", "Enebolig", "Leilighet", "Tomannsbolig");
         buildingTypes.sorted();
         buildingType.setItems(buildingTypes);
 
+        if (insuranceListener.get() instanceof HomeInsurance) {
+            loadCurrentInsurance();
+            showInsurance();
+        } else {
+            clearFields();
+            setCustomer();
+        }
         setListeners();
         addCSSValidation();
-        clearFields();
-        setCustomer();
     }
 
     @Override
@@ -128,40 +123,50 @@ public final class HouseModuleController extends CommonInsuranceMethods
 
     @Override
     protected void setListeners() {
-        emptyscreenButton.addListener(observable -> {
-            SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
-            if (bool.get())
-                clearFields();
-        });
-
         addComboboxListener(constructedIn, buildingType, deductible, paymentOption);
         addTextfieldListener(constructionYear, grossArea, primaryArea, taxedvalue);
+        setEmptyScreenListener();
+        setCurrentInsuranceListener(HomeInsurance.class);
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
-            if ( bool.get() && insuranceChoiceListener.getPropertyString().equals("Hus") ) {
+            if ( bool.get() && insuranceChoiceListener.getString().equals("Hus") ) {
                 System.out.println("saveinsurance");
                 makeInsurance();
                 saveInsurance(insurance);
             }
         });
 
-        insuranceChoiceListener.getStringProperty().addListener( observable -> {
+        insuranceChoiceListener.getProperty().addListener(observable -> {
             SimpleStringProperty property = (SimpleStringProperty) observable;
-            if (property.get().equals("[Hus]")) {
+            if (property.get().equals("Hus")) {
                 setCustomer();
                 makeInsurance();
             }
         });
+    }
 
-        currentInsurance.getInsuranceProperty().addListener(
-                listener -> {
-                    Boolean isNotNull = currentInsurance.getInsuranceProperty().isNotNull().get();
-                    if (isNotNull && currentInsurance.getInsurance() instanceof HomeInsurance) {
-                        insurance = (HomeInsurance) currentInsurance.getInsurance();
-                        setInsurance();
-                    }
-                });
+    @Override
+    protected void loadCurrentInsurance() {
+        HouseModuleController.insurance  = (HomeInsurance) insuranceListener.get();
+    }
+    @Override
+    protected void showInsurance() {
+        if (insurance.getEndDate() != null)
+            freezeInput();
+
+        adress.setText(insurance.getAdress());
+        city.setText(insurance.getCity());
+        setInt(citynumber, insurance.getCitynumber());
+        setInt(constructionYear, insurance.getConstructionYear());
+        setInt(grossArea, insurance.getGrossArea());
+        setInt(primaryArea, insurance.getPrimaryArea());
+        setInt(taxedvalue, insurance.getTaxedvalue());
+        constructedIn.setValue(insurance.getBuildingMaterial());
+        buildingType.setValue(insurance.getType());
+        deductible.setValue(insurance.getDeductable());
+        paymentOption.setValue(insurance.getPaymentOption().getName());
+        fromDate.setValue(insurance.getFromDate());
     }
 
     @Override
@@ -193,7 +198,7 @@ public final class HouseModuleController extends CommonInsuranceMethods
         PaymentOption selectedPayment = paymentOptions.get(paymentOption.getSelectionModel().getSelectedIndex());
 
         try {
-            insurance = new HomeInsurance(fromDate.getValue(), 0, "some policy", currentCustomer.getPerson(), selectedPayment,
+            insurance = new HomeInsurance(fromDate.getValue(), 0, "some policy", currentCustomer.get(), selectedPayment,
                     deductible.getValue(), adress.getText(), parseInt(citynumber), city.getText(), parseInt(constructionYear), constructedIn.getValue(),
                     parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
             showPremium(insurance);
@@ -204,24 +209,6 @@ public final class HouseModuleController extends CommonInsuranceMethods
                     parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
             showPremium(testinsurance);
         }
-    }
-    @Override
-    protected void setInsurance() {
-        if (insurance.getEndDate() != null)
-            freezeInput();
-
-        adress.setText(insurance.getAdress());
-        city.setText(insurance.getCity());
-        setInt(citynumber, insurance.getCitynumber());
-        setInt(constructionYear, insurance.getConstructionYear());
-        setInt(grossArea, insurance.getGrossArea());
-        setInt(primaryArea, insurance.getPrimaryArea());
-        setInt(taxedvalue, insurance.getTaxedvalue());
-        constructedIn.setValue(insurance.getBuildingMaterial());
-        buildingType.setValue(insurance.getType());
-        deductible.setValue(insurance.getDeductable());
-        paymentOption.setValue(insurance.getPaymentOption().getName());
-        fromDate.setValue(insurance.getFromDate());
     }
 
     @Override

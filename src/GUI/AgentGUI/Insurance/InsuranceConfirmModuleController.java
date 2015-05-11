@@ -16,7 +16,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
-import static GUI.StartMain.currentCustomer;
+import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.StartMain.currentInsurance;
 import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
 
@@ -75,8 +76,19 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
 
     @Override
     protected void setListeners() {
-        BooleanBinding insuranceIsNotChosen = currentInsurance.getInsuranceProperty().isNull();
-        endThis.disableProperty().bind(insuranceIsNotChosen);
+
+        BooleanBinding insuranceIsChosen = insuranceListener.isNotNull();
+        BooleanProperty isNotNull = new SimpleBooleanProperty(
+                insuranceListener.isNotNull().equals(true) &&
+                        insuranceListener.get().getEndDate().equals(null));
+        boolean b = true;
+        //BooleanBinding das = Bindings.when(() -> isNotNull);
+        //endThis.disableProperty().bind(insuranceIsChosen);
+        //endThis.disableProperty().bind(isNotNull);
+
+        confirmInsurance.disableProperty().bind(currentCustomer.isNull().and(insuranceListener.isNull()));
+        insuranceOffer.disableProperty().bind(currentCustomer.isNull());
+
 
         //confirmOrderButton.bind(confirmInsurance.pressedProperty());
         confirmInsurance.pressedProperty().addListener(new ChangeListener<Boolean>() {
@@ -89,8 +101,6 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
             }
         });
 
-        confirmInsurance.disableProperty().bind(currentCustomer.getPersonProperty().isNull());
-        insuranceOffer.disableProperty().bind(currentCustomer.getPersonProperty().isNull());
 
         bonusValue.textProperty().bind(bonusValueLabel);
         bonusValueLabel.addListener(observable -> {

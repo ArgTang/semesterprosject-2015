@@ -7,7 +7,8 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 
-import static java.lang.Math.*;
+import static java.lang.Math.log;
+import static java.lang.Math.pow;
 
 /**
  * Created by steinar on 27.03.2015.

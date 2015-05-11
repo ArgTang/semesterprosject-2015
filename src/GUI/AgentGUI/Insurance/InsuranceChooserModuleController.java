@@ -13,13 +13,12 @@ import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceLis
 public final class InsuranceChooserModuleController
 {
     @FXML
-    private ListView insuranceChooser;
+    private ListView<String> insuranceChooser;
 
-    private ObservableList<String> insuranceTypes = FXCollections.observableArrayList();
+    private ObservableList<String> insuranceTypes = FXCollections.observableArrayList("Hus", "Bil", "Båt", "Reise", "Innbo");
 
     @FXML
     private void initialize() {
-        insuranceTypes.addAll("Hus", "Bil", "Båt", "Reise", "Innbo");
         insuranceChooser.setItems(insuranceTypes);
         insuranceChooser.getSelectionModel().selectFirst();
         insuranceChooser.requestFocus(); //todo: find a way to set listwiev in focus
@@ -27,10 +26,10 @@ public final class InsuranceChooserModuleController
         insuranceChooser.getSelectionModel().selectedItemProperty().addListener(
                 event -> {
                     InsuranceConfirmModuleController.clearLabel();
-                    String choice = insuranceChooser.getSelectionModel().getSelectedItems().toString();
-                    insuranceChoiceListener.setPropertyString( choice );
+                    String choice = insuranceChooser.getSelectionModel().getSelectedItem();
+                    insuranceChoiceListener.setString(choice);
                 });
 
-        insuranceChoiceListener.setPropertyString( insuranceTypes.get(0) );
+       // insuranceChoiceListener.setPropertyString( insuranceTypes.get(0) );
     }
 }

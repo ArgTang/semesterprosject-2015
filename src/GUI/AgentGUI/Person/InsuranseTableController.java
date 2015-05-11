@@ -10,7 +10,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import static GUI.StartMain.*;
+import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
+import static GUI.StartMain.changeWindowListener;
+import static GUI.StartMain.insuranceRegister;
 
 /**
  * Created by steinar on 23.04.2015.
@@ -38,21 +41,23 @@ public class InsuranseTableController
         table.setPlaceholder(new Label("Ingen registrerte forsikringer")); //todo: add icon here?
         table.setItems(tableList);
 
-        if ( currentCustomer.getPersonProperty().isNotNull().get() )
-            setCustomer(currentCustomer.getPerson());
+        if ( currentCustomer.isNotNull().get() )
+            setCustomer(currentCustomer.get());
         setListeners();
     }
 
     private void setListeners() {
-        currentCustomer.getPersonProperty().addListener((observable, oldValue, newCustomer) -> {
+        currentCustomer.addListener((observable, oldValue, newCustomer) -> {
             if (newCustomer != null)
                 setCustomer(newCustomer);
+            else
+                tableList.clear();
         });
 
-        table.getSelectionModel().selectedItemProperty().addListener(
+         table.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldInsirance, newInsurance) -> {
                     if (newInsurance != null) {
-                        currentInsurance.setProperty(newInsurance);
+                        insuranceListener.set(newInsurance);
                     }
                 }
         );
@@ -62,10 +67,11 @@ public class InsuranseTableController
 /*            if (event.isPrimaryButtonDown()) {
                 Insurance  insurance= table.getSelectionModel().selectedItemProperty().get();
                 if (insurance != null)
-                    currentInsurance.setProperty(insurance);
+                    currentInsurance.setInsurance(insurance);
             }*/
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                changeWindowListener.setPropertyString("Insurance");
+                insuranceListener.set(table.getSelectionModel().selectedItemProperty().get());
+                changeWindowListener.setString("Insurance");
             }
         });
     }

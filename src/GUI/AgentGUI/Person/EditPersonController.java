@@ -1,10 +1,9 @@
 package GUI.AgentGUI.Person;
 
-import GUI.AgentGUI.Search.AgentSearchController;
+import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
-import GUI.StartMain;
 import Person.ContactInfo;
 import Person.Customer;
 import javafx.collections.FXCollections;
@@ -20,8 +19,9 @@ import javafx.scene.paint.Color;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static GUI.AgentGUI.Search.AgentSearchController.searchresults;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
-import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.customerRegister;
 
 /**
@@ -63,7 +63,7 @@ public class EditPersonController extends CommonGUIMethods
 
     @Override
     public void clearFields() {
-        currentCustomer.reset();
+        CustomerListener.reset();
         socialSecurityNumber.setEditable(true);
         resetTextFields(socialSecurityNumber, firstname, lastname, adress, citynumber, city, email);
         phones.clear();
@@ -81,7 +81,7 @@ public class EditPersonController extends CommonGUIMethods
 
     @Override
     protected void setListeners() {
-        currentCustomer.getPersonProperty().addListener(observable -> setCustomer());
+        currentCustomer.addListener(observable -> setCustomer());
 
         //todo: find a way to add cssValidation when editing Listview
         phonelist.setOnEditStart(new EventHandler<ListView.EditEvent>() {
@@ -107,7 +107,7 @@ public class EditPersonController extends CommonGUIMethods
     }
 
     protected void setCustomer() {
-        Customer customer = currentCustomer.getPerson();
+        Customer customer = currentCustomer.get();
         setRegisterButton();
         if (customer == null)
             return;
@@ -123,7 +123,7 @@ public class EditPersonController extends CommonGUIMethods
         phones.clear();
         customer.getPhoneNumbers()
                 .stream()
-                .map(i -> i.toString())
+                .map(Object::toString)
                 .forEach(phones::add);
         while (phones.size() < 3)
             phones.add("");
@@ -132,7 +132,7 @@ public class EditPersonController extends CommonGUIMethods
     // this will change the button text to new or change customer dependant on wether a currentcustomer is selected
     //todo: change na,e to something better
     private void setRegisterButton() {
-        if( currentCustomer.getPersonProperty().isNotNull().get()) {
+        if(currentCustomer.isNotNull().get()) {
             changeCustomerButton.setTextFill(Color.RED);
             changeCustomerButton.setText("Endre Kunde");
         } else {
@@ -160,14 +160,14 @@ public class EditPersonController extends CommonGUIMethods
 
         ContactInfo contactInfo = new ContactInfo(adress.getText(), Integer.parseInt( citynumber.getText() ), city.getText(), email.getText(), phonelist);
         Customer newcustomer = new Customer(firstname.getText(), lastname.getText(), personNumber, contactInfo);
-        Customer oldcustomer = currentCustomer.getPerson();
+        Customer oldcustomer = currentCustomer.get();
 
         oldcustomer.getInsuranceNumbers().stream().forEach(newcustomer::addInsuranceNumber);
         oldcustomer.getIncidentNumbers().stream().forEach(newcustomer::addIncidentNumber);
 
-        if ( currentCustomer.getPersonProperty().isNotNull().get()) {
+        if (currentCustomer.isNotNull().get()) {
             customerRegister.update(newcustomer);
-            currentCustomer.setProperty( customerRegister.get( personNumber ));
+            currentCustomer.set(customerRegister.get(personNumber));
         } else if ( customerRegister.get(socialSecurityNumber.getText()) != null ) {
             AlertWindow.messageDialog("denne personen finnes allerede i registeret, vennligst søk opp personen før du forsøker å endre", "kunde er allerede registrert");
         } else {
@@ -175,7 +175,7 @@ public class EditPersonController extends CommonGUIMethods
         }
 
         //TODO: update searchresult each time
-        AgentSearchController.searchresults.setAll(StartMain.customerRegister.getRegister());
+        searchresults.setAll(customerRegister.getRegister());
     }
 
     @Override

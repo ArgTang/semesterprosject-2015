@@ -1,17 +1,13 @@
 package GUI.AgentGUI.Insurance.Modules;
 
-import GUI.CurrentObjectListeners.CurrentInsurance;
-import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.CommonInsuranceMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
-import Insurance.Insurance;
 import Insurance.Property.HouseholdContentsInsurance;
 import Person.Customer;
 import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,12 +21,11 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
+import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
-import static GUI.StartMain.currentCustomer;
-import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
 
@@ -74,12 +69,15 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
                                              .map(PaymentOption::getName)
                                              .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
-        addCSSValidation();
-        clearFields();
+        if (insuranceListener.get() instanceof HouseholdContentsInsurance) {
+            loadCurrentInsurance();
+            showInsurance();
+        } else {
+            clearFields();
+            setCustomer();
+        }
         setListeners();
-        setCustomer();
-
-        //todo: if insurance selected -> set info into page
+        addCSSValidation();
     }
 
     @Override
@@ -135,44 +133,35 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
 
     @Override
     protected void setListeners() {
-        emptyscreenButton.addListener(observable -> {
-            SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
-            if (bool.get())
-                clearFields();
-        });
-
         addComboboxListener(numberOfrooms, numberOfPersons, deductible, paymentOption);
         addTextfieldListener(amount);
+        setEmptyScreenListener();
+        setCurrentInsuranceListener(HouseholdContentsInsurance.class);
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
-            if (insuranceChoiceListener.getPropertyString().equals("[Innbo]") && bool.get()) {
+            if (bool.get() && insuranceChoiceListener.getString().equals("Innbo")) {
                 System.out.println("saveinsurance");
                 makeInsurance();
                 saveInsurance(insurance);
             }
         });
 
-        insuranceChoiceListener.getStringProperty().addListener(observable -> {
+        insuranceChoiceListener.getProperty().addListener(observable -> {
             SimpleStringProperty property = (SimpleStringProperty) observable;
-            if (property.get().equals("[Innbo]")) {
+            if (property.get().equals("Innbo")) {
                 setCustomer();
                 makeInsurance();
             }
         });
-
-        currentInsurance.getInsuranceProperty().addListener(
-                listener -> {
-                    Boolean isNotNull = currentInsurance.getInsuranceProperty().isNotNull().get();
-                    if (isNotNull && currentInsurance.getInsurance() instanceof HouseholdContentsInsurance) {
-                        insurance = (HouseholdContentsInsurance) currentInsurance.getInsurance();
-                        setInsurance();
-                    }
-                });
     }
 
     @Override
-    protected void setInsurance() {
+    protected void loadCurrentInsurance() {
+        HouseholdContentsModuleController.insurance  = (HouseholdContentsInsurance) insuranceListener.get();
+    }
+    @Override
+    protected void showInsurance() {
         if ( insurance.getEndDate() != null )
             freezeInput();
 
@@ -196,7 +185,7 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
         try {
             insurance = new HouseholdContentsInsurance(adress.getText(), parseInt(citynumber), city.getText(), numberOfrooms.getValue(),
                     numberOfPersons.getValue(), fromDate.getValue(), parseInt(amount), "somePolicy",
-                    currentCustomer.getPerson(), selectedPayment, deductible.getValue());
+                    currentCustomer.get(), selectedPayment, deductible.getValue());
             showPremium(insurance);
         } catch (Exception e) {
             HouseholdContentsInsurance tempInsurance = new HouseholdContentsInsurance(adress.getText(), parseInt(citynumber), city.getText(), numberOfrooms.getValue(),

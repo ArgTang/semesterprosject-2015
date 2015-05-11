@@ -1,5 +1,6 @@
 package GUI.AgentGUI.Person;
 
+import GUI.StartMain;
 import Incident.Incident;
 import Person.Customer;
 import javafx.collections.FXCollections;
@@ -10,7 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import static GUI.StartMain.*;
+import static GUI.CurrentObjectListeners.CurrentIncident.incidentListener;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
+import static GUI.StartMain.incidentRegister;
 
 /**
  * Created by steinar on 23.04.2015.
@@ -32,8 +35,8 @@ public class IncidentTableController
 
     @FXML
     private void initialize() {
-        typeCollumn.setCellValueFactory(new PropertyValueFactory("type")); //todo getValue from Incident
-        yearCollumn.setCellValueFactory(new PropertyValueFactory("year")); //todo: Get LocalDate.year?
+        typeCollumn.setCellValueFactory(new PropertyValueFactory("type"));
+        yearCollumn.setCellValueFactory(new PropertyValueFactory("year"));
 
         table.setPlaceholder(new Label("Ingen registrerte hendelsere")); //todo: add icon here?
         table.setItems(tableList);
@@ -42,26 +45,28 @@ public class IncidentTableController
     }
 
     private void setListeners() {
-        currentCustomer.getPersonProperty().addListener((observable, oldValue, newCustomer) -> {
+        currentCustomer.addListener((observable, oldValue, newCustomer) -> {
             if (newCustomer != null)
                 setCustomer(newCustomer);
+            else
+                tableList.clear();
         });
 
         table.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldIncident, newIncident) -> {
                     if (newIncident != null)
-                        currentIncident.setProperty(newIncident);
+                        incidentListener.set(newIncident);
                 }
         );
 
         table.setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown()) {
-                Incident  incident= table.getSelectionModel().selectedItemProperty().get();
+                Incident  incident = table.getSelectionModel().selectedItemProperty().get();
                 if (incident != null)
-                    currentIncident.setProperty(incident);
+                    incidentListener.set(incident);
             }
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                changeWindowListener.setPropertyString("Incident");
+                StartMain.changeWindowListener.setString("Incident");
             }
         });
     }

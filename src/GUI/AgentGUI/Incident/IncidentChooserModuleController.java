@@ -29,9 +29,9 @@ public final class IncidentChooserModuleController
                 event -> {
                     InsuranceConfirmModuleController.clearLabel();
                     String choice = incidentChooser.getSelectionModel().getSelectedItems().toString();
-                    insuranceChoiceListener.setPropertyString( choice );
+                    insuranceChoiceListener.setString(choice);
                 });
 
-        insuranceChoiceListener.setPropertyString(incidentTypes.get(0));
+        insuranceChoiceListener.setString(incidentTypes.get(0));
     }
 }

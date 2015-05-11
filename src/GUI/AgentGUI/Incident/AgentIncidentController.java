@@ -2,7 +2,6 @@ package GUI.AgentGUI.Incident;
 
 
 import GUI.CurrentObjectListeners.WindowChangeListener;
-import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import Person.Person;
 import javafx.beans.property.*;
@@ -13,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import static GUI.StartMain.currentCustomer;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 
 /**
  * Created by steinar on 15.04.2015.
@@ -89,7 +88,7 @@ public final class AgentIncidentController
     }
 
     private void setListeners() {
-        incidentChoiceListener.getStringProperty().addListener(
+        /*stringListener.addListener(
                 observable -> {
                     StringProperty string = (StringProperty) observable;
                     switch (string.getValue()) {
@@ -99,9 +98,9 @@ public final class AgentIncidentController
                             AlertWindow.messageDialog("her kommer en rapportinnlevering", "ikke ferdig");
                     }
                 }
-        );
+        );*/
 
-        currentCustomer.getPersonProperty().addListener(
+        currentCustomer.addListener(
                 observable -> {
                     SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
                     Person person = property.getValue();
@@ -117,8 +116,8 @@ public final class AgentIncidentController
         grid.add(info, 1, 0);
         grid.add(kundenavn, 1, 1);
 
-        if ( currentCustomer.getPersonProperty().isNotNull().get() )
-            setCustomername( currentCustomer.getPerson() );
+        if ( currentCustomer.isNotNull().get() )
+            setCustomername( currentCustomer.get() );
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(grid, chooser);

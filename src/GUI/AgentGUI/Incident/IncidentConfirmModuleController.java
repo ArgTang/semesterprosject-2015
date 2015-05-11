@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static GUI.AgentGUI.Incident.AgentIncidentController.emptyscreenButton;
+import static GUI.CurrentObjectListeners.CurrentIncident.incidentListener;
 import static GUI.StartMain.currentIncident;
 
 /**
@@ -67,7 +68,7 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
 
         clearScheme.pressedProperty().addListener(listener -> {
             if (clearScheme.pressedProperty().get()) clearScheme();});
-        confirmIncident.disableProperty().bind(currentIncident.getIncidentProperty().isNull());
+        confirmIncident.disableProperty().bind(incidentListener.isNull());
         confirmIncident.onActionProperty().addListener(listener -> confirmIncident());
         confirmIncidentButton.bind(confirmIncident.pressedProperty());
 

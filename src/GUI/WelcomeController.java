@@ -2,7 +2,6 @@ package GUI;
 
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
-import GUI.GuiHelper.RegEX;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
@@ -17,6 +16,8 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
+import static GUI.GuiHelper.RegEX.*;
+
 
 /**
  * Created by steinar on 13.04.2015.
@@ -29,7 +30,7 @@ public final class WelcomeController
     private void login()
     {
         //todo: how to proceed from here
-        StartMain.changeWindowListener.setPropertyString("Agent");
+        StartMain.changeWindowListener.setString("Agent");
         //StartMain.changeWindowWindowListener.setPropertyObject(this.getClass()); todo: crash!
     }
 
@@ -78,8 +79,8 @@ public final class WelcomeController
         login.setOnAction(event -> login()); //this needs to check for passwords
         forgotPassword.setOnAction(event -> loadParent(makeDialog()));
 
-        RegEX.addCSSTextValidation(userNameInput, RegEX.isAllChars()); //usernameRegex?
-        RegEX.addCSSTextValidation(passwordInput, RegEX.isPassword());
+        addCSSTextValidation(userNameInput, isAllChars()); //usernameRegex?
+        addCSSTextValidation(passwordInput, isPassword());
 
         gridPane.add(userName, 0, 0);
         gridPane.add(userNameInput, 1, 0);
@@ -105,9 +106,9 @@ public final class WelcomeController
         PasswordField passwordInput = new PasswordField();
         PasswordField confirmPasswordInput = new PasswordField();
 
-        RegEX.addCSSTextValidation(userNameInput, RegEX.isAllChars());
-        RegEX.addCSSTextValidation(passwordInput, RegEX.isPassword());
-        RegEX.addCSSTextValidation(confirmPasswordInput, RegEX.isPassword());
+        addCSSTextValidation(userNameInput, isAllChars());
+        addCSSTextValidation(passwordInput, isPassword());
+        addCSSTextValidation(confirmPasswordInput, isPassword());
 
         GridPane gridPane = new GridPane();
         setGridOptions(gridPane);
@@ -126,8 +127,7 @@ public final class WelcomeController
         changePassword.setOnAction(
                 event ->
                 {
-                    if (RegEX.isLetters().test( userNameInput.getText() )) //TODO: get user from register
-                    {
+                    if (isLetters().test( userNameInput.getText())) { //TODO: get user from register
                         message.setValue("Finner ikke bruker");
                     }
                     else if (!passwordInput.getText().equals( confirmPasswordInput.getText() ))

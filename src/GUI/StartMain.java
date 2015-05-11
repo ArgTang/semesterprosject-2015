@@ -8,7 +8,10 @@ import GUI.AgentGUI.Incident.AgentIncidentController;
 import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.AgentGUI.Person.PersonController;
 import GUI.AgentGUI.Search.AgentSearchController;
-import GUI.CurrentObjectListeners.*;
+import GUI.CurrentObjectListeners.CurrentIncident;
+import GUI.CurrentObjectListeners.CurrentInsurance;
+import GUI.CurrentObjectListeners.CustomerListener;
+import GUI.CurrentObjectListeners.WindowChangeListener;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import Register.RegisterCustomer;
@@ -16,9 +19,6 @@ import Register.RegisterIncident;
 import Register.RegisterInsurance;
 import Test.MakePersons;
 import javafx.application.Application;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -38,7 +38,7 @@ public class StartMain extends Application
     private BorderPane rootLayout = new BorderPane();
     private Fader fade = new Fader();
 
-    public static final CurrentCustomer currentCustomer = new CurrentCustomer();
+    public static final CustomerListener currentCustomer = new CustomerListener();
     public static final CurrentInsurance currentInsurance = new CurrentInsurance();
     public static final CurrentIncident currentIncident = new CurrentIncident();                            //todo: change this? more generic
 
@@ -47,14 +47,12 @@ public class StartMain extends Application
     public static RegisterIncident incidentRegister = new RegisterIncident();
 
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
-    @Deprecated
-    public static final WindowWindowListener changeWindowWindowListener = new WindowWindowListener();     //todo: change to this? more generic
-
     //"storage" for the different Panes
     private static Parent welcome, agentSearch, agentPerson, agentMenu, agentInsurance, agentIncident, agentStatistics;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         //generate Customers in new thread -> might be faster when we generate insurance\incidentCases
         Runnable newthread =
                 () -> { MakePersons.makeCustomers(1000);
@@ -76,7 +74,7 @@ public class StartMain extends Application
         rootLayout.setPadding(new Insets(5, 5, 5, 5));
         rootLayout.setPrefSize(SCREEN.getWidth() / 1.35, SCREEN.getHeight() / 1.5); //todo: change this maybe?
 
-        startup();
+        getLoginPane();
         makePanes();
 
         //adding rules for CSS Validation
@@ -94,7 +92,7 @@ public class StartMain extends Application
         launch(args);
     }
 
-    private void startup() throws IOException {
+    private void getLoginPane() throws IOException {
         if (welcome == null) {
             WelcomeController welcomeController = new WelcomeController();
             welcome = welcomeController.initWelcome();
@@ -122,6 +120,7 @@ public class StartMain extends Application
         return agentMenu;
     }
 
+    @Deprecated //todo: find another way
     private void makePanes(){
         AgentIncidentController incidentController = new AgentIncidentController();
         agentIncident  = incidentController.initAgentIncidentView();
@@ -166,41 +165,29 @@ public class StartMain extends Application
     }
 
     private void setListeners() throws IOException {
-        changeWindowListener.getStringProperty().addListener(
-                observable -> {
-                    StringProperty string = (StringProperty) observable;
-                    switch (string.getValue()) {
+        changeWindowListener.getProperty().addListener(
+                action -> {
+                    switch (changeWindowListener.getString()) {
                         case "Customer":
-                            loadParent( getAgentPersonPane() );
+                            loadParent(getAgentPersonPane());
                             break;
                         case "Insurance":
-                            loadParent( getInsurancePane() );
+                            loadParent(getInsurancePane());
                             break;
                         case "Incident":
-                            loadParent( getIncidentPane() );
+                            loadParent(getIncidentPane());
                             break;
                         case "statistics":
                             AlertWindow.messageDialog("her kommer  snart statistikkskjerm", "statistikkskjerm");
                             break;
                         case "Agent":
                         default:
-                            loadParent( getAgenSearchPane() );
+                            loadParent(getAgenSearchPane());
                             rootLayout.setTop(getAgentMenu());
                             break;
                     }
                 }
         );
-    }
-
-    //todo: make us switch screens by not using a hardcoded String
-    private void initWindowInvalidationListener() throws IOException {
-        changeWindowWindowListener.getObjectProperty().addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
-                System.out.println("windowwindow");
-                System.out.println(observable instanceof Stage);
-            }
-        });
     }
 
     private void loadParent(Parent scene) {

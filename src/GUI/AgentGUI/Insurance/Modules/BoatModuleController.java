@@ -4,19 +4,14 @@ package GUI.AgentGUI.Insurance.Modules;
  * Created by steinar on 27.04.2015.
  */
 
-import GUI.CurrentObjectListeners.CurrentInsurance;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonInsuranceMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Helper.PaymentOption;
-import Insurance.Insurance;
-import Insurance.Property.HouseholdContentsInsurance;
 import Insurance.Vehicle.BoatInsurance;
 import Register.RegisterCustomer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -26,16 +21,15 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
-import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
+import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
-import static GUI.StartMain.currentCustomer;
-import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
-import static Insurance.Vehicle.BoatInsurance.*;
 import static Insurance.Vehicle.BoatInsurance.minBoatValueforMandatoryRegistration;
+import static Insurance.Vehicle.BoatInsurance.types;
 import static Insurance.Vehicle.VehicleInsurance.kaskoValues;
 
 public final class BoatModuleController extends CommonInsuranceMethods
@@ -85,9 +79,15 @@ public final class BoatModuleController extends CommonInsuranceMethods
                                              .map(PaymentOption::getName)
                                              .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
-        addCSSValidation();
-        clearFields();
+        if (insuranceListener.get() instanceof BoatInsurance) {
+            loadCurrentInsurance();
+            showInsurance();
+        } else {
+            clearFields();
+            makeInsurance();
+        }
         setListeners();
+        addCSSValidation();
     }
 
     @Override
@@ -121,7 +121,6 @@ public final class BoatModuleController extends CommonInsuranceMethods
 
     @Override
     protected boolean checkValidation() {
-
         //todo: what if we want to give feedbavk to user for what and witch Textfield are wrong ??
         if ( !validationIsOk(0, size, speed, motorsize))
             return false;
@@ -145,39 +144,25 @@ public final class BoatModuleController extends CommonInsuranceMethods
         addComboboxListener(type, kasko, deductible, paymentOption);
         addTextfieldListener(speed, size, motorsize, modelYear);
 
-        emptyscreenButton.addListener(observable -> {
-            SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
-            if (bool.get())
-                clearFields();
-        });
-
-        currentInsurance.getInsuranceProperty().addListener(
-                listener -> {
-                    Boolean isNotNull = currentInsurance.getInsuranceProperty().isNotNull().get();
-                    if (isNotNull && currentInsurance.getInsurance() instanceof BoatInsurance) {
-                        insurance = (BoatInsurance)currentInsurance.getInsurance();
-                        setInsurance();
-                    }
-                });
+        setEmptyScreenListener();
+        setInsurancechoiceListeners("[Båt]");
+        setCurrentInsuranceListener(BoatInsurance.class);
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
-            if (insuranceChoiceListener.getPropertyString().equals("[Båt]") && bool.get()) {
+            if (bool.get() && insuranceChoiceListener.getString().equals("Båt")) {
                 makeInsurance();
                 saveInsurance(insurance);
-            }
-        });
-
-        insuranceChoiceListener.getStringProperty().addListener(observable -> {
-            SimpleStringProperty property = (SimpleStringProperty) observable;
-            if (property.get().equals("[Båt]")) {
-                makeInsurance();
             }
         });
     }
 
     @Override
-    protected void setInsurance() {
+    protected void loadCurrentInsurance() {
+        BoatModuleController.insurance  = (BoatInsurance) insuranceListener.get();
+    }
+    @Override
+    protected void showInsurance() {
         if ( insurance.getEndDate() != null )
             freezeInput();
         licenceNumber.setText(insurance.getLicenceNumber());
@@ -204,7 +189,7 @@ public final class BoatModuleController extends CommonInsuranceMethods
 
         PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
         try {
-            insurance = new BoatInsurance(fromDate.getValue(), parseInt(buyPrice),"somePolicy", currentCustomer.getPerson(),
+            insurance = new BoatInsurance(fromDate.getValue(), parseInt(buyPrice),"somePolicy", currentCustomer.get(),
                     selectedPayment, maker.getText(), model.getText(), parseInt(modelYear), parseInt(motorsize),
                     parseInt(speed), parseInt(size), type.getSelectionModel().getSelectedItem(), harbor.getText(),
                     kasko.getSelectionModel().getSelectedItem(), deductible.getSelectionModel().getSelectedItem() );

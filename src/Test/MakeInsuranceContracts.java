@@ -9,7 +9,7 @@ import Person.Customer;
 import java.time.LocalDate;
 import java.util.Random;
 
-import static Insurance.Insurance.*;
+import static Insurance.Insurance.paymentOptions;
 
 /**
  * Created by nugGet on 22.04.2015.

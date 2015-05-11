@@ -10,7 +10,7 @@ public final class WindowChangeListener
 {
     private final StringProperty stringListener = new SimpleStringProperty();
 
-    public String getPropertyString() { return stringListener.get(); }
-    public void setPropertyString( String string ) { stringListener.set( string ); }
-    public StringProperty getStringProperty() { return stringListener; }
+    public String getString() { return stringListener.get(); }
+    public void setString( String string ) { stringListener.set( string ); }
+    public StringProperty getProperty() { return stringListener; }
 }

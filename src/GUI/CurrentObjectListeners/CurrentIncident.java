@@ -10,10 +10,13 @@ import javafx.beans.property.SimpleObjectProperty;
 public final class CurrentIncident
 {
     //todo: make generic?
-    private final SimpleObjectProperty<Incident> incidentListener = new SimpleObjectProperty<>();
+    public static final SimpleObjectProperty<Incident> incidentListener = new SimpleObjectProperty<>(null);
 
+    @Deprecated
     public Incident getIncident() { return incidentListener.get(); }
+    @Deprecated
     public void setProperty(Incident incident) { incidentListener.set(incident); }
+    @Deprecated
     public ObjectProperty<Incident> getIncidentProperty() { return incidentListener; }
     public void reset() { incidentListener.setValue(null); }
 }

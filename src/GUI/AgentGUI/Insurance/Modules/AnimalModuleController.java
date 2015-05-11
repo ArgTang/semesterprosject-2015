@@ -1,7 +1,6 @@
 package GUI.AgentGUI.Insurance.Modules;
 
 import GUI.AgentGUI.Insurance.AgentInsuranceController;
-import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.CommonInsuranceMethods;
 import GUI.GuiHelper.RegEX;
 import Insurance.Animal.AnimalInsurance;
@@ -19,6 +18,7 @@ import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
+import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
 import static GUI.GuiHelper.RegEX.*;
 import static Insurance.Insurance.paymentOptions;
 
@@ -119,7 +119,7 @@ public final class AnimalModuleController extends CommonInsuranceMethods
 
         confirmOrderButton.addListener(observable -> {
             BooleanProperty bool = (BooleanProperty) observable;
-            if (insuranceChoiceListener.getPropertyString().equals("[Hus]") && bool.get()) {
+            if (bool.get() && insuranceChoiceListener.getString().equals("Hus")) {
                 makeInsurance();
                 saveInsurance(insurance);
             }
@@ -133,9 +133,12 @@ public final class AnimalModuleController extends CommonInsuranceMethods
                     //catmaxage = 13
                 });
     }
-
     @Override
-    protected void setInsurance() {
+    protected void loadCurrentInsurance() {
+        AnimalModuleController.insurance  = (AnimalInsurance) insuranceListener.get();
+    }
+    @Override
+    protected void showInsurance() {
 
     }
 
