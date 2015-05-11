@@ -1,8 +1,10 @@
 package GUI.AgentGUI.Incident;
 
+import GUI.GuiHelper.CommonInsuranceMethods;
 import Person.Person;
 import javafx.beans.property.*;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -11,6 +13,7 @@ import javafx.scene.layout.VBox;
 
 import static GUI.CurrentObjectListeners.CurrentIncident.incidentListener;
 import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
+import static GUI.GuiHelper.CommonInsuranceMethods.setBoldFont;
 import static java.lang.String.valueOf;
 
 /**
@@ -130,10 +133,5 @@ public final class AgentIncidentController
             return;
 
         incidentID.setText( valueOf(incidentListener.get().getIncidentID()));
-    }
-
-    private void setBoldFont(Label... labels){
-        for(Label label: labels)
-            label.setStyle("-fx-font-weight: bold;");
     }
 }

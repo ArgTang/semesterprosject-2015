@@ -119,4 +119,9 @@ public abstract class CommonInsuranceMethods extends CommonGUIMethods
         for (Node UserEditableNode: UserEditableNodes)
             UserEditableNode.setDisable(value);
     }
+
+    public static void setBoldFont(Node... nodes){
+        for(Node node: nodes)
+            node.setStyle("-fx-font-weight: bold;");
+    }
 }

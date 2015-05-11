@@ -25,7 +25,8 @@ public final class AgentInsuranceController
 {
     private static BorderPane container = new BorderPane();
     private Fader fade = new Fader();
-    private Label kundenavn = new Label();
+    private Label customerName = new Label();
+    private Label Insuranceinfo = new Label();
 
     private final StringProperty selectedCustomerName = new SimpleStringProperty();
     public static final BooleanProperty emptyscreenButton = new SimpleBooleanProperty(false);
@@ -36,8 +37,8 @@ public final class AgentInsuranceController
 
     public Parent initAgentInsuranceView() {
 
-        kundenavn.textProperty().bind(selectedCustomerName);
-        kundenavn.setStyle("-fx-font-weight: bold;");
+        customerName.textProperty().bind(selectedCustomerName);
+        customerName.setStyle("-fx-font-weight: bold;");
 
         confirmModule = showConfirmModule();
         chooserModule = setlabel(showChooserModule());
@@ -166,8 +167,10 @@ public final class AgentInsuranceController
     private Parent setlabel(Parent chooser) {
         GridPane grid= new GridPane();
         Label info = new Label("Du behandler nå:");
-        grid.add(info, 1, 0);
-        grid.add(kundenavn, 1, 1);
+        grid.add(info, 0, 0);
+        grid.add(customerName, 0, 1);
+        //grid.add(incidentInfo, 0, 2);
+        //grid.add(incidentID, 1, 2);
 
         if ( currentCustomer.isNotNull().get() )
             setCustomername( currentCustomer.get() );
