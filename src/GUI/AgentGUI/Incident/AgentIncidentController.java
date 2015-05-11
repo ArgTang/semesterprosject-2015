@@ -1,8 +1,5 @@
 package GUI.AgentGUI.Incident;
 
-
-import GUI.CurrentObjectListeners.WindowChangeListener;
-import GUI.GuiHelper.Fader;
 import Person.Person;
 import javafx.beans.property.*;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +9,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import static GUI.CurrentObjectListeners.CurrentIncident.incidentListener;
 import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
+import static java.lang.String.valueOf;
 
 /**
  * Created by steinar on 15.04.2015.
@@ -23,28 +22,25 @@ import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 public final class AgentIncidentController
 {
     private static BorderPane container = new BorderPane();
-    private Fader fade = new Fader();
-    private Label kundenavn = new Label();
+    private Label customerName = new Label();
+    Label incidentID = new Label();
+    Label incidentInfo = new Label("valgt Hendelse: ");
 
     private final StringProperty selectedCustomerName = new SimpleStringProperty();
     public static final BooleanProperty emptyscreenButton = new SimpleBooleanProperty(false);
 
-    public static final WindowChangeListener incidentChoiceListener = new WindowChangeListener();
-
     private static Parent chooserModule, confirmModule, incidentReport;
 
     public Parent initAgentIncidentView() {
-
-        kundenavn.textProperty().bind(selectedCustomerName);
-        kundenavn.setStyle("-fx-font-weight: bold;");
+        customerName.textProperty().bind(selectedCustomerName);
+        setBoldFont(customerName, incidentID);
 
         chooserModule = setlabel( showChooserModule() );
         confirmModule = showConfirmModule();
         setListeners();
 
         container.setLeft(chooserModule);
-        if( container.getCenter() == null)
-            container.setCenter( showIncidentReport() );
+        container.setCenter( showIncidentReport() );
         container.setRight(confirmModule);
         return container;
     }
@@ -81,12 +77,6 @@ public final class AgentIncidentController
         return scene;
     }
 
-    private void setFade(Parent scene) {
-        fade.setFading(scene);
-        container.setCenter(scene);
-        fade.setupFadeout(scene);
-    }
-
     private void setListeners() {
         /*stringListener.addListener(
                 observable -> {
@@ -100,21 +90,27 @@ public final class AgentIncidentController
                 }
         );*/
 
+        incidentListener.addListener( listener -> {
+            setIncidentLabel();
+        });
+
         currentCustomer.addListener(
-                observable -> {
-                    SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
-                    Person person = property.getValue();
-                    if (person != null)
-                        setCustomername(person);
-                }
+            observable -> {
+                SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
+                Person person = property.getValue();
+                if (person != null)
+                    setCustomername(person);
+            }
         );
     }
 
     private Parent setlabel(Parent chooser) {
         GridPane grid= new GridPane();
         Label info = new Label("Du behandler nå:");
-        grid.add(info, 1, 0);
-        grid.add(kundenavn, 1, 1);
+        grid.add(info, 0, 0);
+        grid.add(customerName, 0, 1);
+        grid.add(incidentInfo, 0, 2);
+        grid.add(incidentID, 1, 2);
 
         if ( currentCustomer.isNotNull().get() )
             setCustomername( currentCustomer.get() );
@@ -127,5 +123,17 @@ public final class AgentIncidentController
     private void setCustomername(Person person) {
         String navnet = person.getFirstName() + " " + person.getLastName();
         selectedCustomerName.setValue(navnet);
+    }
+
+    private void setIncidentLabel() {
+        if (incidentListener.isNull().get())
+            return;
+
+        incidentID.setText( valueOf(incidentListener.get().getIncidentID()));
+    }
+
+    private void setBoldFont(Label... labels){
+        for(Label label: labels)
+            label.setStyle("-fx-font-weight: bold;");
     }
 }
