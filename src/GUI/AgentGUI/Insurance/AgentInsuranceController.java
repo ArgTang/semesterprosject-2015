@@ -32,7 +32,7 @@ public final class AgentInsuranceController
 
     public static final WindowChangeListener insuranceChoiceListener = new WindowChangeListener();
 
-    private static Parent chooserModule, confirmModule, house, car, animal, travel, boat, household;
+    private Parent chooserModule, confirmModule, house, car, animal, travel, boat, household;
 
     public Parent initAgentInsuranceView() {
 

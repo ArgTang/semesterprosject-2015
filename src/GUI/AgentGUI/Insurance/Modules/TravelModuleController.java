@@ -114,7 +114,6 @@ public final class TravelModuleController extends CommonInsuranceMethods
         int types = insurance.isTravelPluss() ?  1:0;
         showtype.setText(type.getItems().get(types));
         showpaymentOption.setText(insurance.getPaymentOption().getName());
-        confirmOrderButton.setValue(false);
     }
 
     @Override

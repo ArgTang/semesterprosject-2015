@@ -40,7 +40,7 @@ public class StartMain extends Application
 
     public static final CustomerListener currentCustomer = new CustomerListener();
     public static final CurrentInsurance currentInsurance = new CurrentInsurance();
-    public static final CurrentIncident currentIncident = new CurrentIncident();                            //todo: change this? more generic
+    public static final CurrentIncident currentIncident = new CurrentIncident();
 
     public static final RegisterCustomer customerRegister = new RegisterCustomer();
     public static final RegisterInsurance insuranceRegister = new RegisterInsurance();

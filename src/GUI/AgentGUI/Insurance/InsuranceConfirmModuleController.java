@@ -76,31 +76,12 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
 
     @Override
     protected void setListeners() {
-
-        BooleanBinding insuranceIsChosen = insuranceListener.isNotNull();
-        BooleanProperty isNotNull = new SimpleBooleanProperty(
-                insuranceListener.isNotNull().get() &&
-                        insuranceListener.get().getEndDate()== null);
-        boolean b = true;
-        //BooleanBinding das = Bindings.when(() -> isNotNull);
-        //endThis.disableProperty().bind(insuranceIsChosen);
-        //endThis.disableProperty().bind(isNotNull);
+        BooleanProperty isNotNull = new SimpleBooleanProperty( insuranceListener.isNotNull().get() && insuranceListener.get().getEndDate()== null);
+        endThis.disableProperty().bind(isNotNull.not());
 
         confirmInsurance.disableProperty().bind(currentCustomer.isNull().and(insuranceListener.isNull()));
-        insuranceOffer.disableProperty().bind(currentCustomer.isNull());
-
-
-        //confirmOrderButton.bind(confirmInsurance.pressedProperty());
-        confirmInsurance.pressedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    confirmOrderButton.set(true);
-                    confirmOrderButton.set(false);
-                }
-            }
-        });
-
+        confirmOrderButton.bind(confirmInsurance.pressedProperty());
+        //insuranceOffer.disableProperty().bind(currentCustomer.isNull()); //todo: when offer is implemented
 
         bonusValue.textProperty().bind(bonusValueLabel);
         bonusValueLabel.addListener(observable -> {
@@ -117,9 +98,11 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
     @FXML
     private void endInsurance() {
         Optional<LocalDate> result = makeDialog();
-        if ( result.isPresent() )
+        if ( result.isPresent() ) {
+
+
             AlertWindow.confirmDialog(result.toString(), "svar");
-        else
+        } else
             AlertWindow.confirmDialog("tomt resultat", "svar");
     }
 
@@ -129,6 +112,7 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
         if( AlertWindow.confirmDialog("Vil du tømme Skjema?", "tøm skjema") ) {
             currentInsurance.reset();
             description.setText("");
+            clearLabel();
 
             Runnable newthread = () -> {
                 emptyscreenButton.setValue(true);
@@ -147,7 +131,6 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
     @FXML
     private void confirmInsurance() {
 
-        AlertWindow.messageDialog("Opprettet Forsikring", "Opprettet Forsikring");
     }
 
     public static void clearLabel() {
@@ -202,5 +185,4 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
     protected boolean checkValidation() {
         throw new NoSuchMethodError("InsuranceConfirmModule dont have a need for this function");
     }
-
 }
