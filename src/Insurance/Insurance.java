@@ -14,7 +14,7 @@ import java.util.Set;
 
 import static GUI.CurrentObjectListeners.CurrentInsurance.getNameOfInsurance;
 
-/**
+/** Superclass for all our insurances.
  * Created by steinar on 27.03.2015.
  * Base information for the different insurance types
  */
@@ -52,11 +52,12 @@ public abstract class Insurance implements Serializable
         }
     }
 
-    public int setCasenumber(int casenumber) {
+    public void setCasenumber(int casenumber) {
         //deny new casenumber if alreaddy given
         if (this.casenumber < 1)
             this.casenumber = casenumber;
-        return casenumber;
+        else
+            throw new IllegalArgumentException("This insurance already have a caseNumber. You can only assign a casenumber once");
     }
 
     public void addIncident(Incident incident) {

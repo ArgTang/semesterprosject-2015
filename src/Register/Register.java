@@ -9,6 +9,8 @@ import java.util.Map;
  * Created by steinar on 28.04.2015.
  *
  * superclass for our registers
+ * Methods to add and update entries. Theres not a way to delete entries, this is intended.
+ * Theres also methods for writing to\from file
  * //linky; https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
  */
 abstract class Register {

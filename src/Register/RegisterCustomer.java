@@ -10,6 +10,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
+ * this class is the register for storing Customer Objects
+ * the tempcustomer is used for displaying Insurance pricing when no customer is selected
+ * Predicates defines what you are searching for in the searchmethod
  * Created by steinar on 28.04.2015.
  */
 public final class RegisterCustomer extends Register {
@@ -37,7 +40,7 @@ public final class RegisterCustomer extends Register {
         Collection<Customer> col = super.getRegister();
         return col.stream()
                   .filter(customer -> customer.getPhoneNumbers().stream()
-                          .anyMatch(i -> i == phone))
+                                                                .anyMatch(i -> i == phone))
                   .collect(Collectors.toList());
     }
 

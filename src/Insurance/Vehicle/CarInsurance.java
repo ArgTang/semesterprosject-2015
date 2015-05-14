@@ -16,13 +16,6 @@ import static java.lang.Math.pow;
  */
 public final class CarInsurance extends VehicleInsurance {
 
-    private int totalKilometer, horsePower;
-    byte bonus; //todo: maybe arraylist -> observable list see Agentgui.insurance.CarModuleController
-    private String licenceNumber;
-    private String color;
-
-    private String yearlyKm;
-
     public static final ObservableList<Integer> bonusValues = FXCollections.observableArrayList(0, 10, 20, 30, 40, 50, 60, 70, 75);
     public static final ObservableList<String> kmValues = FXCollections.observableArrayList("8 000km", "12 000km", "16 000km", "ubegrenset km");
     public static final ObservableList<String> type = FXCollections.observableArrayList(
@@ -36,6 +29,11 @@ public final class CarInsurance extends VehicleInsurance {
             "Morgan","Morris","Nissan","Oldsmobile","Opel","Peugeot","Plymouth","Pontiac","Porche","Renault","Reva",
             "Rolls Royce","Rover","Saab","Seat","Skoda","Smart","Ssangyong","Subaru","Suzuki","Tesla","Think","Toyota",
             "Triumph","Volkswagen","Volvo","Andre");
+    byte bonus; //todo: maybe arraylist -> observable list see Agentgui.insurance.CarModuleController
+    private int totalKilometer, horsePower;
+    private String licenceNumber;
+    private String color;
+    private String yearlyKm;
 
     public CarInsurance(LocalDate validfrom, int itemValue, String insurancePolicy, Customer customer, PaymentOption paymentOption, String maker, String model,
                         int productionYear, int totalKilometer, int horsePower, String licenceNumber, String color, int deductable, int bonus, String kasko, String yearlyKm) {
@@ -63,8 +61,10 @@ public final class CarInsurance extends VehicleInsurance {
         return yearlyKm;
     }
 
-
-
+    /**
+     * This function will calculate current bonus for this insurance
+     * @return
+     */
     public int getCurrentBonus() {
         int years = LocalDate.now().getYear() - getFromYear();
         int totalbonus = bonus + (years*10);
@@ -82,6 +82,9 @@ public final class CarInsurance extends VehicleInsurance {
         return totalbonus;
     }
 
+    /**
+     * This method calculates the annual premium
+     */
     private void calculateAndSetAnnualPremium() {
         int km = getTotalKilometer();
         int horsepower = getHorsePower();

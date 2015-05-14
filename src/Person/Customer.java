@@ -4,7 +4,9 @@ package Person;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/** Class for Customer information
+ * List<Integer> for storing caasenumbers. This is for easier access to insurance\incidents, so we dont have to search
+ * through the whole register when we need cases connected to a customer
  * Created by steinar on 27.03.2015.
  */
 public final class Customer extends Person

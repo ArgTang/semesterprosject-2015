@@ -8,7 +8,8 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 
-/**
+/** Superclass for vehicleInsurance
+ * contains observablelist used mainly to display in GUI Combobox
  * Created by steinar on 27.03.2015.
  */
 public abstract class VehicleInsurance extends Insurance

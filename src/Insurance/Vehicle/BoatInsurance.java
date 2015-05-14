@@ -32,28 +32,32 @@ public final class BoatInsurance extends VehicleInsurance
         this.feet = feet;
         this.boattype = boattype;
         this.harbor = harbor;
-        calculatePremium();
+        calculateAndSetAnnualPremium();
     }
 
     public int getKnots() { return knots; }
     public int getFeet() { return feet; }
-
     public int getHorsepower() {
         return horsepower;
     }
-
     public String getBoattype() {
         return boattype;
     }
-
     public String getLicenceNumber() {
         return licenceNumber;
+    }
+    public String getharbor() {
+        return harbor;
     }
 
     public void setRegistrationNumber(String registrationnumber) { this.licenceNumber = registrationnumber; }
 
-    private void calculatePremium() {
-        double base = (getItemValue()+2000) * 0.005;
+
+    /**
+     * This method Calculates Premium
+     */
+    private void calculateAndSetAnnualPremium() {
+        double base = (getItemValue() + 2000) * 0.005;
         double age = LocalDate.now().getYear() - getProductionYear();
         double poweradjust = log(horsepower) + log(pow(knots, 2));
 
@@ -63,15 +67,11 @@ public final class BoatInsurance extends VehicleInsurance
         if (boattype.equals(types.get(1)))
             typeAdjust = 10;
 
-        double sizeadjust = (double)feet/ (double)typeAdjust;
-        double helperadjuster = (12000 - getDeductable())/500 + pow(poweradjust, age/10);
+        double sizeadjust = (double) feet / (double) typeAdjust;
+        double helperadjuster = (12000 - getDeductable()) / 500 + pow(poweradjust, age / 10);
 
-        double total = ((base*helperadjuster)/8)*sizeadjust;
+        double total = ((base * helperadjuster) / 8) * sizeadjust;
 
-        setAnnualPremium((int)total);
-    }
-
-    public String getharbor() {
-        return harbor;
+        setAnnualPremium((int) total);
     }
 }

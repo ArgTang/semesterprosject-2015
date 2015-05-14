@@ -10,15 +10,12 @@ import Insurance.Vehicle.CarInsurance;
 import javafx.beans.property.SimpleObjectProperty;
 
 /**
+ * Class for storing the insurance that is currently being worked on
  * Created by steinar on 19.04.2015.
  */
+
 public final class CurrentInsurance
 {
-/*
-    private final SimpleObjectProperty<? extends Insurance> insuranceListener = new SimpleObjectProperty<>();
-
-    public <T extends Insurance> T getInsurance() { return insuranceListener.get(); }
-    public <? extends Insurance> void setInsurance(T insurance) { insuranceListener.set( insurance ); }*/
     //todo: make generic?
     public static final SimpleObjectProperty<Insurance> insuranceListener = new SimpleObjectProperty<>(null);
 

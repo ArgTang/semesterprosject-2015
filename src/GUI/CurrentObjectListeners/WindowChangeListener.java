@@ -4,6 +4,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
+ * Class that store the type of window that is shown.
+ * When this property is changed, windowControllers will show the window requested
  * Created by steinar on 17.04.2015.
  */
 public final class WindowChangeListener

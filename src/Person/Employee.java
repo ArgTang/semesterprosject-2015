@@ -1,12 +1,11 @@
 package Person;
 
 
-/**
+/** Class for storing info about our Agents
  * Created by steinar on 27.03.2015.
  */
 public final class Employee extends Person
 {
-
     private String jobTitle;
     private static int idCount = 00001;
     private String employeeId;

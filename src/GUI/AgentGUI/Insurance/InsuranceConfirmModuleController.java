@@ -2,10 +2,7 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;

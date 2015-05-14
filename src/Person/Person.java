@@ -4,11 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-/**
+/**Superclass for PersonObjects
  * Created by steinar on 27.03.2015.
  */
-public abstract class Person implements Serializable
-{
+public abstract class Person implements Serializable {
     private static final long serialVersionUID = 6526472295622776147L;
     private String firstName;
     private String lastName;
@@ -26,25 +25,31 @@ public abstract class Person implements Serializable
     public String getFirstName() {
         return firstName;
     }
+
     public String getLastName() {
         return lastName;
     }
+
     public String getAdress() {
         return contactInfo.getAddress();
     }
+
     public String getCity() {
         return contactInfo.getCity();
     }
+
     public int getCitynumber() {
         return contactInfo.getCitynumber();
     }
+
     public String getEmail() {
         return contactInfo.getEmail();
     }
-    public String getSocialSecurityNumber()
-    {
+
+    public String getSocialSecurityNumber() {
         return socialSecurityNumber;
     }
+
     public Set<Integer> getPhoneNumbers() {
         return contactInfo.getPhoneNumbers();
     }
@@ -52,7 +57,16 @@ public abstract class Person implements Serializable
     public void addPhonenumber(int phonenumber) {
         contactInfo.addPhonenumber(phonenumber);
     }
-    public void addPhonenumber(List<Integer> list) { contactInfo.setPhonenumbers(list); }
 
-    public void setPassword(String password) { this.password = password; }
+    public void addPhonenumber(List<Integer> list) {
+        contactInfo.setPhonenumbers(list);
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

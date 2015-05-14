@@ -5,7 +5,8 @@ import Person.Customer;
 
 import java.time.LocalDate;
 
-/**
+/** Class for MotorbikeInsurane
+ *  ------ NOT implemented --------
  * Created by steinar on 07.04.2015.
  */
 public final class MotorBike extends VehicleInsurance {

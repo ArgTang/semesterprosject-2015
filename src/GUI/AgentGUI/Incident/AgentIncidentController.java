@@ -1,6 +1,6 @@
 package GUI.AgentGUI.Incident;
 
-import Person.Person;
+import Person.Customer;
 import javafx.beans.property.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,13 +18,12 @@ import static java.lang.String.valueOf;
  * Created by steinar on 15.04.2015.
  */
 
-//todo: copied from InsuranceModule -> needs adjusting
 public final class AgentIncidentController
 {
     private static BorderPane container = new BorderPane();
     private Label customerName = new Label();
     Label incidentID = new Label();
-    Label incidentInfo = new Label("valgt Hendelse: ");
+    Label incidentInfo = new Label("Valgt hendelse: ");
 
     private final StringProperty selectedCustomerName = new SimpleStringProperty();
     public static final BooleanProperty emptyscreenButton = new SimpleBooleanProperty(false);
@@ -34,14 +33,17 @@ public final class AgentIncidentController
     public Parent initAgentIncidentView() {
         customerName.textProperty().bind(selectedCustomerName);
         setBoldFont(customerName, incidentID);
+        incidentInfo.visibleProperty().bind(incidentListener.isNotNull());
+        incidentID.visibleProperty().bind(incidentListener.isNotNull());
 
         chooserModule = setlabel( showChooserModule() );
-        confirmModule = showConfirmModule();
+        showIncidentReport();
+        showConfirmModule();
         setListeners();
 
-        container.setLeft(chooserModule);
-        container.setCenter( showIncidentReport() );
-        container.setRight(confirmModule);
+        container.setLeft( chooserModule );
+        container.setCenter( incidentReport );
+        container.setRight( confirmModule );
         return container;
     }
 
@@ -78,28 +80,14 @@ public final class AgentIncidentController
     }
 
     private void setListeners() {
-        /*stringListener.addListener(
-                observable -> {
-                    StringProperty string = (StringProperty) observable;
-                    switch (string.getValue()) {
-                        case "[Hus]":
-                            break;
-                        default:
-                            AlertWindow.messageDialog("her kommer en rapportinnlevering", "ikke ferdig");
-                    }
-                }
-        );*/
-
-        incidentListener.addListener( listener -> {
-            setIncidentLabel();
-        });
+        incidentListener.addListener( listener -> setIncidentLabel() );
 
         currentCustomer.addListener(
             observable -> {
-                SimpleObjectProperty<Person> property = (SimpleObjectProperty) observable;
-                Person person = property.getValue();
-                if (person != null)
-                    setCustomername(person);
+                SimpleObjectProperty<Customer> property = (SimpleObjectProperty<Customer>) observable;
+                Customer customer = property.getValue();
+                if (customer != null)
+                    setCustomername(customer);
             }
         );
     }
@@ -120,8 +108,8 @@ public final class AgentIncidentController
         return vBox;
     }
 
-    private void setCustomername(Person person) {
-        String navnet = person.getFirstName() + " " + person.getLastName();
+    private void setCustomername(Customer customer) {
+        String navnet = customer.getFirstName() + " " + customer.getLastName();
         selectedCustomerName.setValue(navnet);
     }
 

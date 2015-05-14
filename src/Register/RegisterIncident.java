@@ -1,10 +1,10 @@
 package Register;
 
 import Incident.Incident;
-
 import java.util.HashMap;
 
 /**
+ * Class for storing Incidents
  * Created by steinar on 28.04.2015.
  */
 public final class RegisterIncident extends Register
@@ -14,7 +14,12 @@ public final class RegisterIncident extends Register
     }
 
     public boolean add(Incident incident) {
-        incident.setIncidentID( super.getNumberofObjectsStored()+1 );
+        try {
+            incident.setIncidentID(super.getNumberofObjectsStored() + 1);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
+
         return super.add( incident.getIncidentID(), incident );
     }
 

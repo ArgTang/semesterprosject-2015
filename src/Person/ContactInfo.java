@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
+/**Class for storing base info for each Person
  * Created by nugGet on 09.04.2015.
  */
 public class ContactInfo implements Serializable

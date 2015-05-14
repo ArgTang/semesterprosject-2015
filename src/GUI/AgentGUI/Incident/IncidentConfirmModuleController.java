@@ -2,8 +2,11 @@ package GUI.AgentGUI.Incident;
 
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
+import Incident.Incident;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -22,7 +25,10 @@ import java.util.List;
 
 import static GUI.AgentGUI.Incident.AgentIncidentController.emptyscreenButton;
 import static GUI.CurrentObjectListeners.CurrentIncident.incidentListener;
+import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
+import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.StartMain.currentIncident;
+import static GUI.StartMain.incidentRegister;
 
 /**
  * Created by steinar on 15.04.2015.
@@ -30,7 +36,7 @@ import static GUI.StartMain.currentIncident;
 public final class IncidentConfirmModuleController extends CommonGUIMethods
 {
     @FXML
-    private TextArea description;
+    private TextArea descriptionInput;
 
     @FXML
     private Button clearScheme;
@@ -46,47 +52,67 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
 
 
     public static final BooleanProperty confirmIncidentButton = new SimpleBooleanProperty(false);
+    public static final IntegerProperty saveFilesToIncident = new SimpleIntegerProperty(0);
+    private List<Path> uploadedFiles = new ArrayList<>();
+    private Path currentDir;
+    private final Path tempDir = createDir("temp");
+
+    public static String description = "";
 
     @FXML
     @Override
     protected void initialize() {
-        description.setPromptText("Beskrivelse av Hendelsen");
-
-        filenames.setText("Husk å legg til bilder, videoer og andre dokumenter!");
-        filenames.setDisable(true);
+        descriptionInput.setPromptText("Beskrivelse av Hendelsen");
         filenames.setEditable(false);
         filenames.setFocusTraversable(false);
         //http://stackoverflow.com/questions/6092500/how-do-i-remove-the-default-border-glow-of-a-javafx-button-when-selected?lq=1
         filenames.setStyle("-fx-background-insets:0, 0, 0, 0;");
+
+        clearFields();
         setListeners();
     }
 
     @Override
     protected void setListeners() {
-        openFolder.pressedProperty().addListener(listener -> { if (openFolder.pressedProperty().get()) openFolder("dfsa");});
-        addFiles.pressedProperty().addListener( listener -> { if ( addFiles.pressedProperty().get()) showFileAdderDialog();});
+        openFolder.disableProperty().bind( filenames.disableProperty() );
+        openFolder.pressedProperty().addListener(listener -> { if (openFolder.pressedProperty().get()) openCurrentDir();});
+        addFiles.disableProperty().bind(insuranceListener.isNull());
+        addFiles.pressedProperty().addListener( listener -> { if (addFiles.pressedProperty().get()) showFileAdderDialog();});
 
         clearScheme.pressedProperty().addListener(listener -> {
-            if (clearScheme.pressedProperty().get()) clearScheme();});
-        confirmIncident.disableProperty().bind(incidentListener.isNull());
-        confirmIncident.onActionProperty().addListener(listener -> confirmIncident());
-        confirmIncidentButton.bind(confirmIncident.pressedProperty());
-
-        /*confirmIncident.pressedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    confirmIncidentButton.set(true);
-                    confirmIncidentButton.set(false);
-                }
+            if (clearScheme.pressedProperty().get()) {
+                clearScheme();
+                emptyscreenButton.set(true);
+                emptyscreenButton.set(false);
             }
-        });*/
+        });
+
+        confirmIncident.disableProperty().bind( currentCustomer.isNull().and( incidentListener.isNull()));
+        confirmIncident.pressedProperty().addListener( listener -> {
+            if (confirmIncidentButton.get()) {
+                description = descriptionInput.getText();
+
+                confirmIncidentButton.set(true);
+                confirmIncidentButton.set(false);
+            }
+        });
+
+        saveFilesToIncident.addListener( listener -> {
+            Incident incident = incidentRegister.get( saveFilesToIncident.get());
+            saveFiles(incident);
+        });
+
+        incidentListener.addListener( listener -> {
+                if (incidentListener.isNotNull().get()) {
+                    descriptionInput.setText( incidentListener.get().getIncidentDescription());
+                }
+            });
     }
 
     private void showFileAdderDialog() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Legg til filer");
-        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter("All Files", "*.*"));
+        fileChooser.getExtensionFilters().addAll( new FileChooser.ExtensionFilter("Alle Filtyper", "*.*"));
 
         List<File> returnedFiles = fileChooser.showOpenMultipleDialog(null);
 
@@ -94,68 +120,55 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
         filenames.setText("");
         //convert java io -> nio library
         if (!returnedFiles.isEmpty()) {
-            List<Path> selectedFiles = new ArrayList<>();
             returnedFiles.stream()
                          .map(File::toPath)
-                         .forEach(selectedFiles::add);
+                         .forEach(this.uploadedFiles::add);
 
-            copyToNewDir(selectedFiles);
+            uploadedFiles.stream()
+                         .forEach(file -> filenames.appendText(file.getFileName() + " "));
         }
+
+        currentDir = tempDir;
+        copyToNewDir(tempDir);
     }
 
-    @FXML
-    public void clearScheme() {
-        if (AlertWindow.confirmDialog("Vil du tømme Skjema?", "tøm skjema")) {
-            currentIncident.reset();
-            clearFields();
+    public void saveFiles(Incident incident) {
+        createDir(String.valueOf(incident.getIncidentID())); //currentdir =
+        copyToNewDir(currentDir);
 
-            Runnable newthread = () -> {
-                emptyscreenButton.setValue(true);
-                emptyscreenButton.setValue(false);
-            };
-            Thread thread = new Thread(newthread);
-            thread.start();
-        }
+        incident.setFiles(uploadedFiles);
+        incidentRegister.update(incident);
     }
 
-    @Override
-    public void clearFields() {
-        description.setText("");
-        filenames.setText("");
-    }
+    private void openCurrentDir() {
+        if (uploadedFiles.isEmpty())
+            return;
 
-    @FXML
-    private void confirmIncident() {
-        AlertWindow.messageDialog("Opprettet Hendelse", "Opprettet Hendelse");
-    }
-
-    private void openFolder(String path) {
         //todo:clean up method
-        createDir();
         //http://stackoverflow.com/questions/3153337/how-do-i-get-my-current-working-directory-in-java
+        File dir = new File(currentDir.toString());
         File currentDirectory = new File(new File(".").getAbsolutePath());
         //path = currentDirectory.getAbsolutePath();
 
         //stackoverflow.com/questions/9134096/java-open-folder-on-button-click
-        //File folder = new File(path); // path to the directory to be opened
         Desktop desktop = null;
         if (Desktop.isDesktopSupported()) {
             desktop = Desktop.getDesktop();
             try {
-                desktop.open(currentDirectory);
+                desktop.open(dir);
             } catch (IOException exception) {
-                System.out.println("Error opening folder at: " + path);
+                System.out.println("Error opening folder at: " + dir.toString());
                 exception.printStackTrace();
             }
         }
     }
 
-    private Path createDir() {
-        //todo: get incidentID
-        Path directory = Paths.get("." + "\\IncidetReports");
+    private Path createDir(String path) {
+        Path directory = Paths.get("." + "\\IncidetReport_" + path);
         if (!Files.exists(directory)) {
             try {
                 Files.createDirectory(directory);
+                currentDir = directory;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -163,19 +176,57 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
         return directory;
     }
 
-    private void copyToNewDir(List<Path> files) {
-        //get dir of current Incident
-        Path destination = createDir();
-
+    private void copyToNewDir(Path destination) {
         try {
-            for (Path source : files) {
+            for (Path source : uploadedFiles)
                 Files.copy(source, destination.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
-                filenames.appendText(source.getFileName() + " ");
-            }
         } catch (IOException e) {
-            System.out.println("failed copy file");
+            System.out.println("Failed copy file");
             e.printStackTrace();
         }
+        uploadedFiles.clear();
+        try {
+            Files.list(destination).forEach(uploadedFiles::add);
+        } catch (IOException e) {
+            System.out.println("Failed refreshing path for current files after moving");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void clearScheme() {
+        if (AlertWindow.confirmDialog("Vil du tømme Skjema?", "tøm skjema")) {
+            currentIncident.reset();
+            clearFields();
+
+            Runnable clear = () -> {
+                emptyscreenButton.setValue(true);
+                emptyscreenButton.setValue(false);
+            };
+            Thread thread = new Thread(clear);
+            thread.start();
+        }
+    }
+
+    @Override
+    public void clearFields() {
+        filenames.setText("Husk å legg til bilder, videoer og andre dokumenter!");
+        filenames.setDisable(true);
+        try {
+            Files.list(tempDir)
+                 .forEach(path -> {
+                     try { Files.delete(path);
+                     } catch (IOException e) {
+                         System.out.println("failed deleting tempfile: " + path);
+                         e.printStackTrace(); }
+                 });
+        } catch (IOException e) {
+            System.out.println("failed opening tempPath: " + tempDir);
+            e.printStackTrace();
+        }
+        uploadedFiles.clear();
+        descriptionInput.setText("");
+        description = "";
     }
 
     @Override
