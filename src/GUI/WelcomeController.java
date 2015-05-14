@@ -1,5 +1,6 @@
 package GUI;
 
+import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import Person.Customer;
@@ -20,6 +21,8 @@ import java.io.IOException;
 import java.util.List;
 
 import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.changeWindowListener;
+import static GUI.StartMain.customerRegister;
 
 
 /**
@@ -31,15 +34,7 @@ public final class WelcomeController
     private BorderPane root = new BorderPane();
     private Parent welcomePane, loginPane, forgotpasswordPane;
 
-    private void login()
-    {
-        //todo: how to proceed from here
-        StartMain.changeWindowListener.setString("Agent");
-        //StartMain.changeWindowWindowListener.setPropertyObject(this.getClass()); todo: crash!
-    }
-
-    public Parent initWelcome() throws IOException
-    {
+    public Parent initWelcome() throws IOException {
         makeWelcome();
         makelogin();
         root.setCenter(welcomePane);
@@ -47,8 +42,7 @@ public final class WelcomeController
         return root;
     }
 
-    private void makeWelcome()
-    {
+    private void makeWelcome() {
         if (welcomePane != null)
             return;
 
@@ -86,12 +80,29 @@ public final class WelcomeController
         Hyperlink forgotPassword = new Hyperlink("Glemt passord?");
         Button login = new Button("Login");
 
-        login.setOnAction(event -> login()); //this needs to check for passwords
+        addCSSTextValidation(userNameInput, isAllChars());
+        addCSSTextValidation(passwordInput, isPassword());
+        login.setOnAction(event -> {
+            if (isNumberWithLength(10).test(userNameInput.getText())) {
+                Customer customer = customerRegister.get( userNameInput.getText());
+                if ( customer != null) {
+                    if (customer.getPassword().equals(passwordInput.getText())) {
+                        CustomerListener.currentCustomer.set(customer);
+                        changeWindowListener.setString("CustomerLoggedIn");
+                        return;
+                    }
+                }
+            }
+            if ( userNameInput.getText().equalsIgnoreCase(passwordInput.getText())) {
+                changeWindowListener.setString("Agent"); //goto Agentscreen
+                return;
+            }
+
+            AlertWindow.messageDialog("Kunne ikke finne brukernavn og passord i databasen, prøv igjen", "Fant ikke brukernavn/passord");
+        });
+
         forgotPassword.setOnAction( event -> { makeChangePasswordDialog();
                                                 loadParent(forgotpasswordPane);});
-
-        addCSSTextValidation(userNameInput, isAllChars()); //usernameRegex?
-        addCSSTextValidation(passwordInput, isPassword());
 
         gridPane.add(userName, 0, 0);
         gridPane.add(userNameInput, 1, 0);
@@ -144,7 +155,7 @@ public final class WelcomeController
                     Customer result = null;
                     if (isLetters().test( userNameInput.getText())) {
                         String customerID = userNameInput.getText();
-                        result = StartMain.customerRegister.get(customerID);
+                        result = customerRegister.get(customerID);
 
                         if (result == null) {
                             message.setValue("Finner ikke bruker med dette brukernavnet");

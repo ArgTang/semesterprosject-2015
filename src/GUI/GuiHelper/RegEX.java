@@ -29,7 +29,7 @@ public final class RegEX
     //todo: make sure all of the regular expressions works as intended
     private static final String NUMBER = "[1-9]{1}[\\d]";
     private static final String ALLCHARS = "[\\wøØæÆåÅ]+";
-    private static final String LETTERS = "([^\\d\\WøØæÆåÅ ]+( )?)+";
+    private static final String LETTERS = "([[^\\d]\\WøØæÆåÅ ]+( )?)+";
     private static final String EMAIL = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
     private static final String ADRESS = "^((.){1,}(\\d){1,}(.){0,})$";
 

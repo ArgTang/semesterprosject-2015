@@ -1,6 +1,5 @@
-package GUI.AgentGUI.Person;
+package GUI.CustomerGUI;
 
-import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
@@ -14,12 +13,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
-import javafx.scene.paint.Color;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static GUI.AgentGUI.Search.AgentSearchController.searchresults;
 import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.customerRegister;
@@ -27,7 +24,7 @@ import static GUI.StartMain.customerRegister;
 /**
  * Created by steinar on 19.04.2015.
  */
-public final class EditPersonController extends CommonGUIMethods
+public class EditCustomerController extends CommonGUIMethods
 {
     @FXML
     TextField socialSecurityNumber;
@@ -63,7 +60,6 @@ public final class EditPersonController extends CommonGUIMethods
 
     @Override
     public void clearFields() {
-        CustomerListener.reset();
         socialSecurityNumber.setEditable(true);
         resetTextFields(socialSecurityNumber, firstname, lastname, adress, citynumber, city, email);
         phones.clear();
@@ -83,17 +79,7 @@ public final class EditPersonController extends CommonGUIMethods
     protected void setListeners() {
         currentCustomer.addListener(observable -> setCustomer());
 
-        //todo: find a way to add cssValidation when editing Listview
-        phonelist.setOnEditStart(new EventHandler<ListView.EditEvent>() {
-            @Override
-            public void handle(ListView.EditEvent event) {
-                System.out.println(event.getNewValue());
-                //RegEX.addCSSTextValidation(textfield, RegEX.isNumberWithLength(8));
-            }
-        });
-
-        //todo: lambda here??
-        phonelist.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
+        phonelist.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() { //todo: lambda here??
             @Override
             public void handle(ListView.EditEvent event) {
                 if (isNumberWithLength(8).test(event.getNewValue().toString())) {
@@ -102,13 +88,11 @@ public final class EditPersonController extends CommonGUIMethods
                     phonelist.getItems().set(event.getIndex(), event.getNewValue());
             }
         });
-        //todo why u no compile???:
-        //phonelist.setOnEditCommit( event -> phonelist.getItems().set(event.getIndex(), event.getNewValue()));
     }
 
     protected void setCustomer() {
+        clearFields();
         Customer customer = currentCustomer.get();
-        setRegisterButton();
         if (customer == null)
             return;
         socialSecurityNumber.setText(customer.getSocialSecurityNumber());
@@ -127,20 +111,6 @@ public final class EditPersonController extends CommonGUIMethods
                 .forEach(phones::add);
         while (phones.size() < 3)
             phones.add("");
-    }
-
-    // this will change the button text to new or change customer dependant on wether a currentcustomer is selected
-    //todo: change na,e to something better
-    private void setRegisterButton() {
-        if(currentCustomer.isNotNull().get()) {
-            changeCustomerButton.setTextFill(Color.RED);
-            changeCustomerButton.setText("Endre Kunde");
-        } else {
-            //todo: do we need option to add more than 3 phonenumbers?
-            changeCustomerButton.setText("Registrer ny kunde");
-            changeCustomerButton.setTextFill(Color.BLACK);
-            phones.addAll("", "", "");
-        }
     }
 
     @FXML
@@ -165,17 +135,9 @@ public final class EditPersonController extends CommonGUIMethods
         oldcustomer.getInsuranceNumbers().stream().forEach(newcustomer::addInsuranceNumber);
         oldcustomer.getIncidentNumbers().stream().forEach(newcustomer::addIncidentNumber);
 
-        if (currentCustomer.isNotNull().get()) {
-            customerRegister.update(newcustomer);
-            currentCustomer.set(customerRegister.get(personNumber));
-        } else if ( customerRegister.get(socialSecurityNumber.getText()) != null ) {
-            AlertWindow.messageDialog("denne personen finnes allerede i registeret, vennligst søk opp personen før du forsøker å endre", "kunde er allerede registrert");
-        } else {
-            customerRegister.add(newcustomer);
-        }
-
-        //TODO: update searchresult each time
-        searchresults.setAll(customerRegister.getRegister());
+        customerRegister.update(newcustomer);
+        currentCustomer.set(customerRegister.get(personNumber));
+        AlertWindow.messageDialog("Endring av personlig info vellykket", "Endring godkjent");
     }
 
     @Override

@@ -12,6 +12,7 @@ import GUI.CurrentObjectListeners.CurrentIncident;
 import GUI.CurrentObjectListeners.CurrentInsurance;
 import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.CurrentObjectListeners.WindowChangeListener;
+import GUI.CustomerGUI.CustomerLoggedInController;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import Register.RegisterCustomer;
@@ -49,6 +50,7 @@ public class StartMain extends Application
     public static final WindowChangeListener changeWindowListener = new WindowChangeListener();
     //"storage" for the different Panes
     private static Parent welcome, agentSearch, agentPerson, agentMenu, agentInsurance, agentIncident, agentStatistics;
+    private static Parent CustomerLoggedInPane;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -74,10 +76,9 @@ public class StartMain extends Application
         rootLayout.setPrefSize(SCREEN.getWidth() / 1.35, SCREEN.getHeight() / 1.5); //todo: change this maybe?
 
         getLoginPane();
-        makePanes();
 
         //adding rules for CSS Validation
-        String css = StartMain.class.getResource("\\css\\login.css").toExternalForm();
+        String css = StartMain.class.getResource("\\css\\CSSValidation.css").toExternalForm();
         //scene.getStylesheets().clear();
         scene.getStylesheets().add(css);
         rootLayout.setStyle("-fx-font-size: 1.5em;");
@@ -116,6 +117,7 @@ public class StartMain extends Application
             System.out.println("failed loading agentmenu.fxml");
             e.printStackTrace();
         }
+        makePanes();
         return agentMenu;
     }
 
@@ -163,10 +165,22 @@ public class StartMain extends Application
         return agentPerson;
     }
 
+    private Parent getCustomerLoggedInPane() {
+        if (CustomerLoggedInPane != null)
+            return CustomerLoggedInPane;
+
+        CustomerLoggedInController loggedInController= new CustomerLoggedInController();
+        CustomerLoggedInPane = loggedInController.initEditPerson();
+        return CustomerLoggedInPane;
+    }
+
     private void setListeners() throws IOException {
         changeWindowListener.getProperty().addListener(
                 action -> {
                     switch (changeWindowListener.getString()) {
+                        case "CustomerLoggedIn":
+                            loadParent(getCustomerLoggedInPane());
+                            break;
                         case "Customer":
                             loadParent(getAgentPersonPane());
                             break;

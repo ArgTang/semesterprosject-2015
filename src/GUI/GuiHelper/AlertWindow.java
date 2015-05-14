@@ -8,7 +8,7 @@ import javafx.stage.Modality;
 /**
  * Created by steinar on 19.03.2015.
  *
- * Class for alertwindows
+ * Class for displaying alertwindows
  * Add more methods as you see fit
  * Refer to http://code.makery.ch/blog/javafx-dialogs-official/ for how these work
  *  - All functions return a boolean
@@ -44,7 +44,7 @@ public final class AlertWindow
         alert.setHeaderText(null);
         alert.setContentText(message);
 
-        Parent parent = (Parent) alert.getDialogPane();
+        Parent parent = alert.getDialogPane();
         parent.setStyle("-fx-font-size: 1.3em;");
 
         return alert.showAndWait().get() == ButtonType.OK;

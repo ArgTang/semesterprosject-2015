@@ -2,6 +2,7 @@ package Test;
 
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
+import Insurance.TravelInsurance;
 import Insurance.Property.HomeInsurance;
 import Person.ContactInfo;
 import Person.Customer;
@@ -124,11 +125,15 @@ public class MakePersons {
         //todo make default persons and passwords to logintosite
 
         Customer customer1 = new Customer("AAA", "AAA", "12121212333", makeContactinfo("AAAA"));
-        Insurance insurance1 = new HomeInsurance(LocalDate.now(), 1000000, "policy", customer1, PaymentOption.MONTHLY, 2000,
+        customer1.setPassword("123");
+        LocalDate date  = LocalDate.now();
+        Insurance insurance1 = new HomeInsurance(date.minusYears(3+randomGenerator.nextInt(8)), 1000000, "policy", customer1, PaymentOption.MONTHLY, 2000,
                 customer1.getAdress(), customer1.getCitynumber(), customer1.getCity(), 1999, "Tre", 2300000, "Enebolig", 123, 122, true );
-
+        Insurance insurance2 = new TravelInsurance(date.minusYears(8), "policy", customer1, PaymentOption.YEARLY, false);
         insuranceRegister.add(insurance1);
+        insuranceRegister.add(insurance2);
         customer1.addInsuranceNumber(insurance1.getCasenumber());
+        customer1.addInsuranceNumber(insurance2.getCasenumber());
         customerRegister.add(customer1);
     }
 
@@ -142,6 +147,5 @@ public class MakePersons {
     }
 
     public static void makeAgents(int numberOfAgents) {
-
     }
 }

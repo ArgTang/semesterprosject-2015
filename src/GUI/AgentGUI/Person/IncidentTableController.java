@@ -18,7 +18,6 @@ import static GUI.StartMain.incidentRegister;
 /**
  * Created by steinar on 23.04.2015.
  *
- *
  */
 
 public class IncidentTableController
