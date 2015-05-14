@@ -2,6 +2,8 @@ package GUI;
 
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
+import Person.Customer;
+import Register.RegisterCustomer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
@@ -15,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.List;
 
 import static GUI.GuiHelper.RegEX.*;
 
@@ -25,7 +28,8 @@ import static GUI.GuiHelper.RegEX.*;
 public final class WelcomeController
 {
     private Fader fader = new Fader();
-    BorderPane root = new BorderPane();
+    private BorderPane root = new BorderPane();
+    private Parent welcomePane, loginPane, forgotpasswordPane;
 
     private void login()
     {
@@ -36,13 +40,17 @@ public final class WelcomeController
 
     public Parent initWelcome() throws IOException
     {
-        root.setCenter(makeWelcome());
-        loadParent(makelogin());
+        makeWelcome();
+        makelogin();
+        root.setCenter(welcomePane);
+        loadParent(loginPane);
         return root;
     }
 
-    private Parent makeWelcome()
+    private void makeWelcome()
     {
+        if (welcomePane != null)
+            return;
 
         DropShadow ds = new DropShadow();
         ds.setOffsetY(3.0);
@@ -59,11 +67,13 @@ public final class WelcomeController
 
         pane.getChildren().addAll(welcome);
 
-        return pane;
+        welcomePane = pane;
     }
 
-    private Parent makelogin()
-    {
+    private void makelogin() {
+        if (loginPane != null)
+            return;
+
         GridPane gridPane = new GridPane();
         setGridOptions(gridPane);
 
@@ -77,7 +87,8 @@ public final class WelcomeController
         Button login = new Button("Login");
 
         login.setOnAction(event -> login()); //this needs to check for passwords
-        forgotPassword.setOnAction(event -> loadParent(makeDialog()));
+        forgotPassword.setOnAction( event -> { makeChangePasswordDialog();
+                                                loadParent(forgotpasswordPane);});
 
         addCSSTextValidation(userNameInput, isAllChars()); //usernameRegex?
         addCSSTextValidation(passwordInput, isPassword());
@@ -89,13 +100,16 @@ public final class WelcomeController
         gridPane.add(forgotPassword, 0, 2);
         gridPane.add(login, 1, 2);
 
-        return gridPane;
+        loginPane = gridPane;
     }
 
-    private GridPane makeDialog() //http://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
-    {
+    //http://examples.javacodegeeks.com/desktop-java/javafx/dialog-javafx/javafx-dialog-example/
+    private void makeChangePasswordDialog() {
+        if (forgotpasswordPane != null)
+            return;
+
         StringProperty message = new SimpleStringProperty();
-        Label userName = new Label("Fyll inn brukernavn");
+        Label userName = new Label("Brukernavn");
         Label password = new Label("Velg passord");
         Label confirmPassword = new Label("Gjenta Passord");
         Label faultmessage = new Label();
@@ -106,7 +120,7 @@ public final class WelcomeController
         PasswordField passwordInput = new PasswordField();
         PasswordField confirmPasswordInput = new PasswordField();
 
-        addCSSTextValidation(userNameInput, isAllChars());
+        addCSSTextValidation(userNameInput, isNumberWithLength(11));
         addCSSTextValidation(passwordInput, isPassword());
         addCSSTextValidation(confirmPasswordInput, isPassword());
 
@@ -127,24 +141,34 @@ public final class WelcomeController
         changePassword.setOnAction(
                 event ->
                 {
-                    if (isLetters().test( userNameInput.getText())) { //TODO: get user from register
-                        message.setValue("Finner ikke bruker");
-                    }
-                    else if (!passwordInput.getText().equals( confirmPasswordInput.getText() ))
+                    Customer result = null;
+                    if (isLetters().test( userNameInput.getText())) {
+                        String customerID = userNameInput.getText();
+                        result = StartMain.customerRegister.get(customerID);
+
+                        if (result == null) {
+                            message.setValue("Finner ikke bruker med dette brukernavnet");
+                            return;
+                        }
+
+                    } else if (!passwordInput.getText().equals( confirmPasswordInput.getText() ))
                         message.setValue("Passordene må være like!");
 
-                    AlertWindow.messageDialog("change password", "change password");
+                    if (result != null) {
+                        result.setPassword(passwordInput.getText());
+                        AlertWindow.messageDialog("Du kan nå logge inn med ditt nye passord", "Passord forandret");
+                        root.setRight(fader.setFading(loginPane));
+                    }
                 });
         Button cancel = new Button("Gå tilbake");
-        cancel.setOnAction(event -> root.setRight(fader.setFading(makelogin())));
+        cancel.setOnAction(event -> root.setRight(fader.setFading(loginPane)));
         hbox.getChildren().addAll(changePassword, cancel);
         gridPane.add(hbox, 1, 4);
 
-        return gridPane;
+        forgotpasswordPane = gridPane;
     }
 
-    private void setGridOptions(GridPane gridPane)
-    {
+    private void setGridOptions(GridPane gridPane) {
         gridPane.setVgap(5);
         gridPane.setHgap(5);
 
@@ -159,8 +183,7 @@ public final class WelcomeController
         gridPane.getColumnConstraints().addAll(left, right);
     }
 
-    private void loadParent(Parent scene)
-    {
+    private void loadParent(Parent scene) {
         fader.setFading(scene);
         root.setRight(scene); //set scene
         fader.setupFadeout(scene);
