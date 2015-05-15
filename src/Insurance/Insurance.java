@@ -72,7 +72,6 @@ public abstract class Insurance implements Serializable
             throw new IllegalArgumentException("This insurance is ended, change of data is not allowed");
         this.annualPremium = annualPremium; }
     public int getCasenumber() { return casenumber; }
-    public int getFromYear() { return validFrom.getYear(); }
     public PaymentOption getPaymentOption() { return paymentOption; }
     public int getAnnualPremium() { return annualPremium; }
     public int getItemValue() { return itemValue; }
@@ -82,6 +81,7 @@ public abstract class Insurance implements Serializable
     public void endInsuranse(LocalDate endDate) {
         this.endDate = endDate;
     }
+    public int getFromYear() { return validFrom.getYear(); }
     public LocalDate getEndDate() {
         return endDate;
     }

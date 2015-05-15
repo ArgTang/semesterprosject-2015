@@ -8,12 +8,12 @@ import GUI.AgentGUI.Incident.AgentIncidentController;
 import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.AgentGUI.Person.PersonController;
 import GUI.AgentGUI.Search.AgentSearchController;
+import GUI.AgentGUI.Statistics.AgentStatisticController;
 import GUI.CurrentObjectListeners.CurrentIncident;
 import GUI.CurrentObjectListeners.CurrentInsurance;
 import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.CurrentObjectListeners.WindowChangeListener;
 import GUI.CustomerGUI.CustomerLoggedInController;
-import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import Register.RegisterCustomer;
 import Register.RegisterIncident;
@@ -73,7 +73,7 @@ public class StartMain extends Application
         Scene scene = new Scene(rootLayout);
         rootLayout.setPadding(new Insets(5, 5, 5, 5));
         rootLayout.setPrefSize(SCREEN.getWidth() / 1.35, SCREEN.getHeight() / 1.5); //todo: change this maybe?
-        loadParent( getLoginPane() );
+        loadParent(getLoginPane());
 
         //adding rules for CSS Validation
         String css = StartMain.class.getResource("\\css\\CSSValidation.css").toExternalForm();
@@ -168,6 +168,15 @@ public class StartMain extends Application
         return agentPerson;
     }
 
+    private Parent getAgentStatisticsPane() {
+        if (agentStatistics != null)
+            return agentStatistics;
+
+        AgentStatisticController statisticController = new AgentStatisticController();
+        agentStatistics = statisticController.initStatistics();
+        return agentStatistics;
+    }
+
     private Parent getCustomerLoggedInPane() {
         if (CustomerLoggedInPane != null)
             return CustomerLoggedInPane;
@@ -198,7 +207,7 @@ public class StartMain extends Application
                             loadParent(getIncidentPane());
                             break;
                         case "statistics":
-                            AlertWindow.messageDialog("her kommer  snart statistikkskjerm", "statistikkskjerm");
+                            loadParent(getAgentStatisticsPane());
                             break;
                         case "Agent":
                         default:
