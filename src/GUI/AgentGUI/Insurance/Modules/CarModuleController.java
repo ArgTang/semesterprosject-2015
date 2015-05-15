@@ -226,12 +226,12 @@ public final class CarModuleController extends CommonInsuranceMethods
         String yearlyKM = CarInsurance.kmValues.get(this.yearlyKM.getSelectionModel().getSelectedIndex());
 
         try {
-            insurance = new CarInsurance(fromDate.getValue(), parseInt(buyPrice), "comePolicy", currentCustomer.get(), selectedPayment,
+            insurance = new CarInsurance(fromDate.getValue(), parseInt(buyPrice), "somePolicy", currentCustomer.get(), selectedPayment,
                     maker.getValue(), model.getText(), parseInt(modelYear), parseInt(km), parseInt(horsePower), licenceNumber.getText(),
                     color.getText(), Integer.parseInt(deductible.getValue().toString()), bonus, kasko, yearlyKM);
             showPremium(insurance);
         } catch (Exception expected) {
-            Insurance tempinsurance = new CarInsurance(fromDate.getValue(), parseInt(buyPrice), "comePolicy",
+            Insurance tempinsurance = new CarInsurance(fromDate.getValue(), parseInt(buyPrice), "somePolicy",
                     RegisterCustomer.tempCustomer, selectedPayment, maker.getValue(), model.getText(),
                     parseInt(modelYear), parseInt(km), parseInt(horsePower), licenceNumber.getText(),
                     color.getText(), Integer.parseInt(deductible.getValue().toString()), bonus, kasko, yearlyKM);

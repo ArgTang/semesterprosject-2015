@@ -1,3 +1,4 @@
+/* This stylesheet puts a red border around the Textfields when the invalidText Pseudoclass is applied*/
 .text-field:invalidText {
     -red: rgb(237.0, 68.0, 37.0);
     -fx-background-color: -red, rgb(230, 230, 230) !important;

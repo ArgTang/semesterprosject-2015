@@ -1,6 +1,5 @@
 package Test;
 
-
 import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
 import Insurance.TravelInsurance;

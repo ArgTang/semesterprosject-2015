@@ -34,7 +34,7 @@ public final class WelcomeController
     private BorderPane root = new BorderPane();
     private Parent welcomePane, loginPane, forgotpasswordPane;
 
-    public Parent initWelcome() throws IOException {
+    public Parent initWelcome() {
         makeWelcome();
         makelogin();
         root.setCenter(welcomePane);

@@ -25,8 +25,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -74,8 +73,7 @@ public class StartMain extends Application
         Scene scene = new Scene(rootLayout);
         rootLayout.setPadding(new Insets(5, 5, 5, 5));
         rootLayout.setPrefSize(SCREEN.getWidth() / 1.35, SCREEN.getHeight() / 1.5); //todo: change this maybe?
-
-        getLoginPane();
+        loadParent( getLoginPane() );
 
         //adding rules for CSS Validation
         String css = StartMain.class.getResource("\\css\\CSSValidation.css").toExternalForm();
@@ -92,13 +90,13 @@ public class StartMain extends Application
         launch(args);
     }
 
-    private void getLoginPane() throws IOException {
+    private Parent getLoginPane() {
         if (welcome == null) {
             WelcomeController welcomeController = new WelcomeController();
             welcome = welcomeController.initWelcome();
         }
         PrimaryStage.setTitle("Velkommen");
-        loadParent(welcome);
+        return welcome;
     }
 
     private Parent getAgentMenu() {
@@ -108,16 +106,21 @@ public class StartMain extends Application
 
         try {
             Parent menu = FXMLLoader.load(getClass().getResource("\\AgentGUI\\AgentMenu.fxml"));
+            StackPane logout = FXMLLoader.load(getClass().getResource("\\AgentGUI\\Logout.fxml"));
             Separator separator = new Separator();
             separator.setPadding(new Insets(0, 0, 5, 0));
-            VBox agentMenuContainer = new VBox();
-            agentMenuContainer.getChildren().addAll(menu, separator);
-            agentMenu = agentMenuContainer;
+            HBox agentMenuContainer = new HBox();
+            agentMenuContainer.getChildren().addAll(menu, logout);
+            HBox.setHgrow(logout, Priority.ALWAYS);
+            VBox separatorcontainer = new VBox();
+            separatorcontainer.getChildren().addAll(agentMenuContainer, separator);
+            agentMenu = separatorcontainer;
+
         } catch (IOException e) {
             System.out.println("failed loading agentmenu.fxml");
             e.printStackTrace();
         }
-        makePanes();
+        //makePanes();
         return agentMenu;
     }
 
@@ -178,6 +181,10 @@ public class StartMain extends Application
         changeWindowListener.getProperty().addListener(
                 action -> {
                     switch (changeWindowListener.getString()) {
+                        case "welcome":
+                            rootLayout.setTop(null);
+                            loadParent(getLoginPane());
+                            break;
                         case "CustomerLoggedIn":
                             loadParent(getCustomerLoggedInPane());
                             break;

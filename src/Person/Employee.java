@@ -2,6 +2,7 @@ package Person;
 
 
 /** Class for storing info about our Agents
+ * --------- NOT implementet yet
  * Created by steinar on 27.03.2015.
  */
 public final class Employee extends Person
