@@ -180,7 +180,7 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
 
         adress.setText(insurance.getAddress());
         city.setText(insurance.getCity());
-        setInt(citynumber, insurance.getCitynumber());
+        citynumber.setText(insurance.getCitynumber());
         setInt(amount, insurance.getItemValue());
         setInt(shownumberOfrooms, insurance.getRoomCount());
         setInt(shownumberOfPersons, insurance.getRoomMates());
@@ -196,12 +196,12 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
 
         PaymentOption selectedPayment = paymentOptions.get( paymentOption.getSelectionModel().getSelectedIndex() );
         try {
-            insurance = new HouseholdContentsInsurance(adress.getText(), parseInt(citynumber), city.getText(), numberOfrooms.getValue(),
+            insurance = new HouseholdContentsInsurance(adress.getText(), citynumber.getText(), city.getText(), numberOfrooms.getValue(),
                     numberOfPersons.getValue(), fromDate.getValue(), parseInt(amount), "somePolicy",
                     currentCustomer.get(), selectedPayment, deductible.getValue());
             showPremium(insurance);
         } catch (Exception e) {
-            HouseholdContentsInsurance tempInsurance = new HouseholdContentsInsurance(adress.getText(), parseInt(citynumber), city.getText(), numberOfrooms.getValue(),
+            HouseholdContentsInsurance tempInsurance = new HouseholdContentsInsurance(adress.getText(), citynumber.getText(), city.getText(), numberOfrooms.getValue(),
                     numberOfPersons.getValue(), fromDate.getValue(), parseInt(amount), "somePolicy",
                     RegisterCustomer.tempCustomer, selectedPayment, deductible.getValue());
             showPremium(tempInsurance);

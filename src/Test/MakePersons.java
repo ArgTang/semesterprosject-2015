@@ -34,7 +34,7 @@ public class MakePersons {
 
         String adress;
         String city;
-        int citynumber;
+        String citynumber;
         int phone;
 
         adress = adresses[randomGenerator.nextInt(adresses.length)];
@@ -44,12 +44,12 @@ public class MakePersons {
 
         if ((temp & 1) == 0) {
             city = citys[temp + 1];
-            citynumber = Integer.parseInt(citys[temp], 10);
+            citynumber = citys[temp];
         } else {
             city = citys[temp];
-            citynumber = Integer.parseInt(citys[temp - 1], 10);
+            citynumber = citys[temp - 1];
         }
-        //to
+
         city = city.charAt(0) + city.substring(1).toLowerCase();
         adress = adress.charAt(0) + adress.substring(1).toLowerCase();
 
@@ -77,15 +77,15 @@ public class MakePersons {
 
         ContactInfo contactInfo = makeContactinfo(firstname + "." + lastName);
 
-        int year = 1970;
+        int year = 1950;
         do {
-            year = 1970 + randomGenerator.nextInt(40);
+            year = 1955 + randomGenerator.nextInt(50);
         } while (year > LocalDate.now().getYear() - 20); //customers need to be 20 years old
 
         int month = 1;
         do {
             month = 1 + randomGenerator.nextInt(11);
-        } while (month > 12);
+        } while (month > 13);
 
         LocalDate date = LocalDate.of(year, month, 1);
 
@@ -100,7 +100,40 @@ public class MakePersons {
         String PersonNumber = birthday + String.valueOf(++socialSecuritycounter);
 
         Customer customer = new Customer(firstname, lastName, PersonNumber, contactInfo);
+        mortality(customer, date);
+
         return customer;
+    }
+
+    private static void mortality(Customer customer, LocalDate birthdate) {
+
+        //http://www.ssb.no/a/aarbok/tab/tab-079.html
+        int random = randomGenerator.nextInt(100000);
+        int age = LocalDate.now().getYear() - birthdate.getYear();
+        if (age < 30) {
+            if (random < 84)
+                customer.setDeathDate( deathdate(age, birthdate) );
+        } else if (age < 40) {
+            if (random < 104)
+                customer.setDeathDate( deathdate(age, birthdate));
+        } else if (age < 50) {
+            if (random < 346)
+                customer.setDeathDate( deathdate(age, birthdate) );
+        } else if (age < 60) {
+            if (random < 924)
+                customer.setDeathDate( deathdate(age, birthdate) );
+        } else if (age > 60) {
+            if (random < 2336)
+                customer.setDeathDate( deathdate(age, birthdate) );
+        }
+    }
+
+    private static LocalDate deathdate(int age, LocalDate birthdate) {
+        int random;
+        do{
+            random = randomGenerator.nextInt( age > 60 ? 20: 5);
+        } while (birthdate.plusMonths(12*(age-5 + random)).isAfter(LocalDate.now()));
+        return (birthdate.plusMonths(12*(age-5 + random)));
     }
 
     private static String makeName(String[] names) {
@@ -122,9 +155,9 @@ public class MakePersons {
     }
 
     public static void makeDefaultPerson() {
-        //todo make default persons and passwords to logintosite
+        //todo: make default persons and passwords to logintosite
 
-        Customer customer1 = new Customer("AAA", "AAA", "12121212333", makeContactinfo("AAAA"));
+        Customer customer1 = new Customer("Kåre", "Kåseri", "11111111111", makeContactinfo("AAAA"));
         customer1.setPassword("123");
         LocalDate date  = LocalDate.now();
         Insurance insurance1 = new HomeInsurance(date.minusYears(3+randomGenerator.nextInt(8)), 1000000, "policy", customer1, PaymentOption.MONTHLY, 2000,
@@ -144,8 +177,5 @@ public class MakePersons {
             makeinsurance.generate(customer);
             customerRegister.add(customer);
         }
-    }
-
-    public static void makeAgents(int numberOfAgents) {
     }
 }

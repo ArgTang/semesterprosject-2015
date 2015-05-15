@@ -33,16 +33,24 @@ public class MakeInsuranceContracts
         int randomNumber = 2 + randomGenerator.nextInt(8);
         int startYear = birthYear + 20;
         LocalDate fromdate = generateDate(startYear);
+        LocalDate deathDate = customer.getDeathDate();
         if (startYear > currentYear)
             return;
         else {
             travelinsurance = new TravelInsurance(fromdate, "policy", customer, paymentOption, false);
         }
 
-        if (age > 20 + randomNumber) {
+        if (age > (20 + randomNumber) && fromdate.plusYears(randomNumber).isBefore(LocalDate.now())) {
             fromdate = fromdate.plusYears(randomNumber);
             travelinsurance.endInsuranse(fromdate);
             travelinsurance2 = new TravelInsurance(fromdate, "policy", customer, paymentOption, true);
+        }
+
+        if (deathDate != null) {
+            if (travelinsurance2 ==null)
+                travelinsurance.endInsuranse(deathDate);
+            else
+                travelinsurance2.endInsuranse(deathDate);
         }
 
         StartMain.insuranceRegister.add(travelinsurance);

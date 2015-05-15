@@ -13,7 +13,7 @@ public final class HomeInsurance extends PropertyInsurance
     private boolean extended;
 
     public HomeInsurance(LocalDate validFrom, int itemValue, String policy, Customer customer, PaymentOption paymentOption,
-                         int deductable, String adress, int citynumber, String city, int constructionYear, String buildingMaterial,
+                         int deductable, String adress, String citynumber, String city, int constructionYear, String buildingMaterial,
                          int taxedvalue, String type, int grossArea, int primaryArea, boolean extended) {
 
         super(validFrom, itemValue, policy, customer, paymentOption, deductable, adress, citynumber, city, constructionYear,

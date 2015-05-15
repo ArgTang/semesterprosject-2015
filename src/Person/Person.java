@@ -1,6 +1,7 @@
 package Person;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ public abstract class Person implements Serializable {
     private String firstName;
     private String lastName;
     private String socialSecurityNumber; //If we make this a number: 0304052345 will become 304052345
+    private LocalDate deathDate = null;
     private ContactInfo contactInfo;
     private String password;
 
@@ -38,7 +40,7 @@ public abstract class Person implements Serializable {
         return contactInfo.getCity();
     }
 
-    public int getCitynumber() {
+    public String getCitynumber() {
         return contactInfo.getCitynumber();
     }
 
@@ -68,5 +70,12 @@ public abstract class Person implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
+    public LocalDate getDeathDate() {
+        return deathDate;
     }
 }

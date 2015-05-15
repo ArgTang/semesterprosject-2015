@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public abstract class PropertyInsurance extends Insurance
 {
     private String adress;
-    private int citynumber;
+    private String citynumber;
     private String city;
 
     private int constructionYear;
@@ -25,7 +25,7 @@ public abstract class PropertyInsurance extends Insurance
 
 
     public PropertyInsurance(LocalDate validFrom, int itemValue, String policy, Customer customer, PaymentOption paymentOption,
-                             int deductable, String adress, int citynumber, String city, int constructionYear, String buildingMaterial,
+                             int deductable, String adress, String citynumber, String city, int constructionYear, String buildingMaterial,
                              int taxedvalue, String type, int grossArea, int primaryArea) {
         super(validFrom, itemValue, policy, customer, paymentOption, deductable);
         this.adress = adress;
@@ -48,7 +48,7 @@ public abstract class PropertyInsurance extends Insurance
     public String getAdress() {
         return adress;
     }
-    public int getCitynumber() {
+    public String getCitynumber() {
         return citynumber;
     }
     public String getCity() {

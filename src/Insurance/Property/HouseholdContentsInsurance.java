@@ -12,13 +12,13 @@ import java.time.LocalDate;
 public class HouseholdContentsInsurance extends Insurance
 {
     private String address;
-    private int citynumber;
+    private String citynumber;
     private String city;
     private int roomCount;
     private int roomMates;
     private boolean pluss;
 
-    public HouseholdContentsInsurance(String address, int citynumber, String city, int roomCount, int roomMates, LocalDate validFrom,
+    public HouseholdContentsInsurance(String address, String citynumber, String city, int roomCount, int roomMates, LocalDate validFrom,
                                       int itemValue, String policy, Customer customer, PaymentOption paymentOption, int deductable) {
         super(validFrom, itemValue, policy, customer, paymentOption, deductable);
         this.address = address;
@@ -47,7 +47,7 @@ public class HouseholdContentsInsurance extends Insurance
     public String getAddress() {
         return address;
     }
-    public int getCitynumber() {
+    public String getCitynumber() {
         return citynumber;
     }
     public String getCity() {

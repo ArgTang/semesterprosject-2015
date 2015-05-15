@@ -128,7 +128,7 @@ public class EditCustomerController extends CommonGUIMethods
                                         .boxed()
                                         .collect(Collectors.toList());
 
-        ContactInfo contactInfo = new ContactInfo(adress.getText(), Integer.parseInt( citynumber.getText() ), city.getText(), email.getText(), phonelist);
+        ContactInfo contactInfo = new ContactInfo(adress.getText(), citynumber.getText(), city.getText(), email.getText(), phonelist);
         Customer newcustomer = new Customer(firstname.getText(), lastname.getText(), personNumber, contactInfo);
         Customer oldcustomer = currentCustomer.get();
 

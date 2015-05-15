@@ -170,7 +170,7 @@ public final class HouseModuleController extends CommonInsuranceMethods
 
         adress.setText(insurance.getAdress());
         city.setText(insurance.getCity());
-        setInt(citynumber, insurance.getCitynumber());
+        citynumber.setText(insurance.getCitynumber());
         setInt(constructionYear, insurance.getConstructionYear());
         setInt(grossArea, insurance.getGrossArea());
         setInt(primaryArea, insurance.getPrimaryArea());
@@ -212,15 +212,15 @@ public final class HouseModuleController extends CommonInsuranceMethods
 
         try {
             insurance = new HomeInsurance(fromDate.getValue(), 0, "some policy", currentCustomer.get(), selectedPayment,
-                    deductible.getValue(), adress.getText(), parseInt(citynumber), city.getText(), parseInt(constructionYear), constructedIn.getValue(),
+                    deductible.getValue(), adress.getText(), citynumber.getText(), city.getText(), parseInt(constructionYear), constructedIn.getValue(),
                     parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
             showPremium(insurance);
         } catch (Exception expected) {
             //if currentcustomer == null getPremium with tempcustomer
-            HomeInsurance testinsurance = new HomeInsurance(fromDate.getValue(), 0, "some policy", RegisterCustomer.tempCustomer, selectedPayment,
-                    deductible.getValue(), adress.getText(), parseInt(citynumber), city.getText(), parseInt(constructionYear), constructedIn.getValue(),
+            HomeInsurance tempinsurance = new HomeInsurance(fromDate.getValue(), 0, "some policy", RegisterCustomer.tempCustomer, selectedPayment,
+                    deductible.getValue(), adress.getText(), citynumber.getText(), city.getText(), parseInt(constructionYear), constructedIn.getValue(),
                     parseInt(taxedvalue), buildingType.getValue(), parseInt(grossArea), parseInt(primaryArea), false);
-            showPremium(testinsurance);
+            showPremium(tempinsurance);
         }
     }
 

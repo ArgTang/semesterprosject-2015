@@ -1,5 +1,6 @@
 package GUI.AgentGUI.Statistics;
 
+import GUI.AgentGUI.Insurance.Modules.TravelModuleController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.StartMain;
 import Incident.Incident;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Created by steinar on 15.05.2015.
@@ -35,7 +37,8 @@ public final class AgentStatisticController extends CommonGUIMethods
     public void initialize() {
         initPieChartData();
 
-        HashMap<Integer, Integer> data  = new HashMap<>();
+        TreeMap<Integer, Integer> totalNumberOfInsurances  = new TreeMap<>();
+        TreeMap<Integer, Integer> fromYear = new TreeMap<>();
         Collection<Insurance> rawdata = StartMain.insuranceRegister.getRegister();
         int thisyear = LocalDate.now().getYear();
 
@@ -45,15 +48,25 @@ public final class AgentStatisticController extends CommonGUIMethods
             if (insurance.getEndDate() != null)
                 endyear = insurance.getEndDate().getYear();
 
+            fromYear.put(fromyear, (fromYear.getOrDefault(fromyear, 0) +1) );
             for (int i = fromyear; i < endyear; i++)
-                data.put(i, (data.getOrDefault(i, 0) + 1));
+                totalNumberOfInsurances.put(i, (totalNumberOfInsurances.getOrDefault(i, 0) + 1));
         }
 
-        XYChart.Series shownData= new XYChart.Series();
-        for (Integer key: data.keySet()) {
-            shownData.getData().add(new XYChart.Data(String.valueOf(key), data.get(key)));
+        XYChart.Series shownFromData= new XYChart.Series();
+        shownFromData.setName("Nytegninger");
+        for (Integer key: fromYear.keySet()) {
+            shownFromData.getData().add(new XYChart.Data(String.valueOf(key), fromYear.get(key)));
         }
-        lineChart.getData().add(shownData);
+
+        XYChart.Series shownTotalData= new XYChart.Series();
+        shownTotalData.setName("Total antall");
+        for (Integer key: totalNumberOfInsurances.keySet()) {
+            shownTotalData.getData().add(new XYChart.Data(String.valueOf(key), totalNumberOfInsurances.get(key)));
+        }
+        lineChart.getData().add(shownTotalData);
+        lineChart.getData().add(shownFromData);
+
     }
 
     private void initPieChartData() {

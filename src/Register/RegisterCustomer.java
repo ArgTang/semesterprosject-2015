@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public final class RegisterCustomer extends Register {
 
-    private static final ContactInfo contactinfo = new ContactInfo("oslogata 3", 2341, "oslo", "lastname@email.com", 12345678);
+    private static final ContactInfo contactinfo = new ContactInfo("oslogata 3", "2341", "oslo", "lastname@email.com", 12345678);
     public static final Customer tempCustomer = new Customer("ola", "normann", "11111111111", contactinfo);
 
     public RegisterCustomer() {

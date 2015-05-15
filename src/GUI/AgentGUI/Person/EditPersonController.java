@@ -78,7 +78,6 @@ public final class EditPersonController extends CommonGUIMethods
         addCSSTextValidation(isLetters(), firstname, lastname, city);
     }
 
-
     @Override
     protected void setListeners() {
         currentCustomer.addListener(observable -> setCustomer());
@@ -111,6 +110,9 @@ public final class EditPersonController extends CommonGUIMethods
         setRegisterButton();
         if (customer == null)
             return;
+
+        freeze( customer.getDeathDate() == null );
+
         socialSecurityNumber.setText(customer.getSocialSecurityNumber());
         socialSecurityNumber.setEditable(false);
         firstname.setText(customer.getFirstName());
@@ -158,7 +160,7 @@ public final class EditPersonController extends CommonGUIMethods
                                         .boxed()
                                         .collect(Collectors.toList());
 
-        ContactInfo contactInfo = new ContactInfo(adress.getText(), Integer.parseInt( citynumber.getText() ), city.getText(), email.getText(), phonelist);
+        ContactInfo contactInfo = new ContactInfo(adress.getText(), citynumber.getText(), city.getText(), email.getText(), phonelist);
         Customer newcustomer = new Customer(firstname.getText(), lastname.getText(), personNumber, contactInfo);
         Customer oldcustomer = currentCustomer.get();
 
@@ -176,6 +178,17 @@ public final class EditPersonController extends CommonGUIMethods
 
         //TODO: update searchresult each time
         searchresults.setAll(customerRegister.getRegister());
+    }
+
+    private void freeze(boolean toFreezeOrNotToFreeze) {
+        firstname.setEditable(toFreezeOrNotToFreeze);
+        lastname.setEditable(toFreezeOrNotToFreeze);
+        adress.setEditable(toFreezeOrNotToFreeze);
+        citynumber.setEditable(toFreezeOrNotToFreeze);
+        city.setEditable(toFreezeOrNotToFreeze);
+        email.setEditable(toFreezeOrNotToFreeze);
+        phonelist.setEditable(toFreezeOrNotToFreeze);
+        changeCustomerButton.setDisable(!toFreezeOrNotToFreeze);
     }
 
     @Override
