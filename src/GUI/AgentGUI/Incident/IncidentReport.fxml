@@ -28,7 +28,7 @@
        <Label text="Brann" GridPane.rowIndex="1" />
        <CheckBox fx:id="fire" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
        <Label text="Tyveri" GridPane.rowIndex="2" />
-       <CheckBox fx:id="burglary" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+       <CheckBox fx:id="theft" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
        <Label text="Vannskade" GridPane.rowIndex="3" />
        <CheckBox fx:id="waterdamage" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
        <Label text="Personskade" GridPane.rowIndex="4" />

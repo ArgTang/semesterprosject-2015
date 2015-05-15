@@ -20,6 +20,9 @@ import static GUI.StartMain.insuranceRegister;
 import static Insurance.Insurance.paymentFee;
 
 /**
+ *
+ * Alot of GUI classes have similar functions and have need for some common utilityfunctions
+ * we define these here
  * Created by steinar on 09.05.2015.
  */
 public abstract class CommonInsuranceMethods extends CommonGUIMethods

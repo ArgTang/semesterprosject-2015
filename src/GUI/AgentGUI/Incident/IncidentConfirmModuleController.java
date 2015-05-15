@@ -89,9 +89,8 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
 
         confirmIncident.disableProperty().bind( currentCustomer.isNull().and( incidentListener.isNull()));
         confirmIncident.pressedProperty().addListener( listener -> {
-            if (confirmIncidentButton.get()) {
+            if (confirmIncident.pressedProperty().get()) {
                 description = descriptionInput.getText();
-
                 confirmIncidentButton.set(true);
                 confirmIncidentButton.set(false);
             }
@@ -141,14 +140,12 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
     }
 
     private void openCurrentDir() {
-        if (uploadedFiles.isEmpty())
+        if (uploadedFiles.isEmpty() || currentDir == null)
             return;
 
         //todo:clean up method
         //http://stackoverflow.com/questions/3153337/how-do-i-get-my-current-working-directory-in-java
         File dir = new File(currentDir.toString());
-        File currentDirectory = new File(new File(".").getAbsolutePath());
-        //path = currentDirectory.getAbsolutePath();
 
         //stackoverflow.com/questions/9134096/java-open-folder-on-button-click
         Desktop desktop = null;
@@ -164,7 +161,14 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
     }
 
     private Path createDir(String path) {
-        Path directory = Paths.get("." + "\\IncidetReport_" + path);
+        Path directory = Paths.get(".\\IncidentReports\\IncidentID_" + path);
+        if (!Files.exists(Paths.get(".\\IncidentReports")))
+            try {
+                Files.createDirectory(Paths.get(".\\IncidentReports"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         if (!Files.exists(directory)) {
             try {
                 Files.createDirectory(directory);

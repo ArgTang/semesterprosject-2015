@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 
 /**
+ * Alot of classes have similar functions here we define
+ * standard names for some functions.
  * Created by steinar on 01.05.2015.
  */
 public abstract class CommonGUIMethods

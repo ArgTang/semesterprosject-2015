@@ -37,13 +37,11 @@ public final class AgentIncidentController
         incidentID.visibleProperty().bind(incidentListener.isNotNull());
 
         chooserModule = setlabel( showChooserModule() );
-        showIncidentReport();
-        showConfirmModule();
-        setListeners();
-
         container.setLeft( chooserModule );
-        container.setCenter( incidentReport );
-        container.setRight( confirmModule );
+        container.setCenter( showIncidentReport() );
+        container.setRight( showConfirmModule() );
+
+        setListeners();
         return container;
     }
 
