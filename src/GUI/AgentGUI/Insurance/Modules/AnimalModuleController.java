@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
 import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.paymentOptions;
 
 public final class AnimalModuleController extends CommonInsuranceMethods
@@ -131,7 +131,7 @@ public final class AnimalModuleController extends CommonInsuranceMethods
     }
     @Override
     protected void loadCurrentInsurance() {
-        AnimalModuleController.insurance  = (AnimalInsurance) insuranceListener.get();
+        AnimalModuleController.insurance  = (AnimalInsurance) currentInsurance.get();
     }
     @Override
     protected void showInsurance() {

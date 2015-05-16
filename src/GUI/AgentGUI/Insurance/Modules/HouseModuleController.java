@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
 
@@ -90,7 +90,7 @@ public final class HouseModuleController extends CommonInsuranceMethods
         buildingTypes.sorted();
         buildingType.setItems(buildingTypes);
 
-        if (insuranceListener.get() instanceof HomeInsurance) {
+        if (currentInsurance.get() instanceof HomeInsurance) {
             loadCurrentInsurance();
             showInsurance();
         } else {
@@ -160,7 +160,7 @@ public final class HouseModuleController extends CommonInsuranceMethods
 
     @Override
     protected void loadCurrentInsurance() {
-        HouseModuleController.insurance  = (HomeInsurance) insuranceListener.get();
+        HouseModuleController.insurance  = (HomeInsurance) currentInsurance.get();
     }
     @Override
     protected void showInsurance() {

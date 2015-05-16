@@ -24,11 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static GUI.AgentGUI.Incident.AgentIncidentController.emptyscreenButton;
-import static GUI.CurrentObjectListeners.CurrentIncident.incidentListener;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
-import static GUI.StartMain.currentIncident;
-import static GUI.StartMain.incidentRegister;
+import static GUI.StartMain.*;
 
 /**
  * Created by steinar on 15.04.2015.
@@ -76,7 +72,7 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
     protected void setListeners() {
         openFolder.disableProperty().bind( filenames.disableProperty() );
         openFolder.pressedProperty().addListener(listener -> { if (openFolder.pressedProperty().get()) openCurrentDir();});
-        addFiles.disableProperty().bind(insuranceListener.isNull());
+        addFiles.disableProperty().bind(currentInsurance.getProperty().isNull());
         addFiles.pressedProperty().addListener( listener -> { if (addFiles.pressedProperty().get()) showFileAdderDialog();});
 
         clearScheme.pressedProperty().addListener(listener -> {
@@ -87,7 +83,7 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
             }
         });
 
-        confirmIncident.disableProperty().bind( currentCustomer.isNull().and( incidentListener.isNull()));
+        confirmIncident.disableProperty().bind( currentCustomer.getProperty().isNull().and(currentIncident.getProperty().isNull()));
         confirmIncident.pressedProperty().addListener( listener -> {
             if (confirmIncident.pressedProperty().get()) {
                 description = descriptionInput.getText();
@@ -101,11 +97,11 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
             saveFiles(incident);
         });
 
-        incidentListener.addListener( listener -> {
-                if (incidentListener.isNotNull().get()) {
-                    descriptionInput.setText( incidentListener.get().getIncidentDescription());
-                }
-            });
+        currentIncident.getProperty().addListener(listener -> {
+            if (currentIncident.getProperty().isNotNull().get()) {
+                descriptionInput.setText( currentIncident.get().getIncidentDescription());
+            }
+        });
     }
 
     private void showFileAdderDialog() {

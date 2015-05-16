@@ -1,6 +1,5 @@
 package GUI.AgentGUI.Search;
 
-import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
 import Person.Customer;
@@ -14,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.*;
 import static Register.RegisterCustomer.*;
@@ -126,7 +124,7 @@ public final class AgentSearchController extends CommonGUIMethods
     public void clearFields() {
         resetTextFields(searchSocialsecuritynumber, searchSurename, searchLastname, searchCustomeriD, searchPhone);
         searchresults.clear();
-        CustomerListener.reset();
+        currentCustomer.reset();
     }
 
     @Override

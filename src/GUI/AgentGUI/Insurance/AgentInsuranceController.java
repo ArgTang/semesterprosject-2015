@@ -2,7 +2,7 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.CurrentObjectListeners.WindowChangeListener;
 import GUI.GuiHelper.Fader;
-import Person.Person;
+import Person.Customer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,8 +15,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import static GUI.CurrentObjectListeners.CurrentInsurance.getNameOfInsurance;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
+import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 
 /**
  * Created by steinar on 15.04.2015.
@@ -44,8 +44,8 @@ public final class AgentInsuranceController
         setListeners();
 
         String openwithPane = "Hus";
-        if ( insuranceListener.isNotNull().get() )
-            openwithPane = getNameOfInsurance(insuranceListener.get());
+        if ( currentInsurance.getProperty().isNotNull().get() )
+            openwithPane = getNameOfInsurance(currentInsurance.get());
         insuranceChoiceListener.setString(openwithPane);
 
         container.setLeft(chooserModule);
@@ -148,19 +148,19 @@ public final class AgentInsuranceController
                 }
         );
 
-        insuranceListener.addListener(observable -> {
-            if (insuranceListener.isNull().get())
+        currentInsurance.getProperty().addListener(observable -> {
+            if (currentInsurance.getProperty().isNull().get())
                 return;
 
-            String insuranceName = getNameOfInsurance(insuranceListener.get());
+            String insuranceName = getNameOfInsurance(currentInsurance.get());
             insuranceChoiceListener.setString(insuranceName);
         });
 
-        currentCustomer.addListener(
+        currentCustomer.getProperty().addListener(
                 observable -> {
-                    Person person = currentCustomer.get();
-                    if (person != null)
-                        setCustomername(person);
+                    Customer customer = currentCustomer.get();
+                    if (customer != null)
+                        setCustomername(customer);
                     else
                         selectedCustomerName.setValue("Vennligst velg kunde");
                 }
@@ -173,7 +173,7 @@ public final class AgentInsuranceController
         grid.add(info, 0, 0);
         grid.add(customerName, 0, 1);
 
-        if ( currentCustomer.isNotNull().get() )
+        if ( currentCustomer.getProperty().isNotNull().get() )
             setCustomername( currentCustomer.get() );
 
         VBox vBox = new VBox();
@@ -181,8 +181,8 @@ public final class AgentInsuranceController
         return vBox;
     }
 
-    private void setCustomername(Person person) {
-        String navnet = person.getFirstName() + " " + person.getLastName();
+    private void setCustomername(Customer customer) {
+        String navnet = customer.getFirstName() + " " + customer.getLastName();
         selectedCustomerName.setValue(navnet);
     }
 }

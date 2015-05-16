@@ -9,9 +9,9 @@ import GUI.AgentGUI.Insurance.AgentInsuranceController;
 import GUI.AgentGUI.Person.PersonController;
 import GUI.AgentGUI.Search.AgentSearchController;
 import GUI.AgentGUI.Statistics.AgentStatisticController;
+import GUI.CurrentObjectListeners.CurrentCustomer;
 import GUI.CurrentObjectListeners.CurrentIncident;
 import GUI.CurrentObjectListeners.CurrentInsurance;
-import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.CurrentObjectListeners.WindowChangeListener;
 import GUI.CustomerGUI.CustomerLoggedInController;
 import GUI.GuiHelper.Fader;
@@ -38,7 +38,7 @@ public class StartMain extends Application
     private BorderPane rootLayout = new BorderPane();
     private Fader fade = new Fader();
 
-    public static final CustomerListener currentCustomer = new CustomerListener();
+    public static final CurrentCustomer currentCustomer = new CurrentCustomer();
     public static final CurrentInsurance currentInsurance = new CurrentInsurance();
     public static final CurrentIncident currentIncident = new CurrentIncident();
 

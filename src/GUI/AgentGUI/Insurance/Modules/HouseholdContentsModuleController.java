@@ -23,9 +23,9 @@ import java.util.stream.IntStream;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
 
@@ -80,7 +80,7 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
                                              .map(PaymentOption::getName)
                                              .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
-        if (insuranceListener.get() instanceof HouseholdContentsInsurance) {
+        if (currentInsurance.get() instanceof HouseholdContentsInsurance) {
             loadCurrentInsurance();
             showInsurance();
         } else {
@@ -170,7 +170,7 @@ public final class HouseholdContentsModuleController extends CommonInsuranceMeth
 
     @Override
     protected void loadCurrentInsurance() {
-        HouseholdContentsModuleController.insurance  = (HouseholdContentsInsurance) insuranceListener.get();
+        HouseholdContentsModuleController.insurance  = (HouseholdContentsInsurance) currentInsurance.get();
     }
     @Override
     protected void showInsurance() {

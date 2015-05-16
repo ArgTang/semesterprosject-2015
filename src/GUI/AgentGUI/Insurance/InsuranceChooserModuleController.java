@@ -7,7 +7,7 @@ import javafx.scene.control.ListView;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.CurrentObjectListeners.CurrentInsurance.getNameOfInsurance;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
+import static GUI.StartMain.currentInsurance;
 
 /**
  * Created by steinar on 17.04.2015.
@@ -32,9 +32,9 @@ public final class InsuranceChooserModuleController
                     insuranceChoiceListener.setString(choice);
                 });
 
-        insuranceListener.addListener(listener -> {
-            String currentchoice =  insuranceChooser.getSelectionModel().getSelectedItem();
-            String newValue = getNameOfInsurance( insuranceListener.get());
+        currentInsurance.getProperty().addListener(listener -> {
+            String currentchoice = insuranceChooser.getSelectionModel().getSelectedItem();
+            String newValue = getNameOfInsurance(currentInsurance.get());
             if (newValue.equals(currentchoice))
                 return;
 

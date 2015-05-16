@@ -1,9 +1,8 @@
 package GUI.AgentGUI.Incident;
 
-import GUI.CurrentObjectListeners.CurrentIncident;
-import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonInsuranceMethods;
+import GUI.StartMain;
 import Incident.Incident;
 import Insurance.Insurance;
 import Person.Customer;
@@ -16,10 +15,8 @@ import java.time.LocalDate;
 import static GUI.AgentGUI.Incident.AgentIncidentController.emptyscreenButton;
 import static GUI.AgentGUI.Incident.IncidentConfirmModuleController.confirmIncidentButton;
 import static GUI.AgentGUI.Incident.IncidentConfirmModuleController.description;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
-import static GUI.StartMain.incidentRegister;
+import static GUI.StartMain.*;
 
 /**
  * Created by steinar on 07.05.2015.
@@ -108,7 +105,7 @@ public class IncidentReportController extends CommonInsuranceMethods
 
     @Override
     protected void showInsurance() { //insurance == incident
-        incident = CurrentIncident.incidentListener.get();
+        incident = currentIncident.get();
 
         description = incident.getIncidentDescription();
         dateOfIncident.setValue(incident.getDayOfIncident());
@@ -116,20 +113,22 @@ public class IncidentReportController extends CommonInsuranceMethods
 
     @Override
     protected void makeInsurance() { //insurance == incident
-        Insurance currentInsurance = insuranceListener.get();
+        Insurance insurance = currentInsurance.get();
         Customer customer = currentCustomer.get();
         if (currentInsurance == null  || customer == null) {
             AlertWindow.messageDialog("Du må finne forsikringen før du kan rapportere en ulykke", "Mangler en forsikring");
             return;
         }
 
-        incident = new Incident(dateOfIncident.getValue(), currentInsurance.getCasenumber(), description, fire.isSelected(),
+        incident = new Incident(dateOfIncident.getValue(), insurance.getCasenumber(), description, fire.isSelected(),
                 theft.isSelected(), waterdamage.isSelected(), accident.isSelected(), nature.isSelected());
+
         if ( incidentRegister.add(incident) ) {
-            currentCustomer.get().addIncidentNumber(incident.getIncidentID());
+            customer.addIncidentNumber(incident.getIncidentID());
             IncidentConfirmModuleController.saveFilesToIncident.set(incident.getIncidentID());
-            CurrentIncident.incidentListener.set(incident);
-            CustomerListener.reset();
+            StartMain.currentIncident.set(incident);
+            //todo: find a better way for this
+            currentCustomer.reset();
             currentCustomer.set(customer);
         } else
             AlertWindow.errorDialog("Fikk ikke til å lagre i registeret, kontakt support", "Feil i lagring til register");

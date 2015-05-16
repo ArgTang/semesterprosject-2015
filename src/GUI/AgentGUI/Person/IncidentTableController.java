@@ -11,9 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import static GUI.CurrentObjectListeners.CurrentIncident.incidentListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
-import static GUI.StartMain.incidentRegister;
+import static GUI.StartMain.*;
 
 /**
  * Created by steinar on 23.04.2015.
@@ -44,7 +42,7 @@ public class IncidentTableController
     }
 
     private void setListeners() {
-        currentCustomer.addListener((observable, oldValue, newCustomer) -> {
+        currentCustomer.getProperty().addListener((observable, oldValue, newCustomer) -> {
             if (newCustomer != null)
                 setCustomer(newCustomer);
             else
@@ -54,7 +52,7 @@ public class IncidentTableController
         table.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldIncident, newIncident) -> {
                     if (newIncident != null)
-                        incidentListener.set(newIncident);
+                        currentIncident.set(newIncident);
                 }
         );
 
@@ -62,7 +60,7 @@ public class IncidentTableController
             if (event.isPrimaryButtonDown()) {
                 Incident  incident = table.getSelectionModel().selectedItemProperty().get();
                 if (incident != null)
-                    incidentListener.set(incident);
+                    currentIncident.set(incident);
             }
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
                 StartMain.changeWindowListener.setString("Incident");

@@ -17,8 +17,11 @@ import javafx.beans.property.SimpleObjectProperty;
 public final class CurrentInsurance
 {
     //todo: make generic?
-    public static final SimpleObjectProperty<Insurance> insuranceListener = new SimpleObjectProperty<>(null);
+    private final SimpleObjectProperty<Insurance> insuranceListener = new SimpleObjectProperty<>(null);
 
+    public Insurance get() { return insuranceListener.get(); }
+    public void set(Insurance incident) { insuranceListener.set(incident); }
+    public SimpleObjectProperty<Insurance> getProperty() { return insuranceListener; }
     public void reset() { insuranceListener.setValue(null); }
 
     public static String getNameOfInsurance(Insurance insurance) {

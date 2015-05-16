@@ -4,7 +4,7 @@ import Person.Customer;
 import Register.RegisterCustomer;
 import javafx.scene.control.TextField;
 
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
+import static GUI.StartMain.currentCustomer;
 
 /**
  * Alot of classes have similar functions here we define

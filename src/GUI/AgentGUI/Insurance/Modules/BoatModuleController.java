@@ -7,6 +7,7 @@ package GUI.AgentGUI.Insurance.Modules;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonInsuranceMethods;
 import GUI.GuiHelper.RegEX;
+import GUI.StartMain;
 import Insurance.Helper.PaymentOption;
 import Insurance.Vehicle.BoatInsurance;
 import Register.RegisterCustomer;
@@ -23,9 +24,9 @@ import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.deductablenumbers;
 import static Insurance.Insurance.paymentOptions;
 import static Insurance.Vehicle.BoatInsurance.minBoatValueforMandatoryRegistration;
@@ -89,7 +90,7 @@ public final class BoatModuleController extends CommonInsuranceMethods
                                              .map(PaymentOption::getName)
                                              .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
-        if (insuranceListener.get() instanceof BoatInsurance) {
+        if (currentInsurance.get() instanceof BoatInsurance) {
             loadCurrentInsurance();
             showInsurance();
         } else {
@@ -167,7 +168,7 @@ public final class BoatModuleController extends CommonInsuranceMethods
 
     @Override
     protected void loadCurrentInsurance() {
-        BoatModuleController.insurance  = (BoatInsurance) insuranceListener.get();
+        BoatModuleController.insurance  = (BoatInsurance) StartMain.currentInsurance.get();
     }
     @Override
     protected void showInsurance() {

@@ -1,6 +1,5 @@
 package GUI.GuiHelper;
 
-import GUI.CurrentObjectListeners.CustomerListener;
 import Insurance.Insurance;
 import Person.Customer;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -13,10 +12,7 @@ import java.util.NoSuchElementException;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.*;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
-import static GUI.StartMain.changeWindowListener;
-import static GUI.StartMain.insuranceRegister;
+import static GUI.StartMain.*;
 import static Insurance.Insurance.paymentFee;
 
 /**
@@ -39,7 +35,7 @@ public abstract class CommonInsuranceMethods extends CommonGUIMethods
             customer.addInsuranceNumber(insurance.getCasenumber());
 
             //todo: find a better way for this
-            CustomerListener.reset();
+            currentCustomer.reset();
             currentCustomer.set(customer);
 
             //currentCustomer.getPersonProperty().notifyAll(); //IllegalMonitorSateException????
@@ -63,9 +59,9 @@ public abstract class CommonInsuranceMethods extends CommonGUIMethods
     }
 
     protected <neededClass extends Insurance> void setCurrentInsuranceListener(final Class<neededClass> someClass) {
-        insuranceListener.addListener( listener -> {
-            Boolean isNotNull = insuranceListener.isNotNull().get();
-            if (isNotNull && someClass.equals( insuranceListener.get().getClass())) {
+        currentInsurance.getProperty().addListener(listener -> {
+            Boolean isNotNull = currentInsurance.getProperty().isNotNull().get();
+            if (isNotNull && someClass.equals(currentInsurance.get().getClass())) {
                 loadCurrentInsurance();
                 showInsurance();
             }

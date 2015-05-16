@@ -17,8 +17,8 @@ import javafx.scene.control.cell.TextFieldListCell;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.customerRegister;
 
 /**
@@ -77,7 +77,7 @@ public class EditCustomerController extends CommonGUIMethods
 
     @Override
     protected void setListeners() {
-        currentCustomer.addListener(observable -> setCustomer());
+        currentCustomer.getProperty().addListener(observable -> setCustomer());
 
         phonelist.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() { //todo: lambda here??
             @Override

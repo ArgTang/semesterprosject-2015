@@ -9,9 +9,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import static GUI.CurrentObjectListeners.CurrentIncident.incidentListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.CommonInsuranceMethods.setBoldFont;
+import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentIncident;
 import static java.lang.String.valueOf;
 
 /**
@@ -33,8 +33,8 @@ public final class AgentIncidentController
     public Parent initAgentIncidentView() {
         customerName.textProperty().bind(selectedCustomerName);
         setBoldFont(customerName, incidentID);
-        incidentInfo.visibleProperty().bind(incidentListener.isNotNull());
-        incidentID.visibleProperty().bind(incidentListener.isNotNull());
+        incidentInfo.visibleProperty().bind(currentIncident.getProperty().isNotNull());
+        incidentID.visibleProperty().bind(currentIncident.getProperty().isNotNull());
 
         chooserModule = setlabel( showChooserModule() );
         container.setLeft( chooserModule );
@@ -78,15 +78,15 @@ public final class AgentIncidentController
     }
 
     private void setListeners() {
-        incidentListener.addListener( listener -> setIncidentLabel() );
+        currentIncident.getProperty().addListener(listener -> setIncidentLabel());
 
-        currentCustomer.addListener(
-            observable -> {
-                SimpleObjectProperty<Customer> property = (SimpleObjectProperty<Customer>) observable;
-                Customer customer = property.getValue();
-                if (customer != null)
-                    setCustomername(customer);
-            }
+        currentCustomer.getProperty().addListener(
+                observable -> {
+                    SimpleObjectProperty<Customer> property = (SimpleObjectProperty<Customer>) observable;
+                    Customer customer = property.getValue();
+                    if (customer != null)
+                        setCustomername(customer);
+                }
         );
     }
 
@@ -98,7 +98,7 @@ public final class AgentIncidentController
         grid.add(incidentInfo, 0, 2);
         grid.add(incidentID, 1, 2);
 
-        if ( currentCustomer.isNotNull().get() )
+        if ( currentCustomer.getProperty().isNotNull().get() )
             setCustomername( currentCustomer.get() );
 
         VBox vBox = new VBox();
@@ -112,9 +112,9 @@ public final class AgentIncidentController
     }
 
     private void setIncidentLabel() {
-        if (incidentListener.isNull().get())
+        if (currentIncident.getProperty().isNull().get())
             return;
 
-        incidentID.setText( valueOf(incidentListener.get().getIncidentID()));
+        incidentID.setText( valueOf( currentIncident.get().getIncidentID()));
     }
 }

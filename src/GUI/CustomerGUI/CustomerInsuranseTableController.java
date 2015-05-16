@@ -10,7 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
+import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.insuranceRegister;
 
 /**
@@ -39,7 +39,7 @@ public class CustomerInsuranseTableController
         table.setPlaceholder(new Label("Ingen registrerte forsikringer")); //todo: add icon here?
         table.setItems(tableList);
 
-        if ( currentCustomer.isNotNull().get() )
+        if (currentCustomer.getProperty().isNotNull().get() )
             setCustomer(currentCustomer.get());
     }
 

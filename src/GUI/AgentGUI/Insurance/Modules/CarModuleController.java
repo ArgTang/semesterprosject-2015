@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.*;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.*;
 import static Insurance.Vehicle.CarInsurance.bonusValues;
 import static Insurance.Vehicle.CarInsurance.kaskoValues;
@@ -97,7 +97,7 @@ public final class CarModuleController extends CommonInsuranceMethods
                                              .map(PaymentOption::getName)
                                              .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
-        if (insuranceListener.get() instanceof CarInsurance) {
+        if (currentInsurance.get() instanceof CarInsurance) {
             loadCurrentInsurance();
             showInsurance();
         } else {
@@ -191,7 +191,7 @@ public final class CarModuleController extends CommonInsuranceMethods
 
     @Override
     protected void loadCurrentInsurance() {
-        CarModuleController.insurance  = (CarInsurance) insuranceListener.get();
+        CarModuleController.insurance  = (CarInsurance) currentInsurance.get();
     }
 
     @Override

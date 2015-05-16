@@ -1,6 +1,5 @@
 package GUI.AgentGUI.Person;
 
-import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.GuiHelper.RegEX;
@@ -20,8 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Search.AgentSearchController.searchresults;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
 import static GUI.GuiHelper.RegEX.*;
+import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.customerRegister;
 
 /**
@@ -63,7 +62,7 @@ public final class EditPersonController extends CommonGUIMethods
 
     @Override
     public void clearFields() {
-        CustomerListener.reset();
+        currentCustomer.reset();
         socialSecurityNumber.setEditable(true);
         resetTextFields(socialSecurityNumber, firstname, lastname, adress, citynumber, city, email);
         phones.clear();
@@ -80,7 +79,7 @@ public final class EditPersonController extends CommonGUIMethods
 
     @Override
     protected void setListeners() {
-        currentCustomer.addListener(observable -> setCustomer());
+        currentCustomer.getProperty().addListener(observable -> setCustomer());
 
         //todo: find a way to add cssValidation when editing Listview
         phonelist.setOnEditStart(new EventHandler<ListView.EditEvent>() {
@@ -134,7 +133,7 @@ public final class EditPersonController extends CommonGUIMethods
     // this will change the button text to new or change customer dependant on wether a currentcustomer is selected
     //todo: change na,e to something better
     private void setRegisterButton() {
-        if(currentCustomer.isNotNull().get()) {
+        if(currentCustomer.getProperty().isNotNull().get()) {
             changeCustomerButton.setTextFill(Color.RED);
             changeCustomerButton.setText("Endre Kunde");
         } else {
@@ -167,7 +166,7 @@ public final class EditPersonController extends CommonGUIMethods
         oldcustomer.getInsuranceNumbers().stream().forEach(newcustomer::addInsuranceNumber);
         oldcustomer.getIncidentNumbers().stream().forEach(newcustomer::addIncidentNumber);
 
-        if (currentCustomer.isNotNull().get()) {
+        if (currentCustomer.getProperty().isNotNull().get()) {
             customerRegister.update(newcustomer);
             currentCustomer.set(customerRegister.get(personNumber));
         } else if ( customerRegister.get(socialSecurityNumber.getText()) != null ) {

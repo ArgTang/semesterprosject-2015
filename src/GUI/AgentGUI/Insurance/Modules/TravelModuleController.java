@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.insuranceChoiceListener;
 import static GUI.AgentGUI.Insurance.InsuranceConfirmModuleController.confirmOrderButton;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
+import static GUI.StartMain.currentCustomer;
+import static GUI.StartMain.currentInsurance;
 import static Insurance.Insurance.paymentOptions;
 
 public final class TravelModuleController extends CommonInsuranceMethods
@@ -57,7 +57,7 @@ public final class TravelModuleController extends CommonInsuranceMethods
         types.setAll("Reise", "Reise pluss (Familie)");
         type.setItems(types);
 
-        if (insuranceListener.get() instanceof TravelInsurance) {
+        if (currentInsurance.get() instanceof TravelInsurance) {
             loadCurrentInsurance();
             showInsurance();
         } else {
@@ -103,7 +103,7 @@ public final class TravelModuleController extends CommonInsuranceMethods
 
     @Override
     protected void loadCurrentInsurance() {
-        TravelModuleController.insurance  = (TravelInsurance) insuranceListener.get();
+        TravelModuleController.insurance  = (TravelInsurance) currentInsurance.get();
     }
     @Override
     protected void showInsurance() {

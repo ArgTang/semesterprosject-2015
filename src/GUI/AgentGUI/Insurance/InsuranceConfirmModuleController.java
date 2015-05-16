@@ -2,6 +2,7 @@ package GUI.AgentGUI.Insurance;
 
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonGUIMethods;
+import Insurance.Insurance;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -13,8 +14,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static GUI.AgentGUI.Insurance.AgentInsuranceController.emptyscreenButton;
-import static GUI.CurrentObjectListeners.CurrentInsurance.insuranceListener;
-import static GUI.CurrentObjectListeners.CustomerListener.currentCustomer;
+import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.currentInsurance;
 import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
 
@@ -73,10 +73,10 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
 
     @Override
     protected void setListeners() {
-        BooleanProperty isNotNull = new SimpleBooleanProperty( insuranceListener.isNotNull().get() && insuranceListener.get().getEndDate()== null);
+        BooleanProperty isNotNull = new SimpleBooleanProperty( currentInsurance.getProperty().isNotNull().get() && currentInsurance.get().getEndDate()== null);
         endThis.disableProperty().bind(isNotNull.not());
 
-        confirmInsurance.disableProperty().bind(currentCustomer.isNull().and(insuranceListener.isNull()));
+        confirmInsurance.disableProperty().bind(currentCustomer.getProperty().isNull().and(currentInsurance.getProperty().isNull()));
         confirmOrderButton.bind(confirmInsurance.pressedProperty());
         //insuranceOffer.disableProperty().bind(currentCustomer.isNull()); //todo: when offer is implemented
 
@@ -96,11 +96,11 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
     private void endInsurance() {
         Optional<LocalDate> result = makeDialog();
         if ( result.isPresent() ) {
-
-
-            AlertWindow.confirmDialog(result.toString(), "svar");
+            Insurance insurance = currentInsurance.get();
+            insurance.endInsuranse(result.get());
+            currentInsurance.set(insurance);
         } else
-            AlertWindow.confirmDialog("tomt resultat", "svar");
+            return; //cancel: do nothing
     }
 
     @FXML
@@ -127,7 +127,7 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
 
     @FXML
     private void confirmInsurance() {
-
+        throw new NoSuchMethodError("InsuranceConfirmModule dont have a need for this function");
     }
 
     public static void clearLabel() {

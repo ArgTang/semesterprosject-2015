@@ -1,6 +1,5 @@
 package GUI;
 
-import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import Person.Customer;
@@ -18,10 +17,11 @@ import javafx.scene.text.Text;
 
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.changeWindowListener;
+import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.customerRegister;
 
-
 /**
+ * This class constructs and controls login and forgot passwordScreen
  * Created by steinar on 13.04.2015.
  */
 public final class WelcomeController
@@ -83,7 +83,7 @@ public final class WelcomeController
                 Customer customer = customerRegister.get( userNameInput.getText());
                 if ( customer != null) {
                     if (customer.getPassword().equals(passwordInput.getText())) {
-                        CustomerListener.currentCustomer.set(customer);
+                        currentCustomer.set(customer);
                         changeWindowListener.setString("CustomerLoggedIn");
                         return;
                     }

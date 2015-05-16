@@ -23,10 +23,8 @@ import java.util.function.Predicate;
 
 public final class RegEX
 {
-
     public static final PseudoClass invalidText = PseudoClass.getPseudoClass("invalidText");
 
-    //todo: make sure all of the regular expressions works as intended
     private static final String NUMBER = "[1-9]{1}[\\d]";
     private static final String ALLCHARS = "[\\wøØæÆåÅ]+";
     private static final String LETTERS = "([[^\\d]\\WøØæÆåÅ ]+( )?)+";
