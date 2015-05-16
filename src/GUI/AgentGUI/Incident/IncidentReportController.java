@@ -4,7 +4,6 @@ import GUI.CurrentObjectListeners.CurrentIncident;
 import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.CommonInsuranceMethods;
-import GUI.StartMain;
 import Incident.Incident;
 import Insurance.Insurance;
 import Person.Customer;

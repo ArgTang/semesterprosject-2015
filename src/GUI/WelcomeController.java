@@ -4,7 +4,6 @@ import GUI.CurrentObjectListeners.CustomerListener;
 import GUI.GuiHelper.AlertWindow;
 import GUI.GuiHelper.Fader;
 import Person.Customer;
-import Register.RegisterCustomer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
@@ -16,9 +15,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-import java.io.IOException;
-import java.util.List;
 
 import static GUI.GuiHelper.RegEX.*;
 import static GUI.StartMain.changeWindowListener;

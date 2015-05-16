@@ -120,16 +120,7 @@ public class StartMain extends Application
             System.out.println("failed loading agentmenu.fxml");
             e.printStackTrace();
         }
-        //makePanes();
         return agentMenu;
-    }
-
-    @Deprecated //todo: find another way
-    private void makePanes(){
-        AgentIncidentController incidentController = new AgentIncidentController();
-        agentIncident  = incidentController.initAgentIncidentView();
-        AgentInsuranceController insuranceController = new AgentInsuranceController();
-        agentInsurance  = insuranceController.initAgentInsuranceView();
     }
 
     private Parent getIncidentPane() {

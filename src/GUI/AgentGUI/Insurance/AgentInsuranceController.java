@@ -43,9 +43,12 @@ public final class AgentInsuranceController
         chooserModule = setlabel(showChooserModule());
         setListeners();
 
+        String openwithPane = "Hus";
+        if ( insuranceListener.isNotNull().get() )
+            openwithPane = getNameOfInsurance(insuranceListener.get());
+        insuranceChoiceListener.setString(openwithPane);
+
         container.setLeft(chooserModule);
-        if( container.getCenter() == null)
-            showtHouseInsurance();
         container.setRight(confirmModule);
         return container;
     }
@@ -122,9 +125,6 @@ public final class AgentInsuranceController
                 observable -> {
                     StringProperty string = (StringProperty) observable;
                     switch (string.getValue()) {
-                        case "Hus":
-                            showtHouseInsurance();
-                            break;
                         case "Bil":
                             showCarinsurance();
                             break;
@@ -139,6 +139,10 @@ public final class AgentInsuranceController
                             break;
                         case "Innbo":
                             showHouseholdInsurance();
+                            break;
+                        case "Hus":
+                        default:
+                            showtHouseInsurance();
                             break;
                     }
                 }

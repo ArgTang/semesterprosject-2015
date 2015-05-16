@@ -2,8 +2,8 @@ package Test;
 
 import Insurance.Helper.PaymentOption;
 import Insurance.Insurance;
-import Insurance.TravelInsurance;
 import Insurance.Property.HomeInsurance;
+import Insurance.TravelInsurance;
 import Person.ContactInfo;
 import Person.Customer;
 

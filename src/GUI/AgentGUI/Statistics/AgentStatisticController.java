@@ -1,9 +1,7 @@
 package GUI.AgentGUI.Statistics;
 
-import GUI.AgentGUI.Insurance.Modules.TravelModuleController;
 import GUI.GuiHelper.CommonGUIMethods;
 import GUI.StartMain;
-import Incident.Incident;
 import Insurance.Insurance;
 import Person.Customer;
 import javafx.collections.FXCollections;
@@ -18,7 +16,6 @@ import javafx.scene.chart.XYChart;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
