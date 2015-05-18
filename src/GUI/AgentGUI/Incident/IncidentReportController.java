@@ -100,15 +100,17 @@ public class IncidentReportController extends CommonInsuranceMethods
     }
 
     @Override
-    protected void loadCurrentInsurance() {
-    }
-
-    @Override
     protected void showInsurance() { //insurance == incident
         incident = currentIncident.get();
 
         description = incident.getIncidentDescription();
-        dateOfIncident.setValue(incident.getDayOfIncident());
+        dateOfIncident.setValue( incident.getDayOfIncident());
+        fire.setSelected( incident.isFire());
+        nature.setSelected( incident.isNature());
+        waterdamage.setSelected( incident.isWaterdamage());
+        theft.setSelected( incident.isTheft());
+        personDamage.setSelected( incident.isPersonDamage());
+        accident.setSelected( incident.isAccident());
     }
 
     @Override
@@ -121,7 +123,7 @@ public class IncidentReportController extends CommonInsuranceMethods
         }
 
         incident = new Incident(dateOfIncident.getValue(), insurance.getCasenumber(), description, fire.isSelected(),
-                theft.isSelected(), waterdamage.isSelected(), accident.isSelected(), nature.isSelected());
+                theft.isSelected(), waterdamage.isSelected(), accident.isSelected(), nature.isSelected(), personDamage.isSelected());
 
         if ( incidentRegister.add(incident) ) {
             customer.addIncidentNumber(incident.getIncidentID());
@@ -132,5 +134,10 @@ public class IncidentReportController extends CommonInsuranceMethods
             currentCustomer.set(customer);
         } else
             AlertWindow.errorDialog("Fikk ikke til å lagre i registeret, kontakt support", "Feil i lagring til register");
+    }
+
+    @Override
+    protected void loadCurrentInsurance() {
+        throw new NoSuchMethodError("IncidentReportController do not use this method");
     }
 }

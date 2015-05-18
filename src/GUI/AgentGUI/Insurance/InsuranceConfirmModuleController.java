@@ -59,6 +59,7 @@ public final class InsuranceConfirmModuleController extends CommonGUIMethods
     @Override
     protected void initialize() {
         description.setPromptText("beskrivelse av forsikrings objektet");
+        description.setVisible(false);
 
         yearlyPremium.textProperty().bind(yearlyPremiumLabel.asString());
         totalFee.textProperty().bind(totalFeeLabel.asString());

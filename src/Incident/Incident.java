@@ -34,7 +34,7 @@ public class Incident implements Serializable {
     private int payout;
 
     public Incident(LocalDate dayOfIncident, int InsuranceIDReference, String incidentDescription, boolean fire,
-                    boolean theft, boolean waterdamage, boolean accident, boolean nature) {
+                    boolean theft, boolean waterdamage, boolean accident, boolean nature, boolean personDamage) {
         this.timeOfReport = LocalDateTime.now();
         this.dayOfIncident = dayOfIncident;
         this.InsuranceIDReference = InsuranceIDReference;
@@ -43,6 +43,7 @@ public class Incident implements Serializable {
         this.waterdamage = waterdamage;
         this.accident = accident;
         this.nature = nature;
+        this.personDamage = personDamage;
     }
 
     public int getIncidentID() {

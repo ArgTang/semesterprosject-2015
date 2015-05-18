@@ -9,9 +9,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import static GUI.CurrentObjectListeners.CurrentInsurance.getNameOfInsurance;
 import static GUI.GuiHelper.CommonInsuranceMethods.setBoldFont;
 import static GUI.StartMain.currentCustomer;
 import static GUI.StartMain.currentIncident;
+import static GUI.StartMain.currentInsurance;
 import static java.lang.String.valueOf;
 
 /**
@@ -22,6 +24,7 @@ public final class AgentIncidentController
 {
     private static BorderPane container = new BorderPane();
     private Label customerName = new Label();
+    private Label insuranceLabel = new Label();
     Label incidentID = new Label();
     Label incidentInfo = new Label("Valgt hendelse: ");
 
@@ -33,15 +36,17 @@ public final class AgentIncidentController
     public Parent initAgentIncidentView() {
         customerName.textProperty().bind(selectedCustomerName);
         setBoldFont(customerName, incidentID);
+        insuranceLabel.visibleProperty().bind(currentInsurance.getProperty().isNotNull());
         incidentInfo.visibleProperty().bind(currentIncident.getProperty().isNotNull());
         incidentID.visibleProperty().bind(currentIncident.getProperty().isNotNull());
 
-        chooserModule = setlabel( showChooserModule() );
+        chooserModule = initlabel(showChooserModule());
         container.setLeft( chooserModule );
         container.setCenter( showIncidentReport() );
         container.setRight( showConfirmModule() );
 
         setListeners();
+        setInsuranceLabel();
         return container;
     }
 
@@ -79,6 +84,7 @@ public final class AgentIncidentController
 
     private void setListeners() {
         currentIncident.getProperty().addListener(listener -> setIncidentLabel());
+        currentInsurance.getProperty().addListener(listener ->  setInsuranceLabel() );
 
         currentCustomer.getProperty().addListener(
                 observable -> {
@@ -90,20 +96,22 @@ public final class AgentIncidentController
         );
     }
 
-    private Parent setlabel(Parent chooser) {
+    private Parent initlabel(Parent chooser) {
         GridPane grid= new GridPane();
+        grid.setHgap(5);
         Label info = new Label("Du behandler nå:");
         grid.add(info, 0, 0);
         grid.add(customerName, 0, 1);
-        grid.add(incidentInfo, 0, 2);
-        grid.add(incidentID, 1, 2);
+        grid.add(insuranceLabel, 0, 2, 2, 1);
+        grid.add(incidentInfo, 0, 3);
+        grid.add(incidentID, 1, 3);
 
         if ( currentCustomer.getProperty().isNotNull().get() )
             setCustomername( currentCustomer.get() );
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(grid, chooser);
-        return vBox;
+        return grid;
     }
 
     private void setCustomername(Customer customer) {
@@ -116,5 +124,12 @@ public final class AgentIncidentController
             return;
 
         incidentID.setText( valueOf( currentIncident.get().getIncidentID()));
+    }
+
+    private void setInsuranceLabel() {
+        if (currentInsurance.getProperty().isNotNull().get()) {
+            String type = getNameOfInsurance( currentInsurance.get());
+            insuranceLabel.setText( type + " forsikring");
+        }
     }
 }

@@ -79,7 +79,6 @@ public final class CarModuleController extends CommonInsuranceMethods
     @FXML
     private TextField showpaymentOption;
 
-
     private static CarInsurance insurance;
 
     @FXML
