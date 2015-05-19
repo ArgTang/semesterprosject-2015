@@ -22,9 +22,9 @@ public class CustomerLoggedInController
         Parent insuranceTable = null;
         Parent incidentTable = null;
         try {
-            editPerson = FXMLLoader.load( getClass().getResource("\\EditCustomer.fxml") );
-            insuranceTable = FXMLLoader.load( getClass().getResource("\\CustomerInsuranseTable.fxml") );
-            incidentTable = FXMLLoader.load( getClass().getResource("\\CustomerIncidentTable.fxml") );
+            editPerson = FXMLLoader.load( getClass().getResource("/GUI/CustomerGUI/EditCustomer.fxml") );
+            insuranceTable = FXMLLoader.load( getClass().getResource("/GUI/CustomerGUI/CustomerInsuranseTable.fxml") );
+            incidentTable = FXMLLoader.load( getClass().getResource("/GUI/CustomerGUI/CustomerIncidentTable.fxml") );
         } catch (IOException e) {
             System.out.println("failed loading fxml file in PersonController");
             e.printStackTrace();

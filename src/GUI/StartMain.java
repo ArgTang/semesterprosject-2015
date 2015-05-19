@@ -1,6 +1,7 @@
 package GUI;
 
 /**
+ * This is the Main Class for this class. All windows are created here.
  * Created by steinar on 29.03.2015.
  */
 
@@ -73,14 +74,17 @@ public class StartMain extends Application
         Scene scene = new Scene(rootLayout);
         rootLayout.setPadding(new Insets(5, 5, 5, 5));
         rootLayout.setPrefSize(SCREEN.getWidth() / 1.35, SCREEN.getHeight() / 1.5); //todo: change this maybe?
+        rootLayout.setStyle("-fx-font-size: 1.5em;");
         loadParent(getLoginPane());
 
-        //adding rules for CSS Validation
-        String css = StartMain.class.getResource("\\css\\CSSValidation.css").toExternalForm();
-        //scene.getStylesheets().clear();
-        scene.getStylesheets().add(css);
-        rootLayout.setStyle("-fx-font-size: 1.5em;");
-
+        try {
+            String css = StartMain.class.getResource("/GUI/css/CSSValidation.css").toExternalForm();
+            //scene.getStylesheets().clear();
+            scene.getStylesheets().add(css);
+        } catch (Exception e) {
+            System.out.println("could not load css file: /GUI/css/CSSValidation.css" );
+            e.printStackTrace();
+        }
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -105,8 +109,8 @@ public class StartMain extends Application
             return agentMenu;
 
         try {
-            Parent menu = FXMLLoader.load(getClass().getResource("\\AgentGUI\\AgentMenu.fxml"));
-            StackPane logout = FXMLLoader.load(getClass().getResource("\\AgentGUI\\Logout.fxml"));
+            Parent menu = FXMLLoader.load(getClass().getResource("/GUI/AgentGUI/AgentMenu.fxml"));
+            StackPane logout = FXMLLoader.load(getClass().getResource("/GUI/AgentGUI/Logout.fxml"));
             Separator separator = new Separator();
             separator.setPadding(new Insets(0, 0, 5, 0));
             HBox agentMenuContainer = new HBox();

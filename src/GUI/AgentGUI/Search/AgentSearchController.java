@@ -138,7 +138,7 @@ public final class AgentSearchController extends CommonGUIMethods
     public Parent initAgentSearch() {
         Parent searchPane = null;
         try {
-            searchPane = FXMLLoader.load(getClass().getResource("\\AgentPersonSearch.fxml"));
+            searchPane = FXMLLoader.load(getClass().getResource("/GUI/AgentGUI/Search/AgentPersonSearch.fxml"));
         } catch (IOException e) {
             System.out.println("could not find file AgentPersonSearch.fxml");
             e.printStackTrace();

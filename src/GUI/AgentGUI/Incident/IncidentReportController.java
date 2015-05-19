@@ -127,7 +127,7 @@ public class IncidentReportController extends CommonInsuranceMethods
 
         if ( incidentRegister.add(incident) ) {
             customer.addIncidentNumber(incident.getIncidentID());
-            IncidentConfirmModuleController.saveFilesToIncident.set(incident.getIncidentID());
+            IncidentConfirmModuleController.saveFilesToIncidentID.set(incident.getIncidentID());
             StartMain.currentIncident.set(incident);
             //todo: find a better way for this
             currentCustomer.reset();

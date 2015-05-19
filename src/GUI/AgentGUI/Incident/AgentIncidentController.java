@@ -52,21 +52,21 @@ public final class AgentIncidentController
 
     private Parent showChooserModule() {
         if (chooserModule == null)
-            chooserModule = loadParent("\\IncidentTable.fxml");
+            chooserModule = loadParent("/GUI/AgentGUI/Incident/IncidentTable.fxml");
 
         return chooserModule;
     }
 
     private Parent showConfirmModule() {
         if (confirmModule == null)
-            confirmModule = loadParent("\\IncidentConfirmModule.fxml");
+            confirmModule = loadParent("/GUI/AgentGUI/Incident/IncidentConfirmModule.fxml");
 
         return confirmModule;
     }
 
     private Parent showIncidentReport() {
         if (incidentReport == null)
-            incidentReport = loadParent("\\IncidentReport.fxml");
+            incidentReport = loadParent("/GUI/AgentGUI/Incident/IncidentReport.fxml");
 
         return incidentReport;
     }

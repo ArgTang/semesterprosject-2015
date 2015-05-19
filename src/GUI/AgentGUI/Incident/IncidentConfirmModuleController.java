@@ -46,9 +46,8 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
     @FXML
     private Button openFolder;
 
-
     public static final BooleanProperty confirmIncidentButton = new SimpleBooleanProperty(false);
-    public static final IntegerProperty saveFilesToIncident = new SimpleIntegerProperty(0);
+    public static final IntegerProperty saveFilesToIncidentID = new SimpleIntegerProperty(0);
     private List<Path> uploadedFiles = new ArrayList<>();
     private Path currentDir;
     private final Path tempDir = createDir("temp");
@@ -92,8 +91,8 @@ public final class IncidentConfirmModuleController extends CommonGUIMethods
             }
         });
 
-        saveFilesToIncident.addListener( listener -> {
-            Incident incident = incidentRegister.get( saveFilesToIncident.get());
+        saveFilesToIncidentID.addListener(listener -> {
+            Incident incident = incidentRegister.get(saveFilesToIncidentID.get());
             saveFiles(incident);
         });
 

@@ -22,9 +22,9 @@ public class PersonController
         Parent insuranceTable = null;
         Parent incidentTable = null;
         try {
-            editPerson = FXMLLoader.load( getClass().getResource("\\EditPerson.fxml") );
-            insuranceTable = FXMLLoader.load( getClass().getResource("\\InsuranseTable.fxml") );
-            incidentTable = FXMLLoader.load( getClass().getResource("\\IncidentTable.fxml") );
+            editPerson = FXMLLoader.load( getClass().getResource("/GUI/AgentGUI/Person/EditPerson.fxml") );
+            insuranceTable = FXMLLoader.load( getClass().getResource("/GUI/AgentGUI/Person/InsuranseTable.fxml") );
+            incidentTable = FXMLLoader.load( getClass().getResource("/GUI/AgentGUI/Person/IncidentTable.fxml") );
         } catch (IOException e) {
             System.out.println("failed loading fxml file in PersonController");
             e.printStackTrace();

@@ -55,51 +55,51 @@ public final class AgentInsuranceController
 
     private Parent showChooserModule() {
         if (chooserModule == null)
-            chooserModule = loadParent("\\InsuranceChooserModule.fxml");
+            chooserModule = loadParent("/GUI/AgentGUI/Insurance/InsuranceChooserModule.fxml");
 
         return chooserModule;
     }
 
     private Parent showConfirmModule() {
         if (confirmModule == null)
-            confirmModule = loadParent("\\InsuranceConfirmModule.fxml");
+            confirmModule = loadParent("/GUI/AgentGUI/Insurance/InsuranceConfirmModule.fxml");
 
         return confirmModule;
     }
 
     public void showtHouseInsurance() {
         if (house == null)
-            house = loadParent("\\Modules\\HouseModule.fxml");
+            house = loadParent("/GUI/AgentGUI/Insurance/Modules/HouseModule.fxml");
         setFade(house);
     }
 
     public void showCarinsurance() {
         if (car == null)
-            car = loadParent("\\Modules\\CarModule.fxml");
+            car = loadParent("/GUI/AgentGUI/Insurance/Modules/CarModule.fxml");
         setFade(car);
     }
 
     private void showAnimalInsurance() {
         if (animal == null)
-            animal = loadParent("\\Modules\\AnimalModule.fxml");
+            animal = loadParent("/GUI/AgentGUI/Insurance/Modules/AnimalModule.fxml");
         setFade(animal);
     }
 
     private void showTravelInsurance() {
         if (travel == null)
-            travel = loadParent("\\Modules\\TravelModule.fxml");
+            travel = loadParent("/GUI/AgentGUI/Insurance/Modules/TravelModule.fxml");
         setFade(travel);
     }
 
     private void showBoatInsurance() {
         if (boat == null)
-            boat = loadParent("\\Modules\\BoatModule.fxml");
+            boat = loadParent("/GUI/AgentGUI/Insurance/Modules/BoatModule.fxml");
         setFade(boat);
     }
 
     private void showHouseholdInsurance() {
         if (household == null)
-            household = loadParent("\\Modules\\HouseholdContentsModule.fxml");
+            household = loadParent("/GUI/AgentGUI/Insurance/Modules/HouseholdContentsModule.fxml");
         setFade(household);
     }
 

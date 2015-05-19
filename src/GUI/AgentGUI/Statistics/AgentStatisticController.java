@@ -120,7 +120,7 @@ public final class AgentStatisticController extends CommonGUIMethods
     public Parent initStatistics() {
         Parent statisticPane = null;
         try {
-            statisticPane = FXMLLoader.load(getClass().getResource("\\AgentStatisic.fxml"));
+            statisticPane = FXMLLoader.load(getClass().getResource("/GUI/AgentGUI/Statistics/AgentStatisic.fxml"));
         } catch (IOException e) {
             System.out.println("could not find file AgentStatisic.fxml");
             e.printStackTrace();

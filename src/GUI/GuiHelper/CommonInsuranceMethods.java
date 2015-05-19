@@ -50,14 +50,6 @@ public abstract class CommonInsuranceMethods extends CommonGUIMethods
         paymentEachTerminLabel.setValue( (insurance.getAnnualPremium() + paymentFee * paymentTermins) / paymentTermins );
     }
 
-    protected void setEmptyScreenListener() {
-        emptyscreenButton.addListener(observable -> {
-            SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
-            if (bool.get())
-                clearFields();
-        });
-    }
-
     protected <neededClass extends Insurance> void setCurrentInsuranceListener(final Class<neededClass> someClass) {
         currentInsurance.getProperty().addListener(listener -> {
             Boolean isNotNull = currentInsurance.getProperty().isNotNull().get();
@@ -74,6 +66,14 @@ public abstract class CommonInsuranceMethods extends CommonGUIMethods
             if (property.get().equals(typeofclassString)) {
                 makeInsurance();
             }
+        });
+    }
+
+    protected void setEmptyScreenListener() {
+        emptyscreenButton.addListener(observable -> {
+            SimpleBooleanProperty bool = (SimpleBooleanProperty) observable;
+            if (bool.get())
+                clearFields();
         });
     }
 
