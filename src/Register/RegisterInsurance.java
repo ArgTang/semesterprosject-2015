@@ -4,13 +4,14 @@ import Insurance.Insurance;
 
 import java.util.HashMap;
 
-/**Class for storing Insurance
+/**
+ * Class for storing Insurance
  * Created by steinar on 28.04.2015.
  */
 public final class RegisterInsurance extends  Register
 {
     public RegisterInsurance() {
-        super(new HashMap<Integer, Insurance>());
+        super(new HashMap<Integer, Insurance>(), "insurance");
     }
 
     public boolean add(Insurance insurance) {
@@ -19,7 +20,11 @@ public final class RegisterInsurance extends  Register
         } catch (IllegalArgumentException e) {
             throw e;
         }
-        return super.add(insurance.getCasenumber(), insurance);
+        if ( super.add(insurance.getCasenumber(), insurance)) {
+            super.saveRegister();
+            return true;
+        }
+        return false;
     }
 
     public Insurance get(int insuranceID) {

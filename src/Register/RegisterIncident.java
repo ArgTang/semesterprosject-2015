@@ -11,17 +11,21 @@ import java.util.HashMap;
 public final class RegisterIncident extends Register
 {
     public RegisterIncident() {
-        super(new HashMap< Integer, Incident>());
+        super(new HashMap< Integer, Incident>(), "incident");
     }
 
     public boolean add(Incident incident) {
         try {
-            incident.setIncidentID(super.getNumberofObjectsStored() + 1);
+            incident.setIncidentID( super.getNumberofObjectsStored() + 1);
         } catch (IllegalArgumentException e) {
             throw e;
         }
 
-        return super.add( incident.getIncidentID(), incident );
+        if ( super.add( incident.getIncidentID(), incident )) {
+            super.saveRegister();
+            return true;
+        }
+        return false;
     }
 
     public Incident get(int incidetID) {

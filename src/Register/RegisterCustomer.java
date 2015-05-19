@@ -21,11 +21,15 @@ public final class RegisterCustomer extends Register {
     public static final Customer tempCustomer = new Customer("ola", "normann", "11111111111", contactinfo);
 
     public RegisterCustomer() {
-        super(new HashMap< String, Customer >());
+        super(new HashMap< String, Customer >(), "customer");
     }
 
     public boolean add(Customer customer) {
-           return super.add(customer.getSocialSecurityNumber(), customer);
+       if ( super.add(customer.getSocialSecurityNumber(), customer) ) {
+           super.saveRegister();
+           return  true;
+       }
+        return false;
     }
 
     public Customer get(String key) {

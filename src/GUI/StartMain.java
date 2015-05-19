@@ -55,19 +55,21 @@ public class StartMain extends Application
     @Override
     public void start(Stage primaryStage) throws Exception {
         //generate Customers in new thread -> might be faster when we generate insurance\incidentCases
-        Runnable newthread =
-                () -> { MakePersons.makeCustomers(1000);
-/*                    try {
-                        customerRegister.saveRegister();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
-                };
+        Runnable makeMockData = () -> {
+                MakePersons.makeCustomers(1000);
+                MakePersons.makeDefaultPerson();
 
-        Thread thread = new Thread(newthread);
-        thread.start();
-        MakePersons.makeDefaultPerson();
-        //customerRegister.loadRegister();
+                customerRegister.saveRegister();
+                insuranceRegister.saveRegister();
+                incidentRegister.saveRegister();
+
+            };
+        Thread thread = new Thread(makeMockData);
+        //thread.start(); //enable this and disable loadRegister for new set of data
+
+        customerRegister.loadRegister();
+        insuranceRegister.loadRegister();
+        incidentRegister.loadRegister();
 
         setListeners();
         this.PrimaryStage = primaryStage;

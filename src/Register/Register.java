@@ -16,10 +16,11 @@ import java.util.Map;
 abstract class Register {
 
     Map register;
+    String savetoFileName;
 
-    public Register(HashMap hashMap)
-    {
+    public Register(HashMap hashMap, String savetoFileName) {
         register = hashMap;
+        this.savetoFileName = savetoFileName;
     }
 
     <K, O> boolean add(K key, O object) {
@@ -37,7 +38,7 @@ abstract class Register {
 
     <K, O> boolean update( K key, O object) {
         if( register.containsKey(key) ) {
-            register.replace(key, object); //todo check if this method throws an exception
+            register.replace(key, object);
             return true;
         }
         return false;
@@ -48,17 +49,24 @@ abstract class Register {
         return register.size();
     }
 
-    public void saveRegister() throws IOException {
+    public void saveRegister() {
         ObjectOutputStream output = null;
         try {
-            output = new ObjectOutputStream( new FileOutputStream("Register.data"));
+            output = new ObjectOutputStream( new FileOutputStream( savetoFileName + "Register.data"));
             output.writeObject(register);
             output.close();
         } catch (IOException e) {
+            System.out.println("could write to file: " + savetoFileName + "Register.data");
             e.printStackTrace();
         } finally {
-            if (output != null )
-                output.close();
+            if (output != null ) {
+                try {
+                    output.close();
+                } catch (IOException e) {
+                    System.out.println("could not close file: " + savetoFileName + "Register.data");
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -66,13 +74,23 @@ abstract class Register {
 
         ObjectInputStream input = null;
         try {
-            input = new ObjectInputStream( new FileInputStream("Register.data"));
+            input = new ObjectInputStream( new FileInputStream(savetoFileName + "Register.data"));
             register = (Map)input.readObject();
             input.close();
         } catch (IOException e) {
+            System.out.println("could not read from file: " + savetoFileName + "Register.data");
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    System.out.println("could not close file: " + savetoFileName + "Register.data");
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
