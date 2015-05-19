@@ -66,7 +66,7 @@ public final class AgentSearchController extends CommonGUIMethods
         cityColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("City"));
 
         //Gets the observable arraylist from witch the search function gets collected into
-        searchresults.setAll( customerRegister.getRegister() );
+        //searchresults.setAll( customerRegister.getRegister() ); //this is used for testing
 
         personResults.setPlaceholder(new Label("Her kommer resultatet fra ditt søk")); //todo: add icon here?
         personResults.setItems( searchresults );

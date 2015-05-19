@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,19 +43,13 @@ public final class WelcomeController
         if (welcomePane != null)
             return;
 
-        DropShadow ds = new DropShadow();
-        ds.setOffsetY(3.0);
-        ds.setOffsetX(3.0);
-        ds.setColor(Color.GRAY);
-
-        Text welcome = new Text("Velkommen til oss!");
-        welcome.setEffect(ds);
+        Text welcome = new Text("Velkommen til oss!"); //not used anymore
         welcome.setStyle("-fx-font-size: 5em;");
         Image logo = new Image( getClass().getResourceAsStream("/GUI/png/logo.png"));
         ImageView image = new ImageView(logo);
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(image, welcome);
+        vBox.getChildren().addAll(image);
         vBox.alignmentProperty().set(Pos.CENTER);
         vBox.setPadding(new Insets(0, 0, 80, 0));
 
