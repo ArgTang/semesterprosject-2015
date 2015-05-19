@@ -11,9 +11,7 @@ import javafx.scene.layout.VBox;
 
 import static GUI.CurrentObjectListeners.CurrentInsurance.getNameOfInsurance;
 import static GUI.GuiHelper.CommonInsuranceMethods.setBoldFont;
-import static GUI.StartMain.currentCustomer;
-import static GUI.StartMain.currentIncident;
-import static GUI.StartMain.currentInsurance;
+import static GUI.StartMain.*;
 import static java.lang.String.valueOf;
 
 /**

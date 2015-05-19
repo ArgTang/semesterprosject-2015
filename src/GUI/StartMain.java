@@ -26,7 +26,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -112,16 +113,12 @@ public class StartMain extends Application
 
         try {
             Parent menu = FXMLLoader.load(getClass().getResource("/GUI/AgentGUI/AgentMenu.fxml"));
-            StackPane logout = FXMLLoader.load(getClass().getResource("/GUI/AgentGUI/Logout.fxml"));
             Separator separator = new Separator();
             separator.setPadding(new Insets(0, 0, 5, 0));
-            HBox agentMenuContainer = new HBox();
-            agentMenuContainer.getChildren().addAll(menu, logout);
-            HBox.setHgrow(logout, Priority.ALWAYS);
-            VBox separatorcontainer = new VBox();
-            separatorcontainer.getChildren().addAll(agentMenuContainer, separator);
-            agentMenu = separatorcontainer;
 
+            VBox separatorcontainer = new VBox();
+            separatorcontainer.getChildren().addAll(menu, separator);
+            agentMenu = separatorcontainer;
         } catch (IOException e) {
             System.out.println("failed loading agentmenu.fxml");
             e.printStackTrace();

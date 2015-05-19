@@ -16,9 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import static GUI.GuiHelper.RegEX.*;
-import static GUI.StartMain.changeWindowListener;
-import static GUI.StartMain.currentCustomer;
-import static GUI.StartMain.customerRegister;
+import static GUI.StartMain.*;
 
 /**
  * This class constructs and controls login and forgot passwordScreen

@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<HBox spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Search.AgentSearchController">
+<HBox spacing="10.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AgentGUI.Search.AgentSearchController">
    <children>
       <GridPane hgap="5.0" maxHeight="250.0" maxWidth="430.0" HBox.hgrow="ALWAYS">
         <columnConstraints>
@@ -37,6 +37,9 @@
               </children>
             </HBox>
           </children>
+         <padding>
+            <Insets top="26.0" />
+         </padding>
       </GridPane>
       <VBox HBox.hgrow="ALWAYS">
          <children>
