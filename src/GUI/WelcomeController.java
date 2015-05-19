@@ -11,6 +11,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -48,14 +50,15 @@ public final class WelcomeController
         Text welcome = new Text("Velkommen til oss!");
         welcome.setEffect(ds);
         welcome.setStyle("-fx-font-size: 5em;");
-        StackPane pane = new StackPane();
+        Image logo = new Image( getClass().getResourceAsStream("/GUI/png/logo.png"));
+        ImageView image = new ImageView(logo);
 
-        pane.setAlignment(Pos.CENTER_LEFT);
-        StackPane.setMargin(welcome, new Insets(0, 0, 100, 200));
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(image, welcome);
+        vBox.alignmentProperty().set(Pos.CENTER);
+        vBox.setPadding(new Insets(0, 0, 80, 0));
 
-        pane.getChildren().addAll(welcome);
-
-        welcomePane = pane;
+        welcomePane = vBox;
     }
 
     private void makelogin() {

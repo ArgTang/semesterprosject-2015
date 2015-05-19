@@ -26,6 +26,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -53,6 +54,11 @@ public class StartMain extends Application
     private static Parent welcome, agentSearch, agentPerson, agentMenu, agentInsurance, agentIncident, agentStatistics;
     private static Parent CustomerLoggedInPane;
 
+    public static void main(String[] args) {
+        SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         //generate Customers in new thread -> might be faster when we generate insurance\incidentCases
@@ -75,6 +81,8 @@ public class StartMain extends Application
         setListeners();
         this.PrimaryStage = primaryStage;
         Scene scene = new Scene(rootLayout);
+        Image logo = new Image( getClass().getResourceAsStream("/GUI/png/logoicon.png"));
+        primaryStage.getIcons().add( logo );
         rootLayout.setPadding(new Insets(5, 5, 5, 5));
         rootLayout.setPrefSize(SCREEN.getWidth() / 1.35, SCREEN.getHeight() / 1.5); //todo: change this maybe?
         rootLayout.setStyle("-fx-font-size: 1.5em;");
@@ -90,11 +98,6 @@ public class StartMain extends Application
         }
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
-        launch(args);
     }
 
     private Parent getLoginPane() {
