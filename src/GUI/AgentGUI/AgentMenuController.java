@@ -13,7 +13,8 @@ import static GUI.StartMain.changeWindowListener;
 /**
  * Created by steinar on 13.04.2015.
  */
-public class AgentMenuController {
+public class AgentMenuController
+{
     @FXML
     private Button menuSearch;
     @FXML
@@ -31,36 +32,37 @@ public class AgentMenuController {
 
     @FXML
     private void initialize() {
+        setShadow(menuCustomer, menuIncident, menuInsurance, menuSearch, menuStatistics, logout);
+
+        Image image = new Image( getClass().getResourceAsStream("/GUI/png/search99.png"));
+        menuSearch.setGraphic( new ImageView(image) );
+
+        image = new Image( getClass().getResourceAsStream("/GUI/png/plussign1.png"));
+        menuCustomer.setGraphic(new ImageView(image));
+
+        image = new Image( getClass().getResourceAsStream("/GUI/png/contract11.png"));
+        menuInsurance.setGraphic(new ImageView(image));
+
+        image = new Image( getClass().getResourceAsStream("/GUI/png/pencil113.png"));
+        menuIncident.setGraphic(new ImageView(image));
+
+        image = new Image( getClass().getResourceAsStream("/GUI/png/stats2.png"));
+        menuStatistics.setGraphic(new ImageView(image));
+
+        image = new Image( getClass().getResourceAsStream("/GUI/png/logout13.png"));
+        logout.setGraphic(new ImageView(image));
+        logout.pressedProperty().addListener( listener -> StartMain.changeWindowListener.setString("welcome"));
+    }
+
+    private void setShadow(Button... buttons) {
         DropShadow shadow = new DropShadow();
         shadow.setOffsetY(0.0);
         shadow.setOffsetX(0.0);
         shadow.setColor(Color.GRAY);
         shadow.setRadius(1);
 
-        menuSearch.setEffect(shadow);
-        Image image = new Image( getClass().getResourceAsStream("/GUI/png/search99.png"));
-        menuSearch.setGraphic( new ImageView(image) );
-
-        menuCustomer.setEffect(shadow);
-        image = new Image( getClass().getResourceAsStream("/GUI/png/plussign1.png"));
-        menuCustomer.setGraphic(new ImageView(image));
-
-        menuInsurance.setEffect(shadow);
-        image = new Image( getClass().getResourceAsStream("/GUI/png/contract11.png"));
-        menuInsurance.setGraphic(new ImageView(image));
-
-        menuIncident.setEffect(shadow);
-        image = new Image( getClass().getResourceAsStream("/GUI/png/pencil113.png"));
-        menuIncident.setGraphic(new ImageView(image));
-
-        menuStatistics.setEffect(shadow);
-        image = new Image( getClass().getResourceAsStream("/GUI/png/stats2.png"));
-        menuStatistics.setGraphic(new ImageView(image));
-
-        logout.setEffect(shadow);
-        image = new Image( getClass().getResourceAsStream("/GUI/png/logout13.png"));
-        logout.setGraphic(new ImageView(image));
-        logout.pressedProperty().addListener( listener -> StartMain.changeWindowListener.setString("welcome"));
+        for (Button button: buttons)
+            button.setEffect(shadow);
     }
 
     @FXML

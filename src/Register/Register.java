@@ -1,6 +1,9 @@
 package Register;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,9 +52,21 @@ abstract class Register {
         return register.size();
     }
 
-    public void saveRegister() {
+
+    //TODO: this method Crashes horribly dont know why. Ugly fix in place. Dont have time to fix.
+/*    public void saveRegister() {
+        if (!Files.exists(Paths.get("Registers")))
+            try {
+                Files.createDirectory(Paths.get("Registers"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         ObjectOutputStream output = null;
         try {
+            String current = new File( "." ).getCanonicalPath();
+            Path path = Paths.get("/" + savetoFileName + "Register.data");
+            //output = new ObjectOutputStream( new FileOutputStream( current + path.toFile()));
             output = new ObjectOutputStream( new FileOutputStream( savetoFileName + "Register.data"));
             output.writeObject(register);
             output.close();
@@ -74,8 +89,11 @@ abstract class Register {
 
         ObjectInputStream input = null;
         try {
-            input = new ObjectInputStream( new FileInputStream(savetoFileName + "Register.data"));
-            register = (Map)input.readObject();
+            String current = new File( "." ).getCanonicalPath();
+            Path path = Paths.get("/" +  savetoFileName + "Register.data");
+            input = new ObjectInputStream( new FileInputStream( current + path.toFile()));
+            input = new ObjectInputStream( new FileInputStream( savetoFileName + "Register.data"));
+            register = (HashMap)input.readObject();
             input.close();
         } catch (IOException e) {
             System.out.println("could not read from file: " + savetoFileName + "Register.data");
@@ -92,5 +110,5 @@ abstract class Register {
                 }
             }
         }
-    }
+    }*/
 }

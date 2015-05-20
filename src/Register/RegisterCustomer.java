@@ -3,6 +3,10 @@ package Register;
 import Person.ContactInfo;
 import Person.Customer;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +30,7 @@ public final class RegisterCustomer extends Register {
 
     public boolean add(Customer customer) {
        if ( super.add(customer.getSocialSecurityNumber(), customer) ) {
-           super.saveRegister();
+           saveRegister();
            return  true;
        }
         return false;
@@ -58,5 +62,61 @@ public final class RegisterCustomer extends Register {
         return   col.stream()
                     .filter(condition)
                     .collect(Collectors.toList());
+    }
+
+    public void saveRegister() {
+        if (!Files.exists(Paths.get("Registers")))
+            try {
+                Files.createDirectory(Paths.get("Registers"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        ObjectOutputStream output = null;
+        try {
+            String current = new File( "." ).getCanonicalPath();
+            Path path = Paths.get("/" + "customer" + "Register.data");
+            output = new ObjectOutputStream( new FileOutputStream( current + path.toFile()));
+            output.writeObject(register);
+            output.close();
+        } catch (IOException e) {
+            System.out.println("could write to file: " + "customer" + "Register.data");
+            e.printStackTrace();
+        } finally {
+            if (output != null ) {
+                try {
+                    output.close();
+                } catch (IOException e) {
+                    System.out.println("could not close file: " + "customer" + "Register.data");
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void loadRegister() {
+
+        ObjectInputStream input = null;
+        try {
+            String current = new File( "." ).getCanonicalPath();
+            Path path = Paths.get("/" +  "customer" + "Register.data");
+            input = new ObjectInputStream( new FileInputStream( current + path.toFile()));
+            register = (HashMap)input.readObject();
+            input.close();
+        } catch (IOException e) {
+            System.out.println("could not read from file: " + "customer" + "Register.data");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    System.out.println("could not close file: " + "customer" + "Register.data");
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

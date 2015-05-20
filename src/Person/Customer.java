@@ -28,4 +28,8 @@ public final class Customer extends Person
     public void addIncidentNumber( int nr ) { incidentNumbers.add( nr ); }
     public List<Integer> getInsuranceNumbers() { return insuranceNumbers; }
     public List<Integer> getIncidentNumbers() { return incidentNumbers; }
+
+    public static void setidCCount( int i) {
+        idCount = i;
+    }
 }

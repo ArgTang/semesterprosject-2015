@@ -1,7 +1,8 @@
 package GUI;
 
 /**
- * This is the Main Class for this class. All windows are created here.
+ * This is the Main Class for this class. All windows are created and stored here.
+ * Objectlisteners and windowListener are initialized here
  * Created by steinar on 29.03.2015.
  */
 
@@ -16,6 +17,7 @@ import GUI.CurrentObjectListeners.CurrentInsurance;
 import GUI.CurrentObjectListeners.WindowChangeListener;
 import GUI.CustomerGUI.CustomerLoggedInController;
 import GUI.GuiHelper.Fader;
+import Person.Customer;
 import Register.RegisterCustomer;
 import Register.RegisterIncident;
 import Register.RegisterInsurance;
@@ -37,7 +39,7 @@ import java.io.IOException;
 public class StartMain extends Application
 {
     private static Dimension SCREEN;
-    private Stage PrimaryStage;
+    private Stage primaryStage;
     private BorderPane rootLayout = new BorderPane();
     private Fader fade = new Fader();
 
@@ -61,33 +63,34 @@ public class StartMain extends Application
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //generate Customers in new thread -> might be faster when we generate insurance\incidentCases
-        Runnable makeMockData = () -> {
-                MakePersons.makeCustomers(1000);
-                MakePersons.makeDefaultPerson();
-
-                customerRegister.saveRegister();
-                insuranceRegister.saveRegister();
-                incidentRegister.saveRegister();
-
-            };
-        Thread thread = new Thread(makeMockData);
-        //thread.start(); //enable this and disable loadRegister for new set of data
-
-        customerRegister.loadRegister();
-        insuranceRegister.loadRegister();
-        incidentRegister.loadRegister();
-
+        //generateMockData(); //enable this disable loadRegisters to generate new data
+        loadRegisters();
+        Customer.setidCCount(customerRegister.getRegister().size()+1);
         setListeners();
-        this.PrimaryStage = primaryStage;
+        this.primaryStage = primaryStage;
         Scene scene = new Scene(rootLayout);
+
+        addIcon();
+        configRoot();
+        loadParent(getLoginPane());
+        loadCSS(scene);
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private void addIcon () {
         Image logo = new Image( getClass().getResourceAsStream("/GUI/png/logoicon.png"));
         primaryStage.getIcons().add( logo );
+    }
+
+    private void configRoot() {
         rootLayout.setPadding(new Insets(5, 5, 5, 5));
         rootLayout.setPrefSize(SCREEN.getWidth() / 1.35, SCREEN.getHeight() / 1.5); //todo: change this maybe?
         rootLayout.setStyle("-fx-font-size: 1.5em;");
-        loadParent(getLoginPane());
+    }
 
+    private void loadCSS(Scene scene) {
         try {
             String css = StartMain.class.getResource("/GUI/css/CSSValidation.css").toExternalForm();
             //scene.getStylesheets().clear();
@@ -96,8 +99,26 @@ public class StartMain extends Application
             System.out.println("could not load css file: /GUI/css/CSSValidation.css" );
             e.printStackTrace();
         }
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    }
+
+    private void loadRegisters() {
+        customerRegister.loadRegister();
+        insuranceRegister.loadRegister();
+        incidentRegister.loadRegister();
+    }
+
+    private void generateMockData() {
+        //generate Customers in new thread -> might be faster when we generate insurance\incidentCases
+        Runnable makeMockData = () -> {
+            MakePersons.makeCustomers(1000);
+            MakePersons.makeDefaultPerson();
+
+            customerRegister.saveRegister();
+            insuranceRegister.saveRegister();
+            incidentRegister.saveRegister();
+        };
+        Thread thread = new Thread(makeMockData);
+        thread.start(); //enable this and disable loadRegister for new set of data
     }
 
     private Parent getLoginPane() {
@@ -105,12 +126,12 @@ public class StartMain extends Application
             WelcomeController welcomeController = new WelcomeController();
             welcome = welcomeController.initWelcome();
         }
-        PrimaryStage.setTitle("Velkommen");
+        primaryStage.setTitle("Velkommen");
         return welcome;
     }
 
     private Parent getAgentMenu() {
-        PrimaryStage.setTitle("HUBC Forsikring"); //todo: change name when name is ready
+        primaryStage.setTitle("HUBC Forsikring"); //todo: change name when name is ready
         if (agentMenu != null)
             return agentMenu;
 
