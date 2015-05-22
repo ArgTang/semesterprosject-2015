@@ -3,8 +3,7 @@ ITPE1600 spring15 project
 
 using these tools:
 - GitHub.com
-- slack.com
-- waffle.com KanBan
+- Intellij IDEA
 - Findbugs plugin
 - google error-prone compiler
 - JavaFX scenebuilder
